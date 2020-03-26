@@ -20,7 +20,8 @@
         "axios": "^0.19.2",
         "next": "^9.3.2",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "styled-components": "^5.0.1"
     },
     "devDependencies": {
         "@types/node": "^12.12.31",
