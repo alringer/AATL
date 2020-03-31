@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const HeaderItemText = styled.p`
+export const HeaderItemText = styled.a`
     opacity: 0.6;
     font-family: 'Rubik';
     font-size: 12px;
@@ -9,5 +9,5 @@ export const HeaderItemText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${theme};
+    color: ${props => props.theme.darkGrey};
 `

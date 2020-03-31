@@ -10,12 +10,17 @@ export const HeaderContainer = styled.div`
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
     background-color: rgba(255, 255, 255, 0.6);
 
-    /* tablet */
+    @media ${device.mobile} {
+        padding: 13px 16px;
+    }
 
-    /* laptop */
+    @media ${device.tablet} {
+        padding: 16px 20px;
+        justify-content: space-between;
+    }
+
     @media ${device.laptop} {
         padding: 20px 40px;
-        /* height: 150px; */
         justify-content: space-between;
     }
 `
@@ -31,6 +36,23 @@ export const LeftItemsContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+`
+
+export const LogoContainer = styled.div`
+    @media ${device.mobile} {
+        width: 106.6px;
+        height: 30px;
+    }
+
+    @media ${device.tablet} {
+        width: 152px;
+        height: 64px;
+    }
+
+    @media ${device.laptop} {
+        width: 260px;
+        height: 110px;
+    }
 `
 
 export const MenuItemsContainer = styled.div``
