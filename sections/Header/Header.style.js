@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import Button from '@material-ui/core/Button'
+import styled, { css } from 'styled-components'
 import { device } from '../../style/device'
 
 export const HeaderContainer = styled.div`
@@ -55,7 +56,51 @@ export const LogoContainer = styled.div`
     }
 `
 
-export const MenuItemsContainer = styled.div``
+export const MenuItemsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+`
+
+export const MenuItemContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    ${props => {
+        if (props.id === 'rightmost') {
+            return css`
+                margin-left: 50px;
+            `
+        }
+    }}
+`
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    ${props => {
+        if (props.id === 'rightmost') {
+            return css`
+                margin-left: 10px;
+            `
+        }
+    }}
+`
+
 export const LoginItemsContainer = styled.div``
 export const AdminItemsContainer = styled.div``
 export const ProfileItemsContainer = styled.div``
+
+export const SignUpButton = styled(Button)`
+
+`
+export const LoginButton = styled(Button)`
+
+`

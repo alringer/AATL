@@ -1,4 +1,5 @@
 export const ROUTE_ITEMS = {
     home: '/',
-    cities: 'cities'
+    foodAndDrink: '/food-and-drink',
+    cities: '/cities'
 }
