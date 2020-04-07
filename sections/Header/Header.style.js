@@ -1,5 +1,6 @@
-import Button from '@material-ui/core/Button'
 import styled, { css } from 'styled-components'
+import { CustomButton } from '../../style/Button/Button.style'
+import { CustomIconButton } from '../../style/Button/IconButton.style'
 import { device } from '../../style/device'
 
 export const HeaderContainer = styled.div`
@@ -61,7 +62,7 @@ export const MenuItemsContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: 50px;
+    margin-left: 25px;
 `
 
 export const MenuItemContainer = styled.div`
@@ -98,9 +99,25 @@ export const LoginItemsContainer = styled.div``
 export const AdminItemsContainer = styled.div``
 export const ProfileItemsContainer = styled.div``
 
-export const SignUpButton = styled(Button)`
-
+export const SignUpButton = styled(CustomButton)`
+    color: ${props => props.theme.white};
+    background-color: ${props => props.theme.darkSlateBlue};
+    :hover {
+        background-color: ${props => props.theme.darkSlateBlue};
+    }
 `
-export const LoginButton = styled(Button)`
+export const LoginButton = styled(CustomButton)`
+    color: ${props => props.theme.mushroom};
+    background-color: ${props => props.theme.white};
+    border-color: ${props => props.theme.darkGreyOpaque};
+    :hover {
+        border-color: ${props => props.theme.darkGreyOpaque};
+    }
+`
 
+export const SearchButton = styled(CustomIconButton)`
+    background-color: ${props => props.theme.darkSlateBlue};
+    :hover {
+        background-color: ${props => props.theme.darkSlateBlue};
+    }
 `

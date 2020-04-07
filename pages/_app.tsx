@@ -2,8 +2,10 @@
 import { StylesProvider } from '@material-ui/core/styles'
 import { AppProps } from 'next/app'
 import React from 'react'
+import { Provider as StoreProvider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import Header from '../sections/Header/Header'
+import store from '../store/index'
 import { GlobalStyle } from '../style/GlobalStyle'
 import { theme } from '../style/theme'
 
@@ -14,18 +16,21 @@ const App = ({ Component, pageProps }: AppProps) => {
         if (jssStyles && jssStyles.parentNode) {
             jssStyles.parentNode.removeChild(jssStyles)
         }
+        ;``
     }, [])
 
     return (
         <>
-            <StylesProvider injectFirst>
-                <ThemeProvider theme={theme}>
-                    {/* <CssBaseline /> */}
-                    <GlobalStyle />
-                    <Header />
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </StylesProvider>
+            <StoreProvider store={store}>
+                <StylesProvider injectFirst>
+                    <ThemeProvider theme={theme}>
+                        {/* <CssBaseline /> */}
+                        <GlobalStyle />
+                        <Header />
+                        <Component {...pageProps} />
+                    </ThemeProvider>
+                </StylesProvider>
+            </StoreProvider>
         </>
     )
 }

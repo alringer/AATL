@@ -7,4 +7,16 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-family: Rubik, sans-serif;
     }
+
+    .MuiButton-root {
+        min-width: 48px;
+    }
+
+    .MuiOutlinedInput-input {
+        padding: 12px;
+    }
+
+    .Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: transparent !important;
+    }
 `
