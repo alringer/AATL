@@ -17,7 +17,7 @@ import {
     MenuItemContainer,
     MenuItemsContainer,
     RightItemsContainer,
-    SearchButton,
+    SearchToggleButton,
     SignUpButton,
 } from './Header.style'
 
@@ -25,10 +25,10 @@ const Header = () => {
     const [isSearchToggled, setSearchToggled] = React.useState(false)
     const router = useRouter()
 
-    // const handleBlurSearch = () => {
-    //     console.log('on blur!')
-    //     setSearchToggled(false)
-    // }
+    const handleBlurSearch = (e: React.FocusEvent) => {
+        console.log('Blur event from the parent: ', e)
+        setSearchToggled(false)
+    }
 
     const Logo = () => {
         return (
@@ -52,20 +52,20 @@ const Header = () => {
                         active={router.pathname === R.ROUTE_ITEMS.foodAndDrink}
                     />
                 </MenuItemContainer>
-                <MenuItemContainer id={'rightmost'}>
+                <MenuItemContainer id={'left-padded'}>
                     <MenuItem
                         href={R.ROUTE_ITEMS.cities}
                         title={S.HEADER_ITEMS.Cities}
                         active={router.pathname === R.ROUTE_ITEMS.cities}
                     />
                 </MenuItemContainer>
-                <MenuItemContainer id={'rightmost'}>
+                <MenuItemContainer id={'left-padded'} onBlur={handleBlurSearch} tabIndex={0}>
                     {!isSearchToggled ? (
-                        <SearchButton onClick={() => setSearchToggled(true)}>
+                        <SearchToggleButton onClick={() => setSearchToggled(true)}>
                             <Image src={SearchSVG} alt="logo" />
-                        </SearchButton>
+                        </SearchToggleButton>
                     ) : (
-                        <HeaderSearch handleBlur={() => setSearchToggled(false)} />
+                        <HeaderSearch />
                     )}
                 </MenuItemContainer>
             </MenuItemsContainer>
@@ -78,7 +78,7 @@ const Header = () => {
                 <ButtonContainer>
                     <SignUpButton>{S.BUTTON_LABELS.SignUp}</SignUpButton>
                 </ButtonContainer>
-                <ButtonContainer id={'rightmost'}>
+                <ButtonContainer id={'left-padded'}>
                     <LoginButton>{S.BUTTON_LABELS.Login}</LoginButton>
                 </ButtonContainer>
             </MenuItemsContainer>

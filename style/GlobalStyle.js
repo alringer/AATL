@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Rubik, sans-serif;
     }
 
+    input { 
+        box-sizing: border-box;
+    }
+
     .MuiButton-root {
         min-width: 48px;
     }
@@ -18,5 +22,13 @@ export const GlobalStyle = createGlobalStyle`
 
     .Mui-focused .MuiOutlinedInput-notchedOutline {
         border-color: transparent !important;
+    }
+
+    .MuiInputLabel-outlined {
+        /* transform: translate(12px, 16px) scale(1); */
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translate(0, -50%) scale(1)
     }
 `

@@ -72,7 +72,7 @@ export const MenuItemContainer = styled.div`
     align-items: center;
 
     ${props => {
-        if (props.id === 'rightmost') {
+        if (props.id === 'left-padded') {
             return css`
                 margin-left: 50px;
             `
@@ -87,7 +87,7 @@ export const ButtonContainer = styled.div`
     align-items: center;
 
     ${props => {
-        if (props.id === 'rightmost') {
+        if (props.id === 'left-padded') {
             return css`
                 margin-left: 10px;
             `
@@ -115,7 +115,7 @@ export const LoginButton = styled(CustomButton)`
     }
 `
 
-export const SearchButton = styled(CustomIconButton)`
+export const SearchToggleButton = styled(CustomIconButton)`
     background-color: ${props => props.theme.darkSlateBlue};
     :hover {
         background-color: ${props => props.theme.darkSlateBlue};

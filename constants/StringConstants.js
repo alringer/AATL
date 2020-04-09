@@ -9,3 +9,8 @@ export const BUTTON_LABELS = {
     Login: 'LOG IN',
     Search: 'SEARCH'
 }
+
+export const BUTTON_PLACEHOLDERS = {
+    VenueSearchBold: 'Find',
+    VenueSearchNormal: 'places to eat ...'
+}
