@@ -4,10 +4,12 @@ import { AppProps } from 'next/app'
 import React from 'react'
 import { Provider as StoreProvider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
+import Footer from '../sections/Footer/Footer'
 import Header from '../sections/Header/Header'
 import store from '../store/index'
 import { GlobalStyle } from '../style/GlobalStyle'
 import { theme } from '../style/theme'
+import { AppContainer, PageContainer } from './App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
     React.useEffect(() => {
@@ -16,7 +18,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         if (jssStyles && jssStyles.parentNode) {
             jssStyles.parentNode.removeChild(jssStyles)
         }
-        ;``
     }, [])
 
     return (
@@ -26,8 +27,13 @@ const App = ({ Component, pageProps }: AppProps) => {
                     <ThemeProvider theme={theme}>
                         {/* <CssBaseline /> */}
                         <GlobalStyle />
-                        <Header />
-                        <Component {...pageProps} />
+                        <AppContainer>
+                            <Header />
+                            <PageContainer>
+                                <Component {...pageProps} />
+                            </PageContainer>
+                            <Footer />
+                        </AppContainer>
                     </ThemeProvider>
                 </StylesProvider>
             </StoreProvider>

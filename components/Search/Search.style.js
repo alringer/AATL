@@ -43,6 +43,6 @@ export const HeaderSearchTabletContainer = styled(FormControl)`
     /* Input Style for tablet header search only */
     input {
         box-sizing: border-box;
-        height: 96px;
+        height: 92px;
     }
 `

@@ -19,10 +19,10 @@ import {
 } from './Search.style'
 
 interface IHeaderSearchProps {
-    // hideSearch: () => void
+    handleCloseSearch: () => void
 }
 
-const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
+const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
     const router = useRouter()
 
     const [value, setValue] = React.useState<string>('')
@@ -32,25 +32,18 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
         setValue(e.target.value)
     }
 
-    const handleBlur = (e: React.FocusEvent) => {
-        console.log('Blur event from the child: ', e.target.id)
-        e.persist()
-    }
-
     const handleSearch = () => {
-        // TODO: Wire up Search API
-        console.log('Search submitted')
+        // TODO: Push the user to the city page with the search query parameter in the URL
         router.push('/city')
     }
 
     const handleTextFieldKeyDown = (e: React.KeyboardEvent) => {
-        console.log('Press Key: ', e.key)
         switch (e.key) {
             case 'Enter':
-                router.push('/city')
+                handleSearch()
                 break
             case 'Escape':
-                // etc...
+                handleCloseSearch()
                 break
             default:
                 break
@@ -60,7 +53,6 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
     const HeaderSearchTablet = () => (
         <HeaderSearchTabletContainer>
             <TextField
-                id="hello"
                 value={value}
                 onChange={handleChange}
                 autoFocus={true}
@@ -78,14 +70,14 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
                     ),
                     endAdornment: (
                         <InputAdornment position="end">
-                            <CustomIconButton>
+                            <CustomIconButton onClick={handleCloseSearch}>
                                 <Image src={CloseSVG} alt="logo" />
                             </CustomIconButton>
                         </InputAdornment>
                     ),
                 }}
                 variant="outlined"
-                onBlur={handleBlur}
+                onKeyDown={handleTextFieldKeyDown}
             />
         </HeaderSearchTabletContainer>
     )
@@ -109,12 +101,9 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
                     InputLabelProps={{ shrink: false }}
                     variant="outlined"
                     onKeyDown={handleTextFieldKeyDown}
-                    onBlur={handleBlur}
                 />
             </HeaderSearchContainer>
-            <SearchButton onClick={handleSearch} onBlur={handleBlur}>
-                {S.BUTTON_LABELS.Search}
-            </SearchButton>
+            <SearchButton onClick={handleSearch}>{S.BUTTON_LABELS.Search}</SearchButton>
         </>
     )
 
@@ -123,6 +112,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = () => {
             <Media queries={query}>
                 {(matches) => (
                     <>
+                        {matches.mobile && <HeaderSearchTablet />}
                         {matches.tablet && <HeaderSearchTablet />}
                         {matches.laptop && <HeaderSearchDesktop />}
                     </>

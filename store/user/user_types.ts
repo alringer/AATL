@@ -1,6 +1,7 @@
 // State Interfaces
 export interface UserReducerState {
     userName: string
+    userEmail: string
     loggedIn: boolean
 }
 
@@ -11,4 +12,10 @@ interface LoginAction {
     type: typeof LOGIN
 }
 
-export type UserActionTypes = LoginAction
+export const LOGOUT = 'LOGOUT'
+
+interface LogoutAction {
+    type: typeof LOGOUT
+}
+
+export type UserActionTypes = LoginAction | LogoutAction

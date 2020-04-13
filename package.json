@@ -18,6 +18,7 @@
     "homepage": "https://bitbucket.org/SeamgenSD/aatl-web#readme",
     "dependencies": {
         "@material-ui/core": "^4.9.8",
+        "@material-ui/icons": "^4.9.1",
         "axios": "^0.19.2",
         "babel-plugin-styled-components": "^1.10.7",
         "next": "^9.3.2",
@@ -25,6 +26,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-media": "^1.10.0",
+        "react-media-next": "^2.0.0-alpha.1",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
         "redux-thunk": "^2.3.0",

@@ -8,6 +8,11 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Rubik, sans-serif;
     }
 
+    html, body {
+        height: 100%;
+        position: relative;
+    }
+
     input { 
         box-sizing: border-box;
     }
