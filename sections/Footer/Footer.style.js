@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 import { CustomTextLink } from '../../style/Button/TextLink.style'
-import { device } from '../../style/device'
+import { device, sidePaddings } from '../../style/device'
 
 export const FooterContainer = styled.div`
     /* position: absolute; */
@@ -13,17 +13,17 @@ export const FooterContainer = styled.div`
     background-color: rgba(62, 136, 169, 0.2);
 
     @media ${device.mobile} {
-        padding: 40px 17px;
+        padding: 40px ${sidePaddings.mobile};
         text-align: center;
     }
 
     @media ${device.tablet} {
-        padding: 40px 24px;
+        padding: 40px ${sidePaddings.tablet};
         text-align: left;
     }
 
     @media ${device.laptop} {
-        padding: 75px 250px;
+        padding: 75px ${sidePaddings.laptop};
         text-align: left;
     }
 `
@@ -97,10 +97,12 @@ export const FooterRightColumn = styled.div`
     @media ${device.tablet} {
         flex-direction: row;
         align-items: flex-start;
+        margin-top: 0px;
     }
     @media ${device.laptop} {
         flex-direction: row;
         align-items: flex-start;
+        margin-top: 0px;
     }
 `
 
@@ -113,10 +115,19 @@ export const FooterInformationTitle = styled.p`
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
 
+    @media ${device.mobile} {
+        font-size: 20px;
+    }
+    @media ${device.tablet} {
+        font-size: 18px;
+    }
+    @media ${device.laptop} {
+        font-size: 18px;
+    }
+
     margin-bottom: 15px;
 `
 export const FooterInformationBody = styled.p`
-    font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -124,15 +135,19 @@ export const FooterInformationBody = styled.p`
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
 
-    margin-bottom: 25px;
     @media ${device.mobile} {
         text-align: center;
+        margin-bottom: 16px;
+        font-size: 11px;
     }
     @media ${device.tablet} {
         text-align: left;
+        margin-bottom: 16px;
     }
     @media ${device.laptop} {
         text-align: left;
+        margin-bottom: 25px;
+        font-size: 16px;
     }
 `
 

@@ -1,6 +1,7 @@
 // import { CssBaseline } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/core/styles'
 import { AppProps } from 'next/app'
+import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import { Provider as StoreProvider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
@@ -25,15 +26,19 @@ const App = ({ Component, pageProps }: AppProps) => {
             <StoreProvider store={store}>
                 <StylesProvider injectFirst>
                     <ThemeProvider theme={theme}>
-                        {/* <CssBaseline /> */}
-                        <GlobalStyle />
-                        <AppContainer>
-                            <Header />
-                            <PageContainer>
-                                <Component {...pageProps} />
-                            </PageContainer>
-                            <Footer />
-                        </AppContainer>
+                        <SnackbarProvider maxSnack={3}>
+                            <>
+                                {/* <CssBaseline /> */}
+                                <GlobalStyle />
+                                <AppContainer>
+                                    <Header />
+                                    <PageContainer>
+                                        <Component {...pageProps} />
+                                    </PageContainer>
+                                    <Footer />
+                                </AppContainer>
+                            </>
+                        </SnackbarProvider>
                     </ThemeProvider>
                 </StylesProvider>
             </StoreProvider>
