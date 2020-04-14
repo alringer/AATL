@@ -1,6 +1,8 @@
 import { IconButton } from '@material-ui/core'
 import Link from 'next/link'
-import UserProfileSVG from '../../assets/userProfile.svg'
+import FacebookSVG from '../../assets/facebook-icon.svg'
+import InstagramSVG from '../../assets/instagram-icon.svg'
+import TwitterSVG from '../../assets/twitter-icon.svg'
 import Image from '../../components/Image/Image'
 import * as R from '../../constants/RouteConstants'
 import * as S from '../../constants/StringConstants'
@@ -29,13 +31,13 @@ const Footer = () => {
                     <FooterInformationBody>{S.FOOTER_ITEMS.FooterMessage}</FooterInformationBody>
                     <FooterButtonsContainer>
                         <IconButton onClick={() => window.open('https://www.facebook.com/AskaTravelLocal/', '_blank')}>
-                            <Image src={UserProfileSVG} alt="icon" />
+                            <Image src={FacebookSVG} alt="icon" />
                         </IconButton>
                         <IconButton onClick={() => window.open('https://www.instagram.com/askatravellocal/', '_blank')}>
-                            <Image src={UserProfileSVG} alt="icon" />
+                            <Image src={InstagramSVG} alt="icon" />
                         </IconButton>
                         <IconButton onClick={() => window.open('https://twitter.com/', '_blank')}>
-                            <Image src={UserProfileSVG} alt="icon" />
+                            <Image src={TwitterSVG} alt="icon" />
                         </IconButton>
                     </FooterButtonsContainer>
                 </FooterLeftColumn>

@@ -15,3 +15,9 @@ export const query = {
     tablet: `(min-width: ${Number(size.tablet)}px) and (max-width: ${Number(size.laptop) - 1}px)`,
     laptop: `(min-width: ${Number(size.laptop)}px)`,
 }
+
+export const sidePaddings = {
+    mobile: '17px',
+    tablet: '24px',
+    laptop: '250px'
+}

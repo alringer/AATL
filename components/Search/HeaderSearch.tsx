@@ -7,7 +7,7 @@ import SearchSVG from '../../assets/darkSearch.svg'
 import * as S from '../../constants/StringConstants'
 import { CustomIconButton } from '../../style/Button/IconButton.style'
 import { query } from '../../style/device'
-import TextField from '../../style/TextField/TextField'
+import { CustomTextField } from '../../style/TextField/TextField.style'
 import Image from '../Image/Image'
 import {
     HeaderSearchContainer,
@@ -52,7 +52,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
 
     const HeaderSearchTablet = () => (
         <HeaderSearchTabletContainer>
-            <TextField
+            <CustomTextField
                 value={value}
                 onChange={handleChange}
                 autoFocus={true}
@@ -85,7 +85,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
     const HeaderSearchDesktop = () => (
         <>
             <HeaderSearchContainer>
-                <TextField
+                <CustomTextField
                     value={value}
                     onChange={handleChange}
                     autoFocus={true}

@@ -6,4 +6,5 @@ export const CustomTextField = styled(TextField)`
     border: solid 2px rgba(30, 31, 34, 0.1);
     background-color: ${props => props.theme.white};
     width: 100%;
+    height: 100%;
 `
