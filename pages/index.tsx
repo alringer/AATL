@@ -1,4 +1,4 @@
-import EmailSubscription from '../components/EmailSubscription/EmailSubscription'
+import EmailSubscription from '../src/components/EmailSubscription/EmailSubscription'
 
 const Index = () => {
     return <EmailSubscription />

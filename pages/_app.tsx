@@ -5,12 +5,12 @@ import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import { Provider as StoreProvider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
-import Footer from '../sections/Footer/Footer'
-import Header from '../sections/Header/Header'
-import store from '../store/index'
-import { GlobalStyle } from '../style/GlobalStyle'
-import { theme } from '../style/theme'
-import { AppContainer, PageContainer } from './App.style'
+import Footer from '../src/sections/Footer/Footer'
+import Header from '../src/sections/Header/Header'
+import store from '../src/store/index'
+import { GlobalStyle } from '../src/style/GlobalStyle'
+import { theme } from '../src/style/theme'
+import { AppContainer, PageContainer } from './style/App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
     React.useEffect(() => {
