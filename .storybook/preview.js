@@ -1,8 +1,10 @@
 import { StylesProvider } from '@material-ui/core/styles'
 import { addDecorator, addParameters } from '@storybook/react'
+import { Provider as StoreProvider } from 'react-redux'
 import { viewportDevices } from 'style/device'
 import { GlobalStyle } from 'style/GlobalStyle'
 import { ThemeProvider } from 'styled-components'
+import store from '../src/store/index'
 import { theme } from '../src/style/theme'
 
 let viewports = {}
@@ -28,21 +30,22 @@ addParameters({
 })
 addDecorator((s) => (
     <>
-        <StylesProvider injectFirst>
-            <ThemeProvider theme={theme}>
-                <GlobalStyle />
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '-webkit-fill-available',
-                    }}
-                >
-                    {s()}
-                </div>
-            </ThemeProvider>
-        </StylesProvider>
+        <StoreProvider store={store}>
+            <StylesProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <GlobalStyle />
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        {s()}
+                    </div>
+                </ThemeProvider>
+            </StylesProvider>
+        </StoreProvider>
     </>
 ))

@@ -13,6 +13,7 @@ export const HeaderContainer = styled.div`
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
     background-color: rgba(255, 255, 255, 0.6);
     overflow: hidden;
+    width: 100%;
 
     @media ${device.mobile} {
         height: 80px;
