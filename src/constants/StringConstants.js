@@ -44,3 +44,9 @@ export const FOOTER_ITEMS = {
     CompanyName: 'About Ask a Travel Local',
     FooterMessage: 'We are dedicated to creating a space for the foodie in you. We feature places that are recommended by the community. Everything else is moot.'
 }
+
+export const CALL_TO_ACTION = {
+    Title: 'Have you been to',
+    No: 'NO',
+    Yes: 'YES, I RECOMMEND IT'
+}

@@ -71,7 +71,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
                     endAdornment: (
                         <InputAdornment position="end">
                             <CustomIconButton onClick={handleCloseSearch}>
-                                <Image src={CloseSVG} alt="logo" />
+                                <Image src={CloseSVG} alt="close-icon" />
                             </CustomIconButton>
                         </InputAdornment>
                     ),

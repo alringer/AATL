@@ -17,18 +17,6 @@ export const query = {
 }
 
 export const viewportDevices = {
-    mobile: {
-        width: `${size.mobile}px`,
-        height: '560px'
-    },
-    tablet: {
-        width: `${size.tablet}px`,
-        height: '500px'
-    },
-    laptop: {
-        width: `${size.laptop}px`,
-        height: '800px'
-    },
     GalaxyS5: {
         width: '360px',
         height: '640px',
@@ -64,6 +52,18 @@ export const viewportDevices = {
     iPadPro: {
         width: '1366px',
         height: '1024px',
+    },
+    mobile: {
+        width: `${size.mobile}px`,
+        height: '560px'
+    },
+    tablet: {
+        width: `${size.tablet}px`,
+        height: '500px'
+    },
+    laptop: {
+        width: `${size.laptop}px`,
+        height: '800px'
     }
 }
 

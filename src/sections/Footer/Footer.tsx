@@ -6,6 +6,7 @@ import Image from 'components/Image/Image'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import Link from 'next/link'
+import React from 'react'
 import {
     FooterButtonsContainer,
     FooterContainer,
