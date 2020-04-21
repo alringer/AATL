@@ -11,12 +11,22 @@ export const CallToActionData = {
     },
 }
 
-storiesOf('Call-To-Action', module).add('Large Call-To-Action', () => {
-    return (
-        <CallToAction
-            restaurantName={CallToActionData.example.restaurantName}
-            restaurantAddress={CallToActionData.example.restaurantAddress}
-            restaurantDescription={CallToActionData.example.restaurantDescription}
-        />
-    )
-})
+storiesOf('Call-To-Action', module)
+    .add('Large Call-To-Action', () => {
+        return (
+            <CallToAction
+                restaurantName={CallToActionData.example.restaurantName}
+                restaurantAddress={CallToActionData.example.restaurantAddress}
+                restaurantDescription={CallToActionData.example.restaurantDescription}
+            />
+        )
+    })
+    .add('Small Call-To-Action', () => {
+        return (
+            <CallToAction
+                restaurantName={CallToActionData.example.restaurantName}
+                restaurantAddress={CallToActionData.example.restaurantAddress}
+                restaurantDescription={CallToActionData.example.restaurantDescription}
+            />
+        )
+    })

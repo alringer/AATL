@@ -16,14 +16,14 @@ const searchRouterOptions = {
 }
 
 storiesOf('Header', module)
-    .add('Default Header', () => {
+    .add('Default', () => {
         return (
             <MockRouter routerOptions={defaultRouterOptions}>
                 <Header />
             </MockRouter>
         )
     })
-    .add('Search Header', () => {
+    .add('Variant - With Search', () => {
         return (
             <MockRouter routerOptions={searchRouterOptions}>
                 <Header />

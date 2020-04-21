@@ -1,7 +1,11 @@
 import EmailSubscription from '../src/components/EmailSubscription/EmailSubscription'
 
 const Index = () => {
-    return <EmailSubscription />
+    return (
+        <>
+            <EmailSubscription />
+        </>
+    )
 }
 
 export default Index

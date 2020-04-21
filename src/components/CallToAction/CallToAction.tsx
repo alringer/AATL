@@ -1,6 +1,6 @@
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import chopString from 'utilities/converters/chopString'
+import { chopStringSmallCallToAction } from 'utilities/helpers/chopString'
 import {
     CallToActionAddress,
     CallToActionButtonsContainer,
@@ -26,7 +26,7 @@ const CallToAction: React.FC<ICallToActionProps> = ({ restaurantName, restaurant
                     {S.CALL_TO_ACTION.Title} {restaurantName}?
                 </CallToActionTitle>
                 <CallToActionAddress>{restaurantAddress}</CallToActionAddress>
-                <CallToActionMessage>{chopString(restaurantDescription)}</CallToActionMessage>
+                <CallToActionMessage>{chopStringSmallCallToAction(restaurantDescription)}</CallToActionMessage>
             </CallToActionContentContainer>
             <CallToActionButtonsContainer>
                 <CallToActionNoButton>{S.CALL_TO_ACTION.No}</CallToActionNoButton>
