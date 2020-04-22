@@ -7,7 +7,11 @@ import React from 'react'
 import Media from 'react-media'
 import { ImageButtonsContainer, RecommendationIcon } from 'style/Card/Card.style'
 import { query } from 'style/device'
-import { chopStringLargeRecommendation } from 'utilities/helpers/chopString'
+import {
+    chopStringFullRecommendationDescription,
+    chopStringRecommendationTitle,
+    chopStringSimpleRecommendationDescription,
+} from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import {
     RecommendationAuthorNameText,
@@ -25,21 +29,23 @@ import {
     RecommendationRestaurantNameText,
     RecommendationSummaryText,
     RecommendationTitleText,
-} from './RecommendationCardLarge.style'
+} from './RecommendationCard.style'
 
-interface ILargeRecommendationCardProps {
+interface IRecommendationCardProps {
+    isFull: boolean
     recommendationID: number
     recommendationImage: string
-    restaurantName: string
-    restaurantAddress: string
-    restaurantCategories: string[]
+    restaurantName?: string
+    restaurantAddress?: string
+    restaurantCategories?: string[]
     recommendationTitle: string
     recommendationDescription: string
     recommendationAuthorName: string
     recommendationAuthorTitle: string
 }
 
-const LargeRecommendationCard: React.FC<ILargeRecommendationCardProps> = ({
+const RecommendationCard: React.FC<IRecommendationCardProps> = ({
+    isFull,
     recommendationID,
     recommendationImage,
     restaurantName,
@@ -91,7 +97,9 @@ const LargeRecommendationCard: React.FC<ILargeRecommendationCardProps> = ({
             <RecommendationCardContentContainer>
                 <RecommendationContentTopContainer>
                     <RecommendationHeaderContainer>
-                        <RecommendationRestaurantNameText>{restaurantName}</RecommendationRestaurantNameText>
+                        <RecommendationRestaurantNameText>
+                            {isFull === true ? restaurantName : chopStringRecommendationTitle(recommendationTitle)}
+                        </RecommendationRestaurantNameText>
                         <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
@@ -109,25 +117,35 @@ const LargeRecommendationCard: React.FC<ILargeRecommendationCardProps> = ({
                             )}
                         </Media>
                     </RecommendationHeaderContainer>
-                    <Media queries={query} defaultMatches={{ mobile: true }}>
-                        {(matches) => (
-                            <>
-                                {(matches.laptop || matches.tablet) && (
-                                    <RecommendationRestaurantAddressText>
-                                        {restaurantAddress}
-                                    </RecommendationRestaurantAddressText>
+                    {isFull === true && (
+                        <>
+                            <Media queries={query} defaultMatches={{ mobile: true }}>
+                                {(matches) => (
+                                    <>
+                                        {(matches.laptop || matches.tablet) && (
+                                            <RecommendationRestaurantAddressText>
+                                                {restaurantAddress}
+                                            </RecommendationRestaurantAddressText>
+                                        )}
+                                    </>
                                 )}
-                            </>
-                        )}
-                    </Media>
-                    <RecommendationRestaurantCategoryText>
-                        {concatCategories(restaurantCategories)}
-                    </RecommendationRestaurantCategoryText>
+                            </Media>
+                            <RecommendationRestaurantCategoryText>
+                                {concatCategories(restaurantCategories)}
+                            </RecommendationRestaurantCategoryText>
+                        </>
+                    )}
                 </RecommendationContentTopContainer>
                 <RecommendationContentMiddleContainer>
-                    <RecommendationTitleText>{recommendationTitle}</RecommendationTitleText>
+                    {isFull === true && (
+                        <RecommendationTitleText>
+                            {chopStringRecommendationTitle(recommendationTitle)}
+                        </RecommendationTitleText>
+                    )}
                     <RecommendationSummaryText>
-                        {chopStringLargeRecommendation(recommendationDescription)}
+                        {isFull === true
+                            ? chopStringFullRecommendationDescription(recommendationDescription)
+                            : chopStringSimpleRecommendationDescription(recommendationDescription)}
                     </RecommendationSummaryText>
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
@@ -149,4 +167,4 @@ const LargeRecommendationCard: React.FC<ILargeRecommendationCardProps> = ({
     )
 }
 
-export default LargeRecommendationCard
+export default RecommendationCard

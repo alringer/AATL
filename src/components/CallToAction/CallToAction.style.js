@@ -1,30 +1,64 @@
+import CallToActionLargeSVG from 'assets/call-to-action-large-background.svg'
 import CallToActionSmallSVG from 'assets/call-to-action-small-background.svg'
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { CallToActionID } from './CallToAction'
 
 export const CallToActionContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    /* TODO: Render small and large depending on the context */
-    background-image: url(${CallToActionSmallSVG});
     width: 100%;
-    padding: 24px 20px;
 
-    @media ${device.mobile} {
-        max-width: 300px;
-        height: 300px;
-    }
-    @media ${device.tablet} {
-        max-width: 348px;
-        height: 368px;
-    }
-    @media ${device.laptop} {
-        max-width: 300px;
-        height: 318px;
-    }
+    ${props => {
+        if (props.id === CallToActionID.large) {
+            return css`
+                @media ${device.mobile} {
+                    max-width: 360px;
+                    background-image: url(${CallToActionSmallSVG});
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 24px 20px;
+                }
+                @media ${device.tablet} {
+                    max-width: 720px;
+                    background-image: url(${CallToActionLargeSVG});
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 38px 40px;
+                }
+                @media ${device.laptop} {
+                    max-width: 940px;
+                    background-image: url(${CallToActionLargeSVG});
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 38px 40px;
+                }
+            `
+        } else if (props.id === CallToActionID.small) {
+            return css`
+                background-image: url(${CallToActionSmallSVG});
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 24px 20px;
+                @media ${device.mobile} {
+                    max-width: 300px;
+                    height: 300px;
+                }
+                @media ${device.tablet} {
+                    max-width: 348px;
+                    height: 368px;
+                }
+                @media ${device.laptop} {
+                    max-width: 300px;
+                    height: 318px;
+                }
+            `
+        }
+    }}
 `
 
 export const CallToActionContentContainer = styled.div`
@@ -32,8 +66,47 @@ export const CallToActionContentContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+
+    ${props => {
+        if (props.id === CallToActionID.large) {
+            return css`
+                padding-bottom: 70px;
+                flex: 1;
+            `
+        } else if (props.id === CallToActionID.small) {
+            return css`
+                width: 100%;
+            `
+        }
+    }}
 `
 
+export const CallToActionButtonsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+
+    ${props => {
+        if (props.id === CallToActionID.large) {
+            return css`
+                justify-content: flex-end;
+                align-self: flex-end;
+                width: auto;
+                ${CallToActionNoButton} {
+                    margin-right: 10px;
+                }
+            `
+        } else if (props.id === CallToActionID.small) {
+            return css`
+                justify-content: space-between;
+                width: 100%;
+            `
+        }
+    }}
+`
+
+// Texts
 export const CallToActionTitle = styled.p`
     font-size: 24px;
     font-weight: 500;
@@ -54,6 +127,18 @@ export const CallToActionAddress = styled.p`
     color: ${props => props.theme.white};
 
     margin-top: 15px;
+
+    ${props => {
+        if (props.id === CallToActionID.small) {
+            return css`
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                word-wrap: normal;
+            `
+        }
+    }}
 `
 
 export const CallToActionMessage = styled.p`
@@ -68,13 +153,7 @@ export const CallToActionMessage = styled.p`
     margin-top: 10px;
 `
 
-export const CallToActionButtonsContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-`
+// Buttons
 
 export const CallToActionNoButton = styled(CustomButton)`
     color: ${props => props.theme.white};
