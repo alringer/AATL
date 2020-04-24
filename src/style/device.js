@@ -72,3 +72,9 @@ export const sidePaddings = {
     tablet: '24px',
     laptop: '250px'
 }
+
+export const contentWidth = {
+    mobile: '328px',
+    tablet: '720px',
+    laptop: '940px'
+}

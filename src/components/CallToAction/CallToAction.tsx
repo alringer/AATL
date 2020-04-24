@@ -14,10 +14,10 @@ import {
 
 interface ICallToActionProps {
     isLarge: boolean
-    restaurantID: number
-    restaurantName: string
-    restaurantAddress: string
-    restaurantDescription: string
+    placeID: number
+    placeName: string
+    placeAddress: string
+    placeDescription: string
 }
 
 export enum CallToActionID {
@@ -27,29 +27,29 @@ export enum CallToActionID {
 
 const CallToAction: React.FC<ICallToActionProps> = ({
     isLarge,
-    restaurantID,
-    restaurantName,
-    restaurantAddress,
-    restaurantDescription,
+    placeID,
+    placeName,
+    placeAddress,
+    placeDescription,
 }) => {
     const handleNo = () => {
-        console.log('TODO: Handle clicking "No" on the Call-To-Action card for restaurant with ID: ', restaurantID)
+        console.log('TODO: Handle clicking "No" on the Call-To-Action card for place with ID: ', placeID)
     }
     const handleYes = () => {
-        console.log('TODO: Handle clicking "Yes" on the Call-To-Action card for restaurant with ID: ', restaurantID)
+        console.log('TODO: Handle clicking "Yes" on the Call-To-Action card for place with ID: ', placeID)
     }
 
     return (
         <CallToActionContainer id={isLarge === true ? CallToActionID.large : CallToActionID.small}>
             <CallToActionContentContainer id={isLarge === true ? CallToActionID.large : CallToActionID.small}>
                 <CallToActionTitle>
-                    {S.CALL_TO_ACTION.Title} {restaurantName}?
+                    {S.CALL_TO_ACTION.Title} {placeName}?
                 </CallToActionTitle>
                 <CallToActionAddress id={isLarge === true ? CallToActionID.large : CallToActionID.small}>
-                    {restaurantAddress}
+                    {placeAddress}
                 </CallToActionAddress>
                 <CallToActionMessage>
-                    {isLarge === true ? restaurantDescription : chopStringSmallCallToAction(restaurantDescription)}
+                    {isLarge === true ? placeDescription : chopStringSmallCallToAction(placeDescription)}
                 </CallToActionMessage>
             </CallToActionContentContainer>
             <CallToActionButtonsContainer id={isLarge === true ? CallToActionID.large : CallToActionID.small}>

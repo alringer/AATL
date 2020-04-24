@@ -1,11 +1,12 @@
 import CallToActionLargeSVG from 'assets/call-to-action-large-background.svg'
 import CallToActionSmallSVG from 'assets/call-to-action-small-background.svg'
 import { CustomButton } from 'style/Button/Button.style'
+import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 import { CallToActionID } from './CallToAction'
 
-export const CallToActionContainer = styled.div`
+export const CallToActionContainer = styled(ContentWrapper)`
     display: flex;
     width: 100%;
 
@@ -13,7 +14,6 @@ export const CallToActionContainer = styled.div`
         if (props.id === CallToActionID.large) {
             return css`
                 @media ${device.mobile} {
-                    max-width: 360px;
                     background-image: url(${CallToActionSmallSVG});
                     flex-direction: column;
                     justify-content: space-between;
@@ -21,7 +21,6 @@ export const CallToActionContainer = styled.div`
                     padding: 24px 20px;
                 }
                 @media ${device.tablet} {
-                    max-width: 720px;
                     background-image: url(${CallToActionLargeSVG});
                     flex-direction: row;
                     justify-content: space-between;
@@ -29,7 +28,6 @@ export const CallToActionContainer = styled.div`
                     padding: 38px 40px;
                 }
                 @media ${device.laptop} {
-                    max-width: 940px;
                     background-image: url(${CallToActionLargeSVG});
                     flex-direction: row;
                     justify-content: space-between;

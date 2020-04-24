@@ -13,6 +13,7 @@ import {
     chopStringSimpleRecommendationDescription,
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import { IRecommendation } from 'utilities/types/recommendation'
 import {
     RecommendationAuthorNameText,
     RecommendationAuthorTitleText,
@@ -24,33 +25,24 @@ import {
     RecommendationContentMiddleContainer,
     RecommendationContentTopContainer,
     RecommendationHeaderContainer,
-    RecommendationRestaurantAddressText,
-    RecommendationRestaurantCategoryText,
-    RecommendationRestaurantNameText,
+    RecommendationPlaceAddressText,
+    RecommendationPlaceCategoryText,
+    RecommendationPlaceNameText,
     RecommendationSummaryText,
     RecommendationTitleText,
 } from './RecommendationCard.style'
 
-interface IRecommendationCardProps {
+interface IRecommendationCardProps extends IRecommendation {
     isFull: boolean
-    recommendationID: number
-    recommendationImage: string
-    restaurantName?: string
-    restaurantAddress?: string
-    restaurantCategories?: string[]
-    recommendationTitle: string
-    recommendationDescription: string
-    recommendationAuthorName: string
-    recommendationAuthorTitle: string
 }
 
 const RecommendationCard: React.FC<IRecommendationCardProps> = ({
     isFull,
     recommendationID,
     recommendationImage,
-    restaurantName,
-    restaurantAddress,
-    restaurantCategories,
+    placeName,
+    placeAddress,
+    placeCategories,
     recommendationTitle,
     recommendationDescription,
     recommendationAuthorName,
@@ -97,9 +89,9 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
             <RecommendationCardContentContainer>
                 <RecommendationContentTopContainer>
                     <RecommendationHeaderContainer>
-                        <RecommendationRestaurantNameText>
-                            {isFull === true ? restaurantName : chopStringRecommendationTitle(recommendationTitle)}
-                        </RecommendationRestaurantNameText>
+                        <RecommendationPlaceNameText>
+                            {isFull === true ? placeName : chopStringRecommendationTitle(recommendationTitle)}
+                        </RecommendationPlaceNameText>
                         <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
@@ -123,16 +115,16 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
                                 {(matches) => (
                                     <>
                                         {(matches.laptop || matches.tablet) && (
-                                            <RecommendationRestaurantAddressText>
-                                                {restaurantAddress}
-                                            </RecommendationRestaurantAddressText>
+                                            <RecommendationPlaceAddressText>
+                                                {placeAddress}
+                                            </RecommendationPlaceAddressText>
                                         )}
                                     </>
                                 )}
                             </Media>
-                            <RecommendationRestaurantCategoryText>
-                                {concatCategories(restaurantCategories)}
-                            </RecommendationRestaurantCategoryText>
+                            <RecommendationPlaceCategoryText>
+                                {concatCategories(placeCategories)}
+                            </RecommendationPlaceCategoryText>
                         </>
                     )}
                 </RecommendationContentTopContainer>

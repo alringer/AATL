@@ -9,7 +9,6 @@ export const RecommendationCardContainer = styled(CardContainer)`
     
     @media ${device.mobile} {
         flex-direction: column;
-        max-width: 360px;
         height: 100%;
         justify-content: flex-start;
         align-items: center;
@@ -17,7 +16,6 @@ export const RecommendationCardContainer = styled(CardContainer)`
 
     @media ${device.tablet} {
         flex-direction: row;
-        max-width: 720px;
         height: 290px;
         justify-content: flex-start;
         align-items: flex-start;
@@ -25,7 +23,6 @@ export const RecommendationCardContainer = styled(CardContainer)`
 
     @media ${device.laptop} {
         flex-direction: row;
-        max-width: 940px;
         height: 290px;
         justify-content: flex-start;
         align-items: flex-start;
@@ -125,7 +122,7 @@ export const RecommendationContentBottomContainer = styled.div`
     }
 `
 
-export const RecommendationRestaurantNameText = styled.p`
+export const RecommendationPlaceNameText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -146,7 +143,7 @@ export const RecommendationRestaurantNameText = styled.p`
     }
 `
 
-export const RecommendationRestaurantAddressText = styled.p`
+export const RecommendationPlaceAddressText = styled.p`
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;
@@ -168,7 +165,7 @@ export const RecommendationRestaurantAddressText = styled.p`
     }
 `
 
-export const RecommendationRestaurantCategoryText = styled.p`
+export const RecommendationPlaceCategoryText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;

@@ -1,7 +1,8 @@
 import { CustomIconButton } from 'style/Button/IconButton.style'
+import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import styled from 'styled-components'
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(ContentWrapper)`
     transition: all 0.2s linear;
 
     :hover {

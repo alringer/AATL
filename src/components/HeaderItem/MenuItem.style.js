@@ -11,6 +11,7 @@ export const MenuItemAnchor = styled.a`
 `
 
 export const MenuItemText = styled.p`
+    white-space: nowrap;
     opacity: 0.6;
     font-family: 'Rubik', sans-serif;
     font-size: 12px;

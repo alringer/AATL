@@ -3,7 +3,7 @@ import { device } from 'style/device'
 import { NoWrapText } from 'style/NoWrapText/NoWrapText.style'
 import styled from 'styled-components'
 
-export const SmallRestaurantCardContainer = styled(CardContainer)`
+export const SmallPlaceCardContainer = styled(CardContainer)`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,19 +22,19 @@ export const SmallRestaurantCardContainer = styled(CardContainer)`
         height: 368px;
     }
 `
-export const SmallRestaurantCardImageContainer = styled.div`
+export const SmallPlaceCardImageContainer = styled.div`
     position: relative;
     width: 100%;
     height: 160px;
 `
-export const SmallRestaurantCardContentContainer = styled.div`
+export const SmallPlaceCardContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
     width: 100%;
     padding: 20px;
 `
-export const SmallRestaurantCardDescriptionContainer = styled.div`
+export const SmallPlaceCardDescriptionContainer = styled.div`
     margin-top: 8px;
     height: 70px;
 `
@@ -48,7 +48,7 @@ export const Span = styled.span`
     word-wrap: normal !important;
 `
 
-export const SmallRestaurantCardRestaurantName = styled(NoWrapText)`
+export const SmallPlaceCardPlaceName = styled(NoWrapText)`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
@@ -57,7 +57,7 @@ export const SmallRestaurantCardRestaurantName = styled(NoWrapText)`
     color: ${props => props.theme.charcoalGrey};
     font-size: 24px;
 `
-export const SmallRestaurantCardCategory = styled(NoWrapText)`
+export const SmallPlaceCardCategory = styled(NoWrapText)`
     margin-top: 5px;
     font-weight: 500;
     font-stretch: normal;
@@ -67,7 +67,7 @@ export const SmallRestaurantCardCategory = styled(NoWrapText)`
     color: ${props => props.theme.mushroom};
     font-size: 12px;
 `
-export const SmallRestaurantCardDescription = styled.p`
+export const SmallPlaceCardDescription = styled.p`
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;

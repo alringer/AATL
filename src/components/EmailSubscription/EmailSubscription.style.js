@@ -1,26 +1,29 @@
 import { CustomButton } from 'style/Button/Button.style'
-import { device, sidePaddings } from 'style/device'
+import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
+import { device } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
 import styled, { css } from 'styled-components'
 
-export const EmailSubscriptionContainer = styled.div`
+export const EmailSubscriptionContainer = styled(ContentWrapper)`
     display: flex;
-    width: 100%;
 
     @media ${device.mobile} {
-        padding: 24px ${sidePaddings.mobile};
+        padding-top: 24px;
+        padding-bottom: 34px;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
     @media ${device.tablet} {
-        padding: 24px ${sidePaddings.tablet};
+        padding-top: 24px;
+        padding-bottom: 50px;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
     @media ${device.laptop} {
-        padding: 100px ${sidePaddings.laptop};
+        padding-top: 100px;
+        padding-bottom: 120px;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;

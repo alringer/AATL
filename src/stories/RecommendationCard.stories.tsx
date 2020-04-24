@@ -1,49 +1,50 @@
 import { storiesOf } from '@storybook/react'
-import RestaurantImage from 'assets/restaurant_image.jpg'
-import RestaurantImageTwo from 'assets/restaurant_image2.jpeg'
+import PlaceImage from 'assets/restaurant_image.jpg'
+import PlaceImageTwo from 'assets/restaurant_image2.jpeg'
 import RecommendationCard from 'components/RecommendationCard/RecommendationCard'
 import React from 'react'
+import RecommendationCardsList from 'sections/CardsList/RecommendationCardsList'
 
 export const RecommendationCardData = {
     default: {
         recommendationID: 0,
-        recommendationImage: RestaurantImage,
-        restaurantName: "Nakamura's",
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+        recommendationImage: PlaceImage,
+        placeName: "Nakamura's",
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle: 'An amazingly rich and diverse range of edible delights',
         recommendationDescription: 'The only moment, the only life we have is in the NOW.',
         recommendationAuthorName: 'by Justin Mary Michaels',
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
     },
     defaultDifferentImage: {
-        recommendationID: 0,
-        recommendationImage: RestaurantImageTwo,
-        restaurantName: "Nakamura's",
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+        recommendationID: 1,
+        recommendationImage: PlaceImageTwo,
+        placeName: "Nakamura's",
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle: 'An amazingly rich and diverse range of edible delights',
         recommendationDescription: 'The only moment, the only life we have is in the NOW.',
         recommendationAuthorName: 'by Justin Mary Michaels',
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
     },
-    longRestaurantName: {
-        recommendationID: 0,
-        recommendationImage: RestaurantImageTwo,
-        restaurantName: 'Super Tasty Burger And Pizza Kitchen Place',
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+    longPlaceName: {
+        recommendationID: 2,
+        recommendationImage: PlaceImageTwo,
+        placeName: 'Super Tasty Burger And Pizza Kitchen Place',
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle: 'An amazingly rich and diverse range of edible delights',
         recommendationDescription: 'The only moment, the only life we have is in the NOW.',
         recommendationAuthorName: 'by Justin Mary Michaels',
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
     },
     longDescription: {
-        recommendationID: 0,
-        recommendationImage: RestaurantImageTwo,
-        restaurantName: "Nakamura's",
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+        recommendationID: 3,
+        recommendationImage: PlaceImageTwo,
+        placeName: "Nakamura's",
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle: 'An amazingly rich and diverse range of edible delights',
         recommendationDescription:
             'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
@@ -51,29 +52,97 @@ export const RecommendationCardData = {
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
     },
     longRecommendationTitle: {
-        recommendationID: 0,
-        recommendationImage: RestaurantImageTwo,
-        restaurantName: "Nakamura's",
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+        recommendationID: 4,
+        recommendationImage: PlaceImageTwo,
+        placeName: "Nakamura's",
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle:
-            'Truly amazing coffee! Superb food, excellent service. This restaurant has it all. Definitely recommend',
+            'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
         recommendationDescription: 'The only moment, the only life we have is in the NOW.',
         recommendationAuthorName: 'by Justin Mary Michaels',
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
     },
-    longRestaurantNameAndDescriptionAndRecommendationTitle: {
-        recommendationID: 0,
-        recommendationImage: RestaurantImageTwo,
-        restaurantName: 'Super Tasty Burger And Pizza Kitchen Place',
-        restaurantAddress: 'SAN DIEGO, CALIFORNIA',
-        restaurantCategories: ['SUSHI, ASIAN BBQ'],
+    longPlaceNameAndDescriptionAndRecommendationTitle: {
+        recommendationID: 5,
+        recommendationImage: PlaceImageTwo,
+        placeName: 'Super Tasty Burger And Pizza Kitchen Place',
+        placeAddress: 'SAN DIEGO, CALIFORNIA',
+        placeCategories: ['SUSHI, ASIAN BBQ'],
         recommendationTitle:
-            'Truly amazing coffee! Superb food, excellent service. This restaurant has it all. Definitely recommend',
+            'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
         recommendationDescription:
             'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
         recommendationAuthorName: 'by Justin Mary Michaels',
         recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+    },
+}
+
+export const RecommendationCardsListData = {
+    default: {
+        title: 'New Recommendations',
+        subTitle: 'Our essential places from around the United States and Cananda.',
+        recommendations: [
+            {
+                recommendationID: 0,
+                recommendationImage: PlaceImage,
+                placeName: "Nakamura's",
+                placeAddress: 'SAN DIEGO, CALIFORNIA',
+                placeCategories: ['SUSHI, ASIAN BBQ'],
+                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
+                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
+                recommendationAuthorName: 'by Justin Mary Michaels',
+                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+            },
+            {
+                recommendationID: 1,
+                recommendationImage: PlaceImageTwo,
+                placeName: 'Super Tasty Burger And Pizza Kitchen Place',
+                placeAddress: 'SAN DIEGO, CALIFORNIA',
+                placeCategories: ['SUSHI, ASIAN BBQ'],
+                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
+                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
+                recommendationAuthorName: 'by Justin Mary Michaels',
+                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+            },
+            {
+                recommendationID: 2,
+                recommendationImage: PlaceImageTwo,
+                placeName: "Nakamura's",
+                placeAddress: 'SAN DIEGO, CALIFORNIA',
+                placeCategories: ['SUSHI, ASIAN BBQ'],
+                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
+                recommendationDescription:
+                    'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
+                recommendationAuthorName: 'by Justin Mary Michaels',
+                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+            },
+            {
+                recommendationID: 3,
+                recommendationImage: PlaceImageTwo,
+                placeName: "Nakamura's",
+                placeAddress: 'SAN DIEGO, CALIFORNIA',
+                placeCategories: ['SUSHI, ASIAN BBQ'],
+                recommendationTitle:
+                    'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
+                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
+                recommendationAuthorName: 'by Justin Mary Michaels',
+                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+            },
+            {
+                recommendationID: 4,
+                recommendationImage: PlaceImageTwo,
+                placeName: 'Super Tasty Burger And Pizza Kitchen Place',
+                placeAddress: 'SAN DIEGO, CALIFORNIA',
+                placeCategories: ['SUSHI, ASIAN BBQ'],
+                recommendationTitle:
+                    'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
+                recommendationDescription:
+                    'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
+                recommendationAuthorName: 'by Justin Mary Michaels',
+                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
+            },
+        ],
     },
 }
 
@@ -84,9 +153,9 @@ storiesOf('Recommendation Card', module)
                 isFull={true}
                 recommendationID={RecommendationCardData.default.recommendationID}
                 recommendationImage={RecommendationCardData.default.recommendationImage}
-                restaurantName={RecommendationCardData.default.restaurantName}
-                restaurantAddress={RecommendationCardData.default.restaurantAddress}
-                restaurantCategories={RecommendationCardData.default.restaurantCategories}
+                placeName={RecommendationCardData.default.placeName}
+                placeAddress={RecommendationCardData.default.placeAddress}
+                placeCategories={RecommendationCardData.default.placeCategories}
                 recommendationTitle={RecommendationCardData.default.recommendationTitle}
                 recommendationDescription={RecommendationCardData.default.recommendationDescription}
                 recommendationAuthorName={RecommendationCardData.default.recommendationAuthorName}
@@ -100,9 +169,9 @@ storiesOf('Recommendation Card', module)
                 isFull={true}
                 recommendationID={RecommendationCardData.defaultDifferentImage.recommendationID}
                 recommendationImage={RecommendationCardData.defaultDifferentImage.recommendationImage}
-                restaurantName={RecommendationCardData.defaultDifferentImage.restaurantName}
-                restaurantAddress={RecommendationCardData.defaultDifferentImage.restaurantAddress}
-                restaurantCategories={RecommendationCardData.defaultDifferentImage.restaurantCategories}
+                placeName={RecommendationCardData.defaultDifferentImage.placeName}
+                placeAddress={RecommendationCardData.defaultDifferentImage.placeAddress}
+                placeCategories={RecommendationCardData.defaultDifferentImage.placeCategories}
                 recommendationTitle={RecommendationCardData.defaultDifferentImage.recommendationTitle}
                 recommendationDescription={RecommendationCardData.defaultDifferentImage.recommendationDescription}
                 recommendationAuthorName={RecommendationCardData.defaultDifferentImage.recommendationAuthorName}
@@ -114,15 +183,15 @@ storiesOf('Recommendation Card', module)
         return (
             <RecommendationCard
                 isFull={true}
-                recommendationID={RecommendationCardData.longRestaurantName.recommendationID}
-                recommendationImage={RecommendationCardData.longRestaurantName.recommendationImage}
-                restaurantName={RecommendationCardData.longRestaurantName.restaurantName}
-                restaurantAddress={RecommendationCardData.longRestaurantName.restaurantAddress}
-                restaurantCategories={RecommendationCardData.longRestaurantName.restaurantCategories}
-                recommendationTitle={RecommendationCardData.longRestaurantName.recommendationTitle}
-                recommendationDescription={RecommendationCardData.longRestaurantName.recommendationDescription}
-                recommendationAuthorName={RecommendationCardData.longRestaurantName.recommendationAuthorName}
-                recommendationAuthorTitle={RecommendationCardData.longRestaurantName.recommendationAuthorTitle}
+                recommendationID={RecommendationCardData.longPlaceName.recommendationID}
+                recommendationImage={RecommendationCardData.longPlaceName.recommendationImage}
+                placeName={RecommendationCardData.longPlaceName.placeName}
+                placeAddress={RecommendationCardData.longPlaceName.placeAddress}
+                placeCategories={RecommendationCardData.longPlaceName.placeCategories}
+                recommendationTitle={RecommendationCardData.longPlaceName.recommendationTitle}
+                recommendationDescription={RecommendationCardData.longPlaceName.recommendationDescription}
+                recommendationAuthorName={RecommendationCardData.longPlaceName.recommendationAuthorName}
+                recommendationAuthorTitle={RecommendationCardData.longPlaceName.recommendationAuthorTitle}
             />
         )
     })
@@ -132,9 +201,9 @@ storiesOf('Recommendation Card', module)
                 isFull={true}
                 recommendationID={RecommendationCardData.longDescription.recommendationID}
                 recommendationImage={RecommendationCardData.longDescription.recommendationImage}
-                restaurantName={RecommendationCardData.longDescription.restaurantName}
-                restaurantAddress={RecommendationCardData.longDescription.restaurantAddress}
-                restaurantCategories={RecommendationCardData.longDescription.restaurantCategories}
+                placeName={RecommendationCardData.longDescription.placeName}
+                placeAddress={RecommendationCardData.longDescription.placeAddress}
+                placeCategories={RecommendationCardData.longDescription.placeCategories}
                 recommendationTitle={RecommendationCardData.longDescription.recommendationTitle}
                 recommendationDescription={RecommendationCardData.longDescription.recommendationDescription}
                 recommendationAuthorName={RecommendationCardData.longDescription.recommendationAuthorName}
@@ -147,34 +216,27 @@ storiesOf('Recommendation Card', module)
             <RecommendationCard
                 isFull={true}
                 recommendationID={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationID
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationID
                 }
                 recommendationImage={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationImage
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationImage
                 }
-                restaurantName={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.restaurantName
-                }
-                restaurantAddress={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.restaurantAddress
-                }
-                restaurantCategories={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.restaurantCategories
+                placeName={RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeName}
+                placeAddress={RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeAddress}
+                placeCategories={
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeCategories
                 }
                 recommendationTitle={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationTitle
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationTitle
                 }
                 recommendationDescription={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationDescription
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationDescription
                 }
                 recommendationAuthorName={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationAuthorName
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationAuthorName
                 }
                 recommendationAuthorTitle={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationAuthorTitle
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationAuthorTitle
                 }
             />
         )
@@ -185,6 +247,9 @@ storiesOf('Recommendation Card', module)
                 isFull={false}
                 recommendationID={RecommendationCardData.default.recommendationID}
                 recommendationImage={RecommendationCardData.default.recommendationImage}
+                placeName={RecommendationCardData.default.placeName}
+                placeAddress={RecommendationCardData.default.placeAddress}
+                placeCategories={RecommendationCardData.default.placeCategories}
                 recommendationTitle={RecommendationCardData.default.recommendationTitle}
                 recommendationDescription={RecommendationCardData.default.recommendationDescription}
                 recommendationAuthorName={RecommendationCardData.default.recommendationAuthorName}
@@ -197,26 +262,48 @@ storiesOf('Recommendation Card', module)
             <RecommendationCard
                 isFull={false}
                 recommendationID={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationID
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationID
                 }
                 recommendationImage={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationImage
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationImage
+                }
+                placeName={RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeName}
+                placeAddress={RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeAddress}
+                placeCategories={
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.placeCategories
                 }
                 recommendationTitle={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle.recommendationTitle
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationTitle
                 }
                 recommendationDescription={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationDescription
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationDescription
                 }
                 recommendationAuthorName={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationAuthorName
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationAuthorName
                 }
                 recommendationAuthorTitle={
-                    RecommendationCardData.longRestaurantNameAndDescriptionAndRecommendationTitle
-                        .recommendationAuthorTitle
+                    RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationAuthorTitle
                 }
+            />
+        )
+    })
+    .add('Section - Full Card', () => {
+        return (
+            <RecommendationCardsList
+                isFull={true}
+                title={RecommendationCardsListData.default.title}
+                subTitle={RecommendationCardsListData.default.subTitle}
+                recommendations={RecommendationCardsListData.default.recommendations}
+            />
+        )
+    })
+    .add('Section - Simple Card', () => {
+        return (
+            <RecommendationCardsList
+                isFull={false}
+                title={RecommendationCardsListData.default.title}
+                subTitle={RecommendationCardsListData.default.subTitle}
+                recommendations={RecommendationCardsListData.default.recommendations}
             />
         )
     })

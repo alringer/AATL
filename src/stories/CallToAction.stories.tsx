@@ -4,35 +4,35 @@ import React from 'react'
 
 export const CallToActionData = {
     default: {
-        restaurantID: 0,
-        restaurantName: 'Point Loma Seafood',
-        restaurantAddress: '2805 Emerson Street',
-        restaurantDescription: 'A casual joint with ample seafood and sushi options.',
+        placeID: 0,
+        placeName: 'Point Loma Seafood',
+        placeAddress: '2805 Emerson Street',
+        placeDescription: 'A casual joint with ample seafood and sushi options.',
     },
     longName: {
-        restaurantID: 0,
-        restaurantName: 'Super Tasty Burger Pizza Chicken Kitchen',
-        restaurantAddress: '2805 Emerson Street',
-        restaurantDescription: 'A casual joint with ample seafood and sushi options.',
+        placeID: 0,
+        placeName: 'Super Tasty Burger Pizza Chicken Kitchen',
+        placeAddress: '2805 Emerson Street',
+        placeDescription: 'A casual joint with ample seafood and sushi options.',
     },
     longAddress: {
-        restaurantID: 0,
-        restaurantName: 'Point Loma Seafood',
-        restaurantAddress: 'Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522',
-        restaurantDescription: 'A casual joint with ample seafood and sushi options. ',
+        placeID: 0,
+        placeName: 'Point Loma Seafood',
+        placeAddress: 'Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522',
+        placeDescription: 'A casual joint with ample seafood and sushi options. ',
     },
     longDescription: {
-        restaurantID: 0,
-        restaurantName: 'Point Loma Seafood',
-        restaurantAddress: '2805 Emerson Street',
-        restaurantDescription:
+        placeID: 0,
+        placeName: 'Point Loma Seafood',
+        placeAddress: '2805 Emerson Street',
+        placeDescription:
             'A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options.',
     },
     longNameAddressDescription: {
-        restaurantID: 0,
-        restaurantName: 'Super Tasty Burger Pizza Chicken Kitchen',
-        restaurantAddress: 'Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522',
-        restaurantDescription:
+        placeID: 0,
+        placeName: 'Super Tasty Burger Pizza Chicken Kitchen',
+        placeAddress: 'Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi 96522',
+        placeDescription:
             'A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options. A casual joint with ample seafood and sushi options.',
     },
 }
@@ -42,10 +42,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={false}
-                restaurantID={CallToActionData.default.restaurantID}
-                restaurantName={CallToActionData.default.restaurantName}
-                restaurantAddress={CallToActionData.default.restaurantAddress}
-                restaurantDescription={CallToActionData.default.restaurantDescription}
+                placeID={CallToActionData.default.placeID}
+                placeName={CallToActionData.default.placeName}
+                placeAddress={CallToActionData.default.placeAddress}
+                placeDescription={CallToActionData.default.placeDescription}
             />
         )
     })
@@ -53,10 +53,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={false}
-                restaurantID={CallToActionData.longName.restaurantID}
-                restaurantName={CallToActionData.longName.restaurantName}
-                restaurantAddress={CallToActionData.longName.restaurantAddress}
-                restaurantDescription={CallToActionData.longName.restaurantDescription}
+                placeID={CallToActionData.longName.placeID}
+                placeName={CallToActionData.longName.placeName}
+                placeAddress={CallToActionData.longName.placeAddress}
+                placeDescription={CallToActionData.longName.placeDescription}
             />
         )
     })
@@ -64,10 +64,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={false}
-                restaurantID={CallToActionData.longAddress.restaurantID}
-                restaurantName={CallToActionData.longAddress.restaurantName}
-                restaurantAddress={CallToActionData.longAddress.restaurantAddress}
-                restaurantDescription={CallToActionData.longAddress.restaurantDescription}
+                placeID={CallToActionData.longAddress.placeID}
+                placeName={CallToActionData.longAddress.placeName}
+                placeAddress={CallToActionData.longAddress.placeAddress}
+                placeDescription={CallToActionData.longAddress.placeDescription}
             />
         )
     })
@@ -75,10 +75,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={false}
-                restaurantID={CallToActionData.longNameAddressDescription.restaurantID}
-                restaurantName={CallToActionData.longNameAddressDescription.restaurantName}
-                restaurantAddress={CallToActionData.longNameAddressDescription.restaurantAddress}
-                restaurantDescription={CallToActionData.longNameAddressDescription.restaurantDescription}
+                placeID={CallToActionData.longNameAddressDescription.placeID}
+                placeName={CallToActionData.longNameAddressDescription.placeName}
+                placeAddress={CallToActionData.longNameAddressDescription.placeAddress}
+                placeDescription={CallToActionData.longNameAddressDescription.placeDescription}
             />
         )
     })
@@ -86,10 +86,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={true}
-                restaurantID={CallToActionData.default.restaurantID}
-                restaurantName={CallToActionData.default.restaurantName}
-                restaurantAddress={CallToActionData.default.restaurantAddress}
-                restaurantDescription={CallToActionData.default.restaurantDescription}
+                placeID={CallToActionData.default.placeID}
+                placeName={CallToActionData.default.placeName}
+                placeAddress={CallToActionData.default.placeAddress}
+                placeDescription={CallToActionData.default.placeDescription}
             />
         )
     })
@@ -97,10 +97,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={true}
-                restaurantID={CallToActionData.longName.restaurantID}
-                restaurantName={CallToActionData.longName.restaurantName}
-                restaurantAddress={CallToActionData.longName.restaurantAddress}
-                restaurantDescription={CallToActionData.longName.restaurantDescription}
+                placeID={CallToActionData.longName.placeID}
+                placeName={CallToActionData.longName.placeName}
+                placeAddress={CallToActionData.longName.placeAddress}
+                placeDescription={CallToActionData.longName.placeDescription}
             />
         )
     })
@@ -108,10 +108,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={true}
-                restaurantID={CallToActionData.longAddress.restaurantID}
-                restaurantName={CallToActionData.longAddress.restaurantName}
-                restaurantAddress={CallToActionData.longAddress.restaurantAddress}
-                restaurantDescription={CallToActionData.longAddress.restaurantDescription}
+                placeID={CallToActionData.longAddress.placeID}
+                placeName={CallToActionData.longAddress.placeName}
+                placeAddress={CallToActionData.longAddress.placeAddress}
+                placeDescription={CallToActionData.longAddress.placeDescription}
             />
         )
     })
@@ -119,10 +119,10 @@ storiesOf('Call-To-Action', module)
         return (
             <CallToAction
                 isLarge={true}
-                restaurantID={CallToActionData.longNameAddressDescription.restaurantID}
-                restaurantName={CallToActionData.longNameAddressDescription.restaurantName}
-                restaurantAddress={CallToActionData.longNameAddressDescription.restaurantAddress}
-                restaurantDescription={CallToActionData.longNameAddressDescription.restaurantDescription}
+                placeID={CallToActionData.longNameAddressDescription.placeID}
+                placeName={CallToActionData.longNameAddressDescription.placeName}
+                placeAddress={CallToActionData.longNameAddressDescription.placeAddress}
+                placeDescription={CallToActionData.longNameAddressDescription.placeDescription}
             />
         )
     })
