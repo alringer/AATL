@@ -1,7 +1,8 @@
 import { CustomButton } from 'style/Button/Button.style'
 import { CustomIconButton } from 'style/Button/IconButton.style'
-import { CustomTextLink } from 'style/Button/TextLink.style'
+import { TextLink } from 'style/Button/TextLink.style'
 import { device } from 'style/device'
+import zIndices from 'style/zIndices'
 import styled, { css } from 'styled-components'
 
 export const HeaderContainer = styled.div`
@@ -192,7 +193,7 @@ export const PopoverOptionText = styled.p`
     ${PopoverText}
 `
 
-export const PopoverOptionLinkText = styled(CustomTextLink)`
+export const PopoverOptionLinkText = styled(TextLink)`
     ${PopoverText}
 `
 
@@ -226,7 +227,7 @@ export const MenuContainerMobile = styled.div`
     min-height: 100vh;
     background-color: ${props => props.theme.darkSlateBlue};
     overflow-y: auto;
-    z-index: 99;
+    z-index: ${zIndices.mobileMenu};
 `
 
 export const MenuItemsSectionRow = styled.div`

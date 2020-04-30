@@ -142,17 +142,7 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
                     <RecommendationAuthorNameText>{recommendationAuthorName}</RecommendationAuthorNameText>
-                    <Media queries={query} defaultMatches={{ mobile: true }}>
-                        {(matches) => (
-                            <>
-                                {(matches.laptop || matches.tablet) && (
-                                    <RecommendationAuthorTitleText>
-                                        {recommendationAuthorTitle}
-                                    </RecommendationAuthorTitleText>
-                                )}
-                            </>
-                        )}
-                    </Media>
+                    <RecommendationAuthorTitleText>{recommendationAuthorTitle}</RecommendationAuthorTitleText>
                 </RecommendationContentBottomContainer>
             </RecommendationCardContentContainer>
         </RecommendationCardContainer>

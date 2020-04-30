@@ -11,17 +11,20 @@ export const ListContainer = styled(ContentWrapper)`
     height: 100%;
 
     @media ${device.mobile} {
-        padding: 40px 0px;
+        padding-top: 40px;
+        padding-bottom: 40px;
     }
     @media ${device.tablet} {
-        padding: 64px 0px;
+        padding-top: 64px;
+        padding-bottom: 64px;
     }
     @media ${device.laptop} {
-        padding: 128px 0px;
+        padding-top: 128px;
+        padding-bottom: 100px;
     }
 `
 
-export const CardContainer = styled.div`
+export const RecommendationCardContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
@@ -37,6 +40,26 @@ export const CardContainer = styled.div`
         margin: 10px 0px;
     }
 `
+
+export const PlaceCardsGrid = styled.div`
+    width: 100%;
+    display: grid;
+    justify-content: space-between; 
+
+    @media ${device.mobile} {
+        grid-template-columns: auto;
+        row-gap: 10px;
+    }
+    @media ${device.tablet} {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 40px;
+    }
+    @media ${device.laptop} {
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 50px;
+    }
+`
+export const PlaceCardContainer = styled.div``
 
 // Texts
 export const ListTitle = styled.p`

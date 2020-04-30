@@ -56,7 +56,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
                 value={value}
                 onChange={handleChange}
                 autoFocus={true}
-                placeholder={`${S.BUTTON_PLACEHOLDERS.VenueSearchBold} ${S.BUTTON_PLACEHOLDERS.VenueSearchNormal}`}
+                placeholder={`${S.INPUT_PLACEHOLDERS.VenueSearchBold} ${S.INPUT_PLACEHOLDERS.VenueSearchNormal}`}
                 InputLabelProps={{
                     shrink: false,
                 }}
@@ -92,9 +92,8 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
                     label={
                         value === '' ? (
                             <PlaceholderContainer>
-                                <PlaceholderTextBold>{S.BUTTON_PLACEHOLDERS.VenueSearchBold}</PlaceholderTextBold>{' '}
-                                &nbsp;
-                                <PlaceholderTextNormal>{S.BUTTON_PLACEHOLDERS.VenueSearchNormal}</PlaceholderTextNormal>
+                                <PlaceholderTextBold>{S.INPUT_PLACEHOLDERS.VenueSearchBold}</PlaceholderTextBold> &nbsp;
+                                <PlaceholderTextNormal>{S.INPUT_PLACEHOLDERS.VenueSearchNormal}</PlaceholderTextNormal>
                             </PlaceholderContainer>
                         ) : null
                     }

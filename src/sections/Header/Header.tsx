@@ -9,6 +9,7 @@ import MobileSearchSvg from 'assets/mobileHeaderSearchIcon.svg'
 import UserProfileSVG from 'assets/userProfile.svg'
 import MenuItem from 'components/HeaderItem/MenuItem'
 import Image from 'components/Image/Image'
+import AuthenticationModal, { AuthenticationViewEnum } from 'components/Modal/AuthenticationModal'
 import HeaderSearch from 'components/Search/HeaderSearch'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
@@ -61,8 +62,10 @@ interface IHeaderProps {
 const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
+    const [initialAuthenticationView, setInitialAuthenticationView] = React.useState(AuthenticationViewEnum.Login)
     const searchReference = useComponentVisible(false)
     const popoverReference = useComponentVisible(false)
+    const authenticationModalReference = useComponentVisible(false)
     const router = useRouter()
     const isSearchEnabled = router.pathname !== R.ROUTE_ITEMS.home && router.pathname !== R.ROUTE_ITEMS.search
 
@@ -105,6 +108,17 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
         router.push(target)
     }
 
+    const handleOpenLogin = () => {
+        setInitialAuthenticationView(AuthenticationViewEnum.Login)
+        authenticationModalReference.setIsComponentVisible(true)
+        setMobileMenuVisible(false)
+    }
+    const handleOpenSignUp = () => {
+        setInitialAuthenticationView(AuthenticationViewEnum.SignUp)
+        authenticationModalReference.setIsComponentVisible(true)
+        setMobileMenuVisible(false)
+    }
+
     const Logo = () => (
         <LogoContainer>
             <Link href="/">
@@ -134,10 +148,10 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
     const NotSignedInItems = () => (
         <MenuItemsContainer>
             <ButtonContainer>
-                <SignUpButton>{S.BUTTON_LABELS.SignUp}</SignUpButton>
+                <SignUpButton onClick={handleOpenSignUp}>{S.BUTTON_LABELS.SignUp}</SignUpButton>
             </ButtonContainer>
             <ButtonContainer id={'leftPadded'}>
-                <LoginButton onClick={() => login()}>{S.BUTTON_LABELS.Login}</LoginButton>
+                <LoginButton onClick={handleOpenLogin}>{S.BUTTON_LABELS.Login}</LoginButton>
             </ButtonContainer>
         </MenuItemsContainer>
     )
@@ -286,10 +300,10 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
                 ) : (
                     <>
                         {/* TODO: Add sign up modal  */}
-                        <MenuItemRow id="marginBottom">
+                        <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
                         </MenuItemRow>
-                        <MenuItemRow onClick={handleMobileLogin}>
+                        <MenuItemRow onClick={handleOpenLogin}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
                         </MenuItemRow>
                     </>
@@ -319,6 +333,12 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
                     </>
                 )}
             </Media>
+            {authenticationModalReference.isComponentVisible && (
+                <AuthenticationModal
+                    initialAuthenticationView={initialAuthenticationView}
+                    authenticationModalReference={authenticationModalReference}
+                />
+            )}
         </>
     )
 }

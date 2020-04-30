@@ -1,5 +1,6 @@
 import { CardContainer } from 'style/Card/Card.style'
 import { device } from 'style/device'
+import { ImageContainer } from 'style/ImageContainer/ImageContainer'
 import styled from 'styled-components'
 
 export const RecommendationCardContainer = styled(CardContainer)`
@@ -29,9 +30,8 @@ export const RecommendationCardContainer = styled(CardContainer)`
     }
 `
 
-export const RecommendationCardImageContainer = styled.div`
+export const RecommendationCardImageContainer = styled(ImageContainer)`
     position: relative;
-    width: 300px;
     height: 100%;
 
     @media ${device.mobile} {
@@ -48,10 +48,6 @@ export const RecommendationCardImageContainer = styled.div`
         width: 300px;
         height: 100%;
     }
-
-    img {
-        object-fit: cover !important;
-    }
 `
 
 export const RecommendationCardContentContainer = styled.div`
@@ -63,7 +59,7 @@ export const RecommendationCardContentContainer = styled.div`
     height: 100%;
 
     @media ${device.mobile} {
-        padding: 8px;
+        padding: 8px 16px 39px;
     }
 
     @media ${device.tablet} {
@@ -79,7 +75,7 @@ export const RecommendationHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
 `
 
@@ -266,14 +262,17 @@ export const RecommendationAuthorTitleText = styled.p`
     color: ${props => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
+        margin-top: 9px;
         font-size: 10px;
     }
 
     @media ${device.tablet} {
+        margin-top: 5px;
         font-size: 10px;
     }
 
     @media ${device.laptop} {
+        margin-top: 5px;
         font-size: 12px;
     }
 `

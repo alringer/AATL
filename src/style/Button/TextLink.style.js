@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const CustomTextLink = styled.p`
+export const TextLink = styled.p`
     cursor: pointer;
     :hover {
         text-decoration: underline;

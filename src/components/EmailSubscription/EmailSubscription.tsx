@@ -1,8 +1,8 @@
+import Snackbar from 'components/Snackbar/Snackbar'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import React from 'react'
-import Snackbar from '../Snackbar/Snackbar'
 import {
     EmailSubscriptionBody,
     EmailSubscriptionButtonContainer,
@@ -15,8 +15,9 @@ import {
     EmailSubscriptionTitle,
 } from './EmailSubscription.style'
 
-const EmailSubscription = ({ enqueueSnackbar }) => {
+const EmailSubscription = () => {
     const [email, setEmail] = React.useState('')
+    const { enqueueSnackbar } = useSnackbar()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(String(e.target.value))
@@ -58,7 +59,7 @@ const EmailSubscription = ({ enqueueSnackbar }) => {
                     <EmailSubscriptionTextInput
                         value={email}
                         onChange={handleChange}
-                        placeholder={`${S.BUTTON_PLACEHOLDERS.YourEmail}`}
+                        placeholder={`${S.INPUT_PLACEHOLDERS.YourEmail}`}
                         variant="outlined"
                     />
                     <EmailSubscriptionButtonContainer>
@@ -72,4 +73,4 @@ const EmailSubscription = ({ enqueueSnackbar }) => {
     )
 }
 
-export default withSnackbar(EmailSubscription)
+export default EmailSubscription

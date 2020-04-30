@@ -1,6 +1,6 @@
 import SnackbarImageBackground from 'assets/snackbarImageBackground.svg'
 import { SNACKBAR_TYPES } from 'constants/SnackbarConstants'
-import { CustomTextLink } from 'style/Button/TextLink.style'
+import { TextLink } from 'style/Button/TextLink.style'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -100,7 +100,7 @@ export const SnackbarMessageBody = styled.div`
     }
 `
 
-export const SnackbarMessageLink = styled(CustomTextLink)`
+export const SnackbarMessageLink = styled(TextLink)`
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;

@@ -1,5 +1,6 @@
 import { FormControl } from '@material-ui/core'
 import { CustomButton } from 'style/Button/Button.style'
+import zIndices from 'style/zIndices'
 import styled from 'styled-components'
 
 export const SearchButton = styled(CustomButton)`
@@ -38,7 +39,7 @@ export const HeaderSearchTabletContainer = styled(FormControl)`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: ${zIndices.headerFullSearchBar};
 
     /* Input Style for tablet header search only */
     input {

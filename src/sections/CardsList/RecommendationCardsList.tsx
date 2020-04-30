@@ -1,7 +1,7 @@
 import RecommendationCard from 'components/RecommendationCard/RecommendationCard'
 import React from 'react'
 import { IRecommendation } from 'utilities/types/recommendation'
-import { CardContainer, ListContainer, ListSubTitle, ListTitle } from './List.style'
+import { ListContainer, ListSubTitle, ListTitle, RecommendationCardContainer } from './List.style'
 
 interface IRecommendationCardsListProps {
     isFull: boolean
@@ -21,7 +21,7 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
             <ListTitle>{title}</ListTitle>
             <ListSubTitle>{subTitle}</ListSubTitle>
             {recommendations.map((recommendation: IRecommendation) => (
-                <CardContainer key={recommendation.recommendationID}>
+                <RecommendationCardContainer key={recommendation.recommendationID}>
                     <RecommendationCard
                         isFull={isFull}
                         recommendationID={recommendation.recommendationID}
@@ -34,7 +34,7 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
                         recommendationAuthorName={recommendation.recommendationAuthorName}
                         recommendationAuthorTitle={recommendation.recommendationAuthorTitle}
                     />
-                </CardContainer>
+                </RecommendationCardContainer>
             ))}
         </ListContainer>
     )

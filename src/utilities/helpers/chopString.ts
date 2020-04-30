@@ -3,7 +3,7 @@ export const chopStringFullRecommendationDescription = (input: string) => {
 }
 
 export const chopStringRecommendationTitle = (input: string) => {
-    return input.length > 60 ? `${input.slice(0, 60)}...` : input
+    return input.length > 57 ? `${input.slice(0, 57)}...` : input
 }
 
 export const chopStringSimpleRecommendationDescription = (input: string) => {

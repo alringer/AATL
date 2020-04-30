@@ -5,7 +5,7 @@ import React from 'react'
 import Snackbar from '../components/Snackbar/Snackbar'
 import * as B from '../constants/SnackbarConstants'
 
-export const taskData = {
+export const TaskData = {
     emailSubscription: {
         type: B.EMAIL_SUBSCRIPTION.Type,
         title: B.EMAIL_SUBSCRIPTION.Title,
@@ -26,20 +26,23 @@ export const taskData = {
         linkMessage: B.ACHIEVEMENT_UNLOCKED.LinkMessage,
         linkDestination: B.ACHIEVEMENT_UNLOCKED.LinkDestination,
     },
+    copiedToClipboard: {
+        type: B.COPY_TO_CLIPBOARD.Type,
+        title: B.COPY_TO_CLIPBOARD.Title,
+        message: B.COPY_TO_CLIPBOARD.Body,
+    },
 }
-
-// export const actionsData = {
-//     onPinTask: action('onPinTask'),
-//     onArchiveTask: action('onArchiveTask'),
-// }
 
 storiesOf('Snackbar', module)
     .add('Email Subscription Complete', () => {
-        return <Snackbar {...taskData.emailSubscription} />
+        return <Snackbar {...TaskData.emailSubscription} />
     })
     .add('Sign Up Completed', () => {
-        return <Snackbar {...taskData.signUp} />
+        return <Snackbar {...TaskData.signUp} />
     })
     .add('Achievement Unlocked', () => {
-        return <Snackbar {...taskData.achievementUnlocked} />
+        return <Snackbar {...TaskData.achievementUnlocked} />
+    })
+    .add('Copied to Clipboard', () => {
+        return <Snackbar {...TaskData.copiedToClipboard} />
     })

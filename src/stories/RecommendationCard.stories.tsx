@@ -80,69 +80,12 @@ export const RecommendationCardData = {
 
 export const RecommendationCardsListData = {
     default: {
-        title: 'New Recommendations',
-        subTitle: 'Our essential places from around the United States and Cananda.',
-        recommendations: [
-            {
-                recommendationID: 0,
-                recommendationImage: PlaceImage,
-                placeName: "Nakamura's",
-                placeAddress: 'SAN DIEGO, CALIFORNIA',
-                placeCategories: ['SUSHI, ASIAN BBQ'],
-                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
-                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
-                recommendationAuthorName: 'by Justin Mary Michaels',
-                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
-            },
-            {
-                recommendationID: 1,
-                recommendationImage: PlaceImageTwo,
-                placeName: 'Super Tasty Burger And Pizza Kitchen Place',
-                placeAddress: 'SAN DIEGO, CALIFORNIA',
-                placeCategories: ['SUSHI, ASIAN BBQ'],
-                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
-                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
-                recommendationAuthorName: 'by Justin Mary Michaels',
-                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
-            },
-            {
-                recommendationID: 2,
-                recommendationImage: PlaceImageTwo,
-                placeName: "Nakamura's",
-                placeAddress: 'SAN DIEGO, CALIFORNIA',
-                placeCategories: ['SUSHI, ASIAN BBQ'],
-                recommendationTitle: 'An amazingly rich and diverse range of edible delights',
-                recommendationDescription:
-                    'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
-                recommendationAuthorName: 'by Justin Mary Michaels',
-                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
-            },
-            {
-                recommendationID: 3,
-                recommendationImage: PlaceImageTwo,
-                placeName: "Nakamura's",
-                placeAddress: 'SAN DIEGO, CALIFORNIA',
-                placeCategories: ['SUSHI, ASIAN BBQ'],
-                recommendationTitle:
-                    'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
-                recommendationDescription: 'The only moment, the only life we have is in the NOW.',
-                recommendationAuthorName: 'by Justin Mary Michaels',
-                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
-            },
-            {
-                recommendationID: 4,
-                recommendationImage: PlaceImageTwo,
-                placeName: 'Super Tasty Burger And Pizza Kitchen Place',
-                placeAddress: 'SAN DIEGO, CALIFORNIA',
-                placeCategories: ['SUSHI, ASIAN BBQ'],
-                recommendationTitle:
-                    'Truly amazing coffee! Superb food, excellent service. This place has it all. Definitely recommend',
-                recommendationDescription:
-                    'The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … The only moment, the only life we have is in the NOW. What happened a few moments or several years ago is gone, what will happen this evening … ',
-                recommendationAuthorName: 'by Justin Mary Michaels',
-                recommendationAuthorTitle: 'FOODIE ASSOCIATE OF CARLSBAD, CALIFORNIA',
-            },
-        ],
+        title: 'Recommendations',
+        subTitle: 'Recommendations of Sushi Ota by locals who love sushi.',
+        recommendations: Object.entries(RecommendationCardData).map((entries: any[]) => {
+            const recommendationCardData = entries[1]
+            return recommendationCardData
+        }),
     },
 }
 

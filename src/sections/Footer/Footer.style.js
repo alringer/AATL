@@ -1,4 +1,4 @@
-import { CustomTextLink } from 'style/Button/TextLink.style'
+import { TextLink } from 'style/Button/TextLink.style'
 import { device, sidePaddings } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -186,7 +186,7 @@ export const FooterLinkRow = styled.div`
     margin-bottom: 10px;
 `
 
-export const FooterLinkTitle = styled(CustomTextLink)`
+export const FooterLinkTitle = styled(TextLink)`
     font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
@@ -202,7 +202,7 @@ export const FooterLinkAnchor = styled.a`
     text-decoration: none;
 `
 
-export const FooterLinkItem = styled(CustomTextLink)`
+export const FooterLinkItem = styled(TextLink)`
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;

@@ -5,6 +5,7 @@ import React from 'react'
 import { ImageButtonsContainer, RecommendationIcon } from 'style/Card/Card.style'
 import { chopStringSmallPlaceDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import { IPlace } from 'utilities/types/place'
 import {
     SmallPlaceCardCategory,
     SmallPlaceCardContainer,
@@ -14,13 +15,7 @@ import {
     SmallPlaceCardPlaceName,
 } from './PlaceCardSmall.style'
 
-interface IPlaceCardSmallSmallProps {
-    placeID: number
-    placeName: string
-    placeCategories: string[]
-    placeDescription: string
-    placeImageSrc: string
-}
+interface IPlaceCardSmallSmallProps extends Partial<IPlace> {}
 
 const PlaceCardSmall: React.FC<IPlaceCardSmallSmallProps> = ({
     placeID,

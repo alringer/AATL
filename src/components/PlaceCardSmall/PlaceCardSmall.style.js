@@ -1,5 +1,6 @@
 import { CardContainer } from 'style/Card/Card.style'
 import { device } from 'style/device'
+import { ImageContainer } from 'style/ImageContainer/ImageContainer'
 import { NoWrapText } from 'style/NoWrapText/NoWrapText.style'
 import styled from 'styled-components'
 
@@ -17,12 +18,12 @@ export const SmallPlaceCardContainer = styled(CardContainer)`
         width: 348px;
         height: 354px;
     }
-    @media ${device.desktop} {
+    @media ${device.laptop} {
         width: 300px;
         height: 368px;
     }
 `
-export const SmallPlaceCardImageContainer = styled.div`
+export const SmallPlaceCardImageContainer = styled(ImageContainer)`
     position: relative;
     width: 100%;
     height: 160px;
