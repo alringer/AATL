@@ -21,19 +21,26 @@ export const GlobalStyle = createGlobalStyle`
         min-width: 48px;
     }
 
-    .MuiOutlinedInput-input {
-        padding: 12px;
-    }
 
     .Mui-focused .MuiOutlinedInput-notchedOutline {
         border-color: transparent !important;
     }
 
+    /* Code below to put more padding within the input fields */
+    /* .MuiOutlinedInput-input {
+        padding: 12px;
+    }
+
     .MuiInputLabel-outlined {
-        /* transform: translate(12px, 16px) scale(1); */
         position: absolute;
         left: 12px;
         top: 50%;
         transform: translate(0, -50%) scale(1)
     }
+
+    .MuiInputLabel-outlined.MuiInputLabel-shrink {
+        position: absolute;
+        top: 0;
+        left: 0;
+    } */
 `

@@ -1,7 +1,7 @@
 // import { CssBaseline } from '@material-ui/core'
 import { StylesProvider } from '@material-ui/core/styles'
+import ModalWrapper from 'components/ModalWrapper/ModalWrapper'
 import { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
 import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import { Provider as StoreProvider } from 'react-redux'
@@ -14,9 +14,7 @@ import { theme } from '../src/style/theme'
 import { AppContainer, PageContainer } from './style/App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
-    const router = useRouter()
     React.useEffect(() => {
-        console.log(router)
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side')
         if (jssStyles && jssStyles.parentNode) {
@@ -30,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 <StylesProvider injectFirst>
                     <ThemeProvider theme={theme}>
                         <SnackbarProvider maxSnack={3}>
-                            <>
+                            <ModalWrapper>
                                 {/* <CssBaseline /> */}
                                 <GlobalStyle />
                                 <AppContainer>
@@ -40,7 +38,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                                     </PageContainer>
                                     <Footer />
                                 </AppContainer>
-                            </>
+                            </ModalWrapper>
                         </SnackbarProvider>
                     </ThemeProvider>
                 </StylesProvider>

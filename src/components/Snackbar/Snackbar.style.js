@@ -2,6 +2,7 @@ import SnackbarImageBackground from 'assets/snackbarImageBackground.svg'
 import { SNACKBAR_TYPES } from 'constants/SnackbarConstants'
 import { TextLink } from 'style/Button/TextLink.style'
 import { device } from 'style/device'
+import zIndices from 'style/zIndices'
 import styled, { css } from 'styled-components'
 
 export const SnackbarContainer = styled.div`
@@ -14,8 +15,9 @@ export const SnackbarContainer = styled.div`
     border-radius: 5px;
     box-shadow: 0 6px 24px 0 rgba(30, 31, 34, 0.5), 0 2px 4px 0 rgba(30, 31, 34, 0.24);
     border: solid 2px rgba(54, 57, 64, 0.06);
+    z-index: ${zIndices.snackBar};
 
-    ${props => {
+    ${(props) => {
         if (props.id === SNACKBAR_TYPES.Complete) {
             return css`
                 background-color: ${props.theme.darkSlateBlue};

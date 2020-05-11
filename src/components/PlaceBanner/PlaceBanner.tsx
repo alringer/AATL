@@ -7,8 +7,13 @@ import * as S from 'constants/StringConstants'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
+import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
+import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import { formatPhone } from 'utilities/helpers/formatPhone'
 import { IPlace } from 'utilities/types/place'
 import {
     FindATableButton,
@@ -35,7 +40,11 @@ import {
     ShareIconButton,
 } from './PlaceBanner.style'
 
-interface IPlaceBannerProps extends IPlace {}
+interface IReduxProps {
+    openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
+}
+
+interface IPlaceBannerProps extends IPlace, IReduxProps {}
 
 const PlaceBanner: React.FC<IPlaceBannerProps> = ({
     placeID,
@@ -53,6 +62,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
     placeWebsiteURL,
     placeStatePostal,
     placeNumber,
+    openRecommendationModal,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -79,11 +89,12 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
 
     const handleFindATable = () => {
         // TODO: Wire up Find-A-Table API
-        console.log(`Find-A-Table button is clicked for place with ID of ${placeID}!`)
+        console.log(`Find-A-Table button is clicked for place with ID of ${placeID}`)
     }
     const handleRecommend = () => {
         // TODO: Send the user to the recommendation editor
-        console.log(`Recommend-restaurant button is clicked for place with ID of ${placeID}!`)
+        openRecommendationModal({ placeID: placeID, placeName: placeName })
+        console.log(`Recommend-restaurant button is clicked for place with ID of ${placeID}`)
     }
     const handleVisitWebsite = () => {
         window.open(placeWebsiteURL, '_blank')
@@ -130,7 +141,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                     <PlaceBannerContactInformationSpan>
                         <PlaceBannerVisitWebsite onClick={handleVisitWebsite}>Visit Website</PlaceBannerVisitWebsite>
                         &nbsp;
-                        <PlaceBannerPhoneNumber>/ {placeNumber}</PlaceBannerPhoneNumber>
+                        <PlaceBannerPhoneNumber>/ {formatPhone(placeNumber)}</PlaceBannerPhoneNumber>
                     </PlaceBannerContactInformationSpan>
                     <PlaceBannerButtonsContainer>
                         <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
@@ -153,5 +164,6 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         </PlaceBannerContainer>
     )
 }
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal }, dispatch)
 
-export default PlaceBanner
+export default reduxConnect(null, mapDispatchToProps)(PlaceBanner)

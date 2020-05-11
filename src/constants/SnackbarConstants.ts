@@ -40,3 +40,9 @@ export const ACHIEVEMENT_UNLOCKED: ISnackbarConstants = {
     LinkMessage: 'Look around!',
     LinkDestination: R.ROUTE_ITEMS.home,
 }
+
+export const RECOMMENDATION_LINK_COPIED: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Ready to share!',
+    Body: 'Recommendation link was copied to clipboard',
+}

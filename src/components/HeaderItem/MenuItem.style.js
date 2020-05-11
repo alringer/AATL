@@ -1,16 +1,14 @@
+import { TextLink } from 'style/Button/TextLink.style'
 import styled, { css } from 'styled-components'
 
 const activeOpacity = '0.96'
 
 const activeItemCSS = css`
     opacity: ${activeOpacity};
+    text-decoration: none;
 `
 
-export const MenuItemAnchor = styled.a`
-    
-`
-
-export const MenuItemText = styled.p`
+export const MenuItemText = styled(TextLink)`
     white-space: nowrap;
     opacity: 0.6;
     font-family: 'Rubik', sans-serif;

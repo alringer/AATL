@@ -1,5 +1,5 @@
 import { TextField } from '@material-ui/core'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const CustomTextField = styled(TextField)`
     border-radius: 4px;
@@ -7,4 +7,24 @@ export const CustomTextField = styled(TextField)`
     background-color: ${props => props.theme.white};
     width: 100%;
     height: 100%;
+
+    .MuiFormLabel-root.Mui-focused {
+        color: grey;
+    }
+
+    ${props => {
+        if (props.className === 'error') {
+            return css`
+                input {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+                fieldset {
+                    border-color: color: ${props => props.theme.dustyRed} !important;
+                }
+                .MuiFormLabel-root {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+            `
+        }
+    }}
 `

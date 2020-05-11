@@ -1,5 +1,5 @@
 import { action } from 'typesafe-actions'
-import { LOGIN, LOGOUT } from './user_types'
+import { IUserInformation, LOGIN, LOGOUT } from './user_types'
 
-export const login = () => action(LOGIN)
+export const login = (userInformation: IUserInformation) => action(LOGIN, userInformation)
 export const logout = () => action(LOGOUT)

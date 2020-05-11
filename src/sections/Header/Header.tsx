@@ -9,7 +9,6 @@ import MobileSearchSvg from 'assets/mobileHeaderSearchIcon.svg'
 import UserProfileSVG from 'assets/userProfile.svg'
 import MenuItem from 'components/HeaderItem/MenuItem'
 import Image from 'components/Image/Image'
-import AuthenticationModal, { AuthenticationViewEnum } from 'components/Modal/AuthenticationModal'
 import HeaderSearch from 'components/Search/HeaderSearch'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
@@ -19,8 +18,10 @@ import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { openAuthenticationModal } from 'store/authentication/authentication_actions'
+import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
 import { StoreState } from 'store/index'
-import { login, logout } from 'store/user/user_actions'
+import { logout } from 'store/user/user_actions'
 import { UserReducerState } from 'store/user/user_types'
 import { query } from 'style/device'
 import useComponentVisible from 'utilities/hooks/useComponentVisible'
@@ -53,19 +54,18 @@ import {
     SignUpButton,
 } from './Header.style'
 
-interface IHeaderProps {
+interface IReduxProps {
     user: UserReducerState
-    login: () => void
     logout: () => void
+    openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
 }
+interface IHeaderProps extends IReduxProps {}
 
-const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
+const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal }) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
-    const [initialAuthenticationView, setInitialAuthenticationView] = React.useState(AuthenticationViewEnum.Login)
     const searchReference = useComponentVisible(false)
     const popoverReference = useComponentVisible(false)
-    const authenticationModalReference = useComponentVisible(false)
     const router = useRouter()
     const isSearchEnabled = router.pathname !== R.ROUTE_ITEMS.home && router.pathname !== R.ROUTE_ITEMS.search
 
@@ -84,12 +84,7 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
         router.push(target)
     }
 
-    const handleMobileLogin = () => {
-        login()
-        setMobileMenuVisible(false)
-    }
-
-    const handleMobileLogout = () => {
+    const handleLogout = () => {
         logout()
         setMobileMenuVisible(false)
     }
@@ -109,13 +104,11 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
     }
 
     const handleOpenLogin = () => {
-        setInitialAuthenticationView(AuthenticationViewEnum.Login)
-        authenticationModalReference.setIsComponentVisible(true)
+        openAuthenticationModal(AuthenticationViewEnum.Login)
         setMobileMenuVisible(false)
     }
     const handleOpenSignUp = () => {
-        setInitialAuthenticationView(AuthenticationViewEnum.SignUp)
-        authenticationModalReference.setIsComponentVisible(true)
+        openAuthenticationModal(AuthenticationViewEnum.SignUp)
         setMobileMenuVisible(false)
     }
 
@@ -293,7 +286,7 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
                         <MenuItemRow id="marginBottom">
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Settings}</MenuItemAnchorText>
                         </MenuItemRow>
-                        <MenuItemRow onClick={handleMobileLogout}>
+                        <MenuItemRow onClick={handleLogout}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.SignOut}</MenuItemAnchorText>
                         </MenuItemRow>
                     </>
@@ -328,17 +321,13 @@ const Header: React.FC<IHeaderProps> = ({ user, login, logout }) => {
                             {matches.tablet && <HeaderDesktopTablet />}
                             {matches.laptop && <HeaderDesktopTablet />}
                         </HeaderContainer>
+                        {user.loggedIn && popoverReference.isComponentVisible && (matches.laptop || matches.tablet) && (
+                            <PopoverItems />
+                        )}
                         {matches.mobile && isMobileMenuVisible && <MobileMenu />}
-                        {user.loggedIn && popoverReference.isComponentVisible && <PopoverItems />}
                     </>
                 )}
             </Media>
-            {authenticationModalReference.isComponentVisible && (
-                <AuthenticationModal
-                    initialAuthenticationView={initialAuthenticationView}
-                    authenticationModalReference={authenticationModalReference}
-                />
-            )}
         </>
     )
 }
@@ -350,8 +339,8 @@ const mapStateToProps = (state: StoreState) => ({
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
         {
-            login,
             logout,
+            openAuthenticationModal,
         },
         dispatch
     )

@@ -14,7 +14,6 @@ import {
     FooterInformationBody,
     FooterInformationTitle,
     FooterLeftColumn,
-    FooterLinkAnchor,
     FooterLinkItem,
     FooterLinksContainer,
     FooterLinkTitle,
@@ -45,9 +44,7 @@ const Footer = () => {
                 <FooterRightColumn>
                     <FooterLinksContainer>
                         <Link href={R.ROUTE_ITEMS.cities}>
-                            <FooterLinkAnchor>
-                                <FooterLinkTitle>{S.FOOTER_ITEMS.Cities}</FooterLinkTitle>
-                            </FooterLinkAnchor>
+                            <FooterLinkTitle>{S.FOOTER_ITEMS.Cities}</FooterLinkTitle>
                         </Link>
                         {/* TODO: Render dynamically and link them to the search page*/}
                         <FooterLinkItem>Atlanta</FooterLinkItem>
@@ -56,9 +53,7 @@ const Footer = () => {
                     </FooterLinksContainer>
                     <FooterLinksContainer id="marginLeft">
                         <Link href={R.ROUTE_ITEMS.foodAndDrink}>
-                            <FooterLinkAnchor>
-                                <FooterLinkTitle>{S.FOOTER_ITEMS.FoodAndDrinks}</FooterLinkTitle>
-                            </FooterLinkAnchor>
+                            <FooterLinkTitle>{S.FOOTER_ITEMS.FoodAndDrinks}</FooterLinkTitle>
                         </Link>
                         {/* TODO: Render dynamically and link them to the search page */}
                         <FooterLinkItem>Burgers</FooterLinkItem>

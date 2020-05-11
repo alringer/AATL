@@ -43,7 +43,9 @@ export const BUTTON_LABELS = {
     SignUpEmail: 'SIGN UP WITH EMAIL',
     SignUpExclamation: 'SIGN UP!',
     ResetPassword: 'RESET PASSWORD',
-    OK: 'OK'
+    OK: 'OK',
+    PublishRecommendation: 'PUBLISH RECOMMENDATION',
+    CopyRecommendation: 'COPY RECOMMENDATION LINK'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -76,7 +78,6 @@ export const AUTHENTICATION = {
     // Sign In
     SignInTitle: 'Sign In',
     SignInBody: 'Sign in to access your personalized restaurant recommendations, and view other foodies and their faves!',
-    ErrorMessage: 'The email address or password you have entered does not match any account. Please make sure that the information you have entered is correct.',
     // Sign Up
     SignUpTitle: 'Join us!',
     SignUpBody: 'Create an account to receive great recommendations, create your own foodie space, and view other foodies and their favorite spots around the United States and Canada.',
@@ -96,4 +97,54 @@ export const AUTHENTICATION = {
     AlreadyHaveAnAccount: 'Already have an account?',
     SignUp: 'Sign Up',
     SignIn: 'Sign In'
+}
+
+export const ERROR_MESSAGES = {
+    EmptyEmail: 'Must enter email',
+    InvalidEmail: 'Invalid email format',
+    WrongEmailOrPassword: 'The email address or password you have entered does not match any account. Please make sure that the information you have entered is correct.',
+    FullName: 'Must enter your name',
+    ConfirmPassword: 'Passwords do not match',
+    EmptyPassword: 'Must enter password',
+}
+
+export const CITIES = {
+    Title: 'More Places to Ask a Travel Local',
+    US: 'United States',
+    Canada: 'Canada',
+    New: 'New',
+    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+}
+
+export const FOOD_AND_DRINK = {
+    Title: 'More Food & Drink to Ask a Travel Local',
+    Categories: 'Categories',
+    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+}
+
+export const RECOMMENDATION_EDITOR = {
+    Title: 'Recommending',
+    LabelImage: 'Image',
+    LabelTitle: 'Title',
+    LabelDescription: 'Description',
+    PlaceholderTitle: 'Write a catchy title :)',
+    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.'
+}
+
+export const RECOMMENDATION_PUBLISHED = {
+    Title: 'Your story is published!',
+    PreviewText: 'Alaskan Salmon by Yoon',
+    BodyTextOne: 'If our curators feature your recommendation for readers, we will email you and let you know.',
+    BodyTextTwo: 'Recommendations are a large part of what we are about and we greatly appreciate your help in speading the word about the best places to eat around you. Thank you!'
+}
+
+export const IMAGE_DROPZONE = {
+    LabelSupportedFormats: 'Supported Formats',
+    SupportedFormats: 'PNG, JPG',
+    LabelImageDimensions: 'Image Dimensions',
+    ImageDimensions: 'Minimum 1600x1200',
+    LabelFileSize: 'File Size',
+    FileSize: 'Maximum 5 MB',
+    Tooltip: 'Upload a photograph to go along with your recommendation.',
+    ErrorImproperFileType: 'File type not accepted. Please use .png or .jpg file.',
 }

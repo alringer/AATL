@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { MenuItemAnchor, MenuItemText } from './MenuItem.style'
+import { MenuItemText } from './MenuItem.style'
 
 interface IMenuItemProps {
     title: string
@@ -11,9 +11,7 @@ interface IMenuItemProps {
 const MenuItem: React.FC<IMenuItemProps> = ({ title, active, href }) => {
     return (
         <Link href={href}>
-            <MenuItemAnchor>
-                <MenuItemText id={active ? 'active' : 'not-active'}>{title}</MenuItemText>
-            </MenuItemAnchor>
+            <MenuItemText id={active ? 'active' : 'not-active'}>{title}</MenuItemText>
         </Link>
     )
 }

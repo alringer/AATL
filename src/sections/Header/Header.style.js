@@ -5,7 +5,16 @@ import { device } from 'style/device'
 import zIndices from 'style/zIndices'
 import styled, { css } from 'styled-components'
 
+export const HeaderHeights = {
+    mobile: '80px',
+    tablet: '96px',
+    laptop: '106px'
+}
+
 export const HeaderContainer = styled.div`
+    position: fixed;
+    top: 0;
+    z-index: ${zIndices.header};
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -15,21 +24,20 @@ export const HeaderContainer = styled.div`
     background-color: rgba(255, 255, 255, 0.6);
     overflow: hidden;
     width: 100%;
-
     @media ${device.mobile} {
-        height: 80px;
+        height: ${HeaderHeights.mobile};
         padding: 12px 16px;
         justify-content: space-between;
     }
 
     @media ${device.tablet} {
-        height: 96px;
+        height: ${HeaderHeights.tablet};
         padding: 16px 20px;
         justify-content: space-between;
     }
 
     @media ${device.laptop} {
-        height: 150px;
+        height: ${HeaderHeights.laptop};
         padding: 20px 40px;
         justify-content: space-between;
     }
@@ -136,12 +144,10 @@ export const SearchToggleButton = styled(CustomIconButton)`
 `
 // Popover
 export const PopoverContainer = styled.div`
-    position: absolute;
+    position: fixed;
     width: 250px;
     backdrop-filter: blur(10px);
-    /* box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.16), 0 2px 4px 0 rgba(0, 0, 0, 0.12),
-        0 1px 2px 0 rgba(0, 0, 0, 0.12); */
-    /* box-shadow: 3px -2px 4px #AAA; */
+    z-index: ${zIndices.headerOverflowMenu};
     background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     display: flex;
@@ -153,7 +159,7 @@ export const PopoverContainer = styled.div`
     }
 
     @media ${device.laptop} {
-        top: 110px;
+        top: 100px;
         right: 40px;
     }
 `

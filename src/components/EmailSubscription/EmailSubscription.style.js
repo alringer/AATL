@@ -134,7 +134,7 @@ export const EmailSubscriptionFormContainer = styled.div`
 
     @media ${device.mobile} {
         margin-top: 24px;
-        height: 44px;
+        height: 100%;
         width: 100%;
         max-width: 330px;
     }

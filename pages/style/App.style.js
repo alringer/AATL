@@ -1,18 +1,11 @@
+import { HeaderHeights } from 'sections/Header/Header.style'
+import { device } from 'style/device'
 import styled from 'styled-components'
-import { device } from '../../src/style/device'
 
 export const AppContainer = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    @media ${device.mobile} {
-    }
-
-    @media ${device.tablet} {
-    }
-
-    @media ${device.laptop} {
-    }
 `
 
 export const PageContainer = styled.div`
@@ -20,5 +13,17 @@ export const PageContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    /* align-items: flex-start; */
     flex-grow: 1;
+    @media ${device.mobile} {
+        padding-top: ${HeaderHeights.mobile};
+    }
+
+    @media ${device.tablet} {
+        padding-top: ${HeaderHeights.tablet};
+    }
+
+    @media ${device.laptop} {
+        padding-top: ${HeaderHeights.laptop};
+    }
 `

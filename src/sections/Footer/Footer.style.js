@@ -198,10 +198,6 @@ export const FooterLinkTitle = styled(TextLink)`
     margin-bottom: 20px;
 `
 
-export const FooterLinkAnchor = styled.a`
-    text-decoration: none;
-`
-
 export const FooterLinkItem = styled(TextLink)`
     font-size: 16px;
     font-weight: normal;

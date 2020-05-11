@@ -7,7 +7,8 @@ export const theme: ITheme = {
     dustyRed: 'rgba(211, 49, 62, 1)',
     dustyOrange: 'rgba(240, 129, 66, 1)',
     mushroom: 'rgba(191, 157, 138, 1)',
-    pinkishTan: 'rgba(205, 171, 149, 1)'
+    pinkishTan: 'rgba(205, 171, 149, 1)',
+    transition: `all 0.08s ease-in-out`,
 }
 
 export interface ITheme {
@@ -20,4 +21,5 @@ export interface ITheme {
     dustyOrange: string
     mushroom: string
     pinkishTan: string
+    transition: string
 }
