@@ -1,10 +1,7 @@
 import Dialog from '@material-ui/core/Dialog'
-import CloseButton from 'assets/recommendation-modal-close.svg'
-import Image from 'components/Image/Image'
 import {
     RecommendationModalContainer,
     RecommendationModalContentContainer,
-    RecommendationModalHeaderContainer,
 } from 'components/RecommendationModal/Recommendation.style'
 import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
@@ -16,7 +13,7 @@ import {
     clearRecommendationModal,
     closeRecommendationModal,
 } from 'store/recommendationModal/recommendationModal_actions'
-import { CustomIconButton } from 'style/Button/IconButton.style'
+import RecommendationEditorHeader from './RecommendationEditorHeader'
 
 interface IReduxProps {
     placeID: number | null
@@ -60,19 +57,10 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
         }, 2000)
     }
 
-    const RecommendationEditorHeader = () => {
-        return (
-            <RecommendationModalHeaderContainer>
-                <CustomIconButton onClick={closeRecommendationModal}>
-                    <Image src={CloseButton} alt="close" />
-                </CustomIconButton>
-            </RecommendationModalHeaderContainer>
-        )
-    }
     return (
         <Dialog open={isOpen} fullScreen>
             <RecommendationModalContainer>
-                <RecommendationEditorHeader />
+                <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} />
                 <RecommendationModalContentContainer>
                     {published ? (
                         <RecommendationPublished publishedTitle={publishedTitle} />

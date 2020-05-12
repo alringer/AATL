@@ -11,35 +11,35 @@ storiesOf('Authentication Modals', module)
     .add('Login', () => {
         return (
             <ModalContentContainer>
-                <Login setCurrentAuthenticationView={() => {}} closeAuthenticationModal={() => {}} />
+                <Login setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
             </ModalContentContainer>
         )
     })
     .add('Sign Up', () => {
         return (
             <ModalContentContainer>
-                <SignUp setCurrentAuthenticationView={() => {}} closeAuthenticationModal={() => {}} />
+                <SignUp setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
             </ModalContentContainer>
         )
     })
     .add('Sign Up with Email', () => {
         return (
             <ModalContentContainer>
-                <SignUpWithEmail setCurrentAuthenticationView={() => {}} closeAuthenticationModal={() => {}} />
+                <SignUpWithEmail setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
             </ModalContentContainer>
         )
     })
     .add('Request Reset Password', () => {
         return (
             <ModalContentContainer>
-                <ForgotPassword setCurrentAuthenticationView={() => {}} closeAuthenticationModal={() => {}} />
+                <ForgotPassword setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
             </ModalContentContainer>
         )
     })
     .add('Magic Link', () => {
         return (
             <ModalContentContainer>
-                <MagicLink setCurrentAuthenticationView={() => {}} closeAuthenticationModal={() => {}} />
+                <MagicLink setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
             </ModalContentContainer>
         )
     })

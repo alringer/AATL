@@ -22,9 +22,14 @@ const FoodAndDrink: React.FC<IFoodAndDrinkProps> = ({ categoryList }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     let categoryList = []
-    await axios.get(FETCH_CATEGORIES).then((res) => {
-        categoryList = res.data
-    })
+    await axios
+        .get(FETCH_CATEGORIES)
+        .then((res) => {
+            categoryList = res.data
+        })
+        .catch((err) => {
+            console.log('Error detected in food-and-drink')
+        })
     return {
         props: { categoryList: categoryList },
     }

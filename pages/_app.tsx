@@ -1,16 +1,10 @@
 // import { CssBaseline } from '@material-ui/core'
-import { StylesProvider } from '@material-ui/core/styles'
-import ModalWrapper from 'components/ModalWrapper/ModalWrapper'
+import Provider from 'config/Provider'
 import { AppProps } from 'next/app'
-import { SnackbarProvider } from 'notistack'
 import React from 'react'
-import { Provider as StoreProvider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
 import Footer from '../src/sections/Footer/Footer'
 import Header from '../src/sections/Header/Header'
-import store from '../src/store/index'
 import { GlobalStyle } from '../src/style/GlobalStyle'
-import { theme } from '../src/style/theme'
 import { AppContainer, PageContainer } from './style/App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -24,25 +18,17 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     return (
         <>
-            <StoreProvider store={store}>
-                <StylesProvider injectFirst>
-                    <ThemeProvider theme={theme}>
-                        <SnackbarProvider maxSnack={3}>
-                            <ModalWrapper>
-                                {/* <CssBaseline /> */}
-                                <GlobalStyle />
-                                <AppContainer>
-                                    <Header />
-                                    <PageContainer>
-                                        <Component {...pageProps} />
-                                    </PageContainer>
-                                    <Footer />
-                                </AppContainer>
-                            </ModalWrapper>
-                        </SnackbarProvider>
-                    </ThemeProvider>
-                </StylesProvider>
-            </StoreProvider>
+            <Provider>
+                {/* <CssBaseline /> */}
+                <GlobalStyle />
+                <AppContainer>
+                    <Header />
+                    <PageContainer>
+                        <Component {...pageProps} />
+                    </PageContainer>
+                    <Footer />
+                </AppContainer>
+            </Provider>
         </>
     )
 }
