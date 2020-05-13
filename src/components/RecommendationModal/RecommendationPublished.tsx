@@ -6,7 +6,7 @@ import {
     RecommendationEditorPublishedTitle,
     RecommendationPublishedContainer,
     RecommendationPublishedContentContainer,
-} from 'components/RecommendationModal/Recommendation.style'
+} from 'components/RecommendationModal/RecommendationModal.style'
 import Snackbar from 'components/Snackbar/Snackbar'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'

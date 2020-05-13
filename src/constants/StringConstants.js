@@ -1,3 +1,39 @@
+export const LOREM_IPSUM_SHORT = 'Lorem ipsum dolor sit amet'
+export const LOREM_IPSUM_LONG = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor sed lacus quis faucibus. Cras pretium vestibulum tellus, a vulputate est placerat dictum. Cras sit amet turpis a metus convallis sodales non ac nulla. Maecenas gravida gravida quam sit amet convallis. Nulla pulvinar, urna eget viverra aliquam, orci arcu fermentum nisl, vitae molestie purus massa a sapien. Phasellus nec porttitor felis. Phasellus quis convallis velit. Ut interdum justo nibh. Nullam auctor venenatis tincidunt. Donec sed mollis odio, et consequat turpis. Donec commodo sodales risus, eget rhoncus diam suscipit vitae. Donec id auctor velit. Fusce blandit eu dui id suscipit. Phasellus nibh ex, tempor non placerat in, finibus bibendum nisi.'
+
+export const BUTTON_LABELS = {
+    SignUp: 'SIGN UP',
+    Login: 'LOG IN',
+    Search: 'SEARCH',
+    Subscribe: 'SUBSCRIBE',
+    FindATable: 'FIND A TABLE',
+    Recommend: 'RECOMMEND',
+    Share: 'SHARE',
+    WriteARecommendation: 'WRITE A RECOMMENDATION',
+    SignInInstagram: 'SIGN IN WITH INSTAGRAM',
+    SignInEmail: 'SIGN IN WITH EMAIL',
+    SignUpInstagram: 'SIGN UP WITH INSTAGRAM',
+    SignUpEmail: 'SIGN UP WITH EMAIL',
+    SignUpExclamation: 'SIGN UP!',
+    ResetPassword: 'RESET PASSWORD',
+    OK: 'OK',
+    PublishRecommendation: 'PUBLISH RECOMMENDATION',
+    CopyRecommendation: 'COPY RECOMMENDATION LINK',
+    MoreTips: 'MORE TIPS',
+    ReadOurGuidelines: 'READ OUR GUIDELINES'
+}
+
+export const INPUT_PLACEHOLDERS = {
+    VenueSearchBold: 'Find',
+    VenueSearchNormal: 'places to eat ...',
+    YourEmail: 'Your email',
+    Email: 'Email',
+    Password: 'Password',
+    YourFullName: 'Your Full Name',
+    ConfirmPassword: 'Confirm Password'
+
+}
+
 export const HEADER_ITEMS = {
     FoodAndDrinks: 'FOOD & DRINK',
     Cities: 'CITIES',
@@ -26,37 +62,6 @@ export const PROFILE_POPOVER_ITEMS = {
     AdminMenu: 'Admin Menu',
     Help: 'Help',
     SignOut: 'Sign Out'
-}
-
-export const BUTTON_LABELS = {
-    SignUp: 'SIGN UP',
-    Login: 'LOG IN',
-    Search: 'SEARCH',
-    Subscribe: 'SUBSCRIBE',
-    FindATable: 'FIND A TABLE',
-    Recommend: 'RECOMMEND',
-    Share: 'SHARE',
-    WriteARecommendation: 'WRITE A RECOMMENDATION',
-    SignInInstagram: 'SIGN IN WITH INSTAGRAM',
-    SignInEmail: 'SIGN IN WITH EMAIL',
-    SignUpInstagram: 'SIGN UP WITH INSTAGRAM',
-    SignUpEmail: 'SIGN UP WITH EMAIL',
-    SignUpExclamation: 'SIGN UP!',
-    ResetPassword: 'RESET PASSWORD',
-    OK: 'OK',
-    PublishRecommendation: 'PUBLISH RECOMMENDATION',
-    CopyRecommendation: 'COPY RECOMMENDATION LINK'
-}
-
-export const INPUT_PLACEHOLDERS = {
-    VenueSearchBold: 'Find',
-    VenueSearchNormal: 'places to eat ...',
-    YourEmail: 'Your email',
-    Email: 'Email',
-    Password: 'Password',
-    YourFullName: 'Your Full Name',
-    ConfirmPassword: 'Confirm Password'
-
 }
 
 export const FOOTER_ITEMS = {
@@ -147,4 +152,8 @@ export const IMAGE_DROPZONE = {
     FileSize: 'Maximum 5 MB',
     Tooltip: 'Upload a photograph to go along with your recommendation.',
     ErrorImproperFileType: 'File type not accepted. Please use .png or .jpg file.',
+}
+
+export const RECOMMENDATION_TIPS = {
+    Title: 'Tips on writing a scrumptious recommendation'
 }

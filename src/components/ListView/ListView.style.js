@@ -118,7 +118,7 @@ export const ListViewRegionText = styled(TextLink)`
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.38;
+    line-height: 1.7;
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
 

@@ -4,6 +4,8 @@ import ImageDropzoneDefaultBackground from 'assets/image-dropzone-background.svg
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import Media from 'react-media'
+import { query } from 'style/device'
 import {
     ImageDropzoneBackgroundContainer,
     ImageDropzoneBackgroundImg,
@@ -44,32 +46,40 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onDrop, file }) => {
                                         <CameraAltIcon />
                                     </ImageDropzoneIconContainer>
                                 </Tooltip>
-                                <ImageDropzoneFileInformationContainer>
-                                    <ImageDropzoneFileInformationColumnContainer>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.LabelSupportedFormats}
-                                        </ImageDropzoneFileInformationText>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.SupportedFormats}
-                                        </ImageDropzoneFileInformationText>
-                                    </ImageDropzoneFileInformationColumnContainer>
-                                    <ImageDropzoneFileInformationColumnContainer>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.LabelImageDimensions}
-                                        </ImageDropzoneFileInformationText>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.ImageDimensions}
-                                        </ImageDropzoneFileInformationText>
-                                    </ImageDropzoneFileInformationColumnContainer>
-                                    <ImageDropzoneFileInformationColumnContainer>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.LabelFileSize}
-                                        </ImageDropzoneFileInformationText>
-                                        <ImageDropzoneFileInformationText>
-                                            {S.IMAGE_DROPZONE.FileSize}
-                                        </ImageDropzoneFileInformationText>
-                                    </ImageDropzoneFileInformationColumnContainer>
-                                </ImageDropzoneFileInformationContainer>
+                                <Media queries={query} defaultMatches={{ mobile: true }}>
+                                    {(matches) => (
+                                        <>
+                                            {(matches.laptop || matches.tablet) && (
+                                                <ImageDropzoneFileInformationContainer>
+                                                    <ImageDropzoneFileInformationColumnContainer>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.LabelSupportedFormats}
+                                                        </ImageDropzoneFileInformationText>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.SupportedFormats}
+                                                        </ImageDropzoneFileInformationText>
+                                                    </ImageDropzoneFileInformationColumnContainer>
+                                                    <ImageDropzoneFileInformationColumnContainer>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.LabelImageDimensions}
+                                                        </ImageDropzoneFileInformationText>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.ImageDimensions}
+                                                        </ImageDropzoneFileInformationText>
+                                                    </ImageDropzoneFileInformationColumnContainer>
+                                                    <ImageDropzoneFileInformationColumnContainer>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.LabelFileSize}
+                                                        </ImageDropzoneFileInformationText>
+                                                        <ImageDropzoneFileInformationText>
+                                                            {S.IMAGE_DROPZONE.FileSize}
+                                                        </ImageDropzoneFileInformationText>
+                                                    </ImageDropzoneFileInformationColumnContainer>
+                                                </ImageDropzoneFileInformationContainer>
+                                            )}
+                                        </>
+                                    )}
+                                </Media>
                             </ImageDropzoneContainer>
                         </ImageDropzoneSection>
                         {isDragReject && (

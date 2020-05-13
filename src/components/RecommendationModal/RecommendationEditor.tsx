@@ -1,24 +1,21 @@
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import {
-    RecommendationEditorContainer,
-    RecommendationEditorDescriptionTextArea,
-    RecommendationEditorInputContainer,
-    RecommendationEditorInputLabelContainer,
-    RecommendationEditorPublishButton,
-    RecommendationEditorRowContainer,
-    RecommendationEditorTitle,
-    RecommendationEditorTitleTextArea,
-} from './Recommendation.style'
+import { RecommendationEditorContainer, RecommendationEditorDescriptionTextArea, RecommendationEditorInputContainer, RecommendationEditorInputLabelContainer, RecommendationEditorInputLabelText, RecommendationEditorPublishButton, RecommendationEditorReadOurGuidelines, RecommendationEditorRowContainer, RecommendationEditorTitle, RecommendationEditorTitleTextArea, RecommendationModalReadOurGuidelinesContainer } from './RecommendationModal.style'
 
 interface IRecommendationEditorProps {
     isLoading: boolean
     placeName: string
     handlePublish: (title: string, description: string, file: File) => void
+    handleReadOurGuidelines: () => void
 }
 
-const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({ placeName, handlePublish, isLoading }) => {
+const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
+    placeName,
+    handlePublish,
+    isLoading,
+    handleReadOurGuidelines,
+}) => {
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
     const [file, setFile] = React.useState()
@@ -55,7 +52,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({ placeName,
             </RecommendationEditorTitle>
             <RecommendationEditorRowContainer id="recommendation-image">
                 <RecommendationEditorInputLabelContainer>
-                    {S.RECOMMENDATION_EDITOR.LabelImage}
+                    <RecommendationEditorInputLabelText>
+                        {S.RECOMMENDATION_EDITOR.LabelImage}
+                    </RecommendationEditorInputLabelText>
                 </RecommendationEditorInputLabelContainer>
                 <RecommendationEditorInputContainer>
                     <ImageDropzone file={file} onDrop={handleDrop} />
@@ -63,7 +62,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({ placeName,
             </RecommendationEditorRowContainer>
             <RecommendationEditorRowContainer id="recommendation-title">
                 <RecommendationEditorInputLabelContainer>
-                    {S.RECOMMENDATION_EDITOR.LabelTitle}
+                    <RecommendationEditorInputLabelText>
+                        {S.RECOMMENDATION_EDITOR.LabelTitle}
+                    </RecommendationEditorInputLabelText>
                 </RecommendationEditorInputLabelContainer>
                 <RecommendationEditorInputContainer>
                     <RecommendationEditorTitleTextArea
@@ -76,7 +77,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({ placeName,
             </RecommendationEditorRowContainer>
             <RecommendationEditorRowContainer id="recommendation-description">
                 <RecommendationEditorInputLabelContainer>
-                    {S.RECOMMENDATION_EDITOR.LabelDescription}
+                    <RecommendationEditorInputLabelText>
+                        {S.RECOMMENDATION_EDITOR.LabelDescription}
+                    </RecommendationEditorInputLabelText>
                 </RecommendationEditorInputLabelContainer>
                 <RecommendationEditorInputContainer>
                     <RecommendationEditorDescriptionTextArea
@@ -93,6 +96,11 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({ placeName,
             >
                 {S.BUTTON_LABELS.PublishRecommendation}
             </RecommendationEditorPublishButton>
+            <RecommendationModalReadOurGuidelinesContainer>
+                <RecommendationEditorReadOurGuidelines onClick={handleReadOurGuidelines}>
+                    {S.BUTTON_LABELS.ReadOurGuidelines}
+                </RecommendationEditorReadOurGuidelines>
+            </RecommendationModalReadOurGuidelinesContainer>
         </RecommendationEditorContainer>
     )
 }

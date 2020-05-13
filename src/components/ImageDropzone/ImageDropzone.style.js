@@ -1,3 +1,4 @@
+import zIndices from 'style/zIndices'
 import styled from 'styled-components'
 
 const verticalPadding = '20px'
@@ -14,7 +15,7 @@ export const ImageDropzoneContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 200px;
+    height: 132px;
     padding: ${verticalPadding} ${horizontalPadding};
     cursor: pointer;
 
@@ -23,7 +24,7 @@ export const ImageDropzoneContainer = styled.div`
     color: ${(props) => props.theme.white};
 
     position: relative;
-    z-index: 3;
+    z-index: ${zIndices.recommendationEditorContainer};
 `
 
 export const ImageDropzoneBackgroundContainer = styled.div`
@@ -32,9 +33,8 @@ export const ImageDropzoneBackgroundContainer = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 10;
     overflow: hidden;
-    z-index: 1;
+    z-index: ${zIndices.recommendationEditorBackground};
 
     ::after {
         position: absolute;
@@ -44,7 +44,7 @@ export const ImageDropzoneBackgroundContainer = styled.div`
         right: 0;
         content: '';
         background-color: rgba(0,0,0,0.21);
-        z-index: 2;
+        z-index: ${zIndices.recommendationEditorBackgroundOverlay};
     }
 `
 
@@ -58,8 +58,8 @@ export const ImageDropzoneIconContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 42px;
-    height: 42px;
+    width: 57px;
+    height: 57px;
     z-index: inherit;
     border-radius: 50%;
     padding: 5px;
@@ -70,6 +70,11 @@ export const ImageDropzoneIconContainer = styled.div`
     :hover {
         color: ${props => props.theme.mushroom};
         border: 2px dotted ${props => props.theme.white};
+    }
+
+    svg {
+        width: 42px;
+        height: 42px;
     }
 `
 

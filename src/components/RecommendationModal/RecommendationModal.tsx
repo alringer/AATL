@@ -1,9 +1,9 @@
 import Dialog from '@material-ui/core/Dialog'
+import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
 import {
     RecommendationModalContainer,
     RecommendationModalContentContainer,
-} from 'components/RecommendationModal/Recommendation.style'
-import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
+} from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
@@ -57,10 +57,21 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
         }, 2000)
     }
 
+    const handleReadOurGuidelines = () => {
+        console.log('TODO: Wire up API for handleReadOurGuidelines')
+    }
+    const handleMoreTips = () => {
+        console.log('TODO: Wire up API for handleMoreTips')
+    }
+
     return (
         <Dialog open={isOpen} fullScreen>
             <RecommendationModalContainer>
-                <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} />
+                <RecommendationEditorHeader
+                    closeRecommendationModal={closeRecommendationModal}
+                    handleMoreTips={handleMoreTips}
+                    published={published}
+                />
                 <RecommendationModalContentContainer>
                     {published ? (
                         <RecommendationPublished publishedTitle={publishedTitle} />
@@ -69,6 +80,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                             placeName={placeName}
                             isLoading={isLoading}
                             handlePublish={handlePublish}
+                            handleReadOurGuidelines={handleReadOurGuidelines}
                         />
                     )}
                 </RecommendationModalContentContainer>

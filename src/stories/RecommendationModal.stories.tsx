@@ -1,10 +1,10 @@
 import { storiesOf } from '@storybook/react'
+import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
+import RecommendationEditorHeader from 'components/RecommendationModal/RecommendationEditorHeader'
 import {
     RecommendationModalContainer,
     RecommendationModalContentContainer,
-} from 'components/RecommendationModal/Recommendation.style'
-import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
-import RecommendationEditorHeader from 'components/RecommendationModal/RecommendationEditorHeader'
+} from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import React from 'react'
 

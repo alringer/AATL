@@ -6,6 +6,10 @@ enum zIndices {
     headerOverflowMenu = '97',
     mobileMenu = '98',
     snackBar = '101',
+    imageDropzoneBackground = '102',
+    imageDropzoneBackgroundOvaerlay = '103',
+    imageDropzoneContainer = '104',
+    recommendationEditorHeader = '105',
 }
 
 export default zIndices
