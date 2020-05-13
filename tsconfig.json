@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",
@@ -28,7 +29,6 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.js",
-    "**/*.style.js",
     "**/*.tsx"
   ]
 }

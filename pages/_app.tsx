@@ -1,16 +1,11 @@
 // import { CssBaseline } from '@material-ui/core'
-import { StylesProvider } from '@material-ui/core/styles'
+import Provider from 'config/Provider'
 import { AppProps } from 'next/app'
-import { SnackbarProvider } from 'notistack'
 import React from 'react'
-import { Provider as StoreProvider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
-import Footer from '../sections/Footer/Footer'
-import Header from '../sections/Header/Header'
-import store from '../store/index'
-import { GlobalStyle } from '../style/GlobalStyle'
-import { theme } from '../style/theme'
-import { AppContainer, PageContainer } from './App.style'
+import Footer from '../src/sections/Footer/Footer'
+import Header from '../src/sections/Header/Header'
+import { GlobalStyle } from '../src/style/GlobalStyle'
+import { AppContainer, PageContainer } from './style/App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
     React.useEffect(() => {
@@ -23,25 +18,17 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     return (
         <>
-            <StoreProvider store={store}>
-                <StylesProvider injectFirst>
-                    <ThemeProvider theme={theme}>
-                        <SnackbarProvider maxSnack={3}>
-                            <>
-                                {/* <CssBaseline /> */}
-                                <GlobalStyle />
-                                <AppContainer>
-                                    <Header />
-                                    <PageContainer>
-                                        <Component {...pageProps} />
-                                    </PageContainer>
-                                    <Footer />
-                                </AppContainer>
-                            </>
-                        </SnackbarProvider>
-                    </ThemeProvider>
-                </StylesProvider>
-            </StoreProvider>
+            <Provider>
+                {/* <CssBaseline /> */}
+                <GlobalStyle />
+                <AppContainer>
+                    <Header />
+                    <PageContainer>
+                        <Component {...pageProps} />
+                    </PageContainer>
+                    <Footer />
+                </AppContainer>
+            </Provider>
         </>
     )
 }
@@ -54,7 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 // App.getInitialProps = async (appContext) => {
 //   // calls page's `getInitialProps` and fills `appProps.pageProps`
 //   const appProps = await App.getInitialProps(appContext);
-//
+
 //   return { ...appProps }
 // }
 
