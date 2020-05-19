@@ -6,6 +6,7 @@ import MagicLink from 'components/AuthenticationModal/MagicLink'
 import SignUp from 'components/AuthenticationModal/SignUp'
 import SignUpWithEmail from 'components/AuthenticationModal/SignUpWithEmail'
 import React from 'react'
+import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
 
 storiesOf('Authentication Modals', module)
     .add('Login', () => {
@@ -25,21 +26,46 @@ storiesOf('Authentication Modals', module)
     .add('Sign Up with Email', () => {
         return (
             <ModalContentContainer>
-                <SignUpWithEmail setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
+                <SignUpWithEmail
+                    setEmailToSend={() => {}}
+                    setCurrentAuthenticationView={() => {}}
+                    closeModal={() => {}}
+                />
             </ModalContentContainer>
         )
     })
     .add('Request Reset Password', () => {
         return (
             <ModalContentContainer>
-                <ForgotPassword setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
+                <ForgotPassword
+                    setEmailToSend={() => {}}
+                    setCurrentAuthenticationView={() => {}}
+                    closeModal={() => {}}
+                />
             </ModalContentContainer>
         )
     })
-    .add('Magic Link', () => {
+    .add('Magic Link: Reset Password', () => {
         return (
             <ModalContentContainer>
-                <MagicLink setCurrentAuthenticationView={() => {}} closeModal={() => {}} />
+                <MagicLink
+                    targetEmail={'example@domain.com'}
+                    currentAuthenticationView={AuthenticationViewEnum.MagicLinkResetPassword}
+                    setCurrentAuthenticationView={() => {}}
+                    closeModal={() => {}}
+                />
+            </ModalContentContainer>
+        )
+    })
+    .add('Magic Link: Setup Account', () => {
+        return (
+            <ModalContentContainer>
+                <MagicLink
+                    targetEmail={'example@domain.com'}
+                    currentAuthenticationView={AuthenticationViewEnum.MagicLinkSetupAccount}
+                    setCurrentAuthenticationView={() => {}}
+                    closeModal={() => {}}
+                />
             </ModalContentContainer>
         )
     })

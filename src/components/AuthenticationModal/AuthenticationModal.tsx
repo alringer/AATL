@@ -7,7 +7,11 @@ import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
-import { closeAuthenticationModal, switchAuthenticationView } from 'store/authentication/authentication_actions'
+import {
+    closeAuthenticationModal,
+    setTargetEmail,
+    switchAuthenticationView,
+} from 'store/authentication/authentication_actions'
 import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
 import { query } from 'style/device'
 import { ModalContentContainer } from './AuthenticationModal.style'
@@ -15,19 +19,23 @@ import Login from './Login'
 import SignUp from './SignUp'
 
 interface IReduxProps {
+    targetEmail: string
     isOpen: boolean
     currentAuthenticationView: AuthenticationViewEnum
     closeAuthenticationModal: () => void
     switchAuthenticationView: (targetView: AuthenticationViewEnum) => void
+    setTargetEmail: (input: string) => void
 }
 
 interface IAuthenticationModalProps extends IReduxProps {}
 
 const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
+    targetEmail,
     isOpen,
     currentAuthenticationView,
     closeAuthenticationModal,
     switchAuthenticationView,
+    setTargetEmail,
 }) => {
     const authRef = React.useRef(null)
 
@@ -40,6 +48,7 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
     React.useEffect(() => {
         document.addEventListener('click', handleClickOutsideAuthModal, true)
         return () => {
+            closeModal()
             document.removeEventListener('click', handleClickOutsideAuthModal, true)
         }
     }, [])
@@ -49,6 +58,10 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
     }
     const setCurrentAuthenticationView = (targetView: AuthenticationViewEnum) => {
         switchAuthenticationView(targetView)
+    }
+
+    const setEmailToSend = (input: string) => {
+        setTargetEmail(input)
     }
 
     return (
@@ -69,15 +82,20 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
                         ) : currentAuthenticationView === AuthenticationViewEnum.SignUpWithEmail ? (
                             <SignUpWithEmail
                                 setCurrentAuthenticationView={setCurrentAuthenticationView}
+                                setEmailToSend={setEmailToSend}
                                 closeModal={closeModal}
                             />
                         ) : currentAuthenticationView === AuthenticationViewEnum.ForgotPassword ? (
                             <ForgotPassword
                                 setCurrentAuthenticationView={setCurrentAuthenticationView}
+                                setEmailToSend={setEmailToSend}
                                 closeModal={closeModal}
                             />
-                        ) : currentAuthenticationView === AuthenticationViewEnum.MagicLink ? (
+                        ) : currentAuthenticationView === AuthenticationViewEnum.MagicLinkResetPassword ||
+                          currentAuthenticationView === AuthenticationViewEnum.MagicLinkSetupAccount ? (
                             <MagicLink
+                                targetEmail={targetEmail}
+                                currentAuthenticationView={currentAuthenticationView}
                                 setCurrentAuthenticationView={setCurrentAuthenticationView}
                                 closeModal={closeModal}
                             />
@@ -92,6 +110,7 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
 const mapStateToProps = (state: StoreState) => ({
     currentAuthenticationView: state.authenticationReducer.currentAuthenticationView,
     isOpen: state.authenticationReducer.isOpen,
+    targetEmail: state.authenticationReducer.targetEmail,
 })
 
 const mapDispatchToProps = (dispatch: any) =>
@@ -99,6 +118,7 @@ const mapDispatchToProps = (dispatch: any) =>
         {
             closeAuthenticationModal,
             switchAuthenticationView,
+            setTargetEmail,
         },
         dispatch
     )

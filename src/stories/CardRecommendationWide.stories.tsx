@@ -1,9 +1,9 @@
 import { storiesOf } from '@storybook/react'
-import PlaceImage from 'assets/restaurant_image.jpg'
-import PlaceImageTwo from 'assets/restaurant_image2.jpeg'
-import RecommendationCard from 'components/RecommendationCard/RecommendationCard'
+import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
+import PlaceImageTwo from 'assets/mock-images/restaurant_image2.jpeg'
+import CardRecommendationWide from 'components/CardRecommendationWide/CardRecommendationWide'
 import React from 'react'
-import RecommendationCardsList from 'sections/CardsList/RecommendationCardsList'
+import RecommendationCardsList from 'sections/CardsList/CardRecommendationWideList'
 
 export const RecommendationCardData = {
     default: {
@@ -89,10 +89,10 @@ export const RecommendationCardsListData = {
     },
 }
 
-storiesOf('Recommendation Card', module)
+storiesOf('Card: Wide Recommendation Card', module)
     .add('Default Full Card', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={true}
                 recommendationID={RecommendationCardData.default.recommendationID}
                 recommendationImage={RecommendationCardData.default.recommendationImage}
@@ -108,7 +108,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Variant Full Card - Different Image', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={true}
                 recommendationID={RecommendationCardData.defaultDifferentImage.recommendationID}
                 recommendationImage={RecommendationCardData.defaultDifferentImage.recommendationImage}
@@ -124,7 +124,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Variant Full Card - Long Name', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={true}
                 recommendationID={RecommendationCardData.longPlaceName.recommendationID}
                 recommendationImage={RecommendationCardData.longPlaceName.recommendationImage}
@@ -140,7 +140,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Variant Full Card - Long Description', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={true}
                 recommendationID={RecommendationCardData.longDescription.recommendationID}
                 recommendationImage={RecommendationCardData.longDescription.recommendationImage}
@@ -156,7 +156,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Variant Full Card - Long Name, Description, and Title', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={true}
                 recommendationID={
                     RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationID
@@ -186,7 +186,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Default Simple Card', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={false}
                 recommendationID={RecommendationCardData.default.recommendationID}
                 recommendationImage={RecommendationCardData.default.recommendationImage}
@@ -202,7 +202,7 @@ storiesOf('Recommendation Card', module)
     })
     .add('Variant Simple Card - Long Name, Description, and Title', () => {
         return (
-            <RecommendationCard
+            <CardRecommendationWide
                 isFull={false}
                 recommendationID={
                     RecommendationCardData.longPlaceNameAndDescriptionAndRecommendationTitle.recommendationID

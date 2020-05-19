@@ -2,7 +2,7 @@ import GrayEllipsesSVG from 'assets/gray-ellipses-icon.svg'
 import GrayHeartSVG from 'assets/gray-heart-icon.svg'
 import Image from 'components/Image/Image'
 import React from 'react'
-import { ImageButtonsContainer, RecommendationIcon } from 'style/Card/Card.style'
+import { CardIcon, ImageButtonsContainer } from 'style/Card/Card.style'
 import { chopStringSmallPlaceDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import { IPlace } from 'utilities/types/place'
@@ -13,11 +13,11 @@ import {
     SmallPlaceCardDescriptionContainer,
     SmallPlaceCardImageContainer,
     SmallPlaceCardPlaceName,
-} from './PlaceCardSmall.style'
+} from './CardPlaceSmall.style'
 
 interface IPlaceCardSmallSmallProps extends Partial<IPlace> {}
 
-const PlaceCardSmall: React.FC<IPlaceCardSmallSmallProps> = ({
+const CardPlaceSmall: React.FC<IPlaceCardSmallSmallProps> = ({
     placeID,
     placeImageSrc,
     placeName,
@@ -46,12 +46,12 @@ const PlaceCardSmall: React.FC<IPlaceCardSmallSmallProps> = ({
             <SmallPlaceCardImageContainer>
                 <Image src={placeImageSrc} alt="place-image" />
                 <ImageButtonsContainer>
-                    <RecommendationIcon onClick={handleMore}>
+                    <CardIcon onClick={handleMore}>
                         <Image src={GrayEllipsesSVG} alt="ellipses-icon" />
-                    </RecommendationIcon>
-                    <RecommendationIcon onClick={handleLike}>
+                    </CardIcon>
+                    <CardIcon onClick={handleLike}>
                         <Image src={GrayHeartSVG} alt="heart-icon" />
-                    </RecommendationIcon>
+                    </CardIcon>
                 </ImageButtonsContainer>
             </SmallPlaceCardImageContainer>
             <SmallPlaceCardContentContainer>
@@ -65,4 +65,4 @@ const PlaceCardSmall: React.FC<IPlaceCardSmallSmallProps> = ({
     )
 }
 
-export default PlaceCardSmall
+export default CardPlaceSmall

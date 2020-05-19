@@ -1,9 +1,9 @@
 import { storiesOf } from '@storybook/react'
-import PlaceImage from 'assets/restaurant_image.jpg'
-import PlaceImageTwo from 'assets/restaurant_image2.jpeg'
-import PlaceCardSmall from 'components/PlaceCardSmall/PlaceCardSmall'
+import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
+import PlaceImageTwo from 'assets/mock-images/restaurant_image2.jpeg'
+import CardPlaceSmall from 'components/CardPlaceSmall/CardPlaceSmall'
 import React from 'react'
-import PlaceCardsList from 'sections/CardsList/PlaceCardsList'
+import PlaceCardsList from 'sections/CardsList/CardPlaceSmallList'
 
 export const PlaceCardData = {
     default: {
@@ -56,21 +56,21 @@ export const PlaceCardsListData = {
     },
 }
 
-storiesOf('Place Card Small', module)
+storiesOf('Card: Small Place Card', module)
     .add('Default', () => {
-        return <PlaceCardSmall {...PlaceCardData.default} />
+        return <CardPlaceSmall {...PlaceCardData.default} />
     })
     .add('Variant - Different Image', () => {
-        return <PlaceCardSmall {...PlaceCardData.defaultDifferentImage} />
+        return <CardPlaceSmall {...PlaceCardData.defaultDifferentImage} />
     })
     .add('Variant - Long Name', () => {
-        return <PlaceCardSmall {...PlaceCardData.longName} />
+        return <CardPlaceSmall {...PlaceCardData.longName} />
     })
     .add('Variant - Long Description', () => {
-        return <PlaceCardSmall {...PlaceCardData.longDescription} />
+        return <CardPlaceSmall {...PlaceCardData.longDescription} />
     })
     .add('Variant - Long Name and Description', () => {
-        return <PlaceCardSmall {...PlaceCardData.longNameAndDescription} />
+        return <CardPlaceSmall {...PlaceCardData.longNameAndDescription} />
     })
     .add('Section - Place Card Small', () => {
         return <PlaceCardsList {...PlaceCardsListData.default} />

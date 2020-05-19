@@ -1,11 +1,11 @@
-import EllipsesSVG from 'assets/ellipses-icon.svg'
 import GrayEllipsesSVG from 'assets/gray-ellipses-icon.svg'
 import GrayHeartSVG from 'assets/gray-heart-icon.svg'
 import HeartSVG from 'assets/heart-icon.svg'
+import EllipsesSVG from 'assets/horizontalEllipses.svg'
 import Image from 'components/Image/Image'
 import React from 'react'
 import Media from 'react-media'
-import { ImageButtonsContainer, RecommendationIcon } from 'style/Card/Card.style'
+import { CardIcon, ImageButtonsContainer } from 'style/Card/Card.style'
 import { query } from 'style/device'
 import {
     chopStringFullRecommendationDescription,
@@ -30,13 +30,13 @@ import {
     RecommendationPlaceNameText,
     RecommendationSummaryText,
     RecommendationTitleText,
-} from './RecommendationCard.style'
+} from './CardRecommendationWide.style'
 
 interface IRecommendationCardProps extends IRecommendation {
     isFull: boolean
 }
 
-const RecommendationCard: React.FC<IRecommendationCardProps> = ({
+const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     isFull,
     recommendationID,
     recommendationImage,
@@ -74,12 +74,12 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
                         <>
                             {matches.mobile && (
                                 <ImageButtonsContainer>
-                                    <RecommendationIcon onClick={handleMore}>
+                                    <CardIcon onClick={handleMore}>
                                         <Image src={GrayEllipsesSVG} alt="ellipses-icon" />
-                                    </RecommendationIcon>
-                                    <RecommendationIcon onClick={handleLike}>
+                                    </CardIcon>
+                                    <CardIcon onClick={handleLike}>
                                         <Image src={GrayHeartSVG} alt="heart-icon" />
-                                    </RecommendationIcon>
+                                    </CardIcon>
                                 </ImageButtonsContainer>
                             )}
                         </>
@@ -97,12 +97,12 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
                                 <>
                                     {(matches.laptop || matches.tablet) && (
                                         <RecommendationButtonsContainer>
-                                            <RecommendationIcon onClick={handleLike}>
+                                            <CardIcon onClick={handleLike}>
                                                 <Image src={HeartSVG} alt="heart-icon" />
-                                            </RecommendationIcon>
-                                            <RecommendationIcon onClick={handleMore}>
+                                            </CardIcon>
+                                            <CardIcon onClick={handleMore}>
                                                 <Image src={EllipsesSVG} alt="ellipses-icon" />
-                                            </RecommendationIcon>
+                                            </CardIcon>
                                         </RecommendationButtonsContainer>
                                     )}
                                 </>
@@ -149,4 +149,4 @@ const RecommendationCard: React.FC<IRecommendationCardProps> = ({
     )
 }
 
-export default RecommendationCard
+export default CardRecommendationWide

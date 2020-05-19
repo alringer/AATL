@@ -1,4 +1,4 @@
-import PlaceCardSmall from 'components/PlaceCardSmall/PlaceCardSmall'
+import CardPlaceSmall from 'components/CardPlaceSmall/CardPlaceSmall'
 import React from 'react'
 import { IPlace } from 'utilities/types/place'
 import { ListContainer, ListSubTitle, ListTitle, PlaceCardContainer, PlaceCardsGrid } from './List.style'
@@ -17,7 +17,7 @@ const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places }) 
             <PlaceCardsGrid>
                 {places.map((place: IPlace) => (
                     <PlaceCardContainer key={place.placeID}>
-                        <PlaceCardSmall
+                        <CardPlaceSmall
                             placeID={place.placeID}
                             placeName={place.placeName}
                             placeCategories={place.placeCategories}

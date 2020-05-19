@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react'
-import PlaceImage from 'assets/sushi_image.png'
+import PlaceImage from 'assets/mock-images/sushi_image.png'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
 import React from 'react'
 

@@ -39,7 +39,7 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
                     {slicedList.map((city: ICity) => {
                         return (
                             <ListViewRegionContainer key={city.cityID}>
-                                <Link href={`/${R.ROUTE_ITEMS.city}/${city.name}`}>
+                                <Link href={`${R.ROUTE_ITEMS.city}/${city.cityID}`}>
                                     <ListViewRegionText>{city.name}</ListViewRegionText>
                                 </Link>
                             </ListViewRegionContainer>

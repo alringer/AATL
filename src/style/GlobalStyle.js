@@ -26,6 +26,10 @@ export const GlobalStyle = createGlobalStyle`
         border-color: transparent !important;
     }
 
+    .carousel-root {
+        width: 100%
+    }
+
     /* Code below to put more padding within the input fields */
     /* .MuiOutlinedInput-input {
         padding: 12px;

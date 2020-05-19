@@ -4,6 +4,7 @@ export interface AuthenticationReducerState {
     currentAuthenticationView: AuthenticationViewEnum
     error: boolean
     loading: boolean
+    targetEmail: string
 }
 
 export enum AuthenticationViewEnum {
@@ -11,7 +12,8 @@ export enum AuthenticationViewEnum {
     SignUp,
     ForgotPassword,
     SignUpWithEmail,
-    MagicLink,
+    MagicLinkResetPassword,
+    MagicLinkSetupAccount,
 }
 
 // Action Types
@@ -49,9 +51,17 @@ interface SetAuthenticationViewAction {
     payload: AuthenticationViewEnum
 }
 
+export const SET_TARGET_EMAIL = 'SET_TARGET_EMAIL'
+
+interface SetTargetEmailAction {
+    type: typeof SET_TARGET_EMAIL
+    payload: string
+}
+
 export type AuthenticationActionTypes =
     | OpenAuthenticationModalAction
     | SetAuthenticationErrorAction
     | CloseAuthenticationModalAction
     | SetAuthenticationViewAction
     | SetAuthenticationLoadingAction
+    | SetTargetEmailAction

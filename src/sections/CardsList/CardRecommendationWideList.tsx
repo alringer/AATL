@@ -1,4 +1,4 @@
-import RecommendationCard from 'components/RecommendationCard/RecommendationCard'
+import CardRecommendationWide from 'components/CardRecommendationWide/CardRecommendationWide'
 import React from 'react'
 import { IRecommendation } from 'utilities/types/recommendation'
 import { ListContainer, ListSubTitle, ListTitle, RecommendationCardContainer } from './List.style'
@@ -22,7 +22,7 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
             <ListSubTitle>{subTitle}</ListSubTitle>
             {recommendations.map((recommendation: IRecommendation) => (
                 <RecommendationCardContainer key={recommendation.recommendationID}>
-                    <RecommendationCard
+                    <CardRecommendationWide
                         isFull={isFull}
                         recommendationID={recommendation.recommendationID}
                         recommendationImage={recommendation.recommendationImage}

@@ -41,11 +41,16 @@ interface Errors {
 }
 
 interface ISignUpWithEmailProps {
+    setEmailToSend: (input: string) => void
     setCurrentAuthenticationView: (authenticationType: AuthenticationViewEnum) => void
     closeModal: () => void
 }
 
-const SignUpWithEmail: React.FC<ISignUpWithEmailProps> = ({ setCurrentAuthenticationView, closeModal }) => {
+const SignUpWithEmail: React.FC<ISignUpWithEmailProps> = ({
+    setEmailToSend,
+    setCurrentAuthenticationView,
+    closeModal,
+}) => {
     const DEFAULT_VALUES = {
         email: '',
         fullName: '',
@@ -98,12 +103,13 @@ const SignUpWithEmail: React.FC<ISignUpWithEmailProps> = ({ setCurrentAuthentica
     const handleSignUpWithEmail = () => {
         const formValid = validateForm()
         if (formValid === true) {
+            setEmailToSend(values.email)
             setAuthenticationLoading(true)
             setTimeout(() => {
                 // TODO: Wire up sign up API
                 console.log('TODO: Wire up sign up API')
                 setAuthenticationLoading(false)
-                closeModal()
+                setCurrentAuthenticationView(AuthenticationViewEnum.MagicLinkSetupAccount)
             }, 1000)
         }
     }

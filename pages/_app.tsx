@@ -2,6 +2,7 @@
 import Provider from 'config/Provider'
 import { AppProps } from 'next/app'
 import React from 'react'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Footer from '../src/sections/Footer/Footer'
 import Header from '../src/sections/Header/Header'
 import { GlobalStyle } from '../src/style/GlobalStyle'
