@@ -3,14 +3,26 @@ import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import EllipsesSVG from 'assets/horizontalEllipses.svg'
 import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
+import CloseSVG from 'assets/mushroomOutlineClose.svg'
+import AddToListButton from 'components/CardButtons/AddToListButton'
+import ShareButton from 'components/CardButtons/ShareButton'
+import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
-import { CardIcon, TooltipIcon, WideHeaderLeftContainer, WideHeaderTooltipIconsContainer } from 'style/Card/Card.style'
+import {
+    CardIcon,
+    MoreHorizontalContainer,
+    MoreVerticalContainer,
+    TooltipIcon,
+    WideHeaderLeftContainer,
+    WideHeaderTooltipIconsContainer,
+} from 'style/Card/Card.style'
 import { query } from 'style/device'
 import { chopStringFullRecommendationDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import { IPlace } from 'utilities/types/place'
 import {
     CardPlaceWideAuthorTitleText,
     CardPlaceWideButtonsContainer,
@@ -26,19 +38,32 @@ import {
     CardPlaceWideSummaryText,
 } from './CardPlaceWide.style'
 
-const CardPlaceWide = () => {
-    const placeName = "Nakamura's"
-    const placeCategories = ['BBQ', 'SUSHI']
-    const recommendationDescription =
-        'DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! DESCRIPTION! '
-    const recommendationAuthorTitle = 'RECOMMENDED 128 TIMES'
+interface ICardPlaceWideProps extends Partial<IPlace> {}
+
+const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
+    placeName,
+    placeID,
+    placeCategories,
+    placeDescription,
+    placeNumberOfRecommendations,
+}) => {
+    const [isMoreVisible, setMoreVisible] = React.useState(false)
 
     const handleView = () => {
         console.log('View a place from wide place card')
     }
+    const handleWriteRecommendation = () => {
+        console.log('handleWriteRecommendation for place ID: ', placeID)
+    }
+    const handleAddToList = () => {
+        console.log('handleAddToList for place ID: ', placeID)
+    }
+    const handleShare = () => {
+        console.log('handleShare for place ID: ', placeID)
+    }
 
     const handleMore = () => {
-        console.log('handle more:')
+        setMoreVisible(!isMoreVisible)
     }
 
     return (
@@ -69,8 +94,25 @@ const CardPlaceWide = () => {
                                 <>
                                     {(matches.laptop || matches.tablet) && (
                                         <CardPlaceWideButtonsContainer>
+                                            {isMoreVisible ? (
+                                                <MoreHorizontalContainer>
+                                                    <AddToListButton handleClick={handleAddToList} />
+                                                    <WriteRecommendationButton
+                                                        handleClick={handleWriteRecommendation}
+                                                    />
+                                                </MoreHorizontalContainer>
+                                            ) : null}
+                                            {isMoreVisible ? (
+                                                <MoreVerticalContainer>
+                                                    <ShareButton handleClick={handleShare} />
+                                                </MoreVerticalContainer>
+                                            ) : null}
                                             <CardIcon onClick={handleMore}>
-                                                <Image src={EllipsesSVG} alt="ellipses-icon" />
+                                                {isMoreVisible ? (
+                                                    <Image src={CloseSVG} alt="close-icon" />
+                                                ) : (
+                                                    <Image src={EllipsesSVG} alt="ellipses-icon" />
+                                                )}
                                             </CardIcon>
                                         </CardPlaceWideButtonsContainer>
                                     )}
@@ -82,11 +124,13 @@ const CardPlaceWide = () => {
                 </CardPlaceWideContentTopContainer>
                 <CardPlaceWideContentMiddleContainer>
                     <CardPlaceWideSummaryText>
-                        {chopStringFullRecommendationDescription(recommendationDescription)}
+                        {chopStringFullRecommendationDescription(placeDescription)}
                     </CardPlaceWideSummaryText>
                 </CardPlaceWideContentMiddleContainer>
                 <CardPlaceWideContentBottomContainer>
-                    <CardPlaceWideAuthorTitleText>{recommendationAuthorTitle}</CardPlaceWideAuthorTitleText>
+                    <CardPlaceWideAuthorTitleText>
+                        {S.PLACE_CARD.Recommended} {placeNumberOfRecommendations} {S.PLACE_CARD.Times}
+                    </CardPlaceWideAuthorTitleText>
                 </CardPlaceWideContentBottomContainer>
             </CardPlaceWideCardContentContainer>
         </CardPlaceWideCardContainer>

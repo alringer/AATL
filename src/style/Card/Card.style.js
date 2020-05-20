@@ -2,7 +2,7 @@ import { CustomIconButton } from 'style/Button/IconButton.style'
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import { ImageContainer } from 'style/ImageContainer/ImageContainer'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const CardContainer = styled(ContentWrapper)`
     transition: all 0.2s linear;
@@ -138,6 +138,7 @@ export const WideHeaderTooltipIconsContainer = styled.div`
 `
 
 export const WideButtonsContainer = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -332,4 +333,47 @@ export const WideAuthorTitleText = styled.p`
         margin-top: 5px;
         font-size: 12px;
     }
+`
+
+const slideLeft = keyframes`
+    0% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+`
+const slideDown = keyframes`
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`
+
+export const MoreHorizontalContainer = styled.div`
+    position: absolute;
+    right: 50px;
+    display: flex;
+    flex-direction: row;
+    background-color: #f6f1ee;
+    border-radius: 27px;
+
+    animation: ${slideLeft} 1s;
+`
+
+export const MoreVerticalContainer = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    background-color: #f6f1ee;
+    border-radius: 27px;
+    top: 50px;
+
+    animation: ${slideDown} 1s;
 `

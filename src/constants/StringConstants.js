@@ -3,7 +3,12 @@ export const LOREM_IPSUM_LONG = 'Lorem ipsum dolor sit amet, consectetur adipisc
 
 export const TOOL_TIPS = {
     Added: 'Added to your list',
-    Recommended: 'Recommended by you'
+    Recommended: 'Recommended by you',
+    AddToList: 'Add to list',
+    RemoveFromList: 'Remove from list',
+    WriteRecommendation: 'Write a recommendation',
+    ShareRestaurant: 'Share restaurant',
+    Flag: 'Flag as inappropriate'
 }
 
 export const BUTTON_LABELS = {
@@ -174,4 +179,9 @@ export const MOST_POPULAR = {
 export const LOCAL_PLACES = {
     Title: 'Local Places',
     SubTitle: 'Places recommended by local foodies in'
+}
+
+export const PLACE_CARD = {
+    Recommended: 'RECOMMENDED',
+    Times: 'TIMES'
 }

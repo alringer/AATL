@@ -1,28 +1,21 @@
 import { storiesOf } from '@storybook/react'
-import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
 import CardPlaceWide from 'components/CardPlaceWide/CardPlaceWide'
 import React from 'react'
-
-export const PlaceCardData = {
-    default: {
-        placeID: 0,
-        placeName: "Nakamura's",
-        placeCategories: ['SUSHI', 'TERIYAKI-STYLE'],
-        placeDescription: 'The best reason you ever had to eat sushi, drink sake, and get sake-bombed in San Diego',
-        placeImageSrc: PlaceImage,
-    },
-}
+import { PlaceBannerData } from 'stories/PlaceBanner.stories'
 
 storiesOf('Card: Wide Place Card', module)
     .add('City - Default', () => {
-        return <CardPlaceWide />
+        return <CardPlaceWide {...PlaceBannerData.default} />
+    })
+    .add('City - Long Name', () => {
+        return <CardPlaceWide {...PlaceBannerData.longName} />
     })
     .add('Search - Default', () => {
-        return <CardPlaceWide />
+        return <CardPlaceWide {...PlaceBannerData.default} />
     })
     .add('Profile Page - Default', () => {
-        return <CardPlaceWide />
+        return <CardPlaceWide {...PlaceBannerData.default} />
     })
     .add('Small Card - Default', () => {
-        return <CardPlaceWide />
+        return <CardPlaceWide {...PlaceBannerData.default} />
     })
