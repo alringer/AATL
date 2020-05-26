@@ -8,7 +8,9 @@ export const TOOL_TIPS = {
     RemoveFromList: 'Remove from list',
     WriteRecommendation: 'Write a recommendation',
     ShareRestaurant: 'Share restaurant',
-    Flag: 'Flag as inappropriate'
+    Flag: 'Flag as inappropriate',
+    Share: 'Share',
+    Recommend: 'Recommend'
 }
 
 export const BUTTON_LABELS = {

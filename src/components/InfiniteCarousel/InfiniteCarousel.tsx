@@ -97,7 +97,7 @@ const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
             <InfiniteCarouselDotButtonsContainer>
                 {places.map((place: IInfiniteCarouselCard, index: number) => {
                     return (
-                        <InfiniteCarouselDotButton id={String(index)} onClick={handleDotNavigation}>
+                        <InfiniteCarouselDotButton id={String(index)} onClick={handleDotNavigation} key={index}>
                             <InfiniteCarouselDotSpan className={index === currentSlide ? 'active' : 'inactive'} />
                         </InfiniteCarouselDotButton>
                     )

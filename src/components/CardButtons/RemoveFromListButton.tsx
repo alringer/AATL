@@ -1,5 +1,5 @@
 import Tooltip from '@material-ui/core/Tooltip'
-import CallMadeIcon from '@material-ui/icons/CallMade'
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import {
@@ -9,28 +9,28 @@ import {
     MoreOptionButton,
 } from './CardButton.style'
 
-interface IShareButtonProps {
+interface IRemoveFromListButtonProps {
     handleClick: (e: React.MouseEvent<HTMLElement>) => void
     isMobile?: boolean
 }
 
-const ShareButton: React.FC<IShareButtonProps> = ({ handleClick, isMobile }) => {
+const RemoveFromListButton: React.FC<IRemoveFromListButtonProps> = ({ handleClick, isMobile }) => {
     return isMobile ? (
-        <Tooltip placement="top" title={S.TOOL_TIPS.AddToList}>
+        <Tooltip placement="top" title={S.TOOL_TIPS.RemoveFromList}>
             <MobileMoreOptionButton onClick={handleClick}>
                 <MobileMoreOptionSpan>
-                    <CallMadeIcon />
-                    <MobileMoreOptionButtonLabel>{S.TOOL_TIPS.Share}</MobileMoreOptionButtonLabel>
+                    <RemoveCircleOutlineIcon />
+                    <MobileMoreOptionButtonLabel>{S.TOOL_TIPS.RemoveFromList}</MobileMoreOptionButtonLabel>
                 </MobileMoreOptionSpan>
             </MobileMoreOptionButton>
         </Tooltip>
     ) : (
-        <Tooltip placement="top" title={S.TOOL_TIPS.ShareRestaurant}>
+        <Tooltip placement="top" title={S.TOOL_TIPS.RemoveFromList}>
             <MoreOptionButton onClick={handleClick}>
-                <CallMadeIcon />
+                <RemoveCircleOutlineIcon />
             </MoreOptionButton>
         </Tooltip>
     )
 }
 
-export default ShareButton
+export default RemoveFromListButton

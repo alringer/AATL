@@ -19,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
 
     .MuiButton-root {
         min-width: 48px;
+        text-transform: none;
     }
 
 
@@ -28,6 +29,25 @@ export const GlobalStyle = createGlobalStyle`
 
     .carousel-root {
         width: 100%
+    }
+
+    .MuiPaginationItem-root {
+        font-size: 12px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.67;
+        letter-spacing: 2px;
+        text-align: center;
+        color: ${(props) => props.theme.pinkishTan};
+        background-color: ${(props) => props.theme.white};
+        border: 2px solid ${(props) => props.theme.darkGreyOpaque};
+        border-radius: 5px;
+    }
+
+    .MuiPaginationItem-page.Mui-selected {
+        color: ${(props) => props.theme.white};
+        background-color: ${(props) => props.theme.pinkishTan};
     }
 
     /* Code below to put more padding within the input fields */

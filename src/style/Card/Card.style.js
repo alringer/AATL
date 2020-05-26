@@ -35,15 +35,12 @@ export const CardIcon = styled(CustomIconButton)`
 `
 
 export const TooltipIcon = styled.span`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 30px;
     height: 30px;
     cursor: default;
-    img {
+    /* img {
         height: fit-content !important;
-    }
+    } */
 `
 
 export const WideCardContainer = styled(CardContainer)`
@@ -96,7 +93,7 @@ export const WideCardImageContainer = styled(ImageContainer)`
 export const WideCardContentContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     flex: 1;
     height: 100%;
@@ -118,7 +115,7 @@ export const WideHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
 `
 
@@ -127,13 +124,11 @@ export const WideHeaderLeftContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
 `
 
-export const WideHeaderTooltipIconsContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+export const WideHeaderTooltipIconsContainer = styled.span`
+    vertical-align: middle;
     margin-left: 10px;
 `
 
@@ -150,6 +145,7 @@ export const WideContentTopContainer = styled.div`
 `
 export const WideContentMiddleContainer = styled.div`
     width: 100%;
+    margin-bottom: auto;
     @media ${device.mobile} {
         margin-top: 10px;
     }
@@ -181,7 +177,7 @@ export const WidePlaceNameText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 0.93;
+    line-height: 1.2;
     letter-spacing: normal;
     color: ${props => props.theme.charcoalGrey};
 
@@ -357,8 +353,8 @@ const slideDown = keyframes`
 `
 
 export const MoreHorizontalContainer = styled.div`
-    position: absolute;
-    right: 50px;
+    position: relative;
+    /* right: 50px; */
     display: flex;
     flex-direction: row;
     background-color: #f6f1ee;
@@ -376,4 +372,23 @@ export const MoreVerticalContainer = styled.div`
     top: 50px;
 
     animation: ${slideDown} 1s;
+`
+
+export const MobileButtonsContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    margin-top: 10px;
+`
+
+export const MobileActionButtonsContainer = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    
+    flex-wrap: wrap;
 `
