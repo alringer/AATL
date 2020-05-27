@@ -5,8 +5,8 @@ import React from 'react'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Footer from '../src/sections/Footer/Footer'
 import Header from '../src/sections/Header/Header'
+import { AppContainer, PageContainer } from '../src/style/App.style'
 import { GlobalStyle } from '../src/style/GlobalStyle'
-import { AppContainer, PageContainer } from './style/App.style'
 
 const App = ({ Component, pageProps }: AppProps) => {
     React.useEffect(() => {
