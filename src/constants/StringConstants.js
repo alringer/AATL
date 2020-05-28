@@ -148,7 +148,8 @@ export const RECOMMENDATION_EDITOR = {
     LabelTitle: 'Title',
     LabelDescription: 'Description',
     PlaceholderTitle: 'Write a catchy title :)',
-    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.'
+    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
+    MaxLength: '/150'
 }
 
 export const RECOMMENDATION_PUBLISHED = {

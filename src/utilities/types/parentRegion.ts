@@ -1,4 +1,6 @@
-export interface ICity {
+import { IVenue } from './venue'
+
+export interface IParentRegion {
     alternateName?: string
     city: string
     county?: string
@@ -13,7 +15,7 @@ export interface ICity {
     population: number
     state: string
     updatedAt: string
-    venues: any
+    venues: IVenue
 }
 export const mockStateList = []
 export const mockProvinceList = []

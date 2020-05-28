@@ -148,28 +148,26 @@ export const RecommendationEditorRowContainer = styled.div`
 `
 
 export const RecommendationEditorInputLabelContainer = styled.div`
-    width: 50px;
     display: flex;
-    flex-direction: row;
     align-items: center;
 
     @media ${device.mobile} {
+        flex-direction: row;
+        width: 100%;
         margin-right: 0;
         padding-right: 0;
         margin-bottom: 10px;
-        justify-content: flex-start;
+        align-items: flex-start;
+        justify-content: space-between;
     }
-    @media ${device.tablet} {
-        margin-right: 0;
-        padding-right: 0;
-        margin-bottom: 10px;
-        justify-content: flex-start;
-    }
+    @media ${device.tablet} {}
     @media ${device.laptop} {
+        width: 50px;
+        flex-direction: column;
         margin-right: 20px;
         padding-right: 20px;
         margin-bottom: 0;
-        justify-content: flex-end;
+        align-items: flex-end;
     }
 `
 
@@ -182,6 +180,20 @@ export const RecommendationEditorInputLabelText = styled.p`
     letter-spacing: normal;
     text-align: right;
     color: ${props => props.theme.charcoalGrey};
+`
+
+export const CurrentTextLength = styled(RecommendationEditorInputLabelText)`
+    color: ${(props) => props.theme.darkGreyOpaque};
+    ${(props) => {
+        if (props.id === 'capped') {
+            return css`
+                color: ${(props) => props.theme.mushroom};
+            `
+        }
+    }}
+`
+export const MaxTextLength = styled(RecommendationEditorInputLabelText)`
+    color: ${(props) => props.theme.mushroom};
 `
 
 export const RecommendationEditorInputContainer = styled.div`
