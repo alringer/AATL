@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next",
         "build": "next build",
-        "clean": "rm -rf build",
+        "clean": "rm -rf build && rm -rf build-storybook",
         "start": "next start",
         "storybook": "start-storybook -p 6006 -c .storybook",
         "build-storybook": "build-storybook -c .storybook -o build-storybook"
