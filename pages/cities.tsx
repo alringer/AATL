@@ -19,8 +19,8 @@ export const getServerSideProps: GetStaticProps = async (context) => {
     await axios
         .get(FETCH_CITIES)
         .then((res) => {
-            // categoryList = res.data
-            console.log(res)
+            stateList = res.data.USA
+            provinceList = res.data.CAN
         })
         .catch((err) => {
             console.log('Fetch failed in cities')
