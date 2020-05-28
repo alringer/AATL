@@ -28,9 +28,6 @@ export const getServerSideProps: GetStaticProps = async (context) => {
     return {
         props: { stateList: stateList, provinceList: provinceList },
     }
-    // return {
-    //     props: { stateList: mockStateList, provinceList: mockProvinceList },
-    // }
 }
 
 export default Cities
