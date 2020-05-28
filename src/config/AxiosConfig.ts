@@ -4,6 +4,7 @@ export const BASE_URL = 'http://localhost:8080/api'
 
 // Categories
 export const FETCH_CATEGORIES = '/categories?size=1000&sort=id%2Casc'
+export const FETCH_CITIES = '/parent-regions-all-active'
 // export const PATIENT_PAYER_CARD_GET = (id: number, fileName: string) => {
 //     return `patients/${id}/payers/cards/${fileName}`
 // }

@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             categoryList = res.data
         })
         .catch((err) => {
-            console.log('Error detected in food-and-drink')
+            console.log('Fetch failed in food-and-drink')
         })
     return {
         props: { categoryList: categoryList },

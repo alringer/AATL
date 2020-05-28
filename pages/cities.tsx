@@ -1,8 +1,8 @@
 import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import CitiesListView from 'components/ListView/CitiesListView'
+import axios, { FETCH_CITIES } from 'config/AxiosConfig'
 import { GetStaticProps } from 'next'
 import React from 'react'
-import { mockProvinceList, mockStateList } from 'utilities/types/city'
 
 const Cities = ({ stateList, provinceList }) => {
     return (
@@ -14,9 +14,23 @@ const Cities = ({ stateList, provinceList }) => {
 }
 
 export const getServerSideProps: GetStaticProps = async (context) => {
+    let stateList = []
+    let provinceList = []
+    await axios
+        .get(FETCH_CITIES)
+        .then((res) => {
+            // categoryList = res.data
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log('Fetch failed in cities')
+        })
     return {
-        props: { stateList: mockStateList, provinceList: mockProvinceList },
+        props: { stateList: stateList, provinceList: provinceList },
     }
+    // return {
+    //     props: { stateList: mockStateList, provinceList: mockProvinceList },
+    // }
 }
 
 export default Cities
