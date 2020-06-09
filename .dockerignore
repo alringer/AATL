@@ -1,0 +1,9 @@
+# The files we want to exclude from Dockerfile COPY
+.git
+Dockerfile
+node_modules
+.next
+out
+build
+build-storybook
+
