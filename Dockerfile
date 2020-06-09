@@ -6,10 +6,13 @@ FROM node:12
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
-# This assumes that this is a clean checkout of this branch and doesn't have
-# cruft from previous 'developer' runs.
+#COPY /src /app/src
+#COPY ["package.json", "package-lock.json*", "./"]
 COPY . ./
 
+# If you're using yarn:
+#  yarn build
+#RUN npm install --production --silent && mv node_modules ../
 RUN npm config set color false
 RUN npm install
 RUN npm run build
