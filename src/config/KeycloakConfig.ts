@@ -1,6 +1,6 @@
 const keycloakCfg = {
     realm: 'jhipster',
-    url: 'http://localhost:8181/auth/',
+    url: process.env.AUTH_URL,
     clientId: 'web_app',
 }
 
