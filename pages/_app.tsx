@@ -1,13 +1,21 @@
 // import { CssBaseline } from '@material-ui/core'
+import { KeycloakCookies } from '@react-keycloak/nextjs'
 import Provider from 'config/Provider'
-import { AppProps } from 'next/app'
+import cookie from 'cookie'
+import { IncomingMessage } from 'http'
+import { AppContext, AppProps } from 'next/app'
 import React from 'react'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Footer from '../src/sections/Footer/Footer'
 import Header from '../src/sections/Header/Header'
+import { AppContainer, PageContainer } from '../src/style/App.style'
 import { GlobalStyle } from '../src/style/GlobalStyle'
-import { AppContainer, PageContainer } from './style/App.style'
 
-const App = ({ Component, pageProps }: AppProps) => {
+interface InitialProps {
+    cookies: KeycloakCookies
+}
+
+const App = ({ Component, pageProps, cookies }: AppProps & InitialProps) => {
     React.useEffect(() => {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side')
@@ -18,7 +26,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     return (
         <>
-            <Provider>
+            <Provider cookies={cookies}>
                 {/* <CssBaseline /> */}
                 <GlobalStyle />
                 <AppContainer>
@@ -31,6 +39,20 @@ const App = ({ Component, pageProps }: AppProps) => {
             </Provider>
         </>
     )
+}
+
+const parseCookies = (req?: IncomingMessage) => {
+    if (!req || !req.headers) {
+        return {}
+    }
+    return cookie.parse(req.headers.cookie || '')
+}
+
+App.getInitialProps = async (context: AppContext) => {
+    // Extract cookies from AppContext
+    return {
+        cookies: parseCookies(context?.ctx?.req),
+    }
 }
 
 // Only uncomment this method if you have blocking data requirements for

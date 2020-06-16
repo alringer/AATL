@@ -23,6 +23,22 @@ import {
 } from './Footer.style'
 
 const Footer = () => {
+    const handleOpenFacebook = () => {
+        if (window !== undefined) {
+            window.open('https://www.facebook.com/AskaTravelLocal/', '_blank')
+        }
+    }
+    const handleOpenInstagram = () => {
+        if (window !== undefined) {
+            window.open('https://www.instagram.com/askatravellocal/', '_blank')
+        }
+    }
+    const handleOpenTwitter = () => {
+        if (window !== undefined) {
+            window.open('https://twitter.com/', '_blank')
+        }
+    }
+
     return (
         <FooterContainer>
             <FooterFirstRow>
@@ -30,13 +46,13 @@ const Footer = () => {
                     <FooterInformationTitle>{S.FOOTER_ITEMS.CompanyName}</FooterInformationTitle>
                     <FooterInformationBody>{S.FOOTER_ITEMS.FooterMessage}</FooterInformationBody>
                     <FooterButtonsContainer>
-                        <IconButton onClick={() => window.open('https://www.facebook.com/AskaTravelLocal/', '_blank')}>
+                        <IconButton onClick={handleOpenFacebook}>
                             <Image src={FacebookSVG} alt="icon" />
                         </IconButton>
-                        <IconButton onClick={() => window.open('https://www.instagram.com/askatravellocal/', '_blank')}>
+                        <IconButton onClick={handleOpenInstagram}>
                             <Image src={InstagramSVG} alt="icon" />
                         </IconButton>
-                        <IconButton onClick={() => window.open('https://twitter.com/', '_blank')}>
+                        <IconButton onClick={handleOpenTwitter}>
                             <Image src={TwitterSVG} alt="icon" />
                         </IconButton>
                     </FooterButtonsContainer>

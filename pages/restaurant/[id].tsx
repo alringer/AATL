@@ -3,12 +3,12 @@ import HaveYouBeenTo from 'components/HaveYouBeenTo/HaveYouBeenTo'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
 import { GetServerSideProps } from 'next'
 import React from 'react'
-import PlaceCardsList from 'sections/CardsList/PlaceCardsList'
-import RecommendationCardsList from 'sections/CardsList/RecommendationCardsList'
+import PlaceCardsList from 'sections/CardsList/CardPlaceSmallList'
+import RecommendationCardsList from 'sections/CardsList/CardRecommendationWideList'
+import { PlaceCardsListData } from 'stories/CardPlaceSmall.stories'
+import { RecommendationCardsListData } from 'stories/CardRecommendationWide.stories'
 import { HaveYouBeenToData } from 'stories/HaveYouBeenTo.stories'
 import { PlaceBannerData } from 'stories/PlaceBanner.stories'
-import { PlaceCardsListData } from 'stories/PlaceCardSmall.stories'
-import { RecommendationCardsListData } from 'stories/RecommendationCard.stories'
 
 interface IRestaurantProps {}
 

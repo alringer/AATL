@@ -3,7 +3,7 @@ import CategoriesListView from 'components/ListView/CategoriesListView'
 import CitiesListView from 'components/ListView/CitiesListView'
 import React from 'react'
 import { mockCategoryList } from 'utilities/types/category'
-import { mockProvinceList, mockStateList } from 'utilities/types/city'
+import { mockProvinceList, mockStateList } from 'utilities/types/parentRegion'
 
 export const CitiesData = {
     smallStateSmallProvince: {

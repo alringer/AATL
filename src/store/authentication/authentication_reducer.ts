@@ -7,6 +7,7 @@ import {
     SET_AUTHENTICATION_ERROR,
     SET_AUTHENTICATION_LOADING,
     SET_AUTHENTICATION_VIEW,
+    SET_TARGET_EMAIL,
 } from './authentication_types'
 
 const initialState: AuthenticationReducerState = {
@@ -14,6 +15,7 @@ const initialState: AuthenticationReducerState = {
     currentAuthenticationView: AuthenticationViewEnum.Login,
     error: false,
     loading: false,
+    targetEmail: '',
 }
 
 const authenticationReducer = (state = initialState, action: AuthenticationActionTypes): AuthenticationReducerState => {
@@ -26,9 +28,7 @@ const authenticationReducer = (state = initialState, action: AuthenticationActio
             }
         case CLOSE_AUTHENTICATION_MODAL:
             return {
-                ...state,
-                isOpen: false,
-                error: false,
+                ...initialState,
             }
         case SET_AUTHENTICATION_ERROR:
             return {
@@ -45,6 +45,11 @@ const authenticationReducer = (state = initialState, action: AuthenticationActio
                 ...state,
                 currentAuthenticationView: action.payload,
                 error: false,
+            }
+        case SET_TARGET_EMAIL:
+            return {
+                ...state,
+                targetEmail: action.payload,
             }
         default:
             return state

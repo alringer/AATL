@@ -18,12 +18,10 @@ export const ModalContainer = styled.div`
 export const ModalContentContainer = styled.div`
     display: flex;
     flex-direction: column;
-    /* TODO: Determine the proper max-height */
     max-height: 100vh;
 
     @media ${device.mobile} {
         width: 100%;
-        /* 100% correct? */
         height: 100%;
     }
     @media ${device.tablet} {

@@ -19,11 +19,18 @@ import {
 } from './AuthenticationModal.style'
 
 interface IMagicLinkProps {
+    targetEmail: string
+    currentAuthenticationView: AuthenticationViewEnum
     setCurrentAuthenticationView: (authenticationType: AuthenticationViewEnum) => void
     closeModal: () => void
 }
 
-const MagicLink: React.FC<IMagicLinkProps> = ({ setCurrentAuthenticationView, closeModal }) => {
+const MagicLink: React.FC<IMagicLinkProps> = ({
+    targetEmail,
+    currentAuthenticationView,
+    setCurrentAuthenticationView,
+    closeModal,
+}) => {
     const handleOK = () => {
         closeModal()
     }
@@ -50,8 +57,12 @@ const MagicLink: React.FC<IMagicLinkProps> = ({ setCurrentAuthenticationView, cl
             </ModalHeaderContainer>
             <ModalBodyContainer>
                 <ModalRowContainer>
-                    <ModalIntroductoryText>{S.AUTHENTICATION.MagicLinkBody}</ModalIntroductoryText>
-                    <ModalIntroductoryText>{S.AUTHENTICATION.MagicLinkBodyTwo}</ModalIntroductoryText>
+                    <ModalIntroductoryText>{`${S.AUTHENTICATION.MagicLinkBody} ${targetEmail}.`}</ModalIntroductoryText>
+                    <ModalIntroductoryText>
+                        {currentAuthenticationView === AuthenticationViewEnum.MagicLinkResetPassword
+                            ? S.AUTHENTICATION.MagicLinkBodyForgotPassword
+                            : S.AUTHENTICATION.MagicLinkBodySetupAccount}
+                    </ModalIntroductoryText>
                 </ModalRowContainer>
                 <ModalRowContainer id="marginTop">
                     <AuthenticationOrangeButton onClick={handleOK}>{S.BUTTON_LABELS.OK}</AuthenticationOrangeButton>

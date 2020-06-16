@@ -20,12 +20,17 @@ storiesOf('Recommendation Editor Modal', module)
     .add('Editor View', () => {
         return (
             <RecommendationModalContainer>
-                <RecommendationEditorHeader closeRecommendationModal={() => {}} />
+                <RecommendationEditorHeader
+                    published={false}
+                    handleMoreTips={() => {}}
+                    closeRecommendationModal={() => {}}
+                />
                 <RecommendationModalContentContainer>
                     <RecommendationEditor
                         placeName={RecommendationEditorData.default.placeName}
                         isLoading={false}
                         handlePublish={() => {}}
+                        handleReadOurGuidelines={() => {}}
                     />
                 </RecommendationModalContentContainer>
             </RecommendationModalContainer>
@@ -34,7 +39,11 @@ storiesOf('Recommendation Editor Modal', module)
     .add('Published View', () => {
         return (
             <RecommendationModalContainer>
-                <RecommendationEditorHeader closeRecommendationModal={() => {}} />
+                <RecommendationEditorHeader
+                    published={true}
+                    handleMoreTips={() => {}}
+                    closeRecommendationModal={() => {}}
+                />
                 <RecommendationModalContentContainer>
                     <RecommendationPublished publishedTitle={RecommendationEditorData.default.recommendationTitle} />
                 </RecommendationModalContentContainer>

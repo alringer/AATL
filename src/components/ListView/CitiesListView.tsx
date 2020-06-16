@@ -3,7 +3,7 @@ import * as S from 'constants/StringConstants'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import React from 'react'
-import { ICity } from 'utilities/types/city'
+import { IParentRegion } from 'utilities/types/parentRegion'
 import {
     EmptyMessage,
     ListViewCountriesContainer,
@@ -20,12 +20,12 @@ import {
 } from './ListView.style'
 
 interface ICitiesListViewProps {
-    stateList: ICity[]
-    provinceList: ICity[]
+    stateList: IParentRegion[]
+    provinceList: IParentRegion[]
 }
 
 const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceList }) => {
-    const renderList = (currentList: ICity[]) => {
+    const renderList = (currentList: IParentRegion[]) => {
         const itemsPerColumn = 20
         const numberOfColumns = Math.ceil(currentList.length / itemsPerColumn)
         let columns = []
@@ -36,11 +36,13 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
             columns = [
                 ...columns,
                 <ListViewRegionColumnContainer key={i}>
-                    {slicedList.map((city: ICity) => {
+                    {slicedList.map((city: IParentRegion) => {
                         return (
-                            <ListViewRegionContainer key={city.cityID}>
-                                <Link href={`/${R.ROUTE_ITEMS.city}/${city.name}`}>
-                                    <ListViewRegionText>{city.name}</ListViewRegionText>
+                            <ListViewRegionContainer key={city.id}>
+                                <Link href={`${R.ROUTE_ITEMS.city}/${city.id}`}>
+                                    <ListViewRegionText>
+                                        {city.alternateName ? city.alternateName : city.city}
+                                    </ListViewRegionText>
                                 </Link>
                             </ListViewRegionContainer>
                         )

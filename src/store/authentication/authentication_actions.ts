@@ -8,6 +8,7 @@ import {
     SET_AUTHENTICATION_ERROR,
     SET_AUTHENTICATION_LOADING,
     SET_AUTHENTICATION_VIEW,
+    SET_TARGET_EMAIL,
 } from './authentication_types'
 
 export const openAuthenticationModal = (currentAuthenticationView: AuthenticationViewEnum) =>
@@ -16,6 +17,7 @@ export const closeAuthenticationModal = () => action(CLOSE_AUTHENTICATION_MODAL)
 export const setAuthenticationLoading = (loading: boolean) => action(SET_AUTHENTICATION_LOADING, loading)
 export const setAuthenticationError = (error: boolean) => action(SET_AUTHENTICATION_ERROR, error)
 export const setAuthenticationView = (targetView: AuthenticationViewEnum) => action(SET_AUTHENTICATION_VIEW, targetView)
+export const setTargetEmail = (targetEmail: string) => action(SET_TARGET_EMAIL, targetEmail)
 
 export const switchAuthenticationView = (targetView: AuthenticationViewEnum) => async (dispatch) => {
     dispatch(setAuthenticationView(targetView))

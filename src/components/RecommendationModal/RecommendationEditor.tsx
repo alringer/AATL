@@ -1,7 +1,21 @@
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import { RecommendationEditorContainer, RecommendationEditorDescriptionTextArea, RecommendationEditorInputContainer, RecommendationEditorInputLabelContainer, RecommendationEditorInputLabelText, RecommendationEditorPublishButton, RecommendationEditorReadOurGuidelines, RecommendationEditorRowContainer, RecommendationEditorTitle, RecommendationEditorTitleTextArea, RecommendationModalReadOurGuidelinesContainer } from './RecommendationModal.style'
+import {
+    CurrentTextLength,
+    MaxTextLength,
+    RecommendationEditorContainer,
+    RecommendationEditorDescriptionTextArea,
+    RecommendationEditorInputContainer,
+    RecommendationEditorInputLabelContainer,
+    RecommendationEditorInputLabelText,
+    RecommendationEditorPublishButton,
+    RecommendationEditorReadOurGuidelines,
+    RecommendationEditorRowContainer,
+    RecommendationEditorTitle,
+    RecommendationEditorTitleTextArea,
+    RecommendationModalReadOurGuidelinesContainer,
+} from './RecommendationModal.style'
 
 interface IRecommendationEditorProps {
     isLoading: boolean
@@ -21,7 +35,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     const [file, setFile] = React.useState()
 
     const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setTitle(String(e.target.value))
+        if (e.target.value.length <= 150) {
+            setTitle(String(e.target.value))
+        }
     }
     const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(String(e.target.value))
@@ -65,6 +81,10 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                     <RecommendationEditorInputLabelText>
                         {S.RECOMMENDATION_EDITOR.LabelTitle}
                     </RecommendationEditorInputLabelText>
+                    <div style={{ display: 'flex' }}>
+                        <CurrentTextLength id={title.length < 150 ? '' : 'capped'}>{title.length}</CurrentTextLength>
+                        <MaxTextLength>{S.RECOMMENDATION_EDITOR.MaxLength}</MaxTextLength>
+                    </div>
                 </RecommendationEditorInputLabelContainer>
                 <RecommendationEditorInputContainer>
                     <RecommendationEditorTitleTextArea

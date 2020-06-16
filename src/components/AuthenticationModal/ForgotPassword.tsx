@@ -23,6 +23,7 @@ import {
 } from './AuthenticationModal.style'
 
 interface IForgotPasswordProps {
+    setEmailToSend: (input: string) => void
     setCurrentAuthenticationView: (authenticationType: AuthenticationViewEnum) => void
     closeModal: () => void
 }
@@ -31,7 +32,11 @@ interface Errors {
     email: string
 }
 
-const ForgotPassword: React.FC<IForgotPasswordProps> = ({ setCurrentAuthenticationView, closeModal }) => {
+const ForgotPassword: React.FC<IForgotPasswordProps> = ({
+    setEmailToSend,
+    setCurrentAuthenticationView,
+    closeModal,
+}) => {
     const DEFAULT_ERRORS = {
         email: '',
     }
@@ -56,9 +61,10 @@ const ForgotPassword: React.FC<IForgotPasswordProps> = ({ setCurrentAuthenticati
         } else {
             setAuthenticationLoading(true)
             setTimeout(() => {
+                setEmailToSend(email)
                 setAuthenticationLoading(false)
                 setAuthenticationErrors(DEFAULT_ERRORS)
-                setCurrentAuthenticationView(AuthenticationViewEnum.MagicLink)
+                setCurrentAuthenticationView(AuthenticationViewEnum.MagicLinkResetPassword)
             }, 1000)
         }
     }

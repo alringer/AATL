@@ -1,6 +1,18 @@
 export const LOREM_IPSUM_SHORT = 'Lorem ipsum dolor sit amet'
 export const LOREM_IPSUM_LONG = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor sed lacus quis faucibus. Cras pretium vestibulum tellus, a vulputate est placerat dictum. Cras sit amet turpis a metus convallis sodales non ac nulla. Maecenas gravida gravida quam sit amet convallis. Nulla pulvinar, urna eget viverra aliquam, orci arcu fermentum nisl, vitae molestie purus massa a sapien. Phasellus nec porttitor felis. Phasellus quis convallis velit. Ut interdum justo nibh. Nullam auctor venenatis tincidunt. Donec sed mollis odio, et consequat turpis. Donec commodo sodales risus, eget rhoncus diam suscipit vitae. Donec id auctor velit. Fusce blandit eu dui id suscipit. Phasellus nibh ex, tempor non placerat in, finibus bibendum nisi.'
 
+export const TOOL_TIPS = {
+    Added: 'Added to your list',
+    Recommended: 'Recommended by you',
+    AddToList: 'Add to list',
+    RemoveFromList: 'Remove from list',
+    WriteRecommendation: 'Write a recommendation',
+    ShareRestaurant: 'Share restaurant',
+    Flag: 'Flag as inappropriate',
+    Share: 'Share',
+    Recommend: 'Recommend'
+}
+
 export const BUTTON_LABELS = {
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
@@ -20,7 +32,12 @@ export const BUTTON_LABELS = {
     PublishRecommendation: 'PUBLISH RECOMMENDATION',
     CopyRecommendation: 'COPY RECOMMENDATION LINK',
     MoreTips: 'MORE TIPS',
-    ReadOurGuidelines: 'READ OUR GUIDELINES'
+    ReadOurGuidelines: 'READ OUR GUIDELINES',
+    CheckItOut: 'CHECK IT OUT',
+    ViewMore: 'VIEW MORE',
+    AddPlace: 'ADD PLACE',
+    Cancel: 'CANCEL',
+    AddNewPlace: 'ADD A NEW PLACE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -30,7 +47,15 @@ export const INPUT_PLACEHOLDERS = {
     Email: 'Email',
     Password: 'Password',
     YourFullName: 'Your Full Name',
-    ConfirmPassword: 'Confirm Password'
+    ConfirmPassword: 'Confirm Password',
+    Near: 'Near',
+    Address: 'city, state or zip',
+    Name: 'Name',
+    RestaurantType: 'Restaurant type i.e. Hamburgers, Sushi, Mexican',
+    Address: 'Address',
+    Description: 'Description',
+    PhoneNumber: 'Phone Number',
+    WebsiteURL: 'Website URL'
 
 }
 
@@ -95,7 +120,8 @@ export const AUTHENTICATION = {
     // Magic Link
     MagicLinkTitle: 'Check your inbox!',
     MagicLinkBody: 'We just emailed a magic link to ',
-    MagicLinkBodyTwo: 'Click the link to reset your password.',
+    MagicLinkBodyForgotPassword: 'Click the link to reset your password.',
+    MagicLinkBodySetupAccount: 'Click the link to complete your account set-up.',
     // Shared
     Forgot: 'FORGOT YOUR PASSWORD?',
     DoNotHaveAnAccount: 'Don\'t have an account?',
@@ -133,7 +159,8 @@ export const RECOMMENDATION_EDITOR = {
     LabelTitle: 'Title',
     LabelDescription: 'Description',
     PlaceholderTitle: 'Write a catchy title :)',
-    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.'
+    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
+    MaxLength: '/150'
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -156,4 +183,36 @@ export const IMAGE_DROPZONE = {
 
 export const RECOMMENDATION_TIPS = {
     Title: 'Tips on writing a scrumptious recommendation'
+}
+
+export const MOST_POPULAR = {
+    Title: 'Most Popular in',
+    SubTitle: 'The places being visited most frequently by foodies all over'
+}
+
+export const LOCAL_PLACES = {
+    Title: 'Local Places',
+    SubTitle: 'Places recommended by local foodies in'
+}
+
+export const PLACE_CARD = {
+    Recommended: 'RECOMMENDED',
+    Times: 'TIMES'
+}
+
+export const RESTAURANT_SEARCH = {
+    Header: 'Looking for a restaurant?',
+    Matches: 'Matches found',
+    NotFind: 'Didn\'t find what you were looking for?'
+}
+
+export const ADD_PLACE = { 
+    Header: 'Add a place to recommend',
+    Intro: 'Please provide information about this restaurant. Your recommendation will be public.'
+}
+
+export const SEARCH_PAGE = {
+    FoodAndDrink: 'FOOD & DRINK',
+    WeHave: 'We have',
+    RecordsFor: 'records for'
 }

@@ -9,7 +9,14 @@ export const CustomTextField = styled(TextField)`
     height: 100%;
 
     .MuiFormLabel-root.Mui-focused {
+        /* background-color: white; */
         color: grey;
+        /* z-index: 100; */
+    }
+
+    input {
+        /* caret-color: black; */
+        /* z-index: 99; */
     }
 
     ${props => {

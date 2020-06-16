@@ -18,3 +18,7 @@ export const chopStringSmallPlaceDescription = (input: string) => {
     // TODO: Determine the correct character count
     return input.length > 90 ? `${input.slice(0, 90)}...` : input
 }
+
+export const chopStringInfiniteCarouselCardDescription = (input: string) => {
+    return input.length > 140 ? `${input.slice(0, 140)}...` : input
+}

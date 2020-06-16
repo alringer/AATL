@@ -19,11 +19,46 @@ export const GlobalStyle = createGlobalStyle`
 
     .MuiButton-root {
         min-width: 48px;
+        text-transform: none;
+    }
+
+    .MuiInputLabel-outlined {
+        transform: translate(14px, 16px) scale(1);
+    }
+
+    .MuiOutlinedInput-input {
+        /* box-sizing: padding-box; */
+        padding: 11px;
+        height: 24px;
+        /* height: 100%; */
     }
 
 
     .Mui-focused .MuiOutlinedInput-notchedOutline {
         border-color: transparent !important;
+    }
+
+    .carousel-root {
+        width: 100%
+    }
+
+    .MuiPaginationItem-root {
+        font-size: 12px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.67;
+        letter-spacing: 2px;
+        text-align: center;
+        color: ${(props) => props.theme.pinkishTan};
+        background-color: ${(props) => props.theme.white};
+        border: 2px solid ${(props) => props.theme.darkGreyOpaque};
+        border-radius: 5px;
+    }
+
+    .MuiPaginationItem-page.Mui-selected {
+        color: ${(props) => props.theme.white};
+        background-color: ${(props) => props.theme.pinkishTan};
     }
 
     /* Code below to put more padding within the input fields */

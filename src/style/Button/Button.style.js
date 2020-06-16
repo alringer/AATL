@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const borderWidth = '2px'
 
 export const CustomButton = styled(MUIButton)`
-    white-space: nowrap;
+    /* white-space: nowrap; */
     position: relative;
     border-radius: 4px;
     box-sizing: border-box;
