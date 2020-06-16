@@ -12,5 +12,13 @@ export const SearchFullData = {
 const handleSearch = (place?: string, address?: string) => {}
 
 storiesOf('Search Page', module).add('Search Panel', () => {
-    return <SearchWorkBench inputPlace={''} inputAddress={''} searchResults={[]} handleSearch={handleSearch} />
+    return (
+        <SearchWorkBench
+            inputPlace={''}
+            inputAddress={''}
+            searchResults={[]}
+            handleSearch={handleSearch}
+            openSearchModal={() => {}}
+        />
+    )
 })
