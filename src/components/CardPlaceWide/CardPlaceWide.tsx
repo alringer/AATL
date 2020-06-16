@@ -17,12 +17,34 @@ import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
-import { CardIcon, MobileActionButtonsContainer, MobileButtonsContainer, MoreHorizontalContainer, MoreVerticalContainer, WideHeaderLeftContainer, WideHeaderTooltipIconsContainer, WidePlaceAddressText } from 'style/Card/Card.style'
+import {
+    CardIcon,
+    MobileActionButtonsContainer,
+    MobileButtonsContainer,
+    MoreHorizontalContainer,
+    MoreVerticalContainer,
+    WideHeaderLeftContainer,
+    WideHeaderTooltipIconsContainer,
+    WidePlaceAddressText,
+} from 'style/Card/Card.style'
 import { query } from 'style/device'
 import { chopStringFullRecommendationDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import { IPlace } from 'utilities/types/place'
-import { CardPlaceWideAuthorTitleText, CardPlaceWideButtonsContainer, CardPlaceWideCardContainer, CardPlaceWideCardContentContainer, CardPlaceWideCardImageContainer, CardPlaceWideContentBottomContainer, CardPlaceWideContentMiddleContainer, CardPlaceWideContentTopContainer, CardPlaceWideHeaderContainer, CardPlaceWidePlaceCategoryText, CardPlaceWidePlaceNameText, CardPlaceWideSummaryText } from './CardPlaceWide.style'
+import {
+    CardPlaceWideAuthorTitleText,
+    CardPlaceWideButtonsContainer,
+    CardPlaceWideCardContainer,
+    CardPlaceWideCardContentContainer,
+    CardPlaceWideCardImageContainer,
+    CardPlaceWideContentBottomContainer,
+    CardPlaceWideContentMiddleContainer,
+    CardPlaceWideContentTopContainer,
+    CardPlaceWideHeaderContainer,
+    CardPlaceWidePlaceCategoryText,
+    CardPlaceWidePlaceNameText,
+    CardPlaceWideSummaryText,
+} from './CardPlaceWide.style'
 
 export enum CardPlaceWideEnum {
     City,
@@ -85,8 +107,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     }
 
     return (
-        <CardPlaceWideCardContainer onClick={handleView}>
-            <CardPlaceWideCardImageContainer>
+        <CardPlaceWideCardContainer onClick={handleView} id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
+            <CardPlaceWideCardImageContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
                 <Image src={PlaceImage} alt="recommendation-image" />
             </CardPlaceWideCardImageContainer>
             <CardPlaceWideCardContentContainer>

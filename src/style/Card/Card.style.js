@@ -2,7 +2,7 @@ import { CustomIconButton } from 'style/Button/IconButton.style'
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import { ImageContainer } from 'style/ImageContainer/ImageContainer'
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 export const CardContainer = styled(ContentWrapper)`
     transition: all 0.2s linear;
@@ -47,7 +47,7 @@ export const WideCardContainer = styled(CardContainer)`
     display: flex;
     width: 100%;
     border: solid 2px rgba(54, 57, 64, 0.06);
-    
+
     @media ${device.mobile} {
         flex-direction: column;
         height: 100%;
@@ -60,34 +60,40 @@ export const WideCardContainer = styled(CardContainer)`
         height: 290px;
         justify-content: flex-start;
         align-items: flex-start;
+        background-clip: content-box;
+
+        ${(props) => {
+            if (props.id === 'toggled') {
+                return css`
+                    background-color: ${(props) => props.theme.darkSlateBlue};
+                `
+            }
+        }}
     }
 
-    @media ${device.laptop} {
-        flex-direction: row;
-        height: 290px;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
+    ${(props) => {
+        if (props.id === 'toggled') {
+            return css`
+                height: auto !important;
+            `
+        }
+    }}
 `
 
 export const WideCardImageContainer = styled(ImageContainer)`
     position: relative;
-    height: 100%;
 
     @media ${device.mobile} {
-        width: 100%;
         height: 160px;
+        width: 100%;
     }
 
     @media ${device.tablet} {
+        height: 286px;
         width: 300px;
-        height: 100%;
     }
 
-    @media ${device.laptop} {
-        width: 300px;
-        height: 100%;
-    }
+    @media ${device.laptop} {}
 `
 
 export const WideCardContentContainer = styled.div`
@@ -97,9 +103,10 @@ export const WideCardContentContainer = styled.div`
     align-items: flex-start;
     flex: 1;
     height: 100%;
+    background-color: ${props => props.theme.white};
 
     @media ${device.mobile} {
-        padding: 8px 16px 39px;
+        padding: 8px 16px 20px;
     }
 
     @media ${device.tablet} {
@@ -115,7 +122,7 @@ export const WideHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
 `
 
@@ -276,12 +283,12 @@ export const WideSummaryText = styled.p`
 
     @media ${device.tablet} {
         font-size: 14px;
-        margin-top: 0;
+        margin-top: 5px;
     }
 
     @media ${device.laptop} {
         font-size: 14px;
-        margin-top: 0;
+        margin-top: 5px;
     }
 `
 
@@ -316,7 +323,7 @@ export const WideAuthorTitleText = styled.p`
     color: ${props => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
-        margin-top: 9px;
+        /* margin-top: 9px; */
         font-size: 10px;
     }
 

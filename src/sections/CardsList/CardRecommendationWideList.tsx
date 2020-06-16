@@ -21,19 +21,8 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
             <ListTitle>{title}</ListTitle>
             <ListSubTitle>{subTitle}</ListSubTitle>
             {recommendations.map((recommendation: IRecommendation) => (
-                <RecommendationCardContainer key={recommendation.recommendationID}>
-                    <CardRecommendationWide
-                        isFull={isFull}
-                        recommendationID={recommendation.recommendationID}
-                        recommendationImage={recommendation.recommendationImage}
-                        placeName={recommendation.placeName}
-                        placeAddress={recommendation.placeAddress}
-                        placeCategories={recommendation.placeCategories}
-                        recommendationTitle={recommendation.recommendationTitle}
-                        recommendationDescription={recommendation.recommendationDescription}
-                        recommendationAuthorName={recommendation.recommendationAuthorName}
-                        recommendationAuthorTitle={recommendation.recommendationAuthorTitle}
-                    />
+                <RecommendationCardContainer key={recommendation.id}>
+                    <CardRecommendationWide isFull={isFull} recommendation={recommendation} />
                 </RecommendationCardContainer>
             ))}
         </ListContainer>

@@ -5,8 +5,8 @@ const useWindowSize = () => {
 
     const getSize = () => {
         return {
-            width: isClient ? window.innerWidth : undefined,
-            height: isClient ? window.innerHeight : undefined,
+            width: isClient && window ? window.innerWidth : undefined,
+            height: isClient && window ? window.innerHeight : undefined,
         }
     }
 
@@ -17,7 +17,7 @@ const useWindowSize = () => {
     }
 
     React.useEffect(() => {
-        if (isClient) {
+        if (isClient && window) {
             window.addEventListener('resize', handleResize)
             return () => window.removeEventListener('resize', handleResize)
         }

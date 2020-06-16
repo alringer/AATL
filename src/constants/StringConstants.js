@@ -34,7 +34,10 @@ export const BUTTON_LABELS = {
     MoreTips: 'MORE TIPS',
     ReadOurGuidelines: 'READ OUR GUIDELINES',
     CheckItOut: 'CHECK IT OUT',
-    ViewMore: 'VIEW MORE'
+    ViewMore: 'VIEW MORE',
+    AddPlace: 'ADD PLACE',
+    Cancel: 'CANCEL',
+    AddNewPlace: 'ADD A NEW PLACE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -44,7 +47,15 @@ export const INPUT_PLACEHOLDERS = {
     Email: 'Email',
     Password: 'Password',
     YourFullName: 'Your Full Name',
-    ConfirmPassword: 'Confirm Password'
+    ConfirmPassword: 'Confirm Password',
+    Near: 'Near',
+    Address: 'city, state or zip',
+    Name: 'Name',
+    RestaurantType: 'Restaurant type i.e. Hamburgers, Sushi, Mexican',
+    Address: 'Address',
+    Description: 'Description',
+    PhoneNumber: 'Phone Number',
+    WebsiteURL: 'Website URL'
 
 }
 
@@ -148,7 +159,8 @@ export const RECOMMENDATION_EDITOR = {
     LabelTitle: 'Title',
     LabelDescription: 'Description',
     PlaceholderTitle: 'Write a catchy title :)',
-    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.'
+    PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
+    MaxLength: '/150'
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -186,4 +198,21 @@ export const LOCAL_PLACES = {
 export const PLACE_CARD = {
     Recommended: 'RECOMMENDED',
     Times: 'TIMES'
+}
+
+export const RESTAURANT_SEARCH = {
+    Header: 'Looking for a restaurant?',
+    Matches: 'Matches found',
+    NotFind: 'Didn\'t find what you were looking for?'
+}
+
+export const ADD_PLACE = { 
+    Header: 'Add a place to recommend',
+    Intro: 'Please provide information about this restaurant. Your recommendation will be public.'
+}
+
+export const SEARCH_PAGE = {
+    FoodAndDrink: 'FOOD & DRINK',
+    WeHave: 'We have',
+    RecordsFor: 'records for'
 }

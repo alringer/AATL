@@ -15,30 +15,7 @@ import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import { formatPhone } from 'utilities/helpers/formatPhone'
 import { IPlace } from 'utilities/types/place'
-import {
-    FindATableButton,
-    PlaceBannerAddressCityStateZip,
-    PlaceBannerAddressOne,
-    PlaceBannerAddressSpan,
-    PlaceBannerButtonsContainer,
-    PlaceBannerCityState,
-    PlaceBannerContactInformationSpan,
-    PlaceBannerContainer,
-    PlaceBannerContentContainer,
-    PlaceBannerDescription,
-    PlaceBannerImageContainer,
-    PlaceBannerPhoneNumber,
-    PlaceBannerPlaceCategory,
-    PlaceBannerPlaceName,
-    PlaceBannerRecommendNumber,
-    PlaceBannerRecommendRating,
-    PlaceBannerRecommendSpan,
-    PlaceBannerTextsContainer,
-    PlaceBannerVisitWebsite,
-    RecommendButton,
-    ShareButton,
-    ShareIconButton,
-} from './PlaceBanner.style'
+import { FindATableButton, PlaceBannerAddressCityStateZip, PlaceBannerAddressOne, PlaceBannerAddressSpan, PlaceBannerButtonsContainer, PlaceBannerCityState, PlaceBannerContactInformationSpan, PlaceBannerContainer, PlaceBannerContentContainer, PlaceBannerDescription, PlaceBannerImageContainer, PlaceBannerPhoneNumber, PlaceBannerPlaceCategory, PlaceBannerPlaceName, PlaceBannerRecommendNumber, PlaceBannerRecommendRating, PlaceBannerRecommendSpan, PlaceBannerTextsContainer, PlaceBannerVisitWebsite, RecommendButton, ShareButton, ShareIconButton } from './PlaceBanner.style'
 
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
@@ -67,12 +44,14 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
     const { enqueueSnackbar } = useSnackbar()
 
     const handleShare = () => {
-        let inp = document.createElement('input')
-        document.body.appendChild(inp)
-        inp.value = window.location.href
-        inp.select()
-        document.execCommand('copy', false)
-        inp.remove()
+        if (window !== undefined ) {
+            let inp = document.createElement('input')
+            document.body.appendChild(inp)
+            inp.value = window.location.href
+            inp.select()
+            document.execCommand('copy', false)
+            inp.remove()
+        }
 
         enqueueSnackbar('', {
             content: (
@@ -97,7 +76,9 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         console.log(`Recommend-restaurant button is clicked for place with ID of ${placeID}`)
     }
     const handleVisitWebsite = () => {
-        window.open(placeWebsiteURL, '_blank')
+        if (window !== undefined ) {
+            window.open(placeWebsiteURL, '_blank')
+        }
     }
 
     return (
