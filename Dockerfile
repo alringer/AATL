@@ -12,7 +12,8 @@ COPY . ./
 
 RUN npm config set color false
 RUN npm install
-RUN npm run build
+# TODO Revisit - This is technically building for dev or integration at the moment
+RUN npm run build-prod
 
 # Expose PORT 3000 on our virtual machine so we can run our server
 EXPOSE 3000
