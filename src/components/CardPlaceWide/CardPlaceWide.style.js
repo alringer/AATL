@@ -1,7 +1,34 @@
 import { WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText } from 'style/Card/Card.style'
-import styled from 'styled-components'
+import { device } from 'style/device'
+import styled, { css } from 'styled-components'
 
-export const CardPlaceWideCardContainer = styled(WideCardContainer)``
+export const CardPlaceWideCardContainer = styled(WideCardContainer)`
+     ${(props) => {
+            if (props.id === 'search') {
+                return css`
+                    @media ${device.tablet} {
+                        height: 250px !important;
+                    }
+                    ${CardPlaceWideCardImageContainer} {
+                        @media ${device.tablet} {
+                            height: 100% !important;
+                            width: 220px !important;
+                        }
+                    }
+
+                    ${CardPlaceWideCardContentContainer} {
+                        @media ${device.tablet} {
+                            padding: 20px !important;
+                        }
+
+                        @media ${device.laptop} {
+                            padding: 20px !important;
+                        }
+                    }
+                `
+            }
+        }}
+`
 export const CardPlaceWideCardImageContainer = styled(WideCardImageContainer)``
 export const CardPlaceWideCardContentContainer = styled(WideCardContentContainer)``
 export const CardPlaceWideHeaderContainer = styled(WideHeaderContainer)``

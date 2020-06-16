@@ -22,6 +22,17 @@ export const GlobalStyle = createGlobalStyle`
         text-transform: none;
     }
 
+    .MuiInputLabel-outlined {
+        transform: translate(14px, 16px) scale(1);
+    }
+
+    .MuiOutlinedInput-input {
+        /* box-sizing: padding-box; */
+        padding: 11px;
+        height: 24px;
+        /* height: 100%; */
+    }
+
 
     .Mui-focused .MuiOutlinedInput-notchedOutline {
         border-color: transparent !important;

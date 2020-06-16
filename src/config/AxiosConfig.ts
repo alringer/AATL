@@ -1,10 +1,14 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
 
-export const BASE_URL = 'http://localhost:8080/api'
-
+const API_URL = '/services/askatravellocal/api'
+export const BASE_URL = process.env.HOSTNAME + API_URL
 // Categories
-export const FETCH_CATEGORIES = '/categories?size=1000&sort=id%2Casc'
+// export const FETCH_CATEGORIES = '/categories?size=1000&sort=id%2Casc'
+export const FETCH_CATEGORIES = '/categories-all'
 export const FETCH_CITIES = '/parent-regions-all-active'
+export const IP_LOOKUP = (ipAddress: string) => {
+    return `/experimental/ip-lookup?ipAddress=${ipAddress}`
+}
 // export const PATIENT_PAYER_CARD_GET = (id: number, fileName: string) => {
 //     return `patients/${id}/payers/cards/${fileName}`
 // }

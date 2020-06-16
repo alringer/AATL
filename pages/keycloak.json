@@ -1,0 +1,8 @@
+{
+    "realm": "jhipster",
+    "auth-server-url": "http://localhost:8181/auth/",
+    "ssl-required": "none",
+    "resource": "web_app",
+    "public-client": true,
+    "confidential-port": 0
+}

@@ -21,9 +21,9 @@ import { bindActionCreators } from 'redux'
 import { openAuthenticationModal } from 'store/authentication/authentication_actions'
 import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
 import { StoreState } from 'store/index'
-import { logout } from 'store/user/user_actions'
 import { UserReducerState } from 'store/user/user_types'
 import { query } from 'style/device'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import useComponentVisible from 'utilities/hooks/useComponentVisible'
 import {
     ButtonContainer,
@@ -56,12 +56,18 @@ import {
 
 interface IReduxProps {
     user: UserReducerState
-    logout: () => void
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
 }
-interface IHeaderProps extends IReduxProps {}
+interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps {}
 
-const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal }) => {
+const Header: React.FC<IHeaderProps> = ({
+    user,
+    keycloakLogout,
+    openAuthenticationModal,
+    keycloakLogin,
+    keycloakSignUp,
+    authenticated,
+}) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
     const searchReference = useComponentVisible(false)
@@ -85,7 +91,7 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
     }
 
     const handleLogout = () => {
-        logout()
+        keycloakLogout()
         setMobileMenuVisible(false)
     }
 
@@ -94,7 +100,7 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
     }
 
     const handlePopoverLogout = () => {
-        logout()
+        keycloakLogout()
         popoverReference.setIsComponentVisible(false)
     }
 
@@ -104,11 +110,13 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
     }
 
     const handleOpenLogin = () => {
-        openAuthenticationModal(AuthenticationViewEnum.Login)
+        // openAuthenticationModal(AuthenticationViewEnum.Login)
+        keycloakLogin()
         setMobileMenuVisible(false)
     }
     const handleOpenSignUp = () => {
-        openAuthenticationModal(AuthenticationViewEnum.SignUp)
+        // openAuthenticationModal(AuthenticationViewEnum.SignUp)
+        keycloakSignUp()
         setMobileMenuVisible(false)
     }
 
@@ -227,7 +235,7 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
             </LeftItemsContainer>
             <RightItemsContainer>
                 <MenuItems />
-                {user.loggedIn === true ? <SignedInItems /> : <NotSignedInItems />}
+                {authenticated === true ? <SignedInItems /> : <NotSignedInItems />}
             </RightItemsContainer>
         </>
     )
@@ -276,7 +284,7 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
                 </MenuItemRow>
             </MenuItemsSectionRow>
             <MenuItemsSectionRow>
-                {user.loggedIn ? (
+                {authenticated ? (
                     <>
                         {/* TODO: Add profile route  */}
                         <MenuItemRow id="marginBottom">
@@ -321,7 +329,7 @@ const Header: React.FC<IHeaderProps> = ({ user, logout, openAuthenticationModal 
                             {matches.tablet && <HeaderDesktopTablet />}
                             {matches.laptop && <HeaderDesktopTablet />}
                         </HeaderContainer>
-                        {user.loggedIn && popoverReference.isComponentVisible && (matches.laptop || matches.tablet) && (
+                        {authenticated && popoverReference.isComponentVisible && (matches.laptop || matches.tablet) && (
                             <PopoverItems />
                         )}
                         {matches.mobile && isMobileMenuVisible && <MobileMenu />}
@@ -339,10 +347,9 @@ const mapStateToProps = (state: StoreState) => ({
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
         {
-            logout,
             openAuthenticationModal,
         },
         dispatch
     )
 
-export default reduxConnect(mapStateToProps, mapDispatchToProps)(Header)
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(Header))

@@ -15,8 +15,26 @@ export interface IParentRegion {
     population: number
     state: string
     updatedAt: string
-    venues: IVenue
+    venues: IVenue[]
 }
+export const mockParentRegion: IParentRegion = {
+    id: 0,
+    city: 'San Diego',
+    population: 0,
+    isActive: true,
+    state: 'CA',
+    iso3Country: 'USA',
+    imageCDNUrl: '',
+    alternateName: '',
+    datasetRanking: 0,
+    county: '',
+    latitude: 0,
+    longitude: 0,
+    createdAt: '2020-05-12T16:36:30Z',
+    updatedAt: '2020-05-12T16:36:30Z',
+    venues: [],
+}
+
 export const mockStateList = []
 export const mockProvinceList = []
 
