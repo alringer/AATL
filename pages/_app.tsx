@@ -1,6 +1,7 @@
 // import { CssBaseline } from '@material-ui/core'
 import { KeycloakCookies } from '@react-keycloak/nextjs'
 import Provider from 'config/Provider'
+import VersionInfo from 'constants/GitProperties.json'
 import cookie from 'cookie'
 import { IncomingMessage } from 'http'
 import { AppContext, AppProps } from 'next/app'
@@ -22,6 +23,7 @@ const App = ({ Component, pageProps, cookies }: AppProps & InitialProps) => {
         if (jssStyles && jssStyles.parentNode) {
             jssStyles.parentNode.removeChild(jssStyles)
         }
+        console.log('Build Information: ', VersionInfo)
     }, [])
 
     return (
