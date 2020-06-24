@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.aatl.gateway</groupId>
+    <artifactId>aatl-web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>aatl-web</name>
+    <description>AATL Web Frontend Service</description>
+
+    <properties>
+        <!-- Versions -->
+        <git-commit-plugin.version>4.0.0</git-commit-plugin.version>
+        <jackson.version>2.9.2</jackson.version>
+        <source.version>3.0.1</source.version>
+
+        <!-- Project Properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>pipeline-build-info-capture</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <configuration>
+                            <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                            <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+                            <dateFormat>yyyy-MM-dd hh:mm:ssaZ</dateFormat>
+                            <dateFormatTimeZone>US/Pacific</dateFormatTimeZone>
+                            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                            <!-- Denotes the format to save properties in. Valid options are "properties" (default) and "json". Properties will be saved to the generateGitPropertiesFilename if generateGitPropertiesFile is set to `true`. -->
+                            <format>json</format>
+                            <generateGitPropertiesFilename>${project.basedir}/src/constants/GitProperties.json
+                            </generateGitPropertiesFilename>
+                            <includeOnlyProperties>
+                                <includeOnlyProperty>git.build.time</includeOnlyProperty>
+                                <includeOnlyProperty>git.build.version</includeOnlyProperty>
+                                <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
+                                <includeOnlyProperty>git.commit.message.full</includeOnlyProperty>
+                                <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                                <includeOnlyProperty>git.commit.user.name</includeOnlyProperty>
+                                <includeOnlyProperty>git.total.commit.count</includeOnlyProperty>
+                            </includeOnlyProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
