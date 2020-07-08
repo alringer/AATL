@@ -3,6 +3,7 @@ import FacebookSVG from 'assets/facebook-icon.svg'
 import InstagramSVG from 'assets/instagram-icon.svg'
 import TwitterSVG from 'assets/twitter-icon.svg'
 import Image from 'components/Image/Image'
+import axios, { FETCH_FOOTER } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import Link from 'next/link'
@@ -23,6 +24,13 @@ import {
 } from './Footer.style'
 
 const Footer = () => {
+    React.useEffect(() => {
+        axios
+            .get(FETCH_FOOTER)
+            .then((res) => console.log(res))
+            .catch((err) => console.log('Error in ', err))
+    }, [])
+
     const handleOpenFacebook = () => {
         if (window !== undefined) {
             window.open('https://www.facebook.com/AskaTravelLocal/', '_blank')

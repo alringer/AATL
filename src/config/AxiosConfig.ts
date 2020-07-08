@@ -6,6 +6,7 @@ export const BASE_URL = process.env.HOSTNAME + API_URL
 // export const FETCH_CATEGORIES = '/categories?size=1000&sort=id%2Casc'
 export const FETCH_CATEGORIES = '/categories-all'
 export const FETCH_CITIES = '/parent-regions-all-active'
+export const FETCH_FOOTER = '/homepage/footer'
 export const IP_LOOKUP = (ipAddress: string) => {
     return `/experimental/ip-lookup?ipAddress=${ipAddress}`
 }
@@ -25,10 +26,12 @@ const requestInterceptor = (config: any = {}) => {
     //         config.headers.Authorization = `Bearer ${state.accessToken}`
     //     }
     // }
+    console.log('Request: ', config)
     return config
 }
 
 const responseInterceptor = (response: AxiosResponse) => {
+    console.log('Response: ', response)
     return response
 }
 
@@ -41,6 +44,7 @@ const responseInterceptorError = (error: AxiosError) => {
     // } else {
     //     SnackbarUtils.error(error.message)
     // }
+    console.log('Error: ', error)
     return Promise.reject(error)
 }
 

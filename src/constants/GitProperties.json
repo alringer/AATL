@@ -1,9 +1,9 @@
 {
-  "git.build.time" : "2020-06-22 02:38:54PM-0700",
-  "git.build.version" : "0.0.1-TEMPLATE_SNAPSHOT",
-  "git.commit.id.abbrev" : "052e257",
-  "git.commit.message.full" : "Sample JSON File",
-  "git.commit.time" : "2020-06-20 01:27:08PM-0700",
-  "git.commit.user.name" : "User Name",
-  "git.total.commit.count" : "68"
+  "git.build.time" : "2020-07-07 11:17:59AM-0700",
+  "git.build.version" : "0.0.1-SNAPSHOT",
+  "git.commit.id.abbrev" : "1444b33",
+  "git.commit.message.full" : "Merged in AATL-325 (pull request #7)\n\nAATL-325",
+  "git.commit.time" : "2020-06-24 09:28:47AM-0700",
+  "git.commit.user.name" : "Yoon Chang",
+  "git.total.commit.count" : "73"
 }
