@@ -1,6 +1,8 @@
 enum zIndices {
     restaurantPlaceBannerImage = '1',
     restaurantMobileShareIcon = '1',
+    userProfileDropzone = '1',
+    userProfileDropzoneHover = '2',
     headerFullSearchBar = '10',
     header = '96',
     headerOverflowMenu = '97',

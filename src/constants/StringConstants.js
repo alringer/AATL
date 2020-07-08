@@ -10,7 +10,9 @@ export const TOOL_TIPS = {
     ShareRestaurant: 'Share restaurant',
     Flag: 'Flag as inappropriate',
     Share: 'Share',
-    Recommend: 'Recommend'
+    Recommend: 'Recommend',
+    RemoveProfile: 'Remove profile image',
+    UploadProfile: 'Click or drop a photo to upload a profile picture'
 }
 
 export const BUTTON_LABELS = {
