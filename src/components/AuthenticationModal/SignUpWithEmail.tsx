@@ -6,7 +6,7 @@ import Image from 'components/Image/Image'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
-import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
+import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 import { query } from 'style/device'
 import { ErrorIcon } from 'style/ErrorIcon/ErrorIcon.style'
 import { CustomTextField } from 'style/TextField/TextField.style'
@@ -145,7 +145,7 @@ const SignUpWithEmail: React.FC<ISignUpWithEmailProps> = ({
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.SignUpWithEmailTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ mobile: true }}>
+                <Media queries={query} defaultMatches={{ laptop: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

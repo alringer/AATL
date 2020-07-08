@@ -18,8 +18,8 @@ import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { openAuthenticationModal } from 'store/authentication/authentication_actions'
-import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
+import { openAuthenticationModal } from 'store/authModal/authModal_actions'
+import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 import { StoreState } from 'store/index'
 import { UserReducerState } from 'store/user/user_types'
 import { query } from 'style/device'
@@ -321,7 +321,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     return (
         <>
-            <Media queries={query} defaultMatches={{ mobile: true }}>
+            <Media queries={query} defaultMatches={{ laptop: true }}>
                 {(matches) => (
                     <>
                         <HeaderContainer>

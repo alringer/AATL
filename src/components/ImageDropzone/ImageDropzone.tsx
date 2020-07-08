@@ -46,7 +46,7 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onDrop, file }) => {
                                         <CameraAltIcon />
                                     </ImageDropzoneIconContainer>
                                 </Tooltip>
-                                <Media queries={query} defaultMatches={{ mobile: true }}>
+                                <Media queries={query} defaultMatches={{ laptop: true }}>
                                     {(matches) => (
                                         <>
                                             {(matches.laptop || matches.tablet) && (

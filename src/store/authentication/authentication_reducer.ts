@@ -1,59 +1,31 @@
+import { createStore } from 'redux'
 import {
     AuthenticationActionTypes,
     AuthenticationReducerState,
-    AuthenticationViewEnum,
-    CLOSE_AUTHENTICATION_MODAL,
-    OPEN_AUTHENTICATION_MODAL,
-    SET_AUTHENTICATION_ERROR,
-    SET_AUTHENTICATION_LOADING,
-    SET_AUTHENTICATION_VIEW,
-    SET_TARGET_EMAIL,
+    CLEAR_KEYCLOAK,
+    SET_KEYCLOAK,
 } from './authentication_types'
 
 const initialState: AuthenticationReducerState = {
-    isOpen: false,
-    currentAuthenticationView: AuthenticationViewEnum.Login,
-    error: false,
-    loading: false,
-    targetEmail: '',
+    keycloak: null,
 }
 
 const authenticationReducer = (state = initialState, action: AuthenticationActionTypes): AuthenticationReducerState => {
     switch (action.type) {
-        case OPEN_AUTHENTICATION_MODAL:
+        case SET_KEYCLOAK:
             return {
                 ...state,
-                isOpen: true,
-                currentAuthenticationView: action.payload,
+                keycloak: action.payload,
             }
-        case CLOSE_AUTHENTICATION_MODAL:
+        case CLEAR_KEYCLOAK:
             return {
                 ...initialState,
-            }
-        case SET_AUTHENTICATION_ERROR:
-            return {
-                ...state,
-                error: action.payload,
-            }
-        case SET_AUTHENTICATION_LOADING:
-            return {
-                ...state,
-                loading: action.payload,
-            }
-        case SET_AUTHENTICATION_VIEW:
-            return {
-                ...state,
-                currentAuthenticationView: action.payload,
-                error: false,
-            }
-        case SET_TARGET_EMAIL:
-            return {
-                ...state,
-                targetEmail: action.payload,
             }
         default:
             return state
     }
 }
 
-export default authenticationReducer
+const authStore = createStore(authenticationReducer)
+
+export default authStore

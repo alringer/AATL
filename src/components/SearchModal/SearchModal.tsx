@@ -107,7 +107,7 @@ const SearchModal: React.FC<ISearchModalProps> = ({ isOpen, closeSearchModal }) 
     }, [])
 
     return (
-        <Media queries={query} defaultMatches={{ mobile: true }}>
+        <Media queries={query} defaultMatches={{ laptop: true }}>
             {(matches) => (
                 <Dialog open={isOpen} fullScreen={matches.laptop || matches.tablet ? false : true} maxWidth="lg">
                     <SearchModalContentContainer ref={searchRef}>

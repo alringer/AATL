@@ -15,7 +15,30 @@ import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import { formatPhone } from 'utilities/helpers/formatPhone'
 import { IPlace } from 'utilities/types/place'
-import { FindATableButton, PlaceBannerAddressCityStateZip, PlaceBannerAddressOne, PlaceBannerAddressSpan, PlaceBannerButtonsContainer, PlaceBannerCityState, PlaceBannerContactInformationSpan, PlaceBannerContainer, PlaceBannerContentContainer, PlaceBannerDescription, PlaceBannerImageContainer, PlaceBannerPhoneNumber, PlaceBannerPlaceCategory, PlaceBannerPlaceName, PlaceBannerRecommendNumber, PlaceBannerRecommendRating, PlaceBannerRecommendSpan, PlaceBannerTextsContainer, PlaceBannerVisitWebsite, RecommendButton, ShareButton, ShareIconButton } from './PlaceBanner.style'
+import {
+    FindATableButton,
+    PlaceBannerAddressCityStateZip,
+    PlaceBannerAddressOne,
+    PlaceBannerAddressSpan,
+    PlaceBannerButtonsContainer,
+    PlaceBannerCityState,
+    PlaceBannerContactInformationSpan,
+    PlaceBannerContainer,
+    PlaceBannerContentContainer,
+    PlaceBannerDescription,
+    PlaceBannerImageContainer,
+    PlaceBannerPhoneNumber,
+    PlaceBannerPlaceCategory,
+    PlaceBannerPlaceName,
+    PlaceBannerRecommendNumber,
+    PlaceBannerRecommendRating,
+    PlaceBannerRecommendSpan,
+    PlaceBannerTextsContainer,
+    PlaceBannerVisitWebsite,
+    RecommendButton,
+    ShareButton,
+    ShareIconButton,
+} from './PlaceBanner.style'
 
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
@@ -44,7 +67,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
     const { enqueueSnackbar } = useSnackbar()
 
     const handleShare = () => {
-        if (window !== undefined ) {
+        if (window !== undefined) {
             let inp = document.createElement('input')
             document.body.appendChild(inp)
             inp.value = window.location.href
@@ -76,7 +99,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         console.log(`Recommend-restaurant button is clicked for place with ID of ${placeID}`)
     }
     const handleVisitWebsite = () => {
-        if (window !== undefined ) {
+        if (window !== undefined) {
             window.open(placeWebsiteURL, '_blank')
         }
     }
@@ -85,7 +108,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         <PlaceBannerContainer>
             <PlaceBannerImageContainer>
                 <Image src={placeImageSrc} alt="restaurant-image" />
-                <Media queries={query} defaultMatches={{ mobile: true }}>
+                <Media queries={query} defaultMatches={{ laptop: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (
@@ -127,7 +150,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                     <PlaceBannerButtonsContainer>
                         <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
                         <RecommendButton onClick={handleRecommend}>{S.BUTTON_LABELS.Recommend}</RecommendButton>
-                        <Media queries={query} defaultMatches={{ mobile: true }}>
+                        <Media queries={query} defaultMatches={{ laptop: true }}>
                             {(matches) => (
                                 <>
                                     {(matches.laptop || matches.tablet) && (
