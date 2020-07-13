@@ -145,7 +145,7 @@ const SignUpWithEmail: React.FC<ISignUpWithEmailProps> = ({
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.SignUpWithEmailTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

@@ -3,6 +3,7 @@ import RestaurantImageOne from 'assets/mock-images/restaurant_image.jpg'
 import RestaurantImageTwo from 'assets/mock-images/restaurant_image2.jpeg'
 import RestaurantImageThree from 'assets/mock-images/sushi_image.png'
 import SearchWorkBench from 'components/SearchWorkBench/SearchWorkBench'
+import axios, { SEARCH_AATL_RESTAURANTS } from 'config/AxiosConfig'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -70,6 +71,16 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, queryPlace, queryAddr
         setAddressEntry(queryAddress ? queryAddress : '')
         // TODO: Do a search with the queries
         setSearchResults([PlaceBannerData.default, PlaceBannerData.longName])
+        axios
+            .post(SEARCH_AATL_RESTAURANTS, {
+                keyword: 'Coffee',
+                longitude: -122,
+                latitude: 37,
+                sort: 'MOST_RECOMMENDED',
+                page: 15,
+            })
+            .then((res) => console.log('Search result: ', res))
+            .catch((err) => console.log(err))
     }, [])
 
     const handleSearch = (place?: string, address?: string) => {

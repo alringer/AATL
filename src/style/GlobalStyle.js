@@ -17,9 +17,17 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child {
+        padding-left: 10px;
+    }
+
     .MuiButton-root {
         min-width: 48px;
         text-transform: none;
+    }
+
+    .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+        padding: 0;
     }
 
     .MuiInputLabel-outlined {

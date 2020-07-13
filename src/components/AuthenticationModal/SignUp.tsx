@@ -42,7 +42,7 @@ const SignUp: React.FC<ISignUpProps> = ({ setCurrentAuthenticationView, closeMod
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.SignUpTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

@@ -1,6 +1,7 @@
 import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import HaveYouBeenTo from 'components/HaveYouBeenTo/HaveYouBeenTo'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
+import axios, { FETCH_RESTAURANT } from 'config/AxiosConfig'
 import { GetServerSideProps } from 'next'
 import React from 'react'
 import PlaceCardsList from 'sections/CardsList/CardPlaceSmallList'
@@ -9,10 +10,22 @@ import { PlaceCardsListData } from 'stories/CardPlaceSmall.stories'
 import { RecommendationCardsListData } from 'stories/CardRecommendationWide.stories'
 import { HaveYouBeenToData } from 'stories/HaveYouBeenTo.stories'
 import { PlaceBannerData } from 'stories/PlaceBanner.stories'
+import withAuth from 'utilities/hocs/withAuth'
 
-interface IRestaurantProps {}
+interface IRestaurantProps {
+    restaurantID: number
+}
 
-const Restaurant: React.FC<IRestaurantProps> = () => {
+const Restaurant = ({ restaurantID, token }) => {
+    React.useEffect(() => {
+        axios
+            .get(FETCH_RESTAURANT(Number(restaurantID)))
+            .then((res) => {
+                console.log('Fetching restaurant: ', res)
+            })
+            .catch((err) => console.log('Error: ', err))
+    }, [])
+
     return (
         <>
             <PlaceBanner {...PlaceBannerData.default} />
@@ -28,15 +41,24 @@ const Restaurant: React.FC<IRestaurantProps> = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    // let categoryList = []
-    // await axios.get(FETCH_CATEGORIES).then((res) => {
-    //     // categoryList = res.data
-    // })
     const restaurantID = context.params.id
-    console.log('TODO: Query restaurant with ID: ', restaurantID)
+    // if (restaurantID) {
+    //     await axios
+    //         .get(FETCH_RESTAURANT(Number(restaurantID)), {
+    //             headers: {
+    //                 Authorization:
+    //             }
+    //         })
+    //         .then((res) => {
+    //             console.log('Fetching restaurant: ', res)
+    //         })
+    //         .catch((err) => console.log('Error: ', err))
+    // }
     return {
-        props: {},
+        props: {
+            restaurantID: restaurantID,
+        },
     }
 }
 
-export default Restaurant
+export default withAuth(Restaurant)

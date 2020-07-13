@@ -61,7 +61,7 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
     }
 
     return (
-        <Media queries={query} defaultMatches={{ laptop: true }}>
+        <Media queries={query} defaultMatches={{ mobile: true }}>
             {(matches) => (
                 <Dialog open={isOpen} fullScreen={matches.laptop || matches.tablet ? false : true}>
                     <ModalContentContainer ref={authRef}>

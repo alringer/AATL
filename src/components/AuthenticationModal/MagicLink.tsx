@@ -43,7 +43,7 @@ const MagicLink: React.FC<IMagicLinkProps> = ({
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.MagicLinkTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

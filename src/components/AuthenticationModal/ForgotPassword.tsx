@@ -73,7 +73,7 @@ const ForgotPassword: React.FC<IForgotPasswordProps> = ({
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.ForgotPasswordTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

@@ -1,9 +1,9 @@
 {
-  "git.build.time" : "2020-07-07 11:17:59AM-0700",
+  "git.build.time" : "2020-07-09 10:37:51AM-0700",
   "git.build.version" : "0.0.1-SNAPSHOT",
-  "git.commit.id.abbrev" : "1444b33",
-  "git.commit.message.full" : "Merged in AATL-325 (pull request #7)\n\nAATL-325",
-  "git.commit.time" : "2020-06-24 09:28:47AM-0700",
+  "git.commit.id.abbrev" : "715080d",
+  "git.commit.message.full" : "- Changes to Auth to use Keycloak methods",
+  "git.commit.time" : "2020-07-08 10:26:33AM-0700",
   "git.commit.user.name" : "Yoon Chang",
-  "git.total.commit.count" : "73"
+  "git.total.commit.count" : "76"
 }

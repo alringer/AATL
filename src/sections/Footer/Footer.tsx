@@ -27,8 +27,8 @@ const Footer = () => {
     React.useEffect(() => {
         axios
             .get(FETCH_FOOTER)
-            .then((res) => console.log(res))
-            .catch((err) => console.log('Error in ', err))
+            .then((res) => console.log('Response for fetching footer: ', res))
+            .catch((err) => console.log('Error in Footer', err))
     }, [])
 
     const handleOpenFacebook = () => {

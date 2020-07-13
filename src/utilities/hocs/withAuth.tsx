@@ -8,6 +8,7 @@ export interface IWithAuthInjectedProps {
     keycloakLogin: () => void
     keycloakLogout: () => void
     keycloakSignUp: () => void
+    token: any
     authenticated: boolean
 }
 
@@ -55,6 +56,7 @@ const withAuth = (WrappedComponent) => {
                     keycloakLogout={handleLogout}
                     keycloakSignUp={handleSignUp}
                     authenticated={keycloak.authenticated}
+                    token={keycloak.token}
                 />
             )
         })

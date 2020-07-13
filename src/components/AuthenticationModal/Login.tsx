@@ -128,7 +128,7 @@ const Login: React.FC<ILoginProps> = ({ error, setCurrentAuthenticationView, clo
         <>
             <ModalHeaderContainer>
                 <ModalHeaderText>{S.AUTHENTICATION.SignInTitle}</ModalHeaderText>
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (

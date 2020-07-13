@@ -1,3 +1,4 @@
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
@@ -32,7 +33,11 @@ export const SearchAddressButtonContainer = styled.div`
 `
 
 export const SearchInput = styled(CustomTextField)`
-    padding: 0;
+    height: inherit;
+`
+export const CustomAutoComplete = styled(Autocomplete)`
+    width: 100%;
+    height: 100%;
     @media ${device.mobile} {
         width: 100%;
     }
@@ -40,6 +45,22 @@ export const SearchInput = styled(CustomTextField)`
         width: 290px;
         margin-right: 15px; 
     }
+
+    ${props => {
+        if (props.className === 'error') {
+            return css`
+                input {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+                fieldset {
+                    border-color: color: ${props => props.theme.dustyRed} !important;
+                }
+                .MuiFormLabel-root {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+            `
+        }
+    }}
 `
 export const SearchButton = styled(CustomButton)`
     box-sizing: border-box;

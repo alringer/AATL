@@ -133,7 +133,7 @@ const UserProfileBanner = () => {
 
     return (
         <UserProfileBannerContainer>
-            <Media queries={query} defaultMatches={{ laptop: true }}>
+            <Media queries={query} defaultMatches={{ mobile: true }}>
                 {(matches) => (
                     <>
                         <UserProfileMainInformationContainer>

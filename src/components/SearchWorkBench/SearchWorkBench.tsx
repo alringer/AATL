@@ -79,7 +79,9 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     return (
         <SearchWorkBenchContainer>
             <SearchWorkBenchTitle>{inputPlace}</SearchWorkBenchTitle>
-            <SearchWorkBenchSubTitle>{`${S.SEARCH_PAGE.WeHave} ${searchResults.length} ${S.SEARCH_PAGE.RecordsFor} ${inputPlace}`}</SearchWorkBenchSubTitle>
+            {searchResults && searchResults.length > 0 ? (
+                <SearchWorkBenchSubTitle>{`${S.SEARCH_PAGE.WeHave} ${searchResults.length} ${S.SEARCH_PAGE.RecordsFor} ${inputPlace}`}</SearchWorkBenchSubTitle>
+            ) : null}
             <SearchWorkBenchContentContainer>
                 <SearchWorkBenchLookupContainer>
                     <SearchWorkBenchInputsContainer>

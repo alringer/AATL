@@ -1,5 +1,6 @@
 // import { CssBaseline } from '@material-ui/core'
 import { KeycloakCookies } from '@react-keycloak/nextjs'
+import RootApp from 'components/RootApp/RootApp'
 import Provider from 'config/Provider'
 import VersionInfo from 'constants/GitProperties.json'
 import cookie from 'cookie'
@@ -34,7 +35,9 @@ const App = ({ Component, pageProps, cookies }: AppProps & InitialProps) => {
                 <AppContainer>
                     <Header />
                     <PageContainer>
-                        <Component {...pageProps} />
+                        <RootApp>
+                            <Component {...pageProps} />
+                        </RootApp>
                     </PageContainer>
                     <Footer />
                 </AppContainer>

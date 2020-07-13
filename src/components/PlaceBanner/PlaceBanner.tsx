@@ -108,7 +108,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         <PlaceBannerContainer>
             <PlaceBannerImageContainer>
                 <Image src={placeImageSrc} alt="restaurant-image" />
-                <Media queries={query} defaultMatches={{ laptop: true }}>
+                <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (
@@ -150,7 +150,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                     <PlaceBannerButtonsContainer>
                         <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
                         <RecommendButton onClick={handleRecommend}>{S.BUTTON_LABELS.Recommend}</RecommendButton>
-                        <Media queries={query} defaultMatches={{ laptop: true }}>
+                        <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
                                     {(matches.laptop || matches.tablet) && (

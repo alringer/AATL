@@ -127,7 +127,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                 </WideHeaderTooltipIconsContainer>
                             </CardPlaceWidePlaceNameText>
                         </WideHeaderLeftContainer>
-                        <Media queries={query} defaultMatches={{ laptop: true }}>
+                        <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
                                     {(matches.laptop || matches.tablet) && (
@@ -172,7 +172,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                     <CardPlaceWideAuthorTitleText>
                         {S.PLACE_CARD.Recommended} {placeNumberOfRecommendations} {S.PLACE_CARD.Times}
                     </CardPlaceWideAuthorTitleText>
-                    <Media queries={query} defaultMatches={{ laptop: true }}>
+                    <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) =>
                             matches.mobile && (
                                 <MobileButtonsContainer>

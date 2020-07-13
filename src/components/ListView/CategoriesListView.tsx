@@ -3,6 +3,8 @@ import * as S from 'constants/StringConstants'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import React from 'react'
+import { size } from 'style/device'
+import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import {
     EmptyMessage,
@@ -23,9 +25,12 @@ interface ICategoriesListViewProps {
 }
 
 const CategoriesListView: NextPage<ICategoriesListViewProps> = ({ categoryList }) => {
+    const windowSize = useWindowSize()
     const renderList = (currentList: ICategory[]) => {
-        const itemsPerColumn = 20
-        const numberOfColumns = Math.ceil(currentList.length / itemsPerColumn)
+        const numberOfColumns =
+            windowSize.width > Number(size.laptop) ? 6 : windowSize.width > Number(size.tablet) ? 4 : 2
+        const itemsPerColumn = Math.ceil(currentList.length / numberOfColumns)
+
         let columns = []
         for (let i = 1; i <= numberOfColumns; i++) {
             const startIndex = i > 1 ? i * itemsPerColumn - (1 + itemsPerColumn) : 0

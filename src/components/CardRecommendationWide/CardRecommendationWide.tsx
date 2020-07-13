@@ -133,7 +133,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 </Tooltip>
                             </WideHeaderTooltipIconsContainer>
                         </RecommendationPlaceNameText>
-                        <Media queries={query} defaultMatches={{ laptop: true }}>
+                        <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
                                     {(matches.laptop || matches.tablet) && (
@@ -164,7 +164,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     </RecommendationHeaderContainer>
                     {isFull === true && (
                         <>
-                            <Media queries={query} defaultMatches={{ laptop: true }}>
+                            <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
                                     <>
                                         {(matches.laptop || matches.tablet) && (
@@ -202,7 +202,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 <RecommendationContentBottomContainer>
                     <RecommendationAuthorNameText>{recommendation.createdBy.fullname}</RecommendationAuthorNameText>
                     <RecommendationAuthorTitleText>{recommendation.createdBy.userByLine}</RecommendationAuthorTitleText>
-                    <Media queries={query} defaultMatches={{ laptop: true }}>
+                    <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) =>
                             matches.mobile && (
                                 <MobileButtonsContainer>
