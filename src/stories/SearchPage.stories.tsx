@@ -14,10 +14,14 @@ const handleSearch = (place?: string, address?: string) => {}
 storiesOf('Search Page', module).add('Search Panel', () => {
     return (
         <SearchWorkBench
-            inputPlace={''}
-            inputAddress={''}
+            inputPlace={null}
+            inputAddress={null}
+            inputLat={null}
+            inputLng={null}
+            inputSort={null}
             searchResults={[]}
-            handleSearch={handleSearch}
+            topCategories={[]}
+            handleSearch={() => {}}
             openSearchModal={() => {}}
         />
     )

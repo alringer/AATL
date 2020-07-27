@@ -1,6 +1,6 @@
 // State Interfaces
 export interface RecommendationModalPlaceInformation {
-    placeID: string | null
+    placeID: number | null
     placeName: string | null
     isAATL: boolean | null
 }

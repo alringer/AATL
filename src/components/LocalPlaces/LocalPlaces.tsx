@@ -4,8 +4,7 @@ import { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import CardPlaceWideList from 'sections/CardsList/CardPlaceWideList'
-import { PlaceBannerData } from 'stories/PlaceBanner.stories'
-import { IPlace } from 'utilities/types/place'
+import { IVenue, mockVenue } from 'utilities/types/venue'
 import {
     LocalPlacesContainer,
     LocalPlacesHeaderContainer,
@@ -51,12 +50,12 @@ const useStyles = makeStyles(() =>
 const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
     const classes = useStyles()
     const [currentTab, setCurrentTab] = React.useState<LocalPlaceTabEnum>(LocalPlaceTabEnum.MostRecommended)
-    const [currentPlaces, setCurrentPlaces] = React.useState<IPlace[]>([])
+    const [currentPlaces, setCurrentPlaces] = React.useState<IVenue[]>([])
 
     React.useEffect(() => {
         // TODO: Wire up initial API call to fetch the initial list
         setTimeout(() => {
-            setCurrentPlaces([PlaceBannerData.default, PlaceBannerData.longName])
+            setCurrentPlaces([mockVenue, mockVenue])
         }, 1000)
     }, [])
 
@@ -64,7 +63,7 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
         if (currentTab !== targetTab) {
             setCurrentTab(targetTab)
             setTimeout(() => {
-                setCurrentPlaces([PlaceBannerData.default, PlaceBannerData.longName])
+                setCurrentPlaces([mockVenue, mockVenue])
             }, 1000)
         }
     }

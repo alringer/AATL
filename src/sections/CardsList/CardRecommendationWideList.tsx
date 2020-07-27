@@ -1,6 +1,5 @@
 import Pagination from '@material-ui/lab/Pagination'
 import CardRecommendationWide from 'components/CardRecommendationWide/CardRecommendationWide'
-import _ from 'lodash'
 import React from 'react'
 import { IRecommendation } from 'utilities/types/recommendation'
 import { IVenueRecommendationsInformation } from 'utilities/types/venue'
@@ -10,7 +9,7 @@ interface IRecommendationCardsListProps {
     isFull: boolean
     title: string
     subTitle: string
-    venueRecommendationsInformation: IVenueRecommendationsInformation
+    venueRecommendationsInformation: IVenueRecommendationsInformation | null
     pageNumber: number | null
     pageSize: number | null
     totalCount: number | null
@@ -25,7 +24,10 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
     pageSize,
     totalCount,
 }) => {
-    const [currentPage, setCurrentPage] = React.useState(pageNumber + 1)
+    const [currentPage, setCurrentPage] = React.useState(pageNumber ? pageNumber + 1 : null)
+    const [currentCount, setCurrentCount] = React.useState(
+        totalCount && pageSize ? Math.ceil(Number(totalCount / pageSize)) : null
+    )
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         // TODO: Call API to paginate recommendations
@@ -35,20 +37,22 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
         <ListContainer>
             <ListTitle>{title}</ListTitle>
             <ListSubTitle>{subTitle}</ListSubTitle>
-            {_.has(venueRecommendationsInformation, 'items')
+            {venueRecommendationsInformation && venueRecommendationsInformation.items
                 ? venueRecommendationsInformation.items.map((recommendation: IRecommendation) => (
                       <RecommendationCardContainer key={recommendation.id}>
                           <CardRecommendationWide isFull={isFull} recommendation={recommendation} />
                       </RecommendationCardContainer>
                   ))
                 : null}
-            <Pagination
-                page={currentPage}
-                count={Math.ceil(Number(totalCount / pageSize))}
-                variant="outlined"
-                shape="rounded"
-                onChange={handlePageChange}
-            />
+            {currentPage && currentCount && (
+                <Pagination
+                    page={currentPage ? currentPage : 0}
+                    count={currentCount ? currentCount : 0}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handlePageChange}
+                />
+            )}
         </ListContainer>
     )
 }

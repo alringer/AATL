@@ -8,8 +8,7 @@ import { bindActionCreators } from 'redux'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import { concatCategories } from 'utilities/helpers/concatStrings'
-import withAuth from 'utilities/hocs/withAuth'
-import { IWithAuthInjectedProps } from 'utilities/providers/AuthProvider'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 import {
@@ -131,7 +130,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     const handleRecommend = (id: string, name: string) => {
         authenticatedAction(() =>
             openRecommendationModal({
-                placeID: id,
+                placeID: Number(id),
                 placeName: name,
                 isAATL: false,
             })

@@ -7,8 +7,7 @@ import UpArrow from 'assets/user-profile-list-up-arrow.svg'
 import { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
 import React from 'react'
 import CardPlaceWideList from 'sections/CardsList/CardPlaceWideList'
-import { PlaceBannerData } from 'stories/PlaceBanner.stories'
-import { IVenue } from 'utilities/types/venue'
+import { IVenue, mockVenue } from 'utilities/types/venue'
 import {
     UserProfileListsContainer,
     UserProfileListsMainViewContainer,
@@ -37,8 +36,8 @@ const useStyles = makeStyles(() =>
 )
 
 // TODO: Remove mock data once data is fetched from the api
-const listZero: IVenue[] = [PlaceBannerData.default, PlaceBannerData.differentName]
-const listOne: IVenue[] = [PlaceBannerData.default, PlaceBannerData.differentName, PlaceBannerData.differentNameTwo]
+const listZero: IVenue[] = [mockVenue, mockVenue]
+const listOne: IVenue[] = [mockVenue, mockVenue, mockVenue]
 
 const UserProfileLists = () => {
     const classes = useStyles()

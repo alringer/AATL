@@ -18,12 +18,12 @@ interface IAdminRecommendationListsControllerProps {
 }
 
 class AdminRecommendationListsController extends React.Component<any, any> {
-    constructor(props) {
+    constructor(props: any) {
         super(props)
         this.state = { lists: props.recommendationLists.lists }
     }
 
-    pushCard(card) {
+    pushCard(card: any) {
         this.setState(
             update(this.state, {
                 lists: {
@@ -33,7 +33,7 @@ class AdminRecommendationListsController extends React.Component<any, any> {
         )
     }
 
-    removeCard(index) {
+    removeCard(index: any) {
         this.setState(
             update(this.state, {
                 lists: {

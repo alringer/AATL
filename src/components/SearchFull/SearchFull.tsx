@@ -1,3 +1,4 @@
+// @ts-nocheck
 import SearchIcon from 'assets/lightSearch.svg'
 import Image from 'components/Image/Image'
 import { PlaceholderContainer, PlaceholderTextBold, PlaceholderTextNormal } from 'components/Search/Search.style'
@@ -56,10 +57,6 @@ const SearchFull: React.FC<ISearchFullProps> = ({
 
     const isClient = typeof window === 'object'
     const geocoder = React.useRef()
-
-    React.useEffect(() => {
-        console.log('Selected Address: ', selectedAddress)
-    }, [selectedAddress])
 
     React.useEffect(() => {
         if (inputPlace) {

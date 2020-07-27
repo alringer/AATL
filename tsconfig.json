@@ -23,7 +23,10 @@
     "jsx": "preserve"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build",
+    "aws-containers",
+    "target"
   ],
   "include": [
     "next-env.d.ts",

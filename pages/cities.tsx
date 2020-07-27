@@ -1,10 +1,18 @@
 import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import CitiesListView from 'components/ListView/CitiesListView'
 import axios, { FETCH_CITIES } from 'config/AxiosConfig'
-import { GetStaticProps } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
+import { IParentRegion } from 'utilities/types/parentRegion'
 
-const Cities = ({ stateList, provinceList }) => {
+interface IServerSideProps {
+    stateList: IParentRegion[]
+    provinceList: IParentRegion[]
+}
+
+interface ICitiesProps extends IServerSideProps {}
+
+const Cities: NextPage<ICitiesProps> = ({ stateList, provinceList }) => {
     return (
         <>
             <CitiesListView stateList={stateList ? stateList : []} provinceList={provinceList ? provinceList : []} />
@@ -14,8 +22,8 @@ const Cities = ({ stateList, provinceList }) => {
 }
 
 export const getServerSideProps: GetStaticProps = async (context) => {
-    let stateList = []
-    let provinceList = []
+    let stateList: IParentRegion[] = []
+    let provinceList: IParentRegion[] = []
     await axios
         .get(FETCH_CITIES)
         .then((res) => {

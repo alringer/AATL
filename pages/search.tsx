@@ -15,8 +15,8 @@ import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 import { IVenue } from 'utilities/types/venue'
 
 interface IReduxProps {
-    ipLocation: ILocationInformation
-    preferredLocation: ILocationInformation
+    ipLocation: ILocationInformation | null
+    preferredLocation: ILocationInformation | null
     openSearchModal: () => void
 }
 interface ISearchProps extends IReduxProps, IWithAuthInjectedProps {}
@@ -24,11 +24,11 @@ interface ISearchProps extends IReduxProps, IWithAuthInjectedProps {}
 const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLocation, preferredLocation }) => {
     const [searchResults, setSearchResults] = React.useState<IVenue[]>([])
     const [topCategories, setTopCategories] = React.useState<ICategory[]>([])
-    const [place, setPlace] = React.useState<string | null>()
-    const [address, setAddress] = React.useState<string | null>()
-    const [lat, setLat] = React.useState<string | null>()
-    const [lng, setLng] = React.useState<string | null>()
-    const [sort, setSort] = React.useState<string | null>()
+    const [place, setPlace] = React.useState<string | null>(null)
+    const [address, setAddress] = React.useState<string | null>(null)
+    const [lat, setLat] = React.useState<string | null>(null)
+    const [lng, setLng] = React.useState<string | null>(null)
+    const [sort, setSort] = React.useState<string | null>(null)
 
     const router = useRouter()
 

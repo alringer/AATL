@@ -46,7 +46,7 @@ export interface IVenue {
     sourcePlaceId: string
     streetNumber: number | null
     street: string
-    neighborhood: null
+    neighborhood: string | null
     locality: string
     county: string | null
     state: string
@@ -58,9 +58,9 @@ export interface IVenue {
     venuetype: string
     flagged: string
     source: string
-    createdAt: null
-    updatedAt: null
-    deletedAt: null
+    createdAt: string | null
+    updatedAt: string | null
+    deletedAt: string | null
     content: null
     parentRegion: IParentRegion
     firstRecommendedBy: {
@@ -138,7 +138,6 @@ export const mockVenue: IVenue = {
         createdAt: '2020-05-13T21:19:23.669794Z',
         updatedAt: '2020-05-13T21:19:23.669794Z',
         stateAbbrevation: 'AB',
-        venues: [],
     },
     firstRecommendedBy: {
         id: 1,

@@ -10,7 +10,7 @@ import { ListContainer, ListSubTitle, ListTitle, PlaceCardContainer, PlaceCardsG
 interface IPlaceCardsList {
     title: string
     subTitle: string
-    places: IVenue[]
+    places: IVenue[] | null
     category: string
 }
 

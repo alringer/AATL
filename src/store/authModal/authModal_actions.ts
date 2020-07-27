@@ -1,5 +1,3 @@
-import { login } from 'store/user/user_actions'
-import { IUserInformation } from 'store/user/user_types'
 import { action } from 'typesafe-actions'
 import {
     AuthenticationViewEnum,
@@ -30,8 +28,8 @@ export const thunkLogin = (email: string, password: string) => async (dispatch) 
     // TODO: Wire up login API
     setTimeout(() => {
         if (email === 'seamgen@awesome.com' && password === '123123') {
-            const userInformation: IUserInformation = { userName: 'Yoon', userEmail: 'example@domain.com' }
-            dispatch(login(userInformation))
+            // const userInformation: IUserInformation = { userName: 'Yoon', userEmail: 'example@domain.com' }
+            // dispatch(login(userInformation))
             dispatch(setAuthenticationError(false))
             dispatch(closeAuthenticationModal())
         } else {

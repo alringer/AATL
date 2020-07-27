@@ -7,6 +7,7 @@ import {
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import React from 'react'
+import { mockRecommendation } from 'utilities/types/recommendation'
 
 export const RecommendationEditorData = {
     default: {
@@ -45,7 +46,10 @@ storiesOf('Recommendation Editor Modal', module)
                     closeRecommendationModal={() => {}}
                 />
                 <RecommendationModalContentContainer>
-                    <RecommendationPublished publishedTitle={RecommendationEditorData.default.recommendationTitle} />
+                    <RecommendationPublished
+                        publishedTitle={RecommendationEditorData.default.recommendationTitle}
+                        recommendation={mockRecommendation}
+                    />
                 </RecommendationModalContentContainer>
             </RecommendationModalContainer>
         )

@@ -17,8 +17,8 @@ interface IReduxProps {
 }
 
 interface IHaveYouBeenToProps extends IReduxProps {
-    placeName: string
-    placeID: number
+    placeName: string | null
+    placeID: number | null
 }
 
 const HaveYouBeenTo: React.FC<IHaveYouBeenToProps> = ({ placeName, placeID, openRecommendationModal }) => {

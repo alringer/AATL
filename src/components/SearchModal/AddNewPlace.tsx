@@ -3,7 +3,17 @@ import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import { ErrorIcon } from 'style/ErrorIcon/ErrorIcon.style'
-import { AddPlaceButton, AddPlaceContentContainer, AddPlaceContentRow, AddPlaceInput, AddPlaceIntroText, CancelButton, SearchModalHeaderContainer, SearchModalHeaderText, SearchModalSearchFooterContainer } from './SearchModal.style'
+import {
+    AddPlaceButton,
+    AddPlaceContentContainer,
+    AddPlaceContentRow,
+    AddPlaceInput,
+    AddPlaceIntroText,
+    CancelButton,
+    SearchModalHeaderContainer,
+    SearchModalHeaderText,
+    SearchModalSearchFooterContainer,
+} from './SearchModal.style'
 
 interface IAddNewPlaceProps {
     switchViewToSearch: () => void
@@ -47,6 +57,9 @@ const AddNewPlace: React.FC<IAddNewPlaceProps> = ({ switchViewToSearch }) => {
     const [values, setValues] = React.useState(DEFAULT_VALUES)
     const [errors, setErrors] = React.useState<Errors>(DEFAULT_ERRORS)
     const [file, setFile] = React.useState()
+    const [preview, setPreview] = React.useState(null)
+    const [isUploadingImage, setUploadingImage] = React.useState()
+    const [isImageDimensionImproper, setImageDimensionImproper] = React.useState()
 
     const validateForm = () => {
         let isValid = true
@@ -98,6 +111,8 @@ const AddNewPlace: React.FC<IAddNewPlaceProps> = ({ switchViewToSearch }) => {
             setFile(acceptedFiles[0])
         }
     }
+
+    const handleDrag = () => {}
 
     const handleChange = (prop: Values) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value })
@@ -276,7 +291,14 @@ const AddNewPlace: React.FC<IAddNewPlaceProps> = ({ switchViewToSearch }) => {
                     />
                 </AddPlaceContentRow>
                 <AddPlaceContentRow>
-                    <ImageDropzone file={file} onDrop={handleDrop} />
+                    <ImageDropzone
+                        file={file}
+                        handleDrop={handleDrop}
+                        preview={preview}
+                        isUploadingImage={isUploadingImage}
+                        isImageDimensionImproper={isImageDimensionImproper}
+                        handleDrag={handleDrag}
+                    />
                 </AddPlaceContentRow>
             </AddPlaceContentContainer>
             <SearchModalSearchFooterContainer>

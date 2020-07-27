@@ -1,4 +1,4 @@
-import { SortEnum } from '../enumerations'
+import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 
 export interface ParamType {
     label: string

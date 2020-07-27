@@ -92,7 +92,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         if (_.has(venueInformation, 'id') && _.has(venueInformation, 'name')) {
             authenticatedAction(() =>
                 openRecommendationModal({
-                    placeID: String(venueInformation.id),
+                    placeID: venueInformation.id,
                     placeName: venueInformation.name,
                     isAATL: true,
                 })
