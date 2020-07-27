@@ -1,4 +1,3 @@
-import { TextLink } from 'style/Button/TextLink.style'
 import { device, sidePaddings } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -186,7 +185,22 @@ export const FooterLinkRow = styled.div`
     margin-bottom: 10px;
 `
 
-export const FooterLinkTitle = styled(TextLink)`
+export const FooterAnchor = styled.a`
+    cursor: pointer;
+    text-decoration: none;
+    text-decoration-color: ${(props) => props.theme.darkGrey};
+    margin-bottom: 10px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`
+
+export const FooterLinkTitleAnchor = styled(FooterAnchor)`
+    margin-bottom: 20px;
+`
+
+export const FooterLinkTitle = styled.p`
     font-size: 18px;
     font-weight: 500;
     font-stretch: normal;
@@ -194,11 +208,9 @@ export const FooterLinkTitle = styled(TextLink)`
     line-height: 1.22;
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
-
-    margin-bottom: 20px;
 `
 
-export const FooterLinkItem = styled(TextLink)`
+export const FooterLinkItem = styled.p`
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
@@ -206,8 +218,6 @@ export const FooterLinkItem = styled(TextLink)`
     line-height: 1.38;
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
-
-    margin-bottom: 10px;
 `
 
 export const FooterTinyText = styled.p`

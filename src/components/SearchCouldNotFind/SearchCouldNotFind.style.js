@@ -1,6 +1,6 @@
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const SearchCouldNotFindContainer = styled.div`
     width: 100%;
@@ -27,6 +27,19 @@ export const SearchCouldNotFindContainer = styled.div`
 
         align-items: flex-start;
     }
+
+    ${props => {
+        if (props.id === 'full-width') {
+            return css`
+                text-align: center !important;
+                align-items: center !important;
+                padding: 20px 80px !important;
+                border: solid 2px rgba(54, 57, 64, 0.06) !important;
+
+                margin-top: 30px !important;
+            `
+        }
+    }}
 `
 
 export const SearchCouldNotFindTitle = styled.p`

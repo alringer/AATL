@@ -1,42 +1,54 @@
-import { IConfigurationAudit } from './configurationAudit'
-import { IRecommendation } from './recommendation'
-import { IRecommendationListMeta } from './recommendationListMeta'
-import { IUserBadge } from './userBadge'
-import { IVenue } from './venue'
+// export interface IUserProfile {
+//     configurationAudits?: IConfigurationAudit[]
+//     content?: string
+//     createdAt?: string
+//     deletedAt?: string
+//     email?: string
+//     firstName?: string
+//     lastName?: string
+//     id?: number
+//     imageCDNUrl?: string
+//     instagramId?: string
+//     recommendationListMetas?: IRecommendationListMeta[]
+//     recommendations?: IRecommendation[]
+//     updatedAt?: string
+//     userBadges?: IUserBadge[]
+//     userByLine?: string
+//     userId: number
+//     username: string
+//     venues?: IVenue[]
+// }
 
 export interface IUserProfile {
-    configurationAudits?: IConfigurationAudit[]
-    content?: string
-    createdAt?: string
-    deletedAt?: string
-    fullname?: string
-    id?: number
-    imageCDNUrl?: string
-    instagramId?: string
-    recommendationListMetas?: IRecommendationListMeta[]
-    recommendations?: IRecommendation[]
-    updatedAt?: string
-    userBadges?: IUserBadge[]
-    userByLine?: string
-    userId: number
-    username: string
-    venues?: IVenue[]
+    activated: boolean | null
+    content: string | null
+    createdAt: string | null
+    deletedAt: string | null
+    email: string | null
+    firstName: string | null
+    id: number | null
+    imageCDNUrl: string | null
+    instagramId: string | null
+    lastName: string | null
+    updatedAt: string | null
+    userByLine: string | null
+    userId: string | null
+    username: string | null
 }
 
 export const mockUser: IUserProfile = {
-    id: 4,
-    userId: 4,
-    username: 'user',
-    fullname: 'user',
-    userByLine: 'Thing about me',
-    instagramId: 'insta-id',
-    imageCDNUrl: null,
-    createdAt: '2020-05-28T18:35:05.180741Z',
-    updatedAt: '2020-05-28T18:35:05.180741Z',
+    activated: true,
+    content: '',
+    createdAt: null,
     deletedAt: null,
-    content: 'Content',
-    recommendations: null,
-    recommendationListMetas: null,
-    userBadges: null,
-    configurationAudits: null,
+    email: 'admin@localhost',
+    firstName: 'Admin',
+    id: 1051,
+    imageCDNUrl: null,
+    instagramId: null,
+    lastName: 'Administrator',
+    updatedAt: null,
+    userByLine: null,
+    userId: '4c973896-5761-41fc-8217-07c5d13a004b',
+    username: 'admin',
 }

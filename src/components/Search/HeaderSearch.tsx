@@ -33,7 +33,8 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
 
     const handleSearch = (keyword: string) => {
         // TODO: Push the user to the city page with the search query parameter in the URL
-        router.push(`/search?keyword=${keyword}`)
+        const urlParam = keyword ? `?place=${keyword}` : ''
+        router.push(`/search` + urlParam)
     }
 
     const handleTextFieldKeyDown = (e: React.KeyboardEvent) => {

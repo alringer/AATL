@@ -115,6 +115,7 @@ export const ListViewCountryText = styled.p`
 `
 
 export const ListViewRegionText = styled(TextLink)`
+    text-decoration: none;
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;

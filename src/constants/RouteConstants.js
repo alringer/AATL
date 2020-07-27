@@ -6,6 +6,7 @@ export const ROUTE_ITEMS = {
     city: '/city',
     restaurant: '/restaurant',
     admin: '/admin',
+    userProfile: '/user-profile',
     adminCities: 'cities',
     adminFlaggedContent: 'flagged-content',
     adminRecommendationLists: 'recommendation-lists'

@@ -15,6 +15,7 @@ export interface IParentRegion {
     population: number
     state: string
     updatedAt: string
+    stateAbbrevation: string | null
     venues: IVenue[]
 }
 export const mockParentRegion: IParentRegion = {
@@ -23,6 +24,7 @@ export const mockParentRegion: IParentRegion = {
     population: 0,
     isActive: true,
     state: 'CA',
+    stateAbbrevation: 'CA',
     iso3Country: 'USA',
     imageCDNUrl: '',
     alternateName: '',

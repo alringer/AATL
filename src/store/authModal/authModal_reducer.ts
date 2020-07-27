@@ -1,6 +1,6 @@
 import {
-    AuthenticationActionTypes,
     AuthenticationViewEnum,
+    AuthModalActionTypes,
     AuthModalReducerState,
     CLOSE_AUTHENTICATION_MODAL,
     OPEN_AUTHENTICATION_MODAL,
@@ -18,7 +18,7 @@ const initialState: AuthModalReducerState = {
     targetEmail: '',
 }
 
-const authModalReducer = (state = initialState, action: AuthenticationActionTypes): AuthModalReducerState => {
+const authModalReducer = (state = initialState, action: AuthModalActionTypes): AuthModalReducerState => {
     switch (action.type) {
         case OPEN_AUTHENTICATION_MODAL:
             return {

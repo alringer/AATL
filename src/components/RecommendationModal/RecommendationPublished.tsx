@@ -7,38 +7,63 @@ import {
     RecommendationPublishedContainer,
     RecommendationPublishedContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
-import Snackbar from 'components/Snackbar/Snackbar'
-import * as B from 'constants/SnackbarConstants'
+import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
+import { IRecommendation } from 'utilities/types/recommendation'
 
 interface IReduxProps {
-    userName: string
+    firstName: string | null
+    lastName: string | null
 }
 
 interface IRecommendationPublishedProps extends IReduxProps {
     publishedTitle: string
+    recommendation: IRecommendation | null
 }
 
-const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publishedTitle, userName }) => {
+const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
+    publishedTitle,
+    firstName,
+    lastName,
+    recommendation,
+}) => {
+    const [permaLink, setPermaLink] = React.useState('')
+    const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
 
-    const handleCopyLink = () => {
-        // TODO: Copy the backend-generated link
-        enqueueSnackbar('', {
-            content: (
-                <div>
-                    <Snackbar
-                        type={B.RECOMMENDATION_LINK_COPIED.Type}
-                        title={B.RECOMMENDATION_LINK_COPIED.Title}
-                        message={B.RECOMMENDATION_LINK_COPIED.Body}
-                    />
-                </div>
-            ),
-        })
+    React.useEffect(() => {
+        if (recommendation && window !== undefined) {
+            // ${window.location.origin}
+            const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
+            setPermaLink(newPermaLink)
+        }
+    }, [recommendation])
+
+    const handleCheckItOut = () => {
+        router.push(permaLink)
+        // navigator.clipboard
+        //     .writeText(permaLink)
+        //     .then(() => {
+        //         enqueueSnackbar('', {
+        //             content: (
+        //                 <div>
+        //                     <Snackbar
+        //                         type={B.RECOMMENDATION_LINK_COPIED.Type}
+        //                         title={B.RECOMMENDATION_LINK_COPIED.Title}
+        //                         message={B.RECOMMENDATION_LINK_COPIED.Body}
+        //                     />
+        //                 </div>
+        //             ),
+        //         })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
     }
 
     return (
@@ -48,7 +73,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
                     {S.RECOMMENDATION_PUBLISHED.Title}
                 </RecommendationEditorPublishedTitle>
                 <RecommendationEditorPublishedPreviewTitle>
-                    {publishedTitle} by {userName}
+                    {publishedTitle} by {`${firstName ? `${firstName} ` : ''}${lastName ? `${lastName}` : ''}`}
                 </RecommendationEditorPublishedPreviewTitle>
                 <RecommendationEditorPublishedBody>
                     {S.RECOMMENDATION_PUBLISHED.BodyTextOne}
@@ -57,8 +82,8 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
                     {S.RECOMMENDATION_PUBLISHED.BodyTextTwo}
                 </RecommendationEditorPublishedBody>
                 <RecommendationEditorCopyRecommendationButtonContainer>
-                    <RecommendationEditorCopyRecommendationButton onClick={handleCopyLink}>
-                        {S.BUTTON_LABELS.CopyRecommendation}
+                    <RecommendationEditorCopyRecommendationButton onClick={handleCheckItOut}>
+                        {S.BUTTON_LABELS.CheckItOut}
                     </RecommendationEditorCopyRecommendationButton>
                 </RecommendationEditorCopyRecommendationButtonContainer>
             </RecommendationPublishedContentContainer>
@@ -67,7 +92,8 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
 }
 
 export const mapStateToProps = (state: StoreState) => ({
-    userName: state.userReducer.userName,
+    firstName: state.userReducer.firstName,
+    lastName: state.userReducer.lastName,
 })
 
 export default reduxConnect(mapStateToProps)(RecommendationPublished)

@@ -4,6 +4,8 @@ import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import _ from 'lodash'
+import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
@@ -13,13 +15,15 @@ import { openRecommendationModal } from 'store/recommendationModal/recommendatio
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
-import { formatPhone } from 'utilities/helpers/formatPhone'
-import { IPlace } from 'utilities/types/place'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { ICategory } from 'utilities/types/category'
+import { IVenue } from 'utilities/types/venue'
 import {
     FindATableButton,
     PlaceBannerAddressCityStateZip,
     PlaceBannerAddressOne,
     PlaceBannerAddressSpan,
+    PlaceBannerAnchor,
     PlaceBannerButtonsContainer,
     PlaceBannerCityState,
     PlaceBannerContactInformationSpan,
@@ -30,7 +34,6 @@ import {
     PlaceBannerPhoneNumber,
     PlaceBannerPlaceCategory,
     PlaceBannerPlaceName,
-    PlaceBannerRecommendNumber,
     PlaceBannerRecommendRating,
     PlaceBannerRecommendSpan,
     PlaceBannerTextsContainer,
@@ -44,70 +47,69 @@ interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
 }
 
-interface IPlaceBannerProps extends IPlace, IReduxProps {}
+interface IPlaceBannerProps extends IReduxProps, IWithAuthInjectedProps {
+    venueInformation: IVenue | null
+}
 
 const PlaceBanner: React.FC<IPlaceBannerProps> = ({
-    placeID,
-    placeCategories,
-    placeImageSrc,
-    placeName,
-    placeCity,
-    placeAddress,
-    placeAddressTwo,
-    placeState,
-    placeZip,
-    placeNumberOfRecommendations,
-    placeRating,
-    placeDescription,
-    placeWebsiteURL,
-    placeStatePostal,
-    placeNumber,
+    venueInformation,
     openRecommendationModal,
+    authenticatedAction,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const handleShare = () => {
         if (window !== undefined) {
-            let inp = document.createElement('input')
-            document.body.appendChild(inp)
-            inp.value = window.location.href
-            inp.select()
-            document.execCommand('copy', false)
-            inp.remove()
+            navigator.clipboard
+                .writeText(window.location.href)
+                .then(() => {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.COPY_TO_CLIPBOARD.Type}
+                                    title={B.COPY_TO_CLIPBOARD.Title}
+                                    message={B.COPY_TO_CLIPBOARD.Body}
+                                />
+                            </div>
+                        ),
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
-
-        enqueueSnackbar('', {
-            content: (
-                <div>
-                    <Snackbar
-                        type={B.COPY_TO_CLIPBOARD.Type}
-                        title={B.COPY_TO_CLIPBOARD.Title}
-                        message={B.COPY_TO_CLIPBOARD.Body}
-                    />
-                </div>
-            ),
-        })
     }
 
     const handleFindATable = () => {
         // TODO: Wire up Find-A-Table API
-        console.log(`Find-A-Table button is clicked for place with ID of ${placeID}`)
+        if (_.has(venueInformation, 'id')) {
+            console.log(`Find-A-Table button is clicked for place with ID of ${venueInformation.id}`)
+        }
     }
     const handleRecommend = () => {
         // TODO: Send the user to the recommendation editor
-        openRecommendationModal({ placeID: placeID, placeName: placeName })
-        console.log(`Recommend-restaurant button is clicked for place with ID of ${placeID}`)
+        if (_.has(venueInformation, 'id') && _.has(venueInformation, 'name')) {
+            authenticatedAction(() =>
+                openRecommendationModal({
+                    placeID: String(venueInformation.id),
+                    placeName: venueInformation.name,
+                    isAATL: true,
+                })
+            )
+            console.log(`Recommend-restaurant button is clicked for place with ID of ${venueInformation.id}`)
+        }
     }
     const handleVisitWebsite = () => {
-        if (window !== undefined) {
-            window.open(placeWebsiteURL, '_blank')
+        if (window !== undefined && _.has(venueInformation, 'websiteURL')) {
+            window.open(venueInformation.websiteURL, '_blank')
         }
     }
 
-    return (
+    return venueInformation ? (
         <PlaceBannerContainer>
             <PlaceBannerImageContainer>
-                <Image src={placeImageSrc} alt="restaurant-image" />
+                <Image src={venueInformation.imageCDNUrl} alt="restaurant-image" />
                 <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
@@ -122,30 +124,47 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
             </PlaceBannerImageContainer>
             <PlaceBannerContentContainer>
                 <PlaceBannerTextsContainer>
-                    <PlaceBannerPlaceCategory>{concatCategories(placeCategories)}</PlaceBannerPlaceCategory>
-                    <PlaceBannerPlaceName>{placeName}</PlaceBannerPlaceName>
+                    <PlaceBannerPlaceCategory>
+                        {concatCategories(venueInformation.categories.map((category: ICategory) => category.longName))}
+                    </PlaceBannerPlaceCategory>
+                    <PlaceBannerPlaceName>{venueInformation.name}</PlaceBannerPlaceName>
                     <PlaceBannerCityState>
-                        {placeCity}, {placeState}
+                        {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
                     </PlaceBannerCityState>
                     <PlaceBannerAddressSpan>
-                        <PlaceBannerAddressOne>
-                            {`${placeAddress},`} {placeAddressTwo ? `${placeAddressTwo},` : ''}
-                        </PlaceBannerAddressOne>
+                        <PlaceBannerAddressOne>{`${venueInformation.street}`}</PlaceBannerAddressOne>
                         &nbsp;
                         <PlaceBannerAddressCityStateZip>
-                            {placeCity}, {placeStatePostal} {placeZip}
+                            {venueInformation.parentRegion.city}, {venueInformation.postalCode}
                         </PlaceBannerAddressCityStateZip>
                     </PlaceBannerAddressSpan>
                     <PlaceBannerRecommendSpan>
-                        <PlaceBannerRecommendRating>{placeRating}</PlaceBannerRecommendRating>
-                        &nbsp;
-                        <PlaceBannerRecommendNumber>({placeNumberOfRecommendations})</PlaceBannerRecommendNumber>
+                        <PlaceBannerRecommendRating>
+                            Recommended {venueInformation.recommendations.totalCount} times
+                        </PlaceBannerRecommendRating>
+                        {/* <PlaceBannerRecommendNumber>
+                            Recommended {venueInformation.recommendations.totalCount} times
+                        </PlaceBannerRecommendNumber> */}
                     </PlaceBannerRecommendSpan>
-                    <PlaceBannerDescription>{placeDescription}</PlaceBannerDescription>
+                    <PlaceBannerDescription>{venueInformation.content}</PlaceBannerDescription>
                     <PlaceBannerContactInformationSpan>
-                        <PlaceBannerVisitWebsite onClick={handleVisitWebsite}>Visit Website</PlaceBannerVisitWebsite>
+                        {venueInformation.websiteURL ? (
+                            <Link href={venueInformation.websiteURL} passHref={true} prefetch={false}>
+                                <PlaceBannerAnchor target="_blank">
+                                    <PlaceBannerVisitWebsite>Visit Website /</PlaceBannerVisitWebsite>
+                                </PlaceBannerAnchor>
+                            </Link>
+                        ) : null}
                         &nbsp;
-                        <PlaceBannerPhoneNumber>/ {formatPhone(placeNumber)}</PlaceBannerPhoneNumber>
+                        {venueInformation.phoneNumFormatted ? (
+                            <Link href={`tel:${venueInformation.phoneNumFormatted}`} passHref={true} prefetch={false}>
+                                <PlaceBannerAnchor target="_blank">
+                                    <PlaceBannerPhoneNumber>
+                                        {venueInformation.phoneNumFormatted}
+                                    </PlaceBannerPhoneNumber>
+                                </PlaceBannerAnchor>
+                            </Link>
+                        ) : null}
                     </PlaceBannerContactInformationSpan>
                     <PlaceBannerButtonsContainer>
                         <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
@@ -166,8 +185,8 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                 </PlaceBannerTextsContainer>
             </PlaceBannerContentContainer>
         </PlaceBannerContainer>
-    )
+    ) : null
 }
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal }, dispatch)
 
-export default reduxConnect(null, mapDispatchToProps)(PlaceBanner)
+export default reduxConnect(null, mapDispatchToProps)(withAuth(PlaceBanner))

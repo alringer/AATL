@@ -1,6 +1,7 @@
-export interface IUserInformation {
-    userName: string
-    userEmail: string
+import { IUserProfile } from 'utilities/types/userProfile'
+
+export interface IUserInformation extends IUserProfile {
+    userRole: string | null
 }
 
 export interface UserReducerState extends IUserInformation {

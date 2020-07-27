@@ -25,7 +25,7 @@ export const getServerSideProps: GetStaticProps = async (context) => {
             }
         })
         .catch((err) => {
-            console.log('Fetch failed in cities')
+            console.log('Fetch failed in cities: ', err)
         })
     return {
         props: { stateList: stateList ? stateList : [], provinceList: provinceList ? provinceList : [] },

@@ -2,7 +2,6 @@ import Tooltip from '@material-ui/core/Tooltip'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import EllipsesSVG from 'assets/horizontalEllipses.svg'
-import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import FlagButton from 'components/CardButtons/FlagButton'
@@ -10,7 +9,10 @@ import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
+import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
+import _ from 'lodash'
+import { useRouter } from 'next/router'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -30,7 +32,8 @@ import {
 import { query } from 'style/device'
 import { chopStringFullRecommendationDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
-import { IPlace } from 'utilities/types/place'
+import { ICategory } from 'utilities/types/category'
+import { IVenue } from 'utilities/types/venue'
 import {
     CardPlaceWideAuthorTitleText,
     CardPlaceWideButtonsContainer,
@@ -55,37 +58,40 @@ export enum CardPlaceWideEnum {
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
 }
-interface ICardPlaceWideProps extends Partial<IPlace>, IReduxProps {
+interface ICardPlaceWideProps extends IReduxProps {
+    place: IVenue
     type: CardPlaceWideEnum
 }
 
-const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
-    placeName,
-    placeCity,
-    placeState,
-    placeID,
-    placeCategories,
-    placeDescription,
-    placeNumberOfRecommendations,
-    type,
-    openRecommendationModal,
-}) => {
+const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecommendationModal }) => {
+    const router = useRouter()
     const [isMoreVisible, setMoreVisible] = React.useState(false)
+
+    // React.useEffect(() => {
+    //     console.log('Place Card: ', place)
+    // }, [place])
 
     const handleView = () => {
         console.log('View a place from wide place card')
+        router.push(`${R.ROUTE_ITEMS.restaurant}/${place.id}`)
     }
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
-        console.log('handleWriteRecommendation for place ID: ', placeID)
-        openRecommendationModal({ placeID: placeID, placeName: placeName })
+        if (_.has(place, 'id') && _.has(place, 'name')) {
+            console.log('handleWriteRecommendation for place ID: ', place.id)
+            openRecommendationModal({ placeID: place.id, placeName: place.name, isAATL: true })
+        }
         e.stopPropagation()
     }
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
-        console.log('handleAddToList for place ID: ', placeID)
+        if (_.has(place, 'id')) {
+            console.log('handleAddToList for place ID: ', place.id)
+        }
         e.stopPropagation()
     }
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
-        console.log('handleShare for place ID: ', placeID)
+        if (_.has(place, 'id')) {
+            console.log('handleShare for place ID: ', place.id)
+        }
         e.stopPropagation()
     }
 
@@ -109,14 +115,14 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     return (
         <CardPlaceWideCardContainer onClick={handleView} id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
             <CardPlaceWideCardImageContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
-                <Image src={PlaceImage} alt="recommendation-image" />
+                <Image src={place ? place.imageCDNUrl : null} alt="recommendation-image" />
             </CardPlaceWideCardImageContainer>
             <CardPlaceWideCardContentContainer>
                 <CardPlaceWideContentTopContainer>
                     <CardPlaceWideHeaderContainer>
                         <WideHeaderLeftContainer>
                             <CardPlaceWidePlaceNameText>
-                                {placeName}
+                                {place && place.name ? place.name : null}
                                 <WideHeaderTooltipIconsContainer>
                                     <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                         <img src={AuthoredSVG} />
@@ -158,19 +164,30 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                     </CardPlaceWideHeaderContainer>
                     {type === CardPlaceWideEnum.Search && (
                         <WidePlaceAddressText>
-                            {placeCity}, {placeState}
+                            {place && place.parentRegion && place.parentRegion.city
+                                ? place.parentRegion.city + ', '
+                                : null}
+                            {place && place.parentRegion && place.parentRegion.state ? place.parentRegion.state : null}
                         </WidePlaceAddressText>
                     )}
-                    <CardPlaceWidePlaceCategoryText>{concatCategories(placeCategories)}</CardPlaceWidePlaceCategoryText>
+                    <CardPlaceWidePlaceCategoryText>
+                        {place && place.categories
+                            ? concatCategories(place.categories.map((category: ICategory) => category.longName))
+                            : null}
+                    </CardPlaceWidePlaceCategoryText>
                 </CardPlaceWideContentTopContainer>
                 <CardPlaceWideContentMiddleContainer>
                     <CardPlaceWideSummaryText>
-                        {chopStringFullRecommendationDescription(placeDescription)}
+                        {place && place.content ? chopStringFullRecommendationDescription(place.content) : null}
                     </CardPlaceWideSummaryText>
                 </CardPlaceWideContentMiddleContainer>
                 <CardPlaceWideContentBottomContainer>
                     <CardPlaceWideAuthorTitleText>
-                        {S.PLACE_CARD.Recommended} {placeNumberOfRecommendations} {S.PLACE_CARD.Times}
+                        {`${S.PLACE_CARD.Recommended} ${
+                            place && place.recommendations && place.recommendations.items
+                                ? place.recommendations.items.length
+                                : 0
+                        } ${S.PLACE_CARD.Times}`}
                     </CardPlaceWideAuthorTitleText>
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) =>

@@ -8,6 +8,7 @@ export const SearchWorkBenchCategoriesContainer = styled.div`
 `
 
 export const SearchWorkBenchCategoriesText = styled(TextLink)`
+    text-decoration: none;
     font-size: 12px;
     font-weight: 500;
     font-stretch: normal;

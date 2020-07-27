@@ -1,7 +1,8 @@
 // State Interfaces
 export interface RecommendationModalPlaceInformation {
-    placeID: number
-    placeName: string
+    placeID: string | null
+    placeName: string | null
+    isAATL: boolean | null
 }
 
 export interface IRecommendationPayload {
@@ -12,8 +13,6 @@ export interface IRecommendationPayload {
 
 export interface RecommendationModalReducerState extends RecommendationModalPlaceInformation {
     isOpen: boolean
-    placeID: number | null
-    placeName: string | null
 }
 
 export enum RecommendationModalViewNum {

@@ -42,6 +42,7 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
                                 <Link
                                     href={`${R.ROUTE_ITEMS.city}/${city.id}`}
                                     as={`${R.ROUTE_ITEMS.city}/${city.id}`}
+                                    passHref={true}
                                     prefetch={false}
                                 >
                                     <ListViewRegionText>

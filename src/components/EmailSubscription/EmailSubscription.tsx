@@ -1,4 +1,5 @@
 import Snackbar from 'components/Snackbar/Snackbar'
+import axios, { SUBSCRIBE_MAILCHIMP } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { useSnackbar } from 'notistack'
@@ -28,19 +29,26 @@ const EmailSubscription = () => {
         if (email !== '') {
             // TODO: Call email subscription API
             console.log('TODO: Call subscribe API with ', email)
-            setEmail('')
-            // TODO: Enqueue snackbar if the API returns with success
-            enqueueSnackbar('', {
-                content: (
-                    <div>
-                        <Snackbar
-                            type={B.EMAIL_SUBSCRIPTION.Type}
-                            title={B.EMAIL_SUBSCRIPTION.Title}
-                            message={B.EMAIL_SUBSCRIPTION.Body}
-                        />
-                    </div>
-                ),
-            })
+            const config = {}
+            axios
+                .post(SUBSCRIBE_MAILCHIMP, { emailAddress: email })
+                .then((res) => {
+                    console.log('Response from subscription: ', res)
+                    setEmail('')
+                    // TODO: Enqueue snackbar if the API returns with success
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.EMAIL_SUBSCRIPTION.Type}
+                                    title={B.EMAIL_SUBSCRIPTION.Title}
+                                    message={B.EMAIL_SUBSCRIPTION.Body}
+                                />
+                            </div>
+                        ),
+                    })
+                })
+                .catch((err) => console.log(err))
         }
     }
 

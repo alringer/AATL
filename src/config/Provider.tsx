@@ -19,7 +19,12 @@ import AuthProvider from 'utilities/providers/AuthProvider'
 const Provider = ({ children, cookies }) => {
     return (
         <>
-            <SSRKeycloakProvider keycloakConfig={keycloakCfg} persistor={Persistors.Cookies(cookies)}>
+            <SSRKeycloakProvider
+                keycloakConfig={keycloakCfg}
+                persistor={Persistors.Cookies(cookies)}
+                LoadingComponent={<div>Loading...</div>}
+                autoRefreshToken={true}
+            >
                 <StoreProvider store={store}>
                     <AuthProvider>
                         <StylesProvider injectFirst>

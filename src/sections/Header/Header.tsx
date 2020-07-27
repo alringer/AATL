@@ -25,6 +25,7 @@ import { UserReducerState } from 'store/user/user_types'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import useComponentVisible from 'utilities/hooks/useComponentVisible'
+import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import {
     ButtonContainer,
     HeaderContainer,
@@ -122,6 +123,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const Logo = () => (
         <LogoContainer>
+            {/* Possible add prefetch={false} */}
             <Link href="/">
                 <a>
                     <Image src={FullLogoSVG} alt="logo" />
@@ -132,6 +134,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const LogoText = () => (
         <LogoContainer>
+            {/* Possible add prefetch={false} */}
             <Link href="/">
                 <a>
                     <Image src={LogoTextSVG} alt="logo" />
@@ -171,26 +174,35 @@ const Header: React.FC<IHeaderProps> = ({
         <PopoverContainer ref={popoverReference.ref}>
             <PopoverArrow />
             <PopoverRowProfileInfo>
-                <PopoverUserNameText>{user.userName}</PopoverUserNameText>
-                <PopoverEmailText>{user.userEmail}</PopoverEmailText>
+                <PopoverUserNameText>
+                    {(user.firstName ? `${user.firstName} ` : '') + (user.lastName ? `${user.lastName}` : '')}
+                </PopoverUserNameText>
+                <PopoverEmailText>{user.email}</PopoverEmailText>
             </PopoverRowProfileInfo>
             <PopoverRowOption>
                 {/* TODO: Add account settings route */}
-                <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
-                    {S.PROFILE_POPOVER_ITEMS.AccountSettings}
-                </PopoverOptionLinkText>
+                <Link href={`${R.ROUTE_ITEMS.userProfile}/${user.id}`} passHref>
+                    <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
+                        {S.PROFILE_POPOVER_ITEMS.AccountSettings}
+                    </PopoverOptionLinkText>
+                </Link>
             </PopoverRowOption>
             <PopoverRowOption>
-                {/* TODO: Add admin menu route */}
-                <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
-                    {S.PROFILE_POPOVER_ITEMS.AdminMenu}
-                </PopoverOptionLinkText>
+                {user.userRole === UserRoleEnum.Admin ? (
+                    <Link href={R.ROUTE_ITEMS.admin} passHref>
+                        <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
+                            {S.PROFILE_POPOVER_ITEMS.AdminMenu}
+                        </PopoverOptionLinkText>
+                    </Link>
+                ) : null}
             </PopoverRowOption>
             <PopoverRowOption>
                 {/* TODO: Add help route */}
-                <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
-                    {S.PROFILE_POPOVER_ITEMS.Help}
-                </PopoverOptionLinkText>
+                <Link href={R.ROUTE_ITEMS.home} passHref>
+                    <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
+                        {S.PROFILE_POPOVER_ITEMS.Help}
+                    </PopoverOptionLinkText>
+                </Link>
             </PopoverRowOption>
             <PopoverRowOption>
                 <PopoverSignOutText onClick={handlePopoverLogout}>{S.PROFILE_POPOVER_ITEMS.SignOut}</PopoverSignOutText>

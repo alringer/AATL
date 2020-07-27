@@ -1,7 +1,17 @@
+import Dialog from '@material-ui/core/Dialog'
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
 import styled from 'styled-components'
+
+export const CustomDialog = styled(Dialog)`
+    @media ${device.tablet} {
+        margin: 0;
+        .MuiDialog-paper {
+            margin: 0;
+        }
+    }
+`
 
 export const SearchModalContentContainer = styled.div`
     display: flex;
@@ -13,7 +23,7 @@ export const SearchModalContentContainer = styled.div`
         height: 100%;
     }
     @media ${device.tablet} {
-        width: 780px;
+        width: 768px;
         height: auto;
     }
     @media ${device.laptop} {
@@ -92,20 +102,45 @@ export const SearchModalMatchesFound = styled.p`
     color: ${props => props.theme.charcoalGrey};
 `
 
+export const SearchModalNoResultsHeader = styled.p`
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: ${props => props.theme.charcoalGrey};
+`
+
 export const SearchModalRestaurantCardsContainer = styled.div`
-    max-height: 500px;
     overflow-y: auto;
     padding: 20px 0;
+
+    @media ${device.mobile} {
+        max-height: 100%;
+    }
+    @media ${device.tablet} {
+        max-height: 500px;
+    }
 `
 
 export const SearchModalRestaurantCardContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
 
-    height: 110px;
     margin-bottom: 20px;
+
+    @media ${device.mobile} {
+        height: 160px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    @media ${device.tablet} {
+        height: 110px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
 `
 export const SearchModalRestaurantCardContentContainer = styled.div`
     display: flex;
@@ -115,8 +150,9 @@ export const SearchModalRestaurantCardContentContainer = styled.div`
     height: 100%;
 `
 export const SearchModalRestaurantCardImageContainer = styled.div`
+    min-width: 110px;
     width: 110px;
-    height: 100%;
+    height: 110px;
 `
 export const SearchModalRestaurantCardInformationsContainer = styled.div`
     display: flex;
@@ -142,6 +178,7 @@ export const SearchModalRestaurantCardRestaurantName = styled.p`
     line-height: 1.22;
     letter-spacing: normal;
     color: ${props => props.theme.darkGrey};
+    overflow-wrap: wrap;
 `
 export const SearchModalRestaurantCardCategories = styled.p`
     font-size: 12px;
@@ -151,6 +188,7 @@ export const SearchModalRestaurantCardCategories = styled.p`
     line-height: 1.67;
     letter-spacing: 2px;
     color: ${props => props.theme.charcoalGrey};
+    overflow-wrap: wrap;
 `
 export const SearchModalRestaurantCardSpecials = styled.p`
     font-size: 12px;
@@ -172,11 +210,21 @@ export const SearchModalRestaurantCardAddress = styled.p`
 `
 
 export const RecommendButton = styled(CustomButton)`
+    min-width: 126px;
     color: ${(props) => props.theme.mushroom};
     background-color: ${(props) => props.theme.white};
     border-color: ${(props) => props.theme.darkGreyOpaque};
     :hover {
         border-color: ${(props) => props.theme.darkGreyOpaque};
+    }
+
+    @media ${device.mobile} {
+        margin-top: 10px;
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        margin-top: 0;
+        width: auto;
     }
 `
 

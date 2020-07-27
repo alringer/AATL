@@ -17,6 +17,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    .Mui-disabled {
+        cursor: not-allowed;
+    }
+
     .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child {
         padding-left: 10px;
     }

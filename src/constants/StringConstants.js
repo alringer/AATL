@@ -32,14 +32,15 @@ export const BUTTON_LABELS = {
     ResetPassword: 'RESET PASSWORD',
     OK: 'OK',
     PublishRecommendation: 'PUBLISH RECOMMENDATION',
-    CopyRecommendation: 'COPY RECOMMENDATION LINK',
+    CheckItOut: 'CHECK IT OUT',
     MoreTips: 'MORE TIPS',
     ReadOurGuidelines: 'READ OUR GUIDELINES',
     CheckItOut: 'CHECK IT OUT',
     ViewMore: 'VIEW MORE',
     AddPlace: 'ADD PLACE',
     Cancel: 'CANCEL',
-    AddNewPlace: 'ADD A NEW PLACE'
+    AddNewPlace: 'ADD A NEW PLACE',
+    RecommendNewPlace: 'RECOMMEND NEW PLACE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -51,7 +52,7 @@ export const INPUT_PLACEHOLDERS = {
     YourFullName: 'Your Full Name',
     ConfirmPassword: 'Confirm Password',
     Near: 'Near',
-    Address: 'city, state or zip',
+    CityStateZip: 'city, state or zip',
     Name: 'Name',
     RestaurantType: 'Restaurant type i.e. Hamburgers, Sushi, Mexican',
     Address: 'Address',
@@ -162,7 +163,8 @@ export const RECOMMENDATION_EDITOR = {
     LabelDescription: 'Description',
     PlaceholderTitle: 'Write a catchy title :)',
     PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
-    MaxLength: '/150'
+    MaxLength: '/150',
+    TipOne: 'It’s all about the ambiance. Speak to the decor, lighting and service. How did the restaurant make you feel? Tap into the emotional aspect of fine dining.'
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -213,8 +215,25 @@ export const ADD_PLACE = {
     Intro: 'Please provide information about this restaurant. Your recommendation will be public.'
 }
 
+export const COULD_NOT_FIND = {
+    Title: 'Couldn’t find it?',
+    Description: 'If you’d like to recommend a place you couldn’t find, please do us a kindness and recommend it!',
+}
+
 export const SEARCH_PAGE = {
     FoodAndDrink: 'FOOD & DRINK',
     WeHave: 'We have',
-    RecordsFor: 'records for'
+    RecordsFor: 'records for',
+    RecordFor: 'record for',
+    NearBy: 'nearby',
+    SeeAllCategories: 'See All Categories',
+    NoResultsTitle: 'No results found',
+    NoResultsSubTitle: 'Try a different location, alternative spelling or a more generalized search.'
+}
+
+export const RESTAURANT_PAGE = {
+    RecommendationsSectionTitle: 'Recommendations',
+    RecommendationsSectionSubTitlePartOne: 'Recommendations of',
+    RecommendationsSectionSubTitlePartTwo: 'by locals',
+    RecommendationsSectionSubTitlePartThree: 'who love'
 }

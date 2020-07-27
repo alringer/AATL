@@ -58,7 +58,7 @@ interface SetTargetEmailAction {
     payload: string
 }
 
-export type AuthenticationActionTypes =
+export type AuthModalActionTypes =
     | OpenAuthenticationModalAction
     | SetAuthenticationErrorAction
     | CloseAuthenticationModalAction

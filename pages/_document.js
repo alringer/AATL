@@ -13,7 +13,7 @@ export default class Document extends NextDocument {
                     />
                     <script
                         type="text/javascript"
-                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVzVqxddd6Eq4ckE8k5Ku_tHjbaDLz8iE&libraries=places"
+                        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_KEY}&libraries=places`}
                     ></script>
                 </Head>
                 <body>

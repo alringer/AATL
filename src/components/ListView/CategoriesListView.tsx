@@ -43,7 +43,11 @@ const CategoriesListView: NextPage<ICategoriesListViewProps> = ({ categoryList }
                         return (
                             <ListViewRegionContainer key={category.id}>
                                 {/* TODO: Send the user to the search page with the proper query parameters in the url */}
-                                <Link href={`${R.ROUTE_ITEMS.search}`}>
+                                <Link
+                                    href={`${R.ROUTE_ITEMS.search}?place=${category.longName}`}
+                                    passHref={true}
+                                    prefetch={false}
+                                >
                                     <ListViewRegionText>{category.longName}</ListViewRegionText>
                                 </Link>
                             </ListViewRegionContainer>

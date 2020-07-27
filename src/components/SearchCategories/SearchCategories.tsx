@@ -1,57 +1,35 @@
-import { SearchWorkBenchCategoriesContainer, SearchWorkBenchCategoriesText } from 'components/SearchCategories/SearchCategories.style'
+import {
+    SearchWorkBenchCategoriesContainer,
+    SearchWorkBenchCategoriesText,
+} from 'components/SearchCategories/SearchCategories.style'
+import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
+import Link from 'next/link'
 import React from 'react'
-
-const categories = [
-    'Food & Drink',
-    'Afghan',
-    'African',
-    'American',
-    'Arabian',
-    'Barbeque',
-    'Basque',
-    'Breakfast & Brunch',
-    'Buffets',
-    'Burgers',
-    'Cafes',
-    'Caribbean',
-    'Chinese',
-    'Diners',
-    'Fast Food',
-    'Fish & Chips',
-    'French',
-    'Gastropubs',
-    'German',
-    'Gluten-Free',
-    'Greek',
-    'Guamanian',
-    'Halal',
-    'Indian',
-    'Italian',
-    'Japanese',
-    'Korean',
-    'Latin American',
-    'Mediterranean',
-    'Mexican',
-    'Pizza',
-    'See All Categories',
-]
+import { ICategory } from 'utilities/types/category'
+import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 
 interface ISearchCategoriesProps {
-    handleSearch: (place?: string, address?: string) => void
+    handleSearch: (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => void
+    topCategories: ICategory[]
 }
 
-const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleSearch }) => {
+const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleSearch, topCategories }) => {
     return (
         <SearchWorkBenchCategoriesContainer>
-            <SearchWorkBenchCategoriesText id="bold">{S.SEARCH_PAGE.FoodAndDrink}</SearchWorkBenchCategoriesText>
-            {categories.map((category: string, index: number) => {
+            <Link href={R.ROUTE_ITEMS.foodAndDrink} passHref={true} prefetch={false}>
+                <SearchWorkBenchCategoriesText id="bold">{S.SEARCH_PAGE.FoodAndDrink}</SearchWorkBenchCategoriesText>
+            </Link>
+            {topCategories.map((category: ICategory, index: number) => {
                 return (
-                    <SearchWorkBenchCategoriesText onClick={() => handleSearch(category)} key={index}>
-                        {category}
+                    <SearchWorkBenchCategoriesText onClick={() => handleSearch(category.longName)} key={index}>
+                        {category.longName}
                     </SearchWorkBenchCategoriesText>
                 )
             })}
+            <Link href={R.ROUTE_ITEMS.foodAndDrink} passHref={true} prefetch={false}>
+                <SearchWorkBenchCategoriesText>{S.SEARCH_PAGE.SeeAllCategories}</SearchWorkBenchCategoriesText>
+            </Link>
         </SearchWorkBenchCategoriesContainer>
     )
 }

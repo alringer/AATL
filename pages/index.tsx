@@ -1,3 +1,4 @@
+import HomeBanner from 'components/HomeBanner/HomeBanner'
 import { KeycloakTokenParsed } from 'keycloak-js'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
@@ -40,6 +41,7 @@ const Index: IIndexProps = () => {
                 Hello there
             </button> */}
             {/* {isOpen && <RecommendationModal />} */}
+            <HomeBanner />
             <EmailSubscription />
         </>
     )
