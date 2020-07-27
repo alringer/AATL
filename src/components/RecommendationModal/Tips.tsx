@@ -22,6 +22,7 @@ interface ITipsProps {
 
 const Tips: React.FC<ITipsProps> = ({ handleMoreTips }) => {
     const [isTipToggled, setTipToggled] = React.useState(false)
+    const [currentTip, setCurrentTip] = React.useState(S.RECOMMENDATION_EDITOR.TipOne)
 
     const tipRef = useComponentVisible(false)
 
@@ -46,7 +47,7 @@ const Tips: React.FC<ITipsProps> = ({ handleMoreTips }) => {
                     </TipsHeaderContainer>
                     <TipsTitle>{S.RECOMMENDATION_TIPS.Title}</TipsTitle>
                     <TipsHR />
-                    <TipsDescription>{S.LOREM_IPSUM_SHORT}</TipsDescription>
+                    <TipsDescription>{currentTip}</TipsDescription>
                     <TipsMoreButton onClick={handleMoreTips}>{S.BUTTON_LABELS.MoreTips}</TipsMoreButton>
                 </TipsToggledContainer>
             ) : (

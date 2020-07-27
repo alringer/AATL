@@ -4,5 +4,10 @@ export const ROUTE_ITEMS = {
     cities: '/cities',
     search: '/search',
     city: '/city',
-    restaurant: '/restaurant'
+    restaurant: '/restaurant',
+    admin: '/admin',
+    userProfile: '/user-profile',
+    adminCities: 'cities',
+    adminFlaggedContent: 'flagged-content',
+    adminRecommendationLists: 'recommendation-lists'
 }

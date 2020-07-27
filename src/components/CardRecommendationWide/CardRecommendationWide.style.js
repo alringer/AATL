@@ -28,3 +28,7 @@ export const RecommendationSummaryText = styled(WideSummaryText)``
 export const RecommendationAuthorNameText = styled(WideAuthorNameText)``
 
 export const RecommendationAuthorTitleText = styled(WideAuthorTitleText)``
+
+export const RecommendationTitleSpan = styled.span`
+    margin-right: 10px;
+`

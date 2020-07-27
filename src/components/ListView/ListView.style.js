@@ -54,7 +54,7 @@ export const ListViewCountryTitleContainer = styled.div`
 
 export const ListViewRegionsContainer = styled.ul`
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: hidden;
     list-style: none;
     
     padding-top: 20px;
@@ -67,10 +67,11 @@ export const ListViewRegionColumnContainer = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     width: 140px;
+    margin-right: 20px;
 
     margin-top: ${hiddenColumnMargin}; 
 `
-export const ListViewRegionContainer = styled.li`
+export const ListViewRegionContainer = styled.div`
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -114,6 +115,7 @@ export const ListViewCountryText = styled.p`
 `
 
 export const ListViewRegionText = styled(TextLink)`
+    text-decoration: none;
     font-size: 16px;
     font-weight: normal;
     font-stretch: normal;

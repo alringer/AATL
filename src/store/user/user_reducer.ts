@@ -1,8 +1,21 @@
 import { LOGIN, LOGOUT, UserActionTypes, UserReducerState } from './user_types'
 
 const initialState: UserReducerState = {
-    userName: '',
-    userEmail: '',
+    activated: null,
+    content: null,
+    createdAt: null,
+    deletedAt: null,
+    email: null,
+    firstName: null,
+    id: null,
+    imageCDNUrl: null,
+    instagramId: null,
+    lastName: null,
+    updatedAt: null,
+    userByLine: null,
+    userId: null,
+    username: null,
+    userRole: null,
     loggedIn: false,
 }
 

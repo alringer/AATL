@@ -6,7 +6,7 @@ import MagicLink from 'components/AuthenticationModal/MagicLink'
 import SignUp from 'components/AuthenticationModal/SignUp'
 import SignUpWithEmail from 'components/AuthenticationModal/SignUpWithEmail'
 import React from 'react'
-import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
+import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 
 storiesOf('Authentication Modals', module)
     .add('Login', () => {

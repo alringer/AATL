@@ -1,122 +1,134 @@
-import RestaurantImageFour from 'assets/mock-images/earl-sandwich.jpg'
-import RestaurantImageOne from 'assets/mock-images/restaurant_image.jpg'
-import RestaurantImageTwo from 'assets/mock-images/restaurant_image2.jpeg'
-import RestaurantImageThree from 'assets/mock-images/sushi_image.png'
 import SearchWorkBench from 'components/SearchWorkBench/SearchWorkBench'
-import { GetServerSideProps } from 'next'
+import axios, { FETCH_TOP_CATEGORIES, SEARCH_AATL_RESTAURANTS } from 'config/AxiosConfig'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { StoreState } from 'store'
+import { ILocationInformation } from 'store/location/location_types'
 import { openSearchModal } from 'store/searchModal/searchModal_actions'
-import { PlaceBannerData } from 'stories/PlaceBanner.stories'
-import { IPlace } from 'utilities/types/place'
+import buildURLWithParams from 'utilities/helpers/buildURLWithParams'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { ICategory } from 'utilities/types/category'
+import { ParamType } from 'utilities/types/clientDTOS/ParamType'
+import { SortEnum } from 'utilities/types/clientDTOS/SortType'
+import { IVenue } from 'utilities/types/venue'
 
 interface IReduxProps {
+    ipLocation: ILocationInformation
+    preferredLocation: ILocationInformation
     openSearchModal: () => void
 }
-interface ISearchProps extends IReduxProps {
-    queryPlace: string
-    queryAddress: string
-}
+interface ISearchProps extends IReduxProps, IWithAuthInjectedProps {}
 
-export interface IMockSearchResult {
-    name: string
-    categories: string[]
-    specials: string
-    address: string
-    imgSrc: string
-}
+const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLocation, preferredLocation }) => {
+    const [searchResults, setSearchResults] = React.useState<IVenue[]>([])
+    const [topCategories, setTopCategories] = React.useState<ICategory[]>([])
+    const [place, setPlace] = React.useState<string | null>()
+    const [address, setAddress] = React.useState<string | null>()
+    const [lat, setLat] = React.useState<string | null>()
+    const [lng, setLng] = React.useState<string | null>()
+    const [sort, setSort] = React.useState<string | null>()
 
-const MOCK_SEARCH_RESULTS: IMockSearchResult[] = [
-    {
-        name: 'Kawaii Sushi',
-        categories: ['Seafood'],
-        specials: 'Free soup for a sandwich',
-        address: '123 Where St',
-        imgSrc: RestaurantImageOne,
-    },
-    {
-        name: 'Tokyo Sushi Loha',
-        categories: ['Breakfast', 'Sushi'],
-        specials: 'Amazing BBQ & happy-hour specials',
-        address: '123 Where St',
-        imgSrc: RestaurantImageTwo,
-    },
-    {
-        name: 'I Luv Sushi',
-        categories: ['Breakfast', 'American', 'Sushi'],
-        specials: 'Creative sushi & happy-hour specials',
-        address: '123 Where St',
-        imgSrc: RestaurantImageThree,
-    },
-    {
-        name: "Nakamura's",
-        categories: ['Japanese', 'Sushi'],
-        specials: 'Creative sushi & happy-hour specials',
-        address: '123 Where St',
-        imgSrc: RestaurantImageFour,
-    },
-]
-
-const Search: React.FC<ISearchProps> = ({ openSearchModal, queryPlace, queryAddress }) => {
-    const [searchResults, setSearchResults] = React.useState<IPlace[]>([])
-    const [placeEntry, setPlaceEntry] = React.useState('')
-    const [addressEntry, setAddressEntry] = React.useState('')
     const router = useRouter()
 
     React.useEffect(() => {
-        setPlaceEntry(queryPlace ? queryPlace : '')
-        setAddressEntry(queryAddress ? queryAddress : '')
-        // TODO: Do a search with the queries
-        setSearchResults([PlaceBannerData.default, PlaceBannerData.longName])
-    }, [])
-
-    const handleSearch = (place?: string, address?: string) => {
-        let url = `/search`
-        if (place && address) {
-            url = url + `?place=${place}&address=${address}`
-        } else if (place) {
-            url = url + `?place=${place}`
-        } else if (address) {
-            url = url + `?address=${address}`
+        const queryPlace = router.query.place ? String(router.query.place) : null
+        let queryAddress = null
+        let queryLat = null
+        let queryLng = null
+        if (router.query.address && router.query.lat && router.query.lng) {
+            queryAddress = String(router.query.address)
+            queryLat = String(router.query.lat)
+            queryLng = String(router.query.lng)
+        } else if (preferredLocation) {
+            queryAddress = `${preferredLocation.city ? `${preferredLocation.city}, ` : ''}${
+                preferredLocation.state ? `${preferredLocation.state}, ` : ''
+            }${preferredLocation.country ? `${preferredLocation.country}` : ''}`
+            queryLat = preferredLocation.lat
+            queryLng = preferredLocation.lng
+        } else if (ipLocation) {
+            queryAddress = `${ipLocation.city ? `${ipLocation.city}, ` : ''}${
+                ipLocation.state ? `${ipLocation.state}, ` : ''
+            }${ipLocation.country ? `${ipLocation.country}` : ''}`
+            queryLat = ipLocation.lat
+            queryLng = ipLocation.lng
         }
+        const querySort = router.query.sort ? String(router.query.sort) : null
+        setPlace(queryPlace)
+        setAddress(queryAddress)
+        setLat(queryLat)
+        setLng(queryLng)
+        setSort(querySort)
+        axios
+            .post(
+                SEARCH_AATL_RESTAURANTS,
+                {
+                    keyword: queryPlace ? queryPlace : '',
+                    longitude: queryLng ? queryLng : Math.round(-117.161087),
+                    latitude: queryLat ? queryLat : Math.round(32.715736),
+                    sort: querySort ? querySort : SortEnum.MostRecommended,
+                },
+                {
+                    headers: {
+                        Authorization: getTokenConfig(),
+                    },
+                }
+            )
+            .then((res) => {
+                console.log('Search result: ', res)
+                setSearchResults(res.data)
+            })
+            .catch((err) => console.log(err))
+        const topCategoriesConfig = {
+            params: {
+                longitude: queryLng ? queryLng : Math.round(-117.161087),
+                latitude: queryLat ? queryLat : Math.round(32.715736),
+                limit: 30,
+            },
+        }
+        axios
+            .get(FETCH_TOP_CATEGORIES, topCategoriesConfig)
+            .then((res) => {
+                setTopCategories(res.data)
+            })
+            .catch((err) => console.log(err))
+    }, [router])
+
+    const handleSearch = (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => {
+        const paramsArray: ParamType[] = [
+            { label: 'place', value: place ? encodeURIComponent(place) : place },
+            { label: 'address', value: address ? encodeURIComponent(address) : address },
+            { label: 'lat', value: lat },
+            { label: 'lng', value: lng },
+            { label: 'sort', value: sort },
+        ]
+        const paramsURL = buildURLWithParams(paramsArray)
+        let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
         router.push(url, undefined, { shallow: true })
-        setPlaceEntry(place ? place : '')
-        setAddressEntry(address ? address : '')
-        // TODO: Do a search with the queries
-        setSearchResults([
-            PlaceBannerData.default,
-            PlaceBannerData.longName,
-            PlaceBannerData.default,
-            PlaceBannerData.longName,
-        ])
     }
 
     return (
         <div>
             <SearchWorkBench
-                inputPlace={placeEntry ? placeEntry : ''}
-                inputAddress={addressEntry ? addressEntry : ''}
+                inputPlace={place}
+                inputAddress={address}
+                inputLat={lat}
+                inputLng={lng}
+                inputSort={sort}
                 searchResults={searchResults}
+                topCategories={topCategories}
                 handleSearch={handleSearch}
                 openSearchModal={openSearchModal}
             />
         </div>
     )
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { place, address } = context.query
 
-    console.log(context.query)
-
-    return {
-        props: {
-            queryPlace: place ? place : '',
-            queryAddress: address ? address : '',
-        },
-    }
-}
+const mapStateToProps = (state: StoreState) => ({
+    ipLocation: state.locationReducer.ipLocation,
+    preferredLocation: state.locationReducer.preferredLocation,
+})
 
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
@@ -126,4 +138,4 @@ const mapDispatchToProps = (dispatch: any) =>
         dispatch
     )
 
-export default reduxConnect(null, mapDispatchToProps)(Search)
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(Search))

@@ -4,6 +4,10 @@ import { ImageContainer } from 'style/ImageContainer/ImageContainer'
 import { NoWrapText } from 'style/NoWrapText/NoWrapText.style'
 import styled from 'styled-components'
 
+export const SmallPlaceCardAnchor = styled.a`
+    text-decoration: none;
+`
+
 export const SmallPlaceCardContainer = styled(CardContainer)`
     display: flex;
     flex-direction: column;

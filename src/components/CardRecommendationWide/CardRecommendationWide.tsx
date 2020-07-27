@@ -8,7 +8,9 @@ import FlagButton from 'components/CardButtons/FlagButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
+import axios, { FETCH_RECOMMENDATION } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
+import _ from 'lodash'
 import React from 'react'
 import Media from 'react-media'
 import {
@@ -43,6 +45,7 @@ import {
     RecommendationPlaceCategoryText,
     RecommendationPlaceNameText,
     RecommendationSummaryText,
+    RecommendationTitleSpan,
     RecommendationTitleText,
 } from './CardRecommendationWide.style'
 
@@ -51,51 +54,69 @@ interface IRecommendationCardProps {
     recommendation: IRecommendation
 }
 
-const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
-    isFull,
-    recommendation,
-    // recommendationID,
-    // recommendationImage,
-    // placeName,
-    // placeAddress,
-    // placeCategories,
-    // recommendationTitle,
-    // recommendationDescription,
-    // recommendationAuthorName,
-    // recommendationAuthorTitle,
-}) => {
+const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, recommendation }) => {
+    const [currentRecommendation, setCurrentRecommendation] = React.useState(null)
+    const [loading, setLoading] = React.useState(false)
     const [isMoreVisible, setMoreVisible] = React.useState(false)
 
-    const handleView = () => {
-        // TODO: Take the user to the recommendation page
-        console.log('Recommendation clicked. Take the user to the recommendation page with ID: ', recommendation.id)
-    }
+    React.useEffect(() => {
+        setLoading(true)
+        if (_.has(recommendation, 'id')) {
+            axios
+                .get(FETCH_RECOMMENDATION(recommendation.id))
+                .then((res) => {
+                    console.log(res)
+                    setCurrentRecommendation(res.data)
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
+    }, [])
 
-    const handleFlag = () => {
+    const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
         console.log('Handle flag content')
+        e.stopPropagation()
     }
 
     const handleLike = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to like the recommendation
+        if (currentRecommendation) {
+            console.log('Recommendation heart clicked. Recommendation ID: ', currentRecommendation.id)
+        }
         e.stopPropagation()
-        console.log('Recommendation heart clicked. Recommendation ID: ', recommendation.id)
     }
 
-    const handleAddToList = () => {
-        console.log('handleAddToList clicked in the recommendation card with id: ', recommendation.id)
+    const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
+        if (currentRecommendation) {
+            console.log('handleAddToList clicked in the recommendation card with id: ', currentRecommendation.id)
+        }
+        e.stopPropagation()
     }
-    const handleWriteRecommendation = () => {
-        console.log('handleWriteRecommendation clicked in the recommendation card with id: ', recommendation.id)
+    const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
+        if (currentRecommendation) {
+            console.log(
+                'handleWriteRecommendation clicked in the recommendation card with id: ',
+                currentRecommendation.id
+            )
+        }
+        e.stopPropagation()
     }
-    const handleShare = () => {
-        console.log('handleShare clicked in the recommendation card with id: ', recommendation.id)
+    const handleShare = (e: React.MouseEvent<HTMLElement>) => {
+        if (currentRecommendation) {
+            console.log('handleShare clicked in the recommendation card with id: ', currentRecommendation.id)
+        }
+        e.stopPropagation()
     }
 
     const handleMore = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Display more options
         setMoreVisible(!isMoreVisible)
         e.stopPropagation()
-        console.log('Recommendation ellipses clicked. Recommendation ID: ', recommendation.id)
+        if (currentRecommendation) {
+            console.log('Recommendation ellipses clicked. Recommendation ID: ', currentRecommendation.id)
+        }
     }
 
     const ViewMore = () => {
@@ -110,8 +131,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         )
     }
 
-    return (
-        <RecommendationCardContainer onClick={handleView} id={isMoreVisible ? 'toggled' : 'not-toggled'}>
+    return currentRecommendation ? (
+        <RecommendationCardContainer onClick={handleMore} id={isMoreVisible ? 'toggled' : 'not-toggled'}>
             <RecommendationCardImageContainer id={isMoreVisible ? 'toggled' : 'not-toggled'}>
                 <Image src={recommendation ? recommendation.imageCDNUrl : ''} alt="recommendation-image" />
             </RecommendationCardImageContainer>
@@ -119,11 +140,21 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 <RecommendationContentTopContainer>
                     <RecommendationHeaderContainer>
                         <RecommendationPlaceNameText>
-                            {isFull === true
-                                ? recommendation.venue.name
-                                : isMoreVisible
-                                ? recommendation.title
-                                : chopStringRecommendationTitle(recommendation.title)}
+                            <RecommendationTitleSpan>
+                                {isFull === true
+                                    ? currentRecommendation &&
+                                      currentRecommendation.venue &&
+                                      currentRecommendation.venue.name
+                                        ? currentRecommendation.venue.name
+                                        : ''
+                                    : isMoreVisible
+                                    ? currentRecommendation && currentRecommendation.title
+                                        ? currentRecommendation.title
+                                        : ''
+                                    : currentRecommendation && currentRecommendation.title
+                                    ? chopStringRecommendationTitle(currentRecommendation.title)
+                                    : ''}
+                            </RecommendationTitleSpan>
                             <WideHeaderTooltipIconsContainer>
                                 <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                     <img src={AuthoredSVG} />
@@ -169,18 +200,24 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     <>
                                         {(matches.laptop || matches.tablet) && (
                                             <RecommendationPlaceAddressText>
-                                                {recommendation.venue.formattedAddress}
+                                                {_.has(currentRecommendation, 'venue.formattedAddress')
+                                                    ? currentRecommendation.venue.formattedAddress
+                                                    : ''}
                                             </RecommendationPlaceAddressText>
                                         )}
                                     </>
                                 )}
                             </Media>
                             <RecommendationPlaceCategoryText>
-                                {concatCategories(
-                                    recommendation.venue.categories.map((category: ICategory) => {
-                                        return category.longName
-                                    })
-                                )}
+                                {currentRecommendation &&
+                                currentRecommendation.venue &&
+                                currentRecommendation.venue.categories
+                                    ? concatCategories(
+                                          currentRecommendation.venue.categories.map((category: ICategory) => {
+                                              return category.longName
+                                          })
+                                      )
+                                    : ''}
                             </RecommendationPlaceCategoryText>
                         </>
                     )}
@@ -188,20 +225,37 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 <RecommendationContentMiddleContainer>
                     {isFull === true && (
                         <RecommendationTitleText>
-                            {isMoreVisible ? recommendation.title : chopStringRecommendationTitle(recommendation.title)}
+                            {isMoreVisible
+                                ? currentRecommendation.title
+                                : chopStringRecommendationTitle(currentRecommendation.title)}
                         </RecommendationTitleText>
                     )}
                     <RecommendationSummaryText>
                         {isMoreVisible
-                            ? recommendation.content
+                            ? currentRecommendation && currentRecommendation.content
+                                ? currentRecommendation.content
+                                : ''
                             : isFull === true
-                            ? chopStringFullRecommendationDescription(recommendation.content)
-                            : chopStringSimpleRecommendationDescription(recommendation.content)}
+                            ? currentRecommendation && currentRecommendation.content
+                                ? chopStringFullRecommendationDescription(currentRecommendation.content)
+                                : ''
+                            : currentRecommendation && currentRecommendation.content
+                            ? chopStringSimpleRecommendationDescription(currentRecommendation.content)
+                            : ''}
                     </RecommendationSummaryText>
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
-                    <RecommendationAuthorNameText>{recommendation.createdBy.fullname}</RecommendationAuthorNameText>
-                    <RecommendationAuthorTitleText>{recommendation.createdBy.userByLine}</RecommendationAuthorTitleText>
+                    <RecommendationAuthorNameText>
+                        {_.has(currentRecommendation, 'createdBy.firstName') &&
+                        _.has(currentRecommendation, 'createdBy.lastName')
+                            ? currentRecommendation.createdBy.firstName + ' ' + currentRecommendation.createdBy.lastName
+                            : ''}
+                    </RecommendationAuthorNameText>
+                    <RecommendationAuthorTitleText>
+                        {_.has(currentRecommendation, 'createdBy.userByLine')
+                            ? currentRecommendation.createdBy.userByLine
+                            : ''}
+                    </RecommendationAuthorTitleText>
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) =>
                             matches.mobile && (
@@ -229,7 +283,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 </RecommendationContentBottomContainer>
             </RecommendationCardContentContainer>
         </RecommendationCardContainer>
-    )
+    ) : null
 }
 
 export default CardRecommendationWide

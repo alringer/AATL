@@ -7,12 +7,8 @@ import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
-import {
-    closeAuthenticationModal,
-    setTargetEmail,
-    switchAuthenticationView,
-} from 'store/authentication/authentication_actions'
-import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
+import { closeAuthenticationModal, setTargetEmail, switchAuthenticationView } from 'store/authModal/authModal_actions'
+import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 import { query } from 'style/device'
 import { ModalContentContainer } from './AuthenticationModal.style'
 import Login from './Login'
@@ -108,9 +104,9 @@ const AuthenticationModal: React.FC<IAuthenticationModalProps> = ({
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    currentAuthenticationView: state.authenticationReducer.currentAuthenticationView,
-    isOpen: state.authenticationReducer.isOpen,
-    targetEmail: state.authenticationReducer.targetEmail,
+    currentAuthenticationView: state.authModalReducer.currentAuthenticationView,
+    isOpen: state.authModalReducer.isOpen,
+    targetEmail: state.authModalReducer.targetEmail,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

@@ -7,9 +7,14 @@ export default class Document extends NextDocument {
         return (
             <Html lang="en">
                 <Head>
-                    <link 
-                        href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet" 
-                        />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+                        rel="stylesheet"
+                    />
+                    <script
+                        type="text/javascript"
+                        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_KEY}&libraries=places`}
+                    ></script>
                 </Head>
                 <body>
                     <Main />

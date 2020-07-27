@@ -29,7 +29,22 @@ enum LocalPlaceTabEnum {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            marginTop: '30px',
+            formControl: {
+                minWidth: 120,
+            },
+            selectEmpty: {},
+            select: {
+                fontFamily: 'Rubik',
+                fontSize: '12px',
+                fontWeight: 500,
+                fontStretch: 'normal',
+                fontStyle: 'normal',
+                lineHeight: '1.67',
+                letterSpacing: '2px',
+            },
+            root: {
+                marginTop: '30px',
+            },
         },
     })
 )

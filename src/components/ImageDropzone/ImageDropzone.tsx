@@ -20,12 +20,30 @@ import {
 
 interface IImageDropzoneProps {
     file: File
-    onDrop: (acceptedFile: any) => void
+    preview: string
+    isUploadingImage: boolean
+    isImageDimensionImproper: boolean
+    handleDrop: (acceptedFile: any) => void
+    handleDrag: () => void
 }
 
-const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onDrop, file }) => {
+const ImageDropzone: React.FC<IImageDropzoneProps> = ({
+    handleDrop,
+    handleDrag,
+    file,
+    preview,
+    isUploadingImage,
+    isImageDimensionImproper,
+}) => {
     return (
-        <Dropzone onDrop={onDrop} accept="image/png" minSize={0} maxSize={5242880} multiple={false}>
+        <Dropzone
+            accept={['image/jpeg', 'image/png']}
+            onDrop={handleDrop}
+            minSize={0}
+            maxSize={5242880}
+            multiple={false}
+            onDragEnter={handleDrag}
+        >
             {({ getRootProps, getInputProps, isDragReject, acceptedFiles }) => {
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
@@ -34,7 +52,8 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onDrop, file }) => {
                                 <ImageDropzoneBackgroundImg
                                     src={
                                         // acceptedFiles && acceptedFiles.length > 0 && acceptedFiles[0]
-                                        file ? URL.createObjectURL(file) : ImageDropzoneDefaultBackground
+                                        preview ? preview : ImageDropzoneDefaultBackground
+                                        // file ? URL.createObjectURL(file) : ImageDropzoneDefaultBackground
                                     }
                                     alt="image-background-image"
                                 />
@@ -82,6 +101,12 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({ onDrop, file }) => {
                                 </Media>
                             </ImageDropzoneContainer>
                         </ImageDropzoneSection>
+                        {isUploadingImage && <p>Uploading...</p>}
+                        {isImageDimensionImproper && (
+                            <ImageDropzoneFileErrorText>
+                                File dimensions are improper. Please use 1600x1200.
+                            </ImageDropzoneFileErrorText>
+                        )}
                         {isDragReject && (
                             <ImageDropzoneFileErrorText>
                                 {S.IMAGE_DROPZONE.ErrorImproperFileType}

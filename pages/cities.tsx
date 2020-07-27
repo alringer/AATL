@@ -19,14 +19,16 @@ export const getServerSideProps: GetStaticProps = async (context) => {
     await axios
         .get(FETCH_CITIES)
         .then((res) => {
-            stateList = res.data.USA
-            provinceList = res.data.CAN
+            if (res && res.data) {
+                stateList = res.data.USA
+                provinceList = res.data.CAN
+            }
         })
         .catch((err) => {
-            console.log('Fetch failed in cities')
+            console.log('Fetch failed in cities: ', err)
         })
     return {
-        props: { stateList: stateList, provinceList: provinceList },
+        props: { stateList: stateList ? stateList : [], provinceList: provinceList ? provinceList : [] },
     }
 }
 

@@ -10,7 +10,7 @@ interface IMenuItemProps {
 
 const MenuItem: React.FC<IMenuItemProps> = ({ title, active, href }) => {
     return (
-        <Link href={href}>
+        <Link href={href} passHref>
             <MenuItemText id={active ? 'active' : 'not-active'}>{title}</MenuItemText>
         </Link>
     )

@@ -1,3 +1,5 @@
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
@@ -5,6 +7,7 @@ import styled from 'styled-components'
 
 export const SearchInputFieldsContainer = styled.div`
     display: flex;
+    width: 100%;
 
     @media ${device.mobile} {
         flex-direction: column;
@@ -13,7 +16,7 @@ export const SearchInputFieldsContainer = styled.div`
     }
     @media ${device.tablet} {
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;   
     }
 `
@@ -32,7 +35,13 @@ export const SearchAddressButtonContainer = styled.div`
 `
 
 export const SearchInput = styled(CustomTextField)`
-    padding: 0;
+    height: inherit;
+`
+export const CustomAutoComplete = styled(Autocomplete)`
+    width: 100%;
+    height: 100%;
+    border: solid 2px rgba(30, 31, 34, 0.1);
+    border-radius: 4px;
     @media ${device.mobile} {
         width: 100%;
     }
@@ -40,6 +49,26 @@ export const SearchInput = styled(CustomTextField)`
         width: 290px;
         margin-right: 15px; 
     }
+
+    .MuiTextField-root {
+        border: transparent;
+    }
+
+    ${props => {
+        if (props.className === 'error') {
+            return css`
+                input {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+                fieldset {
+                    border-color: color: ${props => props.theme.dustyRed} !important;
+                }
+                .MuiFormLabel-root {
+                    color: ${props => props.theme.dustyRed} !important;
+                }
+            `
+        }
+    }}
 `
 export const SearchButton = styled(CustomButton)`
     box-sizing: border-box;
@@ -57,4 +86,20 @@ export const SearchButton = styled(CustomButton)`
     @media ${device.tablet} {
         width: unset;
     }
+`
+
+export const SuggestionOption = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+`
+
+export const SuggestionOptionUseMyLocation = styled(SuggestionOption)`
+    color: ${props => props.theme.mushroom};
+`
+
+
+export const LocationIcon = styled(LocationOnIcon)`
+    color: ${props => props.theme.mushroom};
+    margin-right: 5px;
 `

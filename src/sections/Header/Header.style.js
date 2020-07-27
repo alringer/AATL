@@ -201,6 +201,8 @@ export const PopoverOptionText = styled.p`
 
 export const PopoverOptionLinkText = styled(TextLink)`
     ${PopoverText}
+    text-decoration: none;
+    text-decoration-color: #d9deea !important;
 `
 
 export const PopoverUserNameText = styled(PopoverOptionText)`

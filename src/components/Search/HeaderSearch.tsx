@@ -24,7 +24,6 @@ interface IHeaderSearchProps {
 
 const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
     const router = useRouter()
-
     const [value, setValue] = React.useState<string>('')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,15 +31,16 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
         setValue(e.target.value)
     }
 
-    const handleSearch = () => {
+    const handleSearch = (keyword: string) => {
         // TODO: Push the user to the city page with the search query parameter in the URL
-        router.push('/city')
+        const urlParam = keyword ? `?place=${keyword}` : ''
+        router.push(`/search` + urlParam)
     }
 
     const handleTextFieldKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
             case 'Enter':
-                handleSearch()
+                handleSearch(value)
                 break
             case 'Escape':
                 handleCloseSearch()
@@ -102,7 +102,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
                     onKeyDown={handleTextFieldKeyDown}
                 />
             </HeaderSearchContainer>
-            <SearchButton onClick={handleSearch}>{S.BUTTON_LABELS.Search}</SearchButton>
+            <SearchButton onClick={() => handleSearch(value)}>{S.BUTTON_LABELS.Search}</SearchButton>
         </>
     )
 

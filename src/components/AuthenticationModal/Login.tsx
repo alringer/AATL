@@ -11,8 +11,8 @@ import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
-import { thunkLogin } from 'store/authentication/authentication_actions'
-import { AuthenticationViewEnum } from 'store/authentication/authentication_types'
+import { thunkLogin } from 'store/authModal/authModal_actions'
+import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 import { query } from 'style/device'
 import { ErrorIcon } from 'style/ErrorIcon/ErrorIcon.style'
 import { CustomTextField } from 'style/TextField/TextField.style'
@@ -232,8 +232,8 @@ const Login: React.FC<ILoginProps> = ({ error, setCurrentAuthenticationView, clo
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    loading: state.authenticationReducer.loading,
-    error: state.authenticationReducer.error,
+    loading: state.authModalReducer.loading,
+    error: state.authModalReducer.error,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

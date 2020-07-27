@@ -1,6 +1,5 @@
 import { IconButton } from '@material-ui/core'
 import { CustomButton } from 'style/Button/Button.style'
-import { TextLink } from 'style/Button/TextLink.style'
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import { ImageContainer } from 'style/ImageContainer/ImageContainer'
@@ -217,13 +216,14 @@ export const PlaceBannerContactInformationSpan = styled.span`
     margin-top: 12px;
 `
 
-export const PlaceBannerVisitWebsite = styled(TextLink)`
+export const PlaceBannerVisitWebsite = styled.p`
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
+    color: ${props => props.theme.white};
 `
 export const PlaceBannerPhoneNumber = styled.p`
     font-size: 14px;
@@ -232,6 +232,7 @@ export const PlaceBannerPhoneNumber = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
+    color: ${props => props.theme.white};
 `
 
 export const PlaceBannerButtonsContainer = styled.div`
@@ -293,4 +294,13 @@ export const ShareIconButton = styled(IconButton)`
     top: 5px;
     right: 5px;
     z-index: ${zIndices.restaurantMobileShareIcon};
+`
+
+export const PlaceBannerAnchor = styled.a`
+    cursor: pointer;
+    text-decoration: none;
+    text-decoration-color: ${props => props.theme.white} !important;
+    :hover {
+        text-decoration: underline;
+    }
 `

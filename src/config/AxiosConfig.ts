@@ -1,34 +1,78 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
+import store from 'store'
+import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
+import { ILocationInformation } from 'store/location/location_types'
 
-const API_URL = '/services/askatravellocal/api'
+const API_URL = '/api'
 export const BASE_URL = process.env.HOSTNAME + API_URL
-// Categories
-// export const FETCH_CATEGORIES = '/categories?size=1000&sort=id%2Casc'
+
 export const FETCH_CATEGORIES = '/categories-all'
-export const FETCH_CITIES = '/parent-regions-all-active'
+export const FETCH_TOP_CATEGORIES = '/categories/nearby'
+export const FETCH_CITIES = '/parent-regions/active-with-recommendations'
+export const FETCH_FOOTER = '/homepage/footer'
+export const LOAD_RESTAURANTS = '/lookup/restaurants/load'
+export const FETCH_RESTAURANT = (id: number) => {
+    return `/venues/${id}`
+}
+export const FETCH_RECOMMENDATION = (id: number) => {
+    return `/recommendations/${id}`
+}
 export const IP_LOOKUP = (ipAddress: string) => {
     return `/experimental/ip-lookup?ipAddress=${ipAddress}`
 }
-// export const PATIENT_PAYER_CARD_GET = (id: number, fileName: string) => {
-//     return `patients/${id}/payers/cards/${fileName}`
-// }
+export const SEARCH_AATL_RESTAURANTS = `/restaurants/search`
+export const SEARCH_YELP_RESTAURANTS = '/lookup/restaurants'
+export const UPLOAD_BLOG = '/blob'
+export const POST_RECOMMENDATION = '/recommendations'
+export const FETCH_CURRENT_USER_PROFILE = '/me'
+export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
+export const REGISTER_VIEW = (id: number) => {
+    return `/venues/${id}/register-view`
+}
 
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
 })
 
-const requestInterceptor = (config: any = {}) => {
-    // TODO: Handle authorization bearer token
-    // if (!isSkipAuthEnabled(config)) {
-    //     const state = auth.getState()
-    //     if (state.accessToken) {
-    //         config.headers.Authorization = `Bearer ${state.accessToken}`
-    //     }
-    // }
+const fetchIPAddress = () => {
+    return fetch('https://api.ipify.org?format=jsonp?callback=?', {
+        method: 'GET',
+        headers: {},
+    })
+        .then((res) => res.text())
+        .then((ip) => {
+            return ip
+        })
+        .catch((err) => {
+            console.log(err)
+            return ''
+        })
+}
+
+const requestInterceptor = async (config: any = {}) => {
+    if (store.getState().locationReducer.ipLocation === null) {
+        const clientIP = await fetchIPAddress()
+        config.headers['X-AATL-Use-IP-Address-As-Location'] = true
+        config.headers['X-Forwarded-For'] = clientIP
+    }
     return config
 }
 
 const responseInterceptor = (response: AxiosResponse) => {
+    if (
+        (store.getState().locationReducer.ipLocation === null &&
+            response.config.headers['X-AATL-Use-IP-Address-As-Location']) === true
+    ) {
+        const payload: ILocationInformation = {
+            city: String(response.headers['x-aatl-city']),
+            country: String(response.headers['x-aatl-country']),
+            lat: String(response.headers['x-aatl-latitude']),
+            lng: String(response.headers['x-aatl-longitude']),
+            state: String(response.headers['x-aatl-state']),
+        }
+        store.dispatch(setIPLocation(payload))
+        store.dispatch(setPreferredLocation(payload))
+    }
     return response
 }
 
@@ -41,6 +85,7 @@ const responseInterceptorError = (error: AxiosError) => {
     // } else {
     //     SnackbarUtils.error(error.message)
     // }
+    // console.log('Error: ', error)
     return Promise.reject(error)
 }
 

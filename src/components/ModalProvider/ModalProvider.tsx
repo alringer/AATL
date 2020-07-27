@@ -32,7 +32,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    isAuthenticationOpen: state.authenticationReducer.isOpen,
+    isAuthenticationOpen: state.authModalReducer.isOpen,
     isRecommendationModalOpen: state.recommendationModalReducer.isOpen,
     isSearchModalOpen: state.searchModalReducer.isOpen,
 })

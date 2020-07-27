@@ -46,7 +46,8 @@ export const TooltipIcon = styled.span`
 export const WideCardContainer = styled(CardContainer)`
     display: flex;
     width: 100%;
-    border: solid 2px rgba(54, 57, 64, 0.06);
+    /* border: solid 2px rgba(54, 57, 64, 0.06); */
+    border: solid 2px rgba(242,243,243,1); 
 
     @media ${device.mobile} {
         flex-direction: column;
@@ -57,6 +58,7 @@ export const WideCardContainer = styled(CardContainer)`
 
     @media ${device.tablet} {
         flex-direction: row;
+        min-height: 290px;
         height: 290px;
         justify-content: flex-start;
         align-items: flex-start;
@@ -66,6 +68,8 @@ export const WideCardContainer = styled(CardContainer)`
             if (props.id === 'toggled') {
                 return css`
                     background-color: ${(props) => props.theme.darkSlateBlue};
+                    /* border-left-color: rgba(242, 243, 243, 1); */
+                    /* background-color: white; */
                 `
             }
         }}
@@ -136,7 +140,7 @@ export const WideHeaderLeftContainer = styled.div`
 
 export const WideHeaderTooltipIconsContainer = styled.span`
     vertical-align: middle;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 `
 
 export const WideButtonsContainer = styled.div`

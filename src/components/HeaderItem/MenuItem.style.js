@@ -18,16 +18,17 @@ export const MenuItemText = styled(TextLink)`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
     cursor: pointer;
+    text-decoration: none;
 
     :hover {
         ${activeItemCSS}
     }
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'active') {
-            return activeItemCSS}
+            return activeItemCSS
         }
-    }}
+    }}}
 `
