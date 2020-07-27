@@ -11,19 +11,12 @@ import { login, logout } from 'store/user/user_actions'
 import { IUserInformation } from 'store/user/user_types'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IUserProfile } from 'utilities/types/userProfile'
-
-export interface IWithAuthInjectedProps {
-    keycloakLogin: () => void
-    keycloakLogout: () => void
-    keycloakSignUp: () => void
-    authenticated: boolean
-}
 interface IReduxProps {
     login: (userInformation: IUserInformation) => void
     logout: () => void
     loggedIn: boolean
 }
-interface IAuthProviderProps extends IReduxProps, IWithAuthInjectedProps, ReactKeycloakInjectedProps {
+interface IAuthProviderProps extends IReduxProps, ReactKeycloakInjectedProps {
     children: React.ReactChildren[]
 }
 const AuthProvider = withKeycloak(({ keycloak, children, login, logout, loggedIn }: IAuthProviderProps) => {

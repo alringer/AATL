@@ -1,9 +1,6 @@
 import { ReactKeycloakInjectedProps, withKeycloak } from '@react-keycloak/nextjs'
 import React from 'react'
-import { connect as reduxConnect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { login, logout } from 'store/user/user_actions'
-import { IUserInformation } from 'store/user/user_types'
+import { Subtract } from 'utility-types'
 
 export interface IWithAuthInjectedProps {
     keycloakLogin: () => void
@@ -16,26 +13,10 @@ export interface IWithAuthInjectedProps {
     authenticated: boolean
 }
 
-interface IReduxProps {
-    logout: () => void
-    login: (userInformation: IUserInformation) => void
-}
-
-const withAuth = (WrappedComponent) => {
-    const mapDispatchToProps = (dispatch: any) =>
-        bindActionCreators(
-            {
-                login,
-                logout,
-            },
-            dispatch
-        )
-    return reduxConnect(
-        null,
-        mapDispatchToProps
-    )(
-        withKeycloak((props: ReactKeycloakInjectedProps & IReduxProps) => {
-            const { keycloak } = props
+const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.ComponentType<P>) => {
+    const KeycloakComponent: React.ComponentType<Subtract<P, IWithAuthInjectedProps>> = withKeycloak(
+        (props: ReactKeycloakInjectedProps & P) => {
+            const { keycloak, isServer, keycloakInitialized, ...passProps } = props
             const handleLogin = () => {
                 if (keycloak) {
                     keycloak.login()
@@ -46,7 +27,6 @@ const withAuth = (WrappedComponent) => {
             const handleLogout = () => {
                 if (keycloak) {
                     keycloak.logout()
-                    props.logout()
                 } else {
                     console.log('Keycloak not available')
                 }
@@ -82,7 +62,7 @@ const withAuth = (WrappedComponent) => {
 
             return (
                 <WrappedComponent
-                    {...props}
+                    {...((passProps as unknown) as P)}
                     keycloakLogin={handleLogin}
                     keycloakLogout={handleLogout}
                     keycloakSignUp={handleSignUp}
@@ -93,8 +73,9 @@ const withAuth = (WrappedComponent) => {
                     token={keycloak.token}
                 />
             )
-        })
+        }
     )
+    return KeycloakComponent
 }
 
 export default withAuth

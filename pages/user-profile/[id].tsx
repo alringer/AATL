@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // await axios.get(FETCH_CATEGORIES).then((res) => {
     //     // categoryList = res.data
     // })
-    const userID = context.params.id
+    const userID = context && context.params ? context.params.id : null
     console.log('TODO: Query user with ID: ', userID)
     return {
         props: {

@@ -40,9 +40,9 @@ const UserProfileBanner = () => {
         userDescription: false,
     })
 
-    const handleDrop = (acceptedFiles) => {
+    const handleDrop = (acceptedFiles: any) => {
         if (acceptedFiles && acceptedFiles.length > 0) {
-            acceptedFiles.forEach((file) => {
+            acceptedFiles.forEach((file: any) => {
                 console.log('TODO: Call API to upload the image and get the updated user profile')
                 // TODO: Call API to upload the image and get the updated user profile
                 const reader = new FileReader()
@@ -65,7 +65,7 @@ const UserProfileBanner = () => {
         setImageFile(null)
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserInformation({ ...userInformation, [e.target.id]: e.target.value })
     }
 
@@ -86,7 +86,7 @@ const UserProfileBanner = () => {
         setEditing({ ...editing, [e.currentTarget.id]: true })
     }
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
         setEditing({ ...editing, [e.currentTarget.id]: false })
     }
 

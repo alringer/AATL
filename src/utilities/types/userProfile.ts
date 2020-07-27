@@ -34,6 +34,7 @@ export interface IUserProfile {
     userByLine: string | null
     userId: string | null
     username: string | null
+    // Add venueListMetas
 }
 
 export const mockUser: IUserProfile = {

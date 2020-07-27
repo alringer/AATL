@@ -3,7 +3,7 @@ import PlaceImage from 'assets/mock-images/restaurant_image.jpg'
 import PlaceImageTwo from 'assets/mock-images/restaurant_image2.jpeg'
 import CardPlaceSmall from 'components/CardPlaceSmall/CardPlaceSmall'
 import React from 'react'
-import PlaceCardsList from 'sections/CardsList/CardPlaceSmallList'
+import { mockVenue } from 'utilities/types/venue'
 
 export const PlaceCardData = {
     default: {
@@ -58,20 +58,26 @@ export const PlaceCardsListData = {
 
 storiesOf('Card: Small Place Card', module)
     .add('Default', () => {
-        return <CardPlaceSmall {...PlaceCardData.default} />
+        // return <CardPlaceSmall {...PlaceCardData.default} />
+        return <CardPlaceSmall place={mockVenue} />
     })
     .add('Variant - Different Image', () => {
-        return <CardPlaceSmall {...PlaceCardData.defaultDifferentImage} />
+        // return <CardPlaceSmall {...PlaceCardData.defaultDifferentImage} />
+        return <CardPlaceSmall place={mockVenue} />
     })
     .add('Variant - Long Name', () => {
-        return <CardPlaceSmall {...PlaceCardData.longName} />
+        // return <CardPlaceSmall {...PlaceCardData.longName} />
+        return <CardPlaceSmall place={mockVenue} />
     })
     .add('Variant - Long Description', () => {
-        return <CardPlaceSmall {...PlaceCardData.longDescription} />
+        // return <CardPlaceSmall {...PlaceCardData.longDescription} />
+        return <CardPlaceSmall place={mockVenue} />
     })
     .add('Variant - Long Name and Description', () => {
-        return <CardPlaceSmall {...PlaceCardData.longNameAndDescription} />
+        // return <CardPlaceSmall {...PlaceCardData.longNameAndDescription} />
+        return <CardPlaceSmall place={mockVenue} />
     })
     .add('Section - Place Card Small', () => {
-        return <PlaceCardsList {...PlaceCardsListData.default} />
+        // return <PlaceCardsList {...PlaceCardsListData.default} />
+        return <CardPlaceSmall place={mockVenue} />
     })

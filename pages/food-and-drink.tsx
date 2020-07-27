@@ -21,7 +21,7 @@ const FoodAndDrink: React.FC<IFoodAndDrinkProps> = ({ categoryList }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    let categoryList = []
+    let categoryList: ICategory[] = []
     await axios
         .get(FETCH_CATEGORIES)
         .then((res) => {

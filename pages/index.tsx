@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
-import withAuth from 'utilities/hocs/withAuth'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import EmailSubscription from '../src/components/EmailSubscription/EmailSubscription'
 
 type ParsedToken = KeycloakTokenParsed & {
@@ -22,25 +22,11 @@ interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
 }
 
-interface IIndexProps {}
+interface IIndexProps extends IReduxProps, IWithAuthInjectedProps {}
 
-const Index: IIndexProps = () => {
-    const lookupIP = () => {
-        // console.log('Looking up IP. The current token is: ', keycloak.tokenParsed)
-        // axios
-        //     .get(IP_LOOKUP('2600:8801:8502:a100:783a:36b9:59f5:b98a'), {
-        //         headers: { Authorization: 'Bearer ' + keycloak.token },
-        //     })
-        //     .then((res) => console.log('IP Address Success: ', res))
-        //     .catch((err) => console.log('IP Addres Fail: ', err))
-    }
-
+const Index: React.FC<IIndexProps> = () => {
     return (
         <>
-            {/* <button onClick={() => openRecommendationModal({ placeID: 0, placeName: 'Alaskan Salmon' })}>
-                Hello there
-            </button> */}
-            {/* {isOpen && <RecommendationModal />} */}
             <HomeBanner />
             <EmailSubscription />
         </>

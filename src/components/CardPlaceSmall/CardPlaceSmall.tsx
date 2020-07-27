@@ -21,11 +21,11 @@ import {
     SmallPlaceCardImageContainer,
     SmallPlaceCardPlaceName,
 } from './CardPlaceSmall.style'
-interface IPlaceCardSmallSmallProps {
+interface ICardPlaceSmallProps {
     place: IVenue
 }
 
-const CardPlaceSmall: React.FC<IPlaceCardSmallSmallProps> = ({ place }) => {
+const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
     const router = useRouter()
     const handleView = () => {
         router.push(

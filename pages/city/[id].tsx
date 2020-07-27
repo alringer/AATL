@@ -20,7 +20,7 @@ const City: React.FC<ICityProps> = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const cityID = context.params.id
+    const cityID = context && context.params ? context.params.id : null
     console.log('TODO: Query city with ID: ', cityID)
     return {
         props: {},

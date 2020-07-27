@@ -53,10 +53,12 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
     const HeaderSearchTablet = () => (
         <HeaderSearchTabletContainer>
             <CustomTextField
+                variant="outlined"
                 value={value}
                 onChange={handleChange}
                 autoFocus={true}
                 placeholder={`${S.INPUT_PLACEHOLDERS.VenueSearchBold} ${S.INPUT_PLACEHOLDERS.VenueSearchNormal}`}
+                onKeyDown={handleTextFieldKeyDown}
                 InputLabelProps={{
                     shrink: false,
                 }}
@@ -76,8 +78,6 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
                         </InputAdornment>
                     ),
                 }}
-                variant="outlined"
-                onKeyDown={handleTextFieldKeyDown}
             />
         </HeaderSearchTabletContainer>
     )

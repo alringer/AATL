@@ -11,18 +11,15 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import CardPlaceSmallList from 'sections/CardsList/CardPlaceSmallList'
 import CardRecommendationWideList from 'sections/CardsList/CardRecommendationWideList'
-import withAuth from 'utilities/hocs/withAuth'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IVenue } from 'utilities/types/venue'
-
-declare type PromiseResult<T> = T extends Promise<infer U> ? U : T
-type Props = PromiseResult<ReturnType<typeof getServerSideProps>>
 interface IServerSideProps {
     recommendationID: number | null
     restaurantID: number | null
     venueInformation: IVenue | null
 }
-interface IRestaurantProps extends IServerSideProps {}
-// : NextPage<IRestaurantProps>
+interface IRestaurantProps extends IServerSideProps, IWithAuthInjectedProps {}
+
 const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID, venueInformation }) => {
     const router = useRouter()
     // const { enqueueSnackbar } = useSnackbar()
@@ -119,7 +116,7 @@ const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const recommendationID = context.query.r
-    const restaurantID = context.params.id
+    const restaurantID = context && context.params ? context.params.id : null
     let venueInformation
     if (restaurantID) {
         await axios

@@ -1,5 +1,3 @@
-import { IVenue } from './venue'
-
 export interface IParentRegion {
     alternateName?: string
     city: string
@@ -16,7 +14,6 @@ export interface IParentRegion {
     state: string
     updatedAt: string
     stateAbbrevation: string | null
-    venues: IVenue[]
 }
 export const mockParentRegion: IParentRegion = {
     id: 0,
@@ -34,7 +31,6 @@ export const mockParentRegion: IParentRegion = {
     longitude: 0,
     createdAt: '2020-05-12T16:36:30Z',
     updatedAt: '2020-05-12T16:36:30Z',
-    venues: [],
 }
 
 export const mockStateList = []

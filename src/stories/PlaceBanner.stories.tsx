@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react'
 import PlaceImage from 'assets/mock-images/sushi_image.png'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
 import React from 'react'
+import { mockVenue } from 'utilities/types/venue'
 
 export const PlaceBannerData = {
     default: {
@@ -75,5 +76,5 @@ export const PlaceBannerData = {
 }
 
 storiesOf('Place Banner', module).add('Default', () => {
-    return <PlaceBanner {...PlaceBannerData.default} />
+    return <PlaceBanner venueInformation={mockVenue} />
 })
