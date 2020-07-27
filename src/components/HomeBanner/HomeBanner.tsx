@@ -4,7 +4,6 @@ import SearchFull from 'components/SearchFull/SearchFull'
 import { useRouter } from 'next/router'
 import React from 'react'
 import buildURLWithParams from 'utilities/helpers/buildURLWithParams'
-import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ParamType } from 'utilities/types/clientDTOS/ParamType'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 import {
@@ -17,9 +16,9 @@ import {
     HomeBannerTitleText,
 } from './HomeBanner.style'
 
-interface IHomeBannerProps extends IWithAuthInjectedProps {}
+interface IHomeBannerProps {}
 
-const HomeBanner = ({ getTokenConfig }) => {
+const HomeBanner = () => {
     const router = useRouter()
     const handleSearch = (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => {
         const paramsArray: ParamType[] = [
@@ -60,4 +59,4 @@ const HomeBanner = ({ getTokenConfig }) => {
     )
 }
 
-export default withAuth(HomeBanner)
+export default HomeBanner
