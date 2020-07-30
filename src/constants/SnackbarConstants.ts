@@ -11,6 +11,19 @@ interface ISnackbarConstants {
 export const SNACKBAR_TYPES = {
     Achievement: 'achievement',
     Complete: 'complete',
+    Error: 'error',
+}
+
+export const ERROR_RESTAURANT: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'We cannot load this restaurant at the moment',
+    Body: 'Browse other restaurants or add new ones!',
+}
+
+export const ERROR_CITY: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'We cannot load this restaurant at the moment',
+    Body: 'Browse other restaurants or add new ones!',
 }
 
 export const SIGN_UP: ISnackbarConstants = {
@@ -45,4 +58,10 @@ export const RECOMMENDATION_LINK_COPIED: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Ready to share!',
     Body: 'Recommendation link was copied to clipboard',
+}
+
+export const RESTAURANT_LINK_COPIED: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Ready to share!',
+    Body: 'Restaurant link was copied to clipboard',
 }

@@ -128,9 +128,11 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     }
 
     const handleRecommend = (id: string, name: string) => {
+        console.log('ID: ', id)
+        console.log('Name: ', name)
         authenticatedAction(() =>
             openRecommendationModal({
-                placeID: Number(id),
+                placeID: id,
                 placeName: name,
                 isAATL: false,
             })
@@ -144,7 +146,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
 
     const renderSearchModalRestaurantCard = (restaurant: IYelpRestaurant, key: number) => {
         return (
-            <SearchModalRestaurantCardContainer>
+            <SearchModalRestaurantCardContainer key={key}>
                 <SearchModalRestaurantCardContentContainer>
                     <SearchModalRestaurantCardImageContainer>
                         {/* TODO: Add default image url */}

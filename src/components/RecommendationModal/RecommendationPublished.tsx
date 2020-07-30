@@ -4,13 +4,13 @@ import {
     RecommendationEditorPublishedBody,
     RecommendationEditorPublishedPreviewTitle,
     RecommendationEditorPublishedTitle,
+    RecommendationPublishedButtonAnchor,
     RecommendationPublishedContainer,
     RecommendationPublishedContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
-import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
+import Link from 'next/link'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
@@ -33,38 +33,13 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
     recommendation,
 }) => {
     const [permaLink, setPermaLink] = React.useState('')
-    const router = useRouter()
-    const { enqueueSnackbar } = useSnackbar()
 
     React.useEffect(() => {
         if (recommendation && window !== undefined) {
-            // ${window.location.origin}
             const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
             setPermaLink(newPermaLink)
         }
     }, [recommendation])
-
-    const handleCheckItOut = () => {
-        router.push(permaLink)
-        // navigator.clipboard
-        //     .writeText(permaLink)
-        //     .then(() => {
-        //         enqueueSnackbar('', {
-        //             content: (
-        //                 <div>
-        //                     <Snackbar
-        //                         type={B.RECOMMENDATION_LINK_COPIED.Type}
-        //                         title={B.RECOMMENDATION_LINK_COPIED.Title}
-        //                         message={B.RECOMMENDATION_LINK_COPIED.Body}
-        //                     />
-        //                 </div>
-        //             ),
-        //         })
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
-    }
 
     return (
         <RecommendationPublishedContainer>
@@ -82,9 +57,13 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
                     {S.RECOMMENDATION_PUBLISHED.BodyTextTwo}
                 </RecommendationEditorPublishedBody>
                 <RecommendationEditorCopyRecommendationButtonContainer>
-                    <RecommendationEditorCopyRecommendationButton onClick={handleCheckItOut}>
-                        {S.BUTTON_LABELS.CheckItOut}
-                    </RecommendationEditorCopyRecommendationButton>
+                    <Link href={permaLink} passHref={true} prefetch={false}>
+                        <RecommendationPublishedButtonAnchor>
+                            <RecommendationEditorCopyRecommendationButton>
+                                {S.BUTTON_LABELS.CheckItOut}
+                            </RecommendationEditorCopyRecommendationButton>
+                        </RecommendationPublishedButtonAnchor>
+                    </Link>
                 </RecommendationEditorCopyRecommendationButtonContainer>
             </RecommendationPublishedContentContainer>
         </RecommendationPublishedContainer>

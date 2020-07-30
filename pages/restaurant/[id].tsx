@@ -1,33 +1,40 @@
 import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import HaveYouBeenTo from 'components/HaveYouBeenTo/HaveYouBeenTo'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
-// import Snackbar from 'components/Snackbar/Snackbar'
+import Snackbar from 'components/Snackbar/Snackbar'
 import axios, { FETCH_RESTAURANT, REGISTER_VIEW } from 'config/AxiosConfig'
-// import * as B from 'constants/SnackbarConstants'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-// import { useSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import CardPlaceSmallList from 'sections/CardsList/CardPlaceSmallList'
 import CardRecommendationWideList from 'sections/CardsList/CardRecommendationWideList'
-import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IVenue } from 'utilities/types/venue'
 interface IServerSideProps {
     recommendationID: number | null
     restaurantID: number | null
     venueInformation: IVenue | null
 }
-interface IRestaurantProps extends IServerSideProps, IWithAuthInjectedProps {}
+interface IRestaurantProps extends IServerSideProps {}
 
-const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID, venueInformation }) => {
+const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID, venueInformation }) => {
     const router = useRouter()
-    // const { enqueueSnackbar } = useSnackbar()
+    const { enqueueSnackbar } = useSnackbar()
     React.useEffect(() => {
-        console.log('Venue page with restaurant: ', venueInformation)
-        console.log('Venue page with recommendationID: ', recommendationID)
-        console.log('Venue page with restaurantID: ', restaurantID)
-        if (venueInformation === null) {
+        if (venueInformation === null || venueInformation === undefined) {
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.ERROR_RESTAURANT.Type}
+                            title={B.ERROR_RESTAURANT.Title}
+                            message={B.ERROR_RESTAURANT.Body}
+                        />
+                    </div>
+                ),
+            })
             router.push('/')
         } else {
             axios
@@ -36,23 +43,6 @@ const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID
                 .catch((err) => console.log(err))
         }
     }, [])
-
-    // React.useEffect(() => {
-    //     if (!venueInformation) {
-    //         // enqueueSnackbar('', {
-    //         //     content: (
-    //         //         <div>
-    //         //             <Snackbar
-    //         //                 type={B.COPY_TO_CLIPBOARD.Type}
-    //         //                 title={B.COPY_TO_CLIPBOARD.Title}
-    //         //                 message={B.COPY_TO_CLIPBOARD.Body}
-    //         //             />
-    //         //         </div>
-    //         //     ),
-    //         // })
-    //         // router.push(`${R.ROUTE_ITEMS.home}`)
-    //     }
-    // }, [])
 
     const recommendationsSubTitle = `${S.RESTAURANT_PAGE.RecommendationsSectionSubTitlePartOne} ${
         venueInformation && venueInformation.name ? venueInformation.name : ''
@@ -64,11 +54,13 @@ const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID
         S.RESTAURANT_PAGE.RecommendationsSectionSubTitlePartThree + ' ' + venueInformation.categories[0].longName
     }.`
 
-    return (
+    return venueInformation ? (
         <>
             <PlaceBanner venueInformation={venueInformation} />
             <CardRecommendationWideList
+                highlightedRecommendationID={recommendationID}
                 isFull={false}
+                placeID={venueInformation ? venueInformation.id : null}
                 title={S.RESTAURANT_PAGE.RecommendationsSectionTitle}
                 subTitle={recommendationsSubTitle}
                 venueRecommendationsInformation={
@@ -111,20 +103,31 @@ const Restaurant: NextPage<IRestaurantProps> = ({ recommendationID, restaurantID
             />
             <EmailSubscription />
         </>
-    )
+    ) : null
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const recommendationID = context.query.r
     const restaurantID = context && context.params ? context.params.id : null
-    let venueInformation
-    if (restaurantID) {
-        await axios
-            .get(FETCH_RESTAURANT(Number(restaurantID)))
-            .then((res) => {
-                venueInformation = res.data
-            })
-            .catch((err) => console.log('Error: ', err))
+    let venueInformation = null
+    if (restaurantID !== null && restaurantID !== undefined) {
+        if (recommendationID !== null && recommendationID !== undefined) {
+            await axios
+                .get(FETCH_RESTAURANT(Number(restaurantID), Number(recommendationID)))
+                .then((res) => {
+                    console.log('Fetch Restaurant with Recommendation: ', res.data)
+                    venueInformation = res.data
+                })
+                .catch((err) => console.log('Error: ', err))
+        } else {
+            await axios
+                .get(FETCH_RESTAURANT(Number(restaurantID)))
+                .then((res) => {
+                    console.log('Fetch Restaurant: ', res.data)
+                    venueInformation = res.data
+                })
+                .catch((err) => console.log('Error: ', err))
+        }
     }
     return {
         props: {
@@ -135,4 +138,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 }
 
-export default withAuth(Restaurant)
+export default Restaurant

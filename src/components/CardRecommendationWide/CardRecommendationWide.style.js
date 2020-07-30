@@ -1,11 +1,19 @@
 import { WideAuthorNameText, WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceAddressText, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText, WideTitleText } from 'style/Card/Card.style'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const RecommendationCardContainer = styled(WideCardContainer)``
+export const RecommendationCardContentContainer = styled(WideCardContentContainer)`
+    ${props => {
+        if (props.id === 'highlighted') {
+            return css`
+                background-color: rgb(232.4, 236.2, 237.9);
+            `
+        }
+    }}
+`
 
 export const RecommendationCardImageContainer = styled(WideCardImageContainer)``
 
-export const RecommendationCardContentContainer = styled(WideCardContentContainer)``
 
 export const RecommendationHeaderContainer = styled(WideHeaderContainer)``
 

@@ -58,7 +58,7 @@ const Footer = () => {
                                 </IconButton>
                             </a>
                         </Link>
-                        <Link href={'https://twitter.com/'} passHref={true} prefetch={false}>
+                        <Link href={'https://twitter.com/askatravellocal'} passHref={true} prefetch={false}>
                             <a target={'_blank'}>
                                 <IconButton>
                                     <Image src={TwitterSVG} alt="icon" />

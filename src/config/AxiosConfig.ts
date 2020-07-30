@@ -1,4 +1,5 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
+import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
@@ -6,14 +7,20 @@ import { ILocationInformation } from 'store/location/location_types'
 const API_URL = '/api'
 export const BASE_URL = process.env.HOSTNAME + API_URL
 
+// Venue Page
+export const FETCH_RESTAURANT = (restaurantID: number, recommendationID?: number) => {
+    return `/venues/${restaurantID}${
+        recommendationID !== null && recommendationID !== undefined ? `?recommendationId=${recommendationID}` : ''
+    }`
+}
+export const PAGINATE_RECOMMENDATIONS = (restaurantID: number, page: number) => {
+    return `/venues/${restaurantID}/recommendations?page=${page}&size=3&sort=createdAt,DESC`
+}
+
 export const FETCH_CATEGORIES = '/categories-all'
 export const FETCH_TOP_CATEGORIES = '/categories/nearby'
 export const FETCH_CITIES = '/parent-regions/active-with-recommendations'
 export const FETCH_FOOTER = '/homepage/footer'
-export const LOAD_RESTAURANTS = '/lookup/restaurants/load'
-export const FETCH_RESTAURANT = (id: number) => {
-    return `/venues/${id}`
-}
 export const FETCH_RECOMMENDATION = (id: number) => {
     return `/recommendations/${id}`
 }
@@ -85,7 +92,8 @@ const responseInterceptorError = (error: AxiosError) => {
     // } else {
     //     SnackbarUtils.error(error.message)
     // }
-    // console.log('Error: ', error)
+    // TODO: Delete the error toast below. This is only for development purposes
+    SnackbarUtils.error(error)
     return Promise.reject(error)
 }
 

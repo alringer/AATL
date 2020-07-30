@@ -34,6 +34,14 @@ export const SnackbarContainer = styled.div`
                     color: ${props.theme.darkSlateBlue};
                 }
             `
+        } else if (props.id === SNACKBAR_TYPES.Error) {
+            return css`
+                background-color: ${props.theme.dustyRed};
+
+                ${SnackbarMessageLink} {
+                    color: ${props.theme.darkSlateBlue};
+                }
+            `
         }
     }}
 `
