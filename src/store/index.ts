@@ -2,6 +2,8 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
+import listModalReducer from 'store/listModal/listModal_reducer'
+import { ListModalReducerState } from 'store/listModal/listModal_types'
 import { RecommendationModalReducerState } from 'store/recommendationModal/recommendationModal_types'
 import authModalReducer from './authModal/authModal_reducer'
 import { AuthModalReducerState } from './authModal/authModal_types'
@@ -22,6 +24,7 @@ const reducer = combineReducers({
     searchModalReducer,
     categoriesReducer,
     locationReducer,
+    listModalReducer,
 })
 
 const middleware = applyMiddleware(thunk)
@@ -30,11 +33,12 @@ const store = createStore(reducer, composeWithDevTools(middleware))
 
 export interface StoreState {
     userReducer: UserReducerState
-    authModalReducer: AuthModalReducerState
-    recommendationModalReducer: RecommendationModalReducerState
-    searchModalReducer: SearchModalReducerState
     categoriesReducer: CategoriesReducerState
     locationReducer: LocationReducerState
+    listModalReducer: ListModalReducerState
+    recommendationModalReducer: RecommendationModalReducerState
+    authModalReducer: AuthModalReducerState
+    searchModalReducer: SearchModalReducerState
 }
 
 export default store

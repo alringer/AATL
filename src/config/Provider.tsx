@@ -2,6 +2,7 @@ import { StylesProvider } from '@material-ui/core/styles'
 import { Persistors, SSRKeycloakProvider } from '@react-keycloak/nextjs'
 import ModalProvider from 'components/ModalProvider/ModalProvider'
 import keycloakCfg from 'config/KeycloakConfig'
+import { SnackbarUtilsConfigurator } from 'config/SnackbarUtils'
 import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import { DndProvider } from 'react-dnd'
@@ -30,6 +31,7 @@ const Provider = ({ children, cookies }) => {
                         <StylesProvider injectFirst>
                             <ThemeProvider theme={theme}>
                                 <SnackbarProvider maxSnack={3}>
+                                    <SnackbarUtilsConfigurator />
                                     <DndProvider backend={HTML5Backend}>
                                         <ModalProvider>{children}</ModalProvider>
                                     </DndProvider>

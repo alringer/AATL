@@ -1,4 +1,4 @@
-import { ReactKeycloakInjectedProps, withKeycloak } from '@react-keycloak/nextjs'
+import { withKeycloak } from '@react-keycloak/nextjs'
 import React from 'react'
 import { Subtract } from 'utility-types'
 
@@ -14,8 +14,8 @@ export interface IWithAuthInjectedProps {
 }
 
 const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.ComponentType<P>) => {
-    // : React.ComponentType<Subtract<P, IWithAuthInjectedProps>>
-    const KeycloakComponent = withKeycloak((props: ReactKeycloakInjectedProps & P) => {
+    const KeycloakComponent = withKeycloak((props) => {
+        // console.log('Props in Keycloak Component: ', props)
         const { keycloak, isServer, keycloakInitialized, ...passProps } = props
         const handleLogin = () => {
             if (keycloak) {
@@ -75,10 +75,14 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
         )
     })
 
-    const EnhancedComponent: React.ComponentType<Subtract<P, IWithAuthInjectedProps>> = () => {
-        return <KeycloakComponent />
+    const EnhancedComponent: React.ComponentType<Subtract<P, IWithAuthInjectedProps>> = (props) => {
+        // console.log('Props in Enhanced Component: ', props)
+        return <KeycloakComponent {...props} />
     }
-    return EnhancedComponent
+    return (props) => {
+        // console.log('Props in Final Component: ', props)
+        return <EnhancedComponent {...props} />
+    }
 }
 
 export default withAuth

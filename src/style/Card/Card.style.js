@@ -93,7 +93,7 @@ export const WideCardImageContainer = styled(ImageContainer)`
     }
 
     @media ${device.tablet} {
-        height: 286px;
+        height: 290px;
         width: 300px;
     }
 
@@ -107,6 +107,7 @@ export const WideCardContentContainer = styled.div`
     align-items: flex-start;
     flex: 1;
     height: 100%;
+
     background-color: ${props => props.theme.white};
 
     @media ${device.mobile} {
@@ -115,6 +116,7 @@ export const WideCardContentContainer = styled.div`
 
     @media ${device.tablet} {
         padding: 20px;
+        min-height: 290px;
     }
 
     @media ${device.laptop} {

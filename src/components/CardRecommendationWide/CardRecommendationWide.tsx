@@ -8,9 +8,13 @@ import FlagButton from 'components/CardButtons/FlagButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
+import Snackbar from 'components/Snackbar/Snackbar'
 import axios, { FETCH_RECOMMENDATION } from 'config/AxiosConfig'
+import * as R from 'constants/RouteConstants'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import _ from 'lodash'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import {
@@ -50,13 +54,16 @@ import {
 } from './CardRecommendationWide.style'
 
 interface IRecommendationCardProps {
+    isHighlighted?: boolean
     isFull: boolean
     recommendation: IRecommendation
 }
 
-const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, recommendation }) => {
-    const [currentRecommendation, setCurrentRecommendation] = React.useState(null)
-    const [loading, setLoading] = React.useState(false)
+const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighlighted, isFull, recommendation }) => {
+    const { enqueueSnackbar } = useSnackbar()
+
+    const [currentRecommendation, setCurrentRecommendation] = React.useState<IRecommendation | null>(null)
+    const [isLoading, setLoading] = React.useState(false)
     const [isMoreVisible, setMoreVisible] = React.useState(false)
 
     React.useEffect(() => {
@@ -65,7 +72,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, re
             axios
                 .get(FETCH_RECOMMENDATION(recommendation.id))
                 .then((res) => {
-                    console.log(res)
                     setCurrentRecommendation(res.data)
                 })
                 .catch((err) => console.log(err))
@@ -76,6 +82,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, re
     }, [])
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
+        // TODO: Call API to flag the recommendation
         console.log('Handle flag content')
         e.stopPropagation()
     }
@@ -89,6 +96,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, re
     }
 
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
+        // TODO: Call API to flag the recommendation
         if (currentRecommendation) {
             console.log('handleAddToList clicked in the recommendation card with id: ', currentRecommendation.id)
         }
@@ -105,7 +113,26 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, re
     }
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
         if (currentRecommendation) {
-            console.log('handleShare clicked in the recommendation card with id: ', currentRecommendation.id)
+            navigator.clipboard
+                .writeText(
+                    `${window.location.origin}${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}?r=${currentRecommendation.id}`
+                )
+                .then(() => {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.RECOMMENDATION_LINK_COPIED.Type}
+                                    title={B.RECOMMENDATION_LINK_COPIED.Title}
+                                    message={B.RECOMMENDATION_LINK_COPIED.Body}
+                                />
+                            </div>
+                        ),
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
         e.stopPropagation()
     }
@@ -136,7 +163,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isFull, re
             <RecommendationCardImageContainer id={isMoreVisible ? 'toggled' : 'not-toggled'}>
                 <Image src={recommendation ? recommendation.imageCDNUrl : ''} alt="recommendation-image" />
             </RecommendationCardImageContainer>
-            <RecommendationCardContentContainer>
+            <RecommendationCardContentContainer id={isHighlighted === true ? 'highlighted' : 'not-highlighted'}>
                 <RecommendationContentTopContainer>
                     <RecommendationHeaderContainer>
                         <RecommendationPlaceNameText>

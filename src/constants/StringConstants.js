@@ -16,6 +16,7 @@ export const TOOL_TIPS = {
 }
 
 export const BUTTON_LABELS = {
+    AddToNewList: 'Add to new list',
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
     Search: 'SEARCH',
@@ -236,4 +237,11 @@ export const RESTAURANT_PAGE = {
     RecommendationsSectionSubTitlePartOne: 'Recommendations of',
     RecommendationsSectionSubTitlePartTwo: 'by locals',
     RecommendationsSectionSubTitlePartThree: 'who love'
+}
+
+export const LIST_MODAL = {
+    AddToRestaurant: {
+        Header: 'Add restaurant to a list',
+        Title: 'Restaurant Lists'
+    }
 }

@@ -9,14 +9,19 @@ import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
+import Snackbar from 'components/Snackbar/Snackbar'
 import * as R from 'constants/RouteConstants'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { openListModal } from 'store/listModal/listModal_actions'
+import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import {
@@ -57,19 +62,25 @@ export enum CardPlaceWideEnum {
 
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
+    openListModal: (payload: OpenListModalPayload) => void
 }
 interface ICardPlaceWideProps extends IReduxProps {
     place: IVenue
     type: CardPlaceWideEnum
 }
 
-const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecommendationModal }) => {
+const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecommendationModal, openListModal }) => {
     const router = useRouter()
+    const { enqueueSnackbar } = useSnackbar()
     const [isMoreVisible, setMoreVisible] = React.useState(false)
+    const [placeLink, setPlaceLink] = React.useState('')
 
-    // React.useEffect(() => {
-    //     console.log('Place Card: ', place)
-    // }, [place])
+    React.useEffect(() => {
+        if (window) {
+            const link = `${window.location.origin}${R.ROUTE_ITEMS.restaurant}/${place.id}`
+            setPlaceLink(link)
+        }
+    }, [place])
 
     const handleView = () => {
         console.log('View a place from wide place card')
@@ -78,19 +89,39 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecomme
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
         if (_.has(place, 'id') && _.has(place, 'name')) {
             console.log('handleWriteRecommendation for place ID: ', place.id)
-            openRecommendationModal({ placeID: place.id, placeName: place.name, isAATL: true })
+            openRecommendationModal({ placeID: String(place.id), placeName: place.name, isAATL: true })
         }
         e.stopPropagation()
     }
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
         if (_.has(place, 'id')) {
-            console.log('handleAddToList for place ID: ', place.id)
+            const openListModalPayload: OpenListModalPayload = {
+                newListModalView: ListModalViewEnum.AddToRestaurantList,
+            }
+            openListModal(openListModalPayload)
         }
         e.stopPropagation()
     }
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
-        if (_.has(place, 'id')) {
-            console.log('handleShare for place ID: ', place.id)
+        if (_.has(place, 'id') && placeLink) {
+            navigator.clipboard
+                .writeText(placeLink)
+                .then(() => {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.RESTAURANT_LINK_COPIED.Type}
+                                    title={B.RESTAURANT_LINK_COPIED.Title}
+                                    message={B.RESTAURANT_LINK_COPIED.Body}
+                                />
+                            </div>
+                        ),
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
         e.stopPropagation()
     }
@@ -219,6 +250,6 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecomme
     )
 }
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
 
 export default reduxConnect(null, mapDispatchToProps)(CardPlaceWide)

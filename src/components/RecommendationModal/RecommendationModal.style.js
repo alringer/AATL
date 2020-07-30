@@ -517,3 +517,7 @@ export const TipsCloseButton = styled(CustomIconButton)`
         border-radius: 50%;
     }
 `
+
+export const RecommendationPublishedButtonAnchor = styled.a`
+    text-decoration: none;
+`

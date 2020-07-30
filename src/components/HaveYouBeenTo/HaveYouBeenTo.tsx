@@ -27,7 +27,7 @@ const HaveYouBeenTo: React.FC<IHaveYouBeenToProps> = ({ placeName, placeID, open
         console.log(
             `Write recommendation clicked from "Have you been to" section from the restaurant with ID of ${placeID}`
         )
-        openRecommendationModal({ placeID: placeID, placeName: placeName, isAATL: true })
+        openRecommendationModal({ placeID: String(placeID), placeName: placeName, isAATL: true })
     }
 
     return (
