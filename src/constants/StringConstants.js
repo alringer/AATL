@@ -17,6 +17,7 @@ export const TOOL_TIPS = {
 
 export const BUTTON_LABELS = {
     AddToNewList: 'Add to new list',
+    AddToList: 'ADD TO LIST',
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
     Search: 'SEARCH',

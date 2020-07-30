@@ -1,5 +1,4 @@
-import DiagonalUpArrow from 'assets/diagonal-up-arrow.svg'
-import ShareIcon from 'assets/share-icon.svg'
+import SharePaperIcon from 'assets/restaurant-share-icon.svg'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import * as B from 'constants/SnackbarConstants'
@@ -11,6 +10,8 @@ import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { openListModal } from 'store/listModal/listModal_actions'
+import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
@@ -19,12 +20,15 @@ import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
 import { IVenue } from 'utilities/types/venue'
 import {
+    AddToListButton,
     FindATableButton,
     PlaceBannerAddressCityStateZip,
     PlaceBannerAddressOne,
     PlaceBannerAddressSpan,
     PlaceBannerAnchor,
+    PlaceBannerButtonsBottomContainer,
     PlaceBannerButtonsContainer,
+    PlaceBannerButtonsTopContainer,
     PlaceBannerCityState,
     PlaceBannerContactInformationSpan,
     PlaceBannerContainer,
@@ -45,6 +49,7 @@ import {
 
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
+    openListModal: (payload: OpenListModalPayload) => void
 }
 
 interface IPlaceBannerProps extends IReduxProps, IWithAuthInjectedProps {
@@ -55,6 +60,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
     venueInformation,
     openRecommendationModal,
     authenticatedAction,
+    openListModal,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -100,6 +106,15 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
             console.log(`Recommend-restaurant button is clicked for place with ID of ${venueInformation.id}`)
         }
     }
+
+    const handleAddToList = () => {
+        if (_.has(venueInformation, 'id')) {
+            const openListModalPayload: OpenListModalPayload = {
+                newListModalView: ListModalViewEnum.AddToRestaurantList,
+            }
+            openListModal(openListModalPayload)
+        }
+    }
     const handleVisitWebsite = () => {
         if (window !== undefined && _.has(venueInformation, 'websiteURL')) {
             window.open(venueInformation.websiteURL, '_blank')
@@ -110,7 +125,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         <PlaceBannerContainer>
             <PlaceBannerImageContainer>
                 <Image src={venueInformation.imageCDNUrl} alt="restaurant-image" />
-                <Media queries={query} defaultMatches={{ mobile: true }}>
+                {/* <Media queries={query} defaultMatches={{ mobile: true }}>
                     {(matches) => (
                         <>
                             {matches.mobile && (
@@ -120,7 +135,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                             )}
                         </>
                     )}
-                </Media>
+                </Media> */}
             </PlaceBannerImageContainer>
             <PlaceBannerContentContainer>
                 <PlaceBannerTextsContainer>
@@ -167,9 +182,28 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         ) : null}
                     </PlaceBannerContactInformationSpan>
                     <PlaceBannerButtonsContainer>
-                        <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
-                        <RecommendButton onClick={handleRecommend}>{S.BUTTON_LABELS.Recommend}</RecommendButton>
-                        <Media queries={query} defaultMatches={{ mobile: true }}>
+                        <PlaceBannerButtonsTopContainer>
+                            <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
+                            <RecommendButton onClick={handleRecommend}>{S.BUTTON_LABELS.Recommend}</RecommendButton>
+                        </PlaceBannerButtonsTopContainer>
+                        <PlaceBannerButtonsBottomContainer>
+                            <AddToListButton onClick={handleAddToList}>{S.BUTTON_LABELS.AddToList}</AddToListButton>
+                            <Media queries={query} defaultMatches={{ mobile: true }}>
+                                {(matches) => (
+                                    <>
+                                        {(matches.laptop || matches.tablet) && (
+                                            <ShareIconButton onClick={handleShare}>
+                                                <img src={SharePaperIcon} alt="share-icon" />
+                                            </ShareIconButton>
+                                        )}
+                                        {matches.mobile && (
+                                            <ShareButton onClick={handleShare}>{S.BUTTON_LABELS.Share}</ShareButton>
+                                        )}
+                                    </>
+                                )}
+                            </Media>
+                        </PlaceBannerButtonsBottomContainer>
+                        {/* <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
                                 <>
                                     {(matches.laptop || matches.tablet) && (
@@ -180,13 +214,13 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                                     )}
                                 </>
                             )}
-                        </Media>
+                        </Media> */}
                     </PlaceBannerButtonsContainer>
                 </PlaceBannerTextsContainer>
             </PlaceBannerContentContainer>
         </PlaceBannerContainer>
     ) : null
 }
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
 
 export default reduxConnect(null, mapDispatchToProps)(withAuth(PlaceBanner))
