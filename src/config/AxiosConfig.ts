@@ -78,11 +78,21 @@ const responseInterceptor = (response: AxiosResponse) => {
         )
     ) {
         const payload: ILocationInformation = {
-            city: String(response.headers['x-aatl-city']),
-            country: String(response.headers['x-aatl-country']),
-            lat: String(response.headers['x-aatl-latitude']),
-            lng: String(response.headers['x-aatl-longitude']),
-            state: String(response.headers['x-aatl-state']),
+            city: String(response.headers['x-aatl-city']) !== undefined ? String(response.headers['x-aatl-city']) : '',
+            country:
+                String(response.headers['x-aatl-country']) !== undefined
+                    ? String(response.headers['x-aatl-country'])
+                    : '',
+            lat:
+                String(response.headers['x-aatl-latitude']) !== undefined
+                    ? String(response.headers['x-aatl-latitude'])
+                    : '',
+            lng:
+                String(response.headers['x-aatl-longitude']) !== undefined
+                    ? String(response.headers['x-aatl-longitude'])
+                    : '',
+            state:
+                String(response.headers['x-aatl-state']) !== undefined ? String(response.headers['x-aatl-state']) : '',
         }
         store.dispatch(setIPLocation(payload))
         store.dispatch(setPreferredLocation(payload))
