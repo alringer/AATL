@@ -108,10 +108,10 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const recommendationID = context.query.r
-    const restaurantID = context && context.params ? context.params.id : null
-    let venueInformation = null
-    if (restaurantID !== null && restaurantID !== undefined) {
-        if (recommendationID !== null && recommendationID !== undefined) {
+    const restaurantID = context && context.params ? context.params.id : undefined
+    let venueInformation = undefined
+    if (restaurantID !== undefined && restaurantID !== undefined) {
+        if (recommendationID !== undefined && recommendationID !== undefined) {
             await axios
                 .get(FETCH_RESTAURANT(Number(restaurantID), Number(recommendationID)))
                 .then((res) => {
@@ -133,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             recommendationID: recommendationID !== undefined ? recommendationID : null,
             restaurantID: restaurantID !== undefined ? restaurantID : null,
-            venueInformation: venueInformation ? venueInformation : null,
+            venueInformation: venueInformation !== undefined ? venueInformation : null,
         },
     }
 }
