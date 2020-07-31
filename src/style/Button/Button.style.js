@@ -35,4 +35,9 @@ export const CustomButton = styled(MUIButton)`
             background-color: rgba(0, 0, 0, 0.2);
         }
     }
+
+    :disabled {
+        color: ${props => props.theme.white};
+        background-color: #e1e1e1;
+    }
 `

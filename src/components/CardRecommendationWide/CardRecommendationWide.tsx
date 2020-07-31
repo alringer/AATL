@@ -17,6 +17,13 @@ import _ from 'lodash'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
+import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { StoreState } from 'store'
+import { openListModal } from 'store/listModal/listModal_actions'
+import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
+import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
+import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
 import {
     CardIcon,
     MobileActionButtonsContainer,
@@ -32,7 +39,9 @@ import {
     chopStringSimpleRecommendationDescription,
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
+import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
 import {
     RecommendationAuthorNameText,
@@ -53,13 +62,27 @@ import {
     RecommendationTitleText,
 } from './CardRecommendationWide.style'
 
-interface IRecommendationCardProps {
+interface IReduxProps {
+    userRole: UserRoleEnum
+    openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
+    openListModal: (payload: OpenListModalPayload) => void
+}
+
+interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
     isHighlighted?: boolean
     isFull: boolean
     recommendation: IRecommendation
 }
 
-const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighlighted, isFull, recommendation }) => {
+const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
+    isHighlighted,
+    isFull,
+    recommendation,
+    authenticatedAction,
+    userRole,
+    openRecommendationModal,
+    openListModal,
+}) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const [currentRecommendation, setCurrentRecommendation] = React.useState<IRecommendation | null>(null)
@@ -83,7 +106,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighligh
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to flag the recommendation
-        console.log('Handle flag content')
+        if (currentRecommendation) {
+            authenticatedAction(() =>
+                console.log('handleFlag clicked in the recommendation card with id: ', currentRecommendation.id)
+            )
+        }
         e.stopPropagation()
     }
 
@@ -98,15 +125,32 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighligh
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to flag the recommendation
         if (currentRecommendation) {
-            console.log('handleAddToList clicked in the recommendation card with id: ', currentRecommendation.id)
+            if (userRole === UserRoleEnum.Admin) {
+                console.log('TODO: Add the current recommendation to a recommendation list ', currentRecommendation.id)
+            } else if (userRole === UserRoleEnum.User && currentRecommendation.venue) {
+                const openListModalPayload: OpenListModalPayload = {
+                    currentListModalView: ListModalViewEnum.AddToRestaurantList,
+                    placeID: currentRecommendation.venue.id,
+                }
+                openListModal(openListModalPayload)
+            }
         }
         e.stopPropagation()
     }
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
-        if (currentRecommendation) {
-            console.log(
-                'handleWriteRecommendation clicked in the recommendation card with id: ',
-                currentRecommendation.id
+        if (
+            currentRecommendation &&
+            currentRecommendation.id !== undefined &&
+            currentRecommendation.id !== null &&
+            currentRecommendation.venue &&
+            currentRecommendation.venue.name
+        ) {
+            authenticatedAction(() =>
+                openRecommendationModal({
+                    placeID: String(currentRecommendation.id),
+                    placeName: currentRecommendation.venue.name,
+                    isAATL: true,
+                })
             )
         }
         e.stopPropagation()
@@ -202,7 +246,12 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighligh
                                                         <RemoveFromListButton handleClick={handleAddToList} />
                                                     ) : (
                                                         )} */}
-                                                    <AddToListButton handleClick={handleAddToList} />
+                                                    <FlagButton handleClick={handleFlag} />
+                                                    <AddToListButton
+                                                        handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                            authenticatedAction(() => handleAddToList(e))
+                                                        }
+                                                    />
                                                     <WriteRecommendationButton
                                                         handleClick={handleWriteRecommendation}
                                                     />
@@ -290,10 +339,15 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighligh
                                     {isMoreVisible ? (
                                         <MobileActionButtonsContainer>
                                             {/* {type === CardPlaceWideEnum.Profile ? (
-                                                <RemoveFromListButton handleClick={handleAddToList} isMobile={true} />
+                                                <RemoveFromListButton handleClick={(e:React.MouseEvent<HTMLElement>) => authenticatedAction(() => handleAddToList(e))} isMobile={true} />
                                             ) : (
                                                 )} */}
-                                            <AddToListButton handleClick={handleAddToList} isMobile={true} />
+                                            <AddToListButton
+                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                    authenticatedAction(() => handleAddToList(e))
+                                                }
+                                                isMobile={true}
+                                            />
                                             <WriteRecommendationButton
                                                 handleClick={handleWriteRecommendation}
                                                 isMobile={true}
@@ -313,4 +367,10 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({ isHighligh
     ) : null
 }
 
-export default CardRecommendationWide
+const mapStateToProps = (state: StoreState) => ({
+    userRole: state.userReducer.userRole,
+})
+
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(CardRecommendationWide))

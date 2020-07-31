@@ -8,6 +8,10 @@ export const CustomTextField = styled(TextField)`
     width: 100%;
     height: 100%;
 
+    fieldset {
+        border: 0;
+    }
+
     .MuiFormLabel-root.Mui-focused {
         /* background-color: white; */
         color: grey;

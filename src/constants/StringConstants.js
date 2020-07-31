@@ -16,7 +16,8 @@ export const TOOL_TIPS = {
 }
 
 export const BUTTON_LABELS = {
-    AddToNewList: 'Add to new list',
+    BackToLists: 'BACK TO LISTS',
+    AddToNewList: 'ADD TO NEW LIST',
     AddToList: 'ADD TO LIST',
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
@@ -42,7 +43,8 @@ export const BUTTON_LABELS = {
     AddPlace: 'ADD PLACE',
     Cancel: 'CANCEL',
     AddNewPlace: 'ADD A NEW PLACE',
-    RecommendNewPlace: 'RECOMMEND NEW PLACE'
+    RecommendNewPlace: 'RECOMMEND NEW PLACE',
+    Add: 'ADD'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -60,7 +62,9 @@ export const INPUT_PLACEHOLDERS = {
     Address: 'Address',
     Description: 'Description',
     PhoneNumber: 'Phone Number',
-    WebsiteURL: 'Website URL'
+    WebsiteURL: 'Website URL',
+    Title: 'Title',
+    Optional: '(Optional)'
 
 }
 
@@ -243,6 +247,12 @@ export const RESTAURANT_PAGE = {
 export const LIST_MODAL = {
     AddToRestaurant: {
         Header: 'Add restaurant to a list',
-        Title: 'Restaurant Lists'
+        Title: 'Restaurant Lists',
+        Restaurants: 'Restaurants'
+    },
+    AddNewRestaurantList: {
+        Header: 'Add to a new list',
+        Title: 'New list details',
+        Message: 'URLs are hyerlinked. Only <a> allowed.'
     }
 }

@@ -276,11 +276,6 @@ export const RecommendationEditorPublishButton = styled(CustomButton)`
         background-color: ${props => props.theme.darkSlateBlue};
     }
 
-    :disabled {
-        color: ${props => props.theme.white};
-        background-color: #e1e1e1;
-    }
-
     @media ${device.mobile}{
         margin-bottom: 14px;
     }

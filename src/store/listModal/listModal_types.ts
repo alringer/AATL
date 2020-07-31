@@ -1,6 +1,10 @@
 export interface ListModalReducerState {
     isOpen: boolean
     currentListModalView: ListModalViewEnum | null
+    placeID: number | null
+    recommendationID: number | null
+    placeListID: number | null
+    recommendationListID: number | null
 }
 
 export enum ListModalViewEnum {
@@ -13,7 +17,11 @@ export enum ListModalViewEnum {
 }
 
 export type OpenListModalPayload = {
-    newListModalView: ListModalViewEnum
+    currentListModalView: ListModalViewEnum
+    placeID?: number
+    recommendationID?: number
+    placeListID?: number
+    recommendationListID?: number
 }
 
 // Action Types
@@ -24,10 +32,17 @@ interface OpenListModalAction {
     payload: OpenListModalPayload
 }
 
+export const SWITCH_LIST_MODAL_VIEW = 'SWITCH_LIST_MODAL_VIEW'
+
+interface SwitchListModalViewAction {
+    type: typeof SWITCH_LIST_MODAL_VIEW
+    payload: ListModalViewEnum
+}
+
 export const CLOSE_LIST_MODAL = 'CLOSE_LIST_MODAL'
 
 interface CloseListModalAction {
     type: typeof CLOSE_LIST_MODAL
 }
 
-export type ListModalActionTypes = OpenListModalAction | CloseListModalAction
+export type ListModalActionTypes = OpenListModalAction | CloseListModalAction | SwitchListModalViewAction

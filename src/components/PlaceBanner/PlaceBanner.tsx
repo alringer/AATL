@@ -109,10 +109,13 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
 
     const handleAddToList = () => {
         if (_.has(venueInformation, 'id')) {
-            const openListModalPayload: OpenListModalPayload = {
-                newListModalView: ListModalViewEnum.AddToRestaurantList,
-            }
-            openListModal(openListModalPayload)
+            authenticatedAction(() => {
+                const openListModalPayload: OpenListModalPayload = {
+                    currentListModalView: ListModalViewEnum.AddToRestaurantList,
+                    placeID: venueInformation.id,
+                }
+                openListModal(openListModalPayload)
+            })
         }
     }
     const handleVisitWebsite = () => {

@@ -129,3 +129,24 @@ export const SnackbarMessageLink = styled(TextLink)`
         font-size: 14px;
     }
 `
+
+export const SnackbarOrangeMessage = styled.p`
+    display: inline;
+    color: ${props => props.theme.dustyOrange};
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+
+    @media ${device.mobile} {
+        font-size: 12px;
+    }
+    @media ${device.tablet} {
+        font-size: 14px;
+    }
+    @media ${device.laptop} {
+        font-size: 14px;
+    }
+`

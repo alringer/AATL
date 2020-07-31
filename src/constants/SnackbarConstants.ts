@@ -65,3 +65,9 @@ export const RESTAURANT_LINK_COPIED: ISnackbarConstants = {
     Title: 'Ready to share!',
     Body: 'Restaurant link was copied to clipboard',
 }
+
+export const ADDED_TO_LIST: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Success!',
+    Body: 'was added to your list',
+}
