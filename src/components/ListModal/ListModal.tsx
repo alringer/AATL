@@ -3,9 +3,10 @@ import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
-import { closeListModal } from 'store/listModal/listModal_actions'
+import { closeListModal, switchListModalView } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
 import { query } from 'style/device'
+import AddNewRestaurantList from './AddNewRestaurantList'
 import AddToRestaurantList from './AddToRestaurantList'
 import { CustomDialog, ListModalContentContainer } from './ListModal.style'
 
@@ -13,15 +14,25 @@ interface IReduxProps {
     isOpen: boolean
     currentListModalView: ListModalViewEnum
     closeListModal: () => void
+    switchListModalView: (newListModalView: ListModalViewEnum) => void
 }
 
 interface IListModalProps extends IReduxProps {}
 
-const ListModal: React.FC<IListModalProps> = ({ isOpen, currentListModalView, closeListModal }) => {
-    const [currentView, setCurrentView] = React.useState(
-        currentListModalView ? currentListModalView : ListModalViewEnum.AddToRestaurantList
+const ListModal: React.FC<IListModalProps> = ({
+    isOpen,
+    currentListModalView,
+    closeListModal,
+    switchListModalView,
+}) => {
+    const [currentView, setCurrentView] = React.useState<ListModalViewEnum | null>(
+        currentListModalView ? currentListModalView : null
     )
     const listModalRef = React.useRef(null)
+
+    React.useEffect(() => {
+        setCurrentView(currentListModalView)
+    }, [currentListModalView])
 
     const handleClickOutsideSearchModal = (event) => {
         if (
@@ -42,9 +53,9 @@ const ListModal: React.FC<IListModalProps> = ({ isOpen, currentListModalView, cl
         closeListModal()
     }
 
-    // const switchViewToSearch = () => {
-    //     setCurrentView(SearchModalViewNum.Search)
-    // }
+    const switchView = (newListModalView: ListModalViewEnum) => {
+        switchListModalView(newListModalView)
+    }
     // const switchViewToAddPlace = () => {
     //     setCurrentView(SearchModalViewNum.AddNewPlace)
     // }
@@ -52,7 +63,6 @@ const ListModal: React.FC<IListModalProps> = ({ isOpen, currentListModalView, cl
     React.useEffect(() => {
         document.addEventListener('click', handleClickOutsideSearchModal, true)
         return () => {
-            closeModal()
             document.removeEventListener('click', handleClickOutsideSearchModal, true)
         }
     }, [])
@@ -62,7 +72,11 @@ const ListModal: React.FC<IListModalProps> = ({ isOpen, currentListModalView, cl
             {(matches) => (
                 <CustomDialog open={isOpen} fullScreen={matches.laptop || matches.tablet ? false : true} maxWidth="lg">
                     <ListModalContentContainer ref={listModalRef}>
-                        {currentView === ListModalViewEnum.AddToRestaurantList ? <AddToRestaurantList /> : null}
+                        {currentView === ListModalViewEnum.AddToRestaurantList ? (
+                            <AddToRestaurantList closeModal={closeModal} switchView={switchView} />
+                        ) : currentView === ListModalViewEnum.AddToNewRestaurantList ? (
+                            <AddNewRestaurantList closeModal={closeModal} switchView={switchView} />
+                        ) : null}
                     </ListModalContentContainer>
                 </CustomDialog>
             )}
@@ -75,6 +89,6 @@ const mapStateToProps = (state: StoreState) => ({
     currentListModalView: state.listModalReducer.currentListModalView,
 })
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ closeListModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ closeListModal, switchListModalView }, dispatch)
 
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(ListModal)

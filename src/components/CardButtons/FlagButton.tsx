@@ -26,7 +26,7 @@ const FlagButton: React.FC<IAddToListButtonProps> = ({ handleClick, isMobile }) 
         </Tooltip>
     ) : (
         <Tooltip placement="top" title={S.TOOL_TIPS.Flag}>
-            <MoreOptionButton>
+            <MoreOptionButton onClick={handleClick}>
                 <FlagIcon />
             </MoreOptionButton>
         </Tooltip>

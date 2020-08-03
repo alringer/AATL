@@ -37,6 +37,12 @@ export const REGISTER_VIEW = (id: number) => {
     return `/venues/${id}/register-view`
 }
 
+// Venue Lists
+export const VENUE_LIST = `/venue-list-metas`
+export const POST_NEW_VENUE = (venueListID: number) => {
+    return `/venue-list-metas/${venueListID}/venues`
+}
+
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
 })

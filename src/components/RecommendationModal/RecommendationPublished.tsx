@@ -15,10 +15,10 @@ import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
 import { IRecommendation } from 'utilities/types/recommendation'
+import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IReduxProps {
-    firstName: string | null
-    lastName: string | null
+    user: IUserProfile
 }
 
 interface IRecommendationPublishedProps extends IReduxProps {
@@ -26,12 +26,7 @@ interface IRecommendationPublishedProps extends IReduxProps {
     recommendation: IRecommendation | null
 }
 
-const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
-    publishedTitle,
-    firstName,
-    lastName,
-    recommendation,
-}) => {
+const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publishedTitle, user, recommendation }) => {
     const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
@@ -48,7 +43,8 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
                     {S.RECOMMENDATION_PUBLISHED.Title}
                 </RecommendationEditorPublishedTitle>
                 <RecommendationEditorPublishedPreviewTitle>
-                    {publishedTitle} by {`${firstName ? `${firstName} ` : ''}${lastName ? `${lastName}` : ''}`}
+                    {publishedTitle} by{' '}
+                    {`${user.firstName ? `${user.firstName} ` : ''}${user.lastName ? `${user.lastName}` : ''}`}
                 </RecommendationEditorPublishedPreviewTitle>
                 <RecommendationEditorPublishedBody>
                     {S.RECOMMENDATION_PUBLISHED.BodyTextOne}
@@ -71,8 +67,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
 }
 
 export const mapStateToProps = (state: StoreState) => ({
-    firstName: state.userReducer.firstName,
-    lastName: state.userReducer.lastName,
+    user: state.userReducer.user,
 })
 
 export default reduxConnect(mapStateToProps)(RecommendationPublished)

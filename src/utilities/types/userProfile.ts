@@ -19,6 +19,9 @@
 //     venues?: IVenue[]
 // }
 
+import { IRecommendation } from './recommendation'
+import { IVenue } from './venue'
+
 export interface IUserProfile {
     activated: boolean | null
     content: string | null
@@ -34,7 +37,11 @@ export interface IUserProfile {
     userByLine: string | null
     userId: string | null
     username: string | null
-    // Add venueListMetas
+    venues: IVenue[] | null
+    recommendations: IRecommendation[] | null
+    recommendationListMetas: null
+    userBadges: null
+    configurationAudits: null
 }
 
 export const mockUser: IUserProfile = {
@@ -52,4 +59,9 @@ export const mockUser: IUserProfile = {
     userByLine: null,
     userId: '4c973896-5761-41fc-8217-07c5d13a004b',
     username: 'admin',
+    venues: null,
+    recommendations: null,
+    recommendationListMetas: null,
+    userBadges: null,
+    configurationAudits: null,
 }

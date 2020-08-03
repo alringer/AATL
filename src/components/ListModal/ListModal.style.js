@@ -1,7 +1,11 @@
+import { Button as MUIButton } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
+import MatAddIcon from '@material-ui/icons/Add'
+import MUIArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { CustomButton } from 'style/Button/Button.style'
 import { device } from 'style/device'
-import styled from 'styled-components'
+import { CustomTextField } from 'style/TextField/TextField.style'
+import styled, { css } from 'styled-components'
 
 // Shared
 export const CustomDialog = styled(Dialog)`
@@ -53,7 +57,29 @@ export const ListModalTitleText = styled.div`
     color: ${props => props.theme.charcoalGrey};
 `
 
+
+// Cards
+export const ListModalMainContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    @media ${device.mobile} {
+        margin-top: 15px;
+    }
+    @media ${device.tablet} {
+        margin-top: 20px;
+    }
+`
+
+export const ListModalCardButton = styled(MUIButton)`
+    width: 100%;
+    padding: 0;
+    margin-bottom: 10px;
+`
+
 export const ListModalCardContainer = styled.div`
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -67,11 +93,41 @@ export const ListModalCardContainer = styled.div`
     @media ${device.tablet} {
         padding: 20px;
     }
+
+    &::after {
+        position: absolute;
+        content: '';
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: transparent;
+        transition: background-color .1s;
+    }
+
+    ${props => {
+        if (props.id === 'selected') {
+            return css`
+                p {
+                    color: ${props => props.theme.white};
+                }
+                background-color: ${(props) => props.theme.darkSlateBlue};
+            `
+        }
+    }}
+
+    &:hover {
+        &::after {
+            background-color: rgba(0,0,0,0.1);
+        }
+    }
 `
 
 export const ListModalCardTextContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 `
 
 export const ListModalCardTitle = styled.p`
@@ -97,6 +153,24 @@ export const ListModalCardSubTitle = styled.p`
     line-height: 1.57;
     letter-spacing: normal;
     color: ${props => props.theme.charcoalGrey};
+`
+
+export const ListModalAddToListWideButton = styled(CustomButton)`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: ${(props) => props.theme.mushroom};
+    background-color: transparent;
+    border-color: transparent;
+    :hover {
+        background-color: transparent;
+        border-color: transparent;
+    }
+`
+
+export const AddIcon = styled(MatAddIcon)`
+    color: ${(props) => props.theme.mushroom};
+    margin-right: 12px;
 `
 
 // Header
@@ -133,15 +207,60 @@ export const ListModalFooterContainer = styled.div`
 
     border: solid 2px rgba(54, 57, 64, 0.1);
 
-    padding: 21px 30px;
+    @media ${device.mobile} {
+        padding: 21px 16px;
+    }
+    @media ${device.tablet} {
+        padding: 21px 30px;
+    }
+`
+
+export const ListModalFooterLeftContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: auto;
+`
+export const ListModalFooterRightContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    @media ${device.mobile} {
+        justify-content: space-between;
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        justify-content: flex-start;
+        width: auto;
+    }
+`
+
+export const ListModalMessage = styled.p`
+    font-size: 13px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.69;
+    letter-spacing: normal;
+    text-align: center;
+    color: ${props => props.theme.mushroom};
 `
 
 // Buttons
-export const AddToNewList = styled(CustomButton)`
+export const ArrowBackIcon = styled(MUIArrowBackIcon)`
+    color: white;
+    margin-right: 10px; 
+    height: 20px;
+`
+
+export const ListModalNavigationButton = styled(CustomButton)`
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme.mushroom};
     border-color: ${(props) => props.theme.darkGreyOpaque};
     :hover {
+        background-color: ${(props) => props.theme.mushroom};
         border-color: ${(props) => props.theme.darkGreyOpaque};
     }
 `
@@ -152,7 +271,9 @@ export const AddPlaceButton = styled(CustomButton)`
     :hover {
         background-color: ${(props) => props.theme.dustyOrange};
     }
+
     margin-left: 20px;
+    width: 120px;
 `
 
 export const CancelButton = styled(CustomButton)`
@@ -160,6 +281,20 @@ export const CancelButton = styled(CustomButton)`
     background-color: ${(props) => props.theme.white};
     border-color: ${(props) => props.theme.darkGreyOpaque};
     :hover {
+        background-color: ${(props) => props.theme.white};
         border-color: ${(props) => props.theme.darkGreyOpaque};
     }
+
+    width: 120px;
 `
+
+// Inputs
+export const ListModalInputRowContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 20px;
+`
+export const ListModalInput = styled(CustomTextField)``

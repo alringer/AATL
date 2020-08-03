@@ -8,6 +8,7 @@ import {
     SnackbarMessageContainer,
     SnackbarMessageLink,
     SnackbarMessageTitle,
+    SnackbarOrangeMessage,
 } from './Snackbar.style'
 
 interface ISnackbarProps {
@@ -17,9 +18,18 @@ interface ISnackbarProps {
     iconPath?: string
     linkMessage?: string
     linkDestination?: string
+    orangeMessage?: string
 }
 
-const Snackbar: React.FC<ISnackbarProps> = ({ type, iconPath, title, message, linkMessage, linkDestination }) => {
+const Snackbar: React.FC<ISnackbarProps> = ({
+    type,
+    iconPath,
+    title,
+    message,
+    linkMessage,
+    linkDestination,
+    orangeMessage,
+}) => {
     // Snackbar Full Props Example:
     // enqueueSnackbar('', {
     //     content: (
@@ -45,7 +55,14 @@ const Snackbar: React.FC<ISnackbarProps> = ({ type, iconPath, title, message, li
             )}
             <SnackbarMessageContainer>
                 <SnackbarMessageTitle>{title}</SnackbarMessageTitle>
-                <SnackbarMessageBody>{message}</SnackbarMessageBody>
+                <SnackbarMessageBody>
+                    {message}
+                    {orangeMessage && (
+                        <>
+                            &nbsp; <SnackbarOrangeMessage>{orangeMessage}</SnackbarOrangeMessage>
+                        </>
+                    )}
+                </SnackbarMessageBody>
                 {linkMessage && linkDestination && (
                     <Link href={linkDestination}>
                         <SnackbarMessageLink>{linkMessage}</SnackbarMessageLink>

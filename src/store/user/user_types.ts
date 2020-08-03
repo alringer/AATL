@@ -1,9 +1,9 @@
 import { IUserProfile } from 'utilities/types/userProfile'
 
-export interface IUserInformation extends IUserProfile {
+export interface IUserInformation {
+    user: IUserProfile | null
     userRole: string | null
 }
-
 export interface UserReducerState extends IUserInformation {
     loggedIn: boolean
 }

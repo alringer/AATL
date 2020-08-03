@@ -1,4 +1,3 @@
-import { IconButton } from '@material-ui/core'
 import { CustomButton } from 'style/Button/Button.style'
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
@@ -63,6 +62,7 @@ export const PlaceBannerImageContainer = styled(ImageContainer)`
 `
 
 export const PlaceBannerContentContainer = styled(ContentWrapper)`
+    position: relative;
     display: flex;
     width: 100%;
     z-index: ${zIndices.restaurantPlaceBannerImage};
@@ -81,13 +81,15 @@ export const PlaceBannerTextsContainer = styled.div`
         padding: 24px 16px;
     }
     @media ${device.tablet} {
-        width: 441px;
+        /* width: 441px; */
+        width: 100%;
         background-color: transparent;
         color: white;
         padding: 0;
     }
     @media ${device.laptop} {
-        width: 460px;
+        /* width: 460px; */
+        width: 100%;
         background-color: transparent;
         color: white;
         padding: 0;
@@ -237,21 +239,58 @@ export const PlaceBannerPhoneNumber = styled.p`
 
 export const PlaceBannerButtonsContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    align-items: center;
     width: 100%;
 
     @media ${device.mobile} {
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
     @media ${device.tablet} {
+        flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
     }
     @media ${device.laptop} {
+        flex-direction: row;
         justify-content: flex-start;
+        align-items: center;
     }
 
     margin-top: 15px;
+`
+
+export const PlaceBannerButtonsTopContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    @media ${device.mobile} {
+        justify-content: space-between;
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        justify-content: flex-start;
+        width: auto;
+    }
+`
+
+export const PlaceBannerButtonsBottomContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    
+    @media ${device.mobile} {
+        justify-content: space-between;
+        margin-top: 10px;
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        justify-content: flex-start;
+        margin-top: 0;
+        width: auto;
+    }
 `
 
 export const FindATableButton = styled(CustomButton)`
@@ -261,7 +300,14 @@ export const FindATableButton = styled(CustomButton)`
         background-color: ${props => props.theme.dustyRed};
     }
 
-    margin-right: 8px;
+    @media ${device.mobile} {
+        margin-right: 0;
+        width: 140px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        margin-right: 8px;
+    }
 `
 
 export const RecommendButton = styled(CustomButton)`
@@ -271,30 +317,93 @@ export const RecommendButton = styled(CustomButton)`
         background-color: ${props => props.theme.dustyOrange};
     }
 
-    margin-right: 8px;
+    @media ${device.mobile} {
+        margin-right: 0;
+        width: 140px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        margin-right: 8px;
+    }
+`
+
+export const AddToListButton = styled(CustomButton)`
+    color: ${(props) => props.theme.darkSlateBlue};
+    background-color: ${(props) => props.theme.white};
+    :hover {
+        background-color: ${(props) => props.theme.white};
+    }
+
+
+    @media ${device.mobile} {
+        border-color: ${(props) => props.theme.darkSlateBlue};
+        margin-right: 0;
+        width: 140px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        border-color: transparent;
+        margin-right: 8px;
+    }
 `
 
 export const ShareButton = styled(CustomButton)`
-    color: ${props => props.theme.white};
-    background-color: transparent;
-    border-color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.darkSlateBlue};
     :hover {
-        background-color: transparent;
+        background-color: ${(props) => props.theme.darkSlateBlue};
     }
 
-    img {
-        width: 20px !important;
-        height: 20px !important;
-        margin-right: 5px;
+    @media ${device.mobile} {
+        margin-right: 0;
+        width: 140px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        margin-right: 8px;
     }
 `
 
-export const ShareIconButton = styled(IconButton)`
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    z-index: ${zIndices.restaurantMobileShareIcon};
+export const ShareIconButton = styled(CustomButton)`
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.darkSlateBlue};
+    :hover {
+        background-color: ${(props) => props.theme.darkSlateBlue};
+    }
+
+    @media ${device.mobile} {
+        margin-right: 0;
+    }
+    @media ${device.tablet} {
+        margin-right: 8px;
+    }
 `
+
+// export const ShareButton = styled(CustomButton)`
+//     color: ${props => props.theme.white};
+//     background-color: ${props => props.theme.darkSlateBlue};
+//     /* border-color: ${props => props.theme.white}; */
+//     :hover {
+//         background-color: ${props => props.theme.darkSlateBlue};
+//     }
+
+//     img {
+//         width: 20px !important;
+//         height: 20px !important;
+//         margin-right: 5px;
+//     }
+// `
+
+// export const ShareIconButton = styled(IconButton)`
+//     background-color: ${props => props.theme.darkSlateBlue};
+// `
+
+// export const ShareIconButton = styled(IconButton)`
+//     position: absolute;
+//     top: 5px;
+//     right: 5px;
+//     z-index: ${zIndices.restaurantMobileShareIcon};
+// `
 
 export const PlaceBannerAnchor = styled.a`
     cursor: pointer;

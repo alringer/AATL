@@ -4,7 +4,6 @@ import AuthoredSVG from 'assets/authored.svg'
 import EllipsesSVG from 'assets/horizontalEllipses.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
-import FlagButton from 'components/CardButtons/FlagButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
@@ -37,6 +36,7 @@ import {
 import { query } from 'style/device'
 import { chopStringFullRecommendationDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
 import { IVenue } from 'utilities/types/venue'
 import {
@@ -64,12 +64,18 @@ interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
 }
-interface ICardPlaceWideProps extends IReduxProps {
+interface ICardPlaceWideProps extends IReduxProps, IWithAuthInjectedProps {
     place: IVenue
     type: CardPlaceWideEnum
 }
 
-const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecommendationModal, openListModal }) => {
+const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
+    place,
+    type,
+    openRecommendationModal,
+    openListModal,
+    authenticatedAction,
+}) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
     const [isMoreVisible, setMoreVisible] = React.useState(false)
@@ -89,16 +95,25 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecomme
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
         if (_.has(place, 'id') && _.has(place, 'name')) {
             console.log('handleWriteRecommendation for place ID: ', place.id)
-            openRecommendationModal({ placeID: String(place.id), placeName: place.name, isAATL: true })
+            authenticatedAction(() => {
+                openRecommendationModal({
+                    placeID: String(place.id),
+                    placeName: place.name,
+                    isAATL: true,
+                })
+            })
         }
         e.stopPropagation()
     }
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
         if (_.has(place, 'id')) {
-            const openListModalPayload: OpenListModalPayload = {
-                newListModalView: ListModalViewEnum.AddToRestaurantList,
-            }
-            openListModal(openListModalPayload)
+            authenticatedAction(() => {
+                const openListModalPayload: OpenListModalPayload = {
+                    currentListModalView: ListModalViewEnum.AddToRestaurantList,
+                    placeID: place.id,
+                }
+                openListModal(openListModalPayload)
+            })
         }
         e.stopPropagation()
     }
@@ -236,7 +251,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecomme
                                                 isMobile={true}
                                             />
                                             <ShareButton handleClick={handleShare} isMobile={true} />
-                                            <FlagButton handleClick={handleShare} isMobile={true} />
+                                            {/* <FlagButton handleClick={handleShare} isMobile={true} /> */}
                                         </MobileActionButtonsContainer>
                                     ) : null}
                                     <ViewMore />
@@ -252,4 +267,4 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({ place, type, openRecomme
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
 
-export default reduxConnect(null, mapDispatchToProps)(CardPlaceWide)
+export default reduxConnect(null, mapDispatchToProps)(withAuth(CardPlaceWide))
