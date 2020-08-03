@@ -117,5 +117,10 @@ export const mockRecommendation: IRecommendation = {
         updatedAt: null,
         deletedAt: null,
         content: '',
+        venues: [],
+        recommendations: [],
+        recommendationListMetas: null,
+        userBadges: null,
+        configurationAudits: null,
     },
 }
