@@ -72,6 +72,9 @@ const requestInterceptor = async (config: any = {}) => {
 }
 
 const responseInterceptor = (response: AxiosResponse) => {
+    console.log('Response in the Interceptor: ', response)
+    console.log('City attribute in the header: ', response.headers['x-aatl-city'])
+    console.log('Typeof City attribute in the header: ', typeof response.headers['x-aatl-city'])
     if (
         (store.getState().locationReducer.ipLocation === null &&
             response.config.headers['X-AATL-Use-IP-Address-As-Location']) === true &&
