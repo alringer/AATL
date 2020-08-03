@@ -42,7 +42,7 @@ const AuthProvider = withKeycloak(({ keycloak, children, login, logout, loggedIn
                         // TODO: Set User Profile information to redux
                         const userProfileInformation: IUserProfile = res.data
                         login({
-                            ...userProfileInformation,
+                            user: userProfileInformation,
                             userRole: role,
                         })
                         console.log('User Profile Results: ', res.data)

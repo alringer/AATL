@@ -61,20 +61,12 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         setLng(queryLng)
         setSort(querySort)
         axios
-            .post(
-                SEARCH_AATL_RESTAURANTS,
-                {
-                    keyword: queryPlace ? queryPlace : '',
-                    longitude: queryLng ? queryLng : Math.round(-117.161087),
-                    latitude: queryLat ? queryLat : Math.round(32.715736),
-                    sort: querySort ? querySort : SortEnum.MostRecommended,
-                },
-                {
-                    headers: {
-                        Authorization: getTokenConfig(),
-                    },
-                }
-            )
+            .post(SEARCH_AATL_RESTAURANTS, {
+                keyword: queryPlace ? queryPlace : '',
+                longitude: queryLng ? queryLng : Math.round(-117.161087),
+                latitude: queryLat ? queryLat : Math.round(32.715736),
+                sort: querySort ? querySort : SortEnum.MostRecommended,
+            })
             .then((res) => {
                 console.log('Search result: ', res)
                 setSearchResults(res.data)

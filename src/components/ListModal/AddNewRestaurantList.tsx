@@ -50,7 +50,7 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
     const [isLoading, setLoading] = React.useState(false)
 
     const handleAddPlace = () => {
-        if (titleInput && descriptionInput) {
+        if (titleInput) {
             const createNewVenueListPayload = {
                 title: titleInput,
                 description: descriptionInput,
@@ -175,7 +175,7 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
                 </Media>
                 <ListModalFooterRightContainer>
                     <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                    <AddPlaceButton onClick={handleAddPlace} disabled={!titleInput || !descriptionInput || isLoading}>
+                    <AddPlaceButton onClick={handleAddPlace} disabled={!titleInput || isLoading}>
                         {S.BUTTON_LABELS.Add}
                     </AddPlaceButton>
                 </ListModalFooterRightContainer>

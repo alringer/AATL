@@ -79,14 +79,14 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                     : {}
             )
             .then((res) => {
-                console.log(res)
                 setPublished(true)
                 setPublishedTitle(title)
-                setLoading(false)
                 setRecommendation(res.data)
-                // TODO: Get the recommendation ID and create a permalink from res.data.id
             })
             .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     const handleReadOurGuidelines = () => {

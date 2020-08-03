@@ -21,11 +21,11 @@ import { bindActionCreators } from 'redux'
 import { openAuthenticationModal } from 'store/authModal/authModal_actions'
 import { AuthenticationViewEnum } from 'store/authModal/authModal_types'
 import { StoreState } from 'store/index'
-import { UserReducerState } from 'store/user/user_types'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import useComponentVisible from 'utilities/hooks/useComponentVisible'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
+import { IUserProfile } from 'utilities/types/userProfile'
 import {
     ButtonContainer,
     HeaderContainer,
@@ -56,13 +56,15 @@ import {
 } from './Header.style'
 
 interface IReduxProps {
-    user: UserReducerState
+    user: IUserProfile
+    userRole: string | null
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
 }
 interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps {}
 
 const Header: React.FC<IHeaderProps> = ({
     user,
+    userRole,
     keycloakLogout,
     openAuthenticationModal,
     keycloakLogin,
@@ -188,7 +190,7 @@ const Header: React.FC<IHeaderProps> = ({
                 </Link>
             </PopoverRowOption>
             <PopoverRowOption>
-                {user.userRole === UserRoleEnum.Admin ? (
+                {userRole === UserRoleEnum.Admin ? (
                     <Link href={R.ROUTE_ITEMS.admin} passHref>
                         <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
                             {S.PROFILE_POPOVER_ITEMS.AdminMenu}
@@ -353,7 +355,8 @@ const Header: React.FC<IHeaderProps> = ({
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    user: state.userReducer,
+    user: state.userReducer.user,
+    userRole: state.userReducer.userRole,
 })
 
 const mapDispatchToProps = (dispatch: any) =>
