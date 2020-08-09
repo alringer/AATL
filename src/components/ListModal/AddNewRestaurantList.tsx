@@ -1,5 +1,6 @@
 import { PlaceholderContainer, PlaceholderTextBold, PlaceholderTextNormal } from 'components/Search/Search.style'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
 import axios, { POST_NEW_VENUE, VENUE_LIST } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -12,7 +13,6 @@ import { ListModalViewEnum } from 'store/listModal/listModal_types'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import {
-    AddPlaceButton,
     ArrowBackIcon,
     CancelButton,
     ListModalFooterContainer,
@@ -27,6 +27,7 @@ import {
     ListModalMessage,
     ListModalNavigationButton,
     ListModalTitleText,
+    SubmitButton,
 } from './ListModal.style'
 
 interface IReduxProps {
@@ -79,8 +80,12 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
                                         <Snackbar
                                             type={B.ADDED_TO_LIST.Type}
                                             title={B.ADDED_TO_LIST.Title}
-                                            message={`${res.data.venues[0].name} ${B.ADDED_TO_LIST.Body}`}
-                                            orangeMessage={`${res.data.title}`}
+                                            message={
+                                                <SnackbarMessageBody>
+                                                    {res.data.venues[0].name} {B.ADDED_TO_LIST.Body}&nbsp;
+                                                    <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                                </SnackbarMessageBody>
+                                            }
                                         />
                                     </div>
                                 ),
@@ -175,9 +180,9 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
                 </Media>
                 <ListModalFooterRightContainer>
                     <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                    <AddPlaceButton onClick={handleAddPlace} disabled={!titleInput || isLoading}>
+                    <SubmitButton onClick={handleAddPlace} disabled={!titleInput || isLoading}>
                         {S.BUTTON_LABELS.Add}
-                    </AddPlaceButton>
+                    </SubmitButton>
                 </ListModalFooterRightContainer>
             </ListModalFooterContainer>
         </>

@@ -16,10 +16,10 @@ import {
 interface IImageDropzoneProps {
     handleDrop: (acceptedFile: any) => void
     handleRemove: (e: React.MouseEvent<HTMLElement>) => void
-    imageFile: File | null // TODO: This will be a string coming from the user profile object
+    imageCDNUrl: string
 }
 
-const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageFile, handleDrop, handleRemove }) => {
+const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageCDNUrl, handleDrop, handleRemove }) => {
     const [isImageHovered, setImageHovered] = React.useState(false)
     const [isCameraHovered, setCameraHovered] = React.useState(false)
 
@@ -48,11 +48,11 @@ const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageFile, ha
                 >
                     <input {...getInputProps()} />
                     <UserProfileBannerImage
-                        src={imageFile ? URL.createObjectURL(imageFile) : DefaultUserProfileImage}
+                        src={imageCDNUrl ? imageCDNUrl : DefaultUserProfileImage}
                         alt="user-profile-image"
                     />
-                    {imageFile && isImageHovered ? (
-                        <Tooltip title={S.TOOL_TIPS.RemoveProfile} placement="top">
+                    {imageCDNUrl && isImageHovered ? (
+                        <Tooltip arrow={true} title={S.TOOL_TIPS.RemoveProfile} placement="top">
                             <UserProfileBannerCameraImageContainer
                                 onMouseEnter={handleCameraMouseEnter}
                                 onMouseLeave={handleCameraMouseLeave}
@@ -73,10 +73,10 @@ const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageFile, ha
     return (
         <Dropzone onDrop={handleDrop} accept="image/png" minSize={0} maxSize={5242880} multiple={false}>
             {({ getRootProps, getInputProps, isDragReject, acceptedFiles }) => {
-                return imageFile ? (
+                return imageCDNUrl ? (
                     renderUserProfileDropzoneComponent(getRootProps, getInputProps)
                 ) : (
-                    <Tooltip title={S.TOOL_TIPS.UploadProfile} placement="top">
+                    <Tooltip arrow={true} title={S.TOOL_TIPS.UploadProfile} placement="top">
                         {renderUserProfileDropzoneComponent(getRootProps, getInputProps)}
                     </Tooltip>
                 )

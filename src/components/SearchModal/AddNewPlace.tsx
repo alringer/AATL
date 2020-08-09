@@ -4,7 +4,6 @@ import * as S from 'constants/StringConstants'
 import React from 'react'
 import { ErrorIcon } from 'style/ErrorIcon/ErrorIcon.style'
 import {
-    AddPlaceButton,
     AddPlaceContentContainer,
     AddPlaceContentRow,
     AddPlaceInput,
@@ -13,6 +12,7 @@ import {
     SearchModalHeaderContainer,
     SearchModalHeaderText,
     SearchModalSearchFooterContainer,
+    SubmitButton,
 } from './SearchModal.style'
 
 interface IAddNewPlaceProps {
@@ -303,7 +303,7 @@ const AddNewPlace: React.FC<IAddNewPlaceProps> = ({ switchViewToSearch }) => {
             </AddPlaceContentContainer>
             <SearchModalSearchFooterContainer>
                 <CancelButton onClick={switchViewToSearch}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                <AddPlaceButton onClick={handleAddPlace}>{S.BUTTON_LABELS.AddPlace}</AddPlaceButton>
+                <SubmitButton onClick={handleAddPlace}>{S.BUTTON_LABELS.AddPlace}</SubmitButton>
             </SearchModalSearchFooterContainer>
         </div>
     )

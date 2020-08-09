@@ -1,4 +1,5 @@
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { SUBSCRIBE_MAILCHIMP } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -42,7 +43,7 @@ const EmailSubscription = () => {
                                 <Snackbar
                                     type={B.EMAIL_SUBSCRIPTION.Type}
                                     title={B.EMAIL_SUBSCRIPTION.Title}
-                                    message={B.EMAIL_SUBSCRIPTION.Body}
+                                    message={<SnackbarMessageBody>{B.EMAIL_SUBSCRIPTION.Body}</SnackbarMessageBody>}
                                 />
                             </div>
                         ),

@@ -1,6 +1,7 @@
 import SharePaperIcon from 'assets/restaurant-share-icon.svg'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import _ from 'lodash'
@@ -75,7 +76,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                                 <Snackbar
                                     type={B.COPY_TO_CLIPBOARD.Type}
                                     title={B.COPY_TO_CLIPBOARD.Title}
-                                    message={B.COPY_TO_CLIPBOARD.Body}
+                                    message={<SnackbarMessageBody>{B.COPY_TO_CLIPBOARD.Body}</SnackbarMessageBody>}
                                 />
                             </div>
                         ),

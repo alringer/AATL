@@ -1,3 +1,5 @@
+import DeleteRestaurantList from 'components/ListModal/DeleteRestaurantList'
+import EditRestaurantList from 'components/ListModal/EditRestaurantList'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -76,6 +78,10 @@ const ListModal: React.FC<IListModalProps> = ({
                             <AddToRestaurantList closeModal={closeModal} switchView={switchView} />
                         ) : currentView === ListModalViewEnum.AddToNewRestaurantList ? (
                             <AddNewRestaurantList closeModal={closeModal} switchView={switchView} />
+                        ) : currentView === ListModalViewEnum.EditRestaurantList ? (
+                            <EditRestaurantList closeModal={closeModal} />
+                        ) : currentView === ListModalViewEnum.DeleteRestaurantList ? (
+                            <DeleteRestaurantList closeModal={closeModal} />
                         ) : null}
                     </ListModalContentContainer>
                 </CustomDialog>

@@ -4,21 +4,18 @@ import Image from '../Image/Image'
 import {
     SnackbarContainer,
     SnackbarImageContainer,
-    SnackbarMessageBody,
     SnackbarMessageContainer,
     SnackbarMessageLink,
     SnackbarMessageTitle,
-    SnackbarOrangeMessage,
 } from './Snackbar.style'
 
 interface ISnackbarProps {
     type: string
     title: string
-    message: string
+    message: React.ReactNode
     iconPath?: string
     linkMessage?: string
     linkDestination?: string
-    orangeMessage?: string
 }
 
 const Snackbar: React.FC<ISnackbarProps> = ({
@@ -55,14 +52,7 @@ const Snackbar: React.FC<ISnackbarProps> = ({
             )}
             <SnackbarMessageContainer>
                 <SnackbarMessageTitle>{title}</SnackbarMessageTitle>
-                <SnackbarMessageBody>
-                    {message}
-                    {orangeMessage && (
-                        <>
-                            &nbsp; <SnackbarOrangeMessage>{orangeMessage}</SnackbarOrangeMessage>
-                        </>
-                    )}
-                </SnackbarMessageBody>
+                {message}
                 {linkMessage && linkDestination && (
                     <Link href={linkDestination}>
                         <SnackbarMessageLink>{linkMessage}</SnackbarMessageLink>

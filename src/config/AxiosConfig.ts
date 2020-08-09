@@ -31,16 +31,52 @@ export const SEARCH_AATL_RESTAURANTS = `/restaurants/search`
 export const SEARCH_YELP_RESTAURANTS = '/lookup/restaurants'
 export const UPLOAD_BLOG = '/blob'
 export const POST_RECOMMENDATION = '/recommendations'
-export const FETCH_CURRENT_USER_PROFILE = '/me'
 export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
 export const REGISTER_VIEW = (id: number) => {
     return `/venues/${id}/register-view`
 }
 
-// Venue Lists
+// Venue List Metas
 export const VENUE_LIST = `/venue-list-metas`
+export const FETCH_VENUE_LISTS = (createdById: number) => {
+    return `/venue-list-metas?createdById.equals=${createdById}`
+}
+
+export const FETCH_VENUES_IN_VENUE_LIST_META = (listID: number, page: number) => {
+    return `/venues?venueListMetaId=${listID}&page=${page}&size=10&sort=createdAt,DESC`
+}
+
+export const FETCH_VENUE_LISTS_BY_CATEGORY = (createdById: number) => {
+    return `/venue-list-metas/by-category?createdById.equals=${createdById}`
+}
+
+export const FETCH_VENUE_LIST_CATEGORY = (listID: number, createdById: number, page: number) => {
+    return `/venue-list-metas/by-category/${listID}?createdById.equals=${createdById}&page=${page}`
+}
+
+export const FETCH_VENUE_LISTS_BY_CITY = (createdById: number) => {
+    return `/venue-list-metas/by-parent-region?createdById.equals=${createdById}`
+}
+
+export const FETCH_VENUE_LIST_CITY = (listID: number, createdById: number, page: number) => {
+    return `/venue-list-metas/by-parent-region/${listID}?createdById.equals=${createdById}&page=${page}`
+}
+
+export const DELETE_VENUE_LIST = (venueListMetaID: number) => {
+    return `/venue-list-metas/${venueListMetaID}`
+}
 export const POST_NEW_VENUE = (venueListID: number) => {
     return `/venue-list-metas/${venueListID}/venues`
+}
+
+// User
+export const USER_PROFILE = `/user-profiles`
+export const FETCH_CURRENT_USER_PROFILE = '/me'
+export const FETCH_USER_PROFILE = (userID: number) => {
+    return `/user-profiles/${userID}`
+}
+export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
+    return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
 }
 
 const axiosInstance = Axios.create({

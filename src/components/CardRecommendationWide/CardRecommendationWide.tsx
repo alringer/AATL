@@ -9,11 +9,13 @@ import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { FETCH_RECOMMENDATION } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import _ from 'lodash'
+import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
@@ -44,6 +46,7 @@ import { ICategory } from 'utilities/types/category'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
 import {
+    RecommendationAnchor,
     RecommendationAuthorNameText,
     RecommendationAuthorTitleText,
     RecommendationButtonsContainer,
@@ -168,7 +171,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 <Snackbar
                                     type={B.RECOMMENDATION_LINK_COPIED.Type}
                                     title={B.RECOMMENDATION_LINK_COPIED.Title}
-                                    message={B.RECOMMENDATION_LINK_COPIED.Body}
+                                    message={
+                                        <SnackbarMessageBody>{B.RECOMMENDATION_LINK_COPIED.Body}</SnackbarMessageBody>
+                                    }
                                 />
                             </div>
                         ),
@@ -321,12 +326,23 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     </RecommendationSummaryText>
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
-                    <RecommendationAuthorNameText>
-                        {_.has(currentRecommendation, 'createdBy.firstName') &&
-                        _.has(currentRecommendation, 'createdBy.lastName')
-                            ? currentRecommendation.createdBy.firstName + ' ' + currentRecommendation.createdBy.lastName
-                            : ''}
-                    </RecommendationAuthorNameText>
+                    {/* TODO: Replace ID below with UserName once username becomes unique */}
+                    <Link
+                        href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
+                        passHref={true}
+                        prefetch={false}
+                    >
+                        <RecommendationAnchor onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}>
+                            <RecommendationAuthorNameText>
+                                {_.has(currentRecommendation, 'createdBy.firstName') &&
+                                _.has(currentRecommendation, 'createdBy.lastName')
+                                    ? currentRecommendation.createdBy.firstName +
+                                      ' ' +
+                                      currentRecommendation.createdBy.lastName
+                                    : ''}
+                            </RecommendationAuthorNameText>
+                        </RecommendationAnchor>
+                    </Link>
                     <RecommendationAuthorTitleText>
                         {_.has(currentRecommendation, 'createdBy.userByLine')
                             ? currentRecommendation.createdBy.userByLine

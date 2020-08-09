@@ -1,4 +1,3 @@
-import { ReactKeycloakInjectedProps, withKeycloak } from '@react-keycloak/nextjs'
 import axios, { FETCH_CURRENT_USER_PROFILE } from 'config/AxiosConfig'
 import jwt from 'jwt-decode'
 import React from 'react'
@@ -9,6 +8,7 @@ import authStore from 'store/authentication/authentication_reducer'
 import { SET_KEYCLOAK } from 'store/authentication/authentication_types'
 import { login, logout } from 'store/user/user_actions'
 import { IUserInformation } from 'store/user/user_types'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IUserProfile } from 'utilities/types/userProfile'
 interface IReduxProps {
@@ -16,10 +16,10 @@ interface IReduxProps {
     logout: () => void
     loggedIn: boolean
 }
-interface IAuthProviderProps extends IReduxProps, ReactKeycloakInjectedProps {
+interface IAuthProviderProps extends IReduxProps, IWithAuthInjectedProps {
     children: React.ReactChildren[]
 }
-const AuthProvider = withKeycloak(({ keycloak, children, login, logout, loggedIn }: IAuthProviderProps) => {
+const AuthProvider = ({ keycloak, children, login, logout, loggedIn }: IAuthProviderProps) => {
     React.useEffect(() => {
         authStore.dispatch({ type: SET_KEYCLOAK, payload: keycloak })
         if (keycloak.authenticated === true && loggedIn === false) {
@@ -29,7 +29,7 @@ const AuthProvider = withKeycloak(({ keycloak, children, login, logout, loggedIn
                 ? UserRoleEnum.Admin
                 : roles.includes(UserRoleEnum.User)
                 ? UserRoleEnum.User
-                : null
+                : UserRoleEnum.User // TODO: How should we handle a user who is neither admin nor user?
             const config = {
                 headers: {
                     Authorization: `Bearer ${keycloak.token}`,
@@ -55,10 +55,10 @@ const AuthProvider = withKeycloak(({ keycloak, children, login, logout, loggedIn
     }, [keycloak])
 
     return <>{children}</>
-})
+}
 
 const mapStateToProps = (state: StoreState) => ({
     loggedIn: state.userReducer.loggedIn,
 })
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ login, logout }, dispatch)
-export default reduxConnect(mapStateToProps, mapDispatchToProps)(AuthProvider)
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AuthProvider))

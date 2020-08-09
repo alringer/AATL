@@ -12,8 +12,6 @@ export const UserProfileImageDropzoneContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.darkSlateBlue};
-    border-radius: 50%;
-    border: solid 4px ${props => props.theme.white};
     cursor: pointer;
     overflow: hidden;
 

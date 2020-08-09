@@ -5,14 +5,20 @@ export const TOOL_TIPS = {
     Added: 'Added to your list',
     Recommended: 'Recommended by you',
     AddToList: 'Add to list',
+    DeleteList: 'Delete list',
+    EditList: 'Edit list',
     RemoveFromList: 'Remove from list',
     WriteRecommendation: 'Write a recommendation',
     ShareRestaurant: 'Share restaurant',
     Flag: 'Flag as inappropriate',
     Share: 'Share',
+    ShareList: 'Share list',
     Recommend: 'Recommend',
     RemoveProfile: 'Remove profile image',
-    UploadProfile: 'Click or drop a photo to upload a profile picture'
+    UploadProfile: 'Click or drop a photo to upload a profile picture',
+    ProfileNameEdit: 'Click to edit your displayed name',
+    ProfileByLineEdit: 'Click to edit your profession or tagline',
+    ProfileDescriptionEdit: 'Click to edit your description'
 }
 
 export const BUTTON_LABELS = {
@@ -44,7 +50,9 @@ export const BUTTON_LABELS = {
     Cancel: 'CANCEL',
     AddNewPlace: 'ADD A NEW PLACE',
     RecommendNewPlace: 'RECOMMEND NEW PLACE',
-    Add: 'ADD'
+    Add: 'ADD',
+    Update: 'UPDATE',
+    Delete: 'DELETE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -248,11 +256,39 @@ export const LIST_MODAL = {
     AddToRestaurant: {
         Header: 'Add restaurant to a list',
         Title: 'Restaurant Lists',
-        Restaurants: 'Restaurants'
+        Restaurants: 'Restaurants',
+        EmptyMessage: 'You have not yet created a restaurant list. Why don’t you go ahead and create one?'
     },
     AddNewRestaurantList: {
         Header: 'Add to a new list',
         Title: 'New list details',
         Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    EditRestaurantList: {
+        Header: 'Edit list',
+        Title: 'List details',
+        Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    DeleteRestaurantList: {
+        Header: 'Delete list',
+        FormerMessage: 'Deleting your list',
+        LadderMessage: 'cannot be undone. Please make sure this list is no longer needed before permently deleting it. '
     }
+}
+
+export const USER_PROFILE_BANNER = {
+    EmptyMessageByLine: 'What is your profession or tagline',
+    EmptyMessageDescription: 'Add a little something about you to share with other foodies',
+    Recommends: 'Recommends',
+    Places: 'Places'
+}
+
+export const USER_PROFILE_LISTS = {
+    FoodAndTravelJournal: 'Food & Travel Journal',
+    MyLists: 'MY LISTS',
+    ByCity:'BY CITY',
+    ByCategory:'BY CATEGORY',
+    MyRecommendations:'MY RECOMMENDATIONS',
+    EmptyMessageTitle: 'Start building your lists!',
+    EmptyMessageSubTitle: 'This is where all your lists of places will be saved. To build your list find restaurants you would like to save and select the “Heart” symbol. We will automatically build lists for you by category, location, and your very own recommendations as well.'
 }

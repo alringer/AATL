@@ -17,6 +17,25 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    .MuiTooltip-tooltip {
+        padding: 12px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.16), 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+        background-color: rgba(0, 0, 0, 0.7);
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.57;
+        letter-spacing: normal;
+        text-align: center;
+        color: ${(props) => props.theme.white};
+    }
+
+    .MuiTooltip-arrow {
+        color: rgba(0, 0, 0, 0.7);
+    }
+
     .Mui-disabled {
         cursor: not-allowed;
     }

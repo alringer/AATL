@@ -9,6 +9,7 @@ import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -128,7 +129,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                 <Snackbar
                                     type={B.RESTAURANT_LINK_COPIED.Type}
                                     title={B.RESTAURANT_LINK_COPIED.Title}
-                                    message={B.RESTAURANT_LINK_COPIED.Body}
+                                    message={<SnackbarMessageBody>{B.RESTAURANT_LINK_COPIED.Body}</SnackbarMessageBody>}
                                 />
                             </div>
                         ),

@@ -46,6 +46,9 @@ export const UserProfileMainInformationContainer = styled.div`
 
 export const UserProfileImageContainer = styled.div`
     display: flex;
+    border-radius: 50%;
+    border: solid 4px ${props => props.theme.white};
+    overflow: hidden;
 
     @media ${device.mobile} {
         width: 70px;
@@ -112,7 +115,9 @@ const UserProfileNameCSS = css`
         font-size: 36px;
     }
 `
-export const UserProfileNameContainer = styled.div``
+export const UserProfileNameContainer = styled.div`
+    display: flex;
+`
 export const UserProfileName = styled.p`
     ${UserProfileNameCSS}
 `
@@ -137,7 +142,9 @@ const UserProfileTitleCSS = css`
         font-size: 18px;
     }
 `
-export const UserProfileTitleContainer = styled.div``
+export const UserProfileTitleContainer = styled.div`
+    display: flex;
+`
 export const UserProfileTitle = styled.p`
     ${UserProfileTitleCSS}
 `
@@ -156,6 +163,7 @@ const UserProfileDescriptionCSS = css`
     color: ${(props) => props.theme.white};
 `
 export const UserProfileDescriptionContainer = styled.div`
+    display: flex;
     width: 100%;
     @media ${device.mobile} {
         margin-top: 24px;

@@ -289,7 +289,7 @@ export const AddPlaceIntroText = styled.p`
 
 export const AddPlaceInput = styled(CustomTextField)``
 
-export const AddPlaceButton = styled(CustomButton)`
+export const SubmitButton = styled(CustomButton)`
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme.dustyOrange};
     :hover {
