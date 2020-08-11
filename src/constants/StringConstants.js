@@ -285,10 +285,10 @@ export const USER_PROFILE_BANNER = {
 
 export const USER_PROFILE_LISTS = {
     FoodAndTravelJournal: 'Food & Travel Journal',
-    MyLists: 'MY LISTS',
+    MyLists: 'LISTS',
     ByCity:'BY CITY',
     ByCategory:'BY CATEGORY',
-    MyRecommendations:'MY RECOMMENDATIONS',
+    MyRecommendations:'RECOMMENDATIONS',
     EmptyMessageTitle: 'Start building your lists!',
     EmptyMessageSubTitle: 'This is where all your lists of places will be saved. To build your list find restaurants you would like to save and select the “Heart” symbol. We will automatically build lists for you by category, location, and your very own recommendations as well.'
 }

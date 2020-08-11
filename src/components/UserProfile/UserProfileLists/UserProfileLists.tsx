@@ -1,43 +1,30 @@
-import { Tooltip } from '@material-ui/core'
 import Collapse from '@material-ui/core/Collapse'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
-import Pagination from '@material-ui/lab/Pagination'
 import DownArrow from 'assets/user-profile-list-down-arrow.svg'
 import UpArrow from 'assets/user-profile-list-up-arrow.svg'
-import CardPlaceWide, { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
-import axios, {
-    FETCH_USER_RECOMMENDATIONS,
-    FETCH_VENUE_LISTS,
-    FETCH_VENUE_LISTS_BY_CATEGORY,
-    FETCH_VENUE_LISTS_BY_CITY,
-    FETCH_VENUE_LIST_CATEGORY,
-    FETCH_VENUE_LIST_CITY,
-} from 'config/AxiosConfig'
+import axios, { FETCH_VENUE_LISTS, FETCH_VENUE_LISTS_BY_CATEGORY, FETCH_VENUE_LISTS_BY_CITY } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ListContainer } from 'sections/CardsList/List.style'
 import { StoreState } from 'store'
 import { openListModal } from 'store/listModal/listModal_actions'
-import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
-import { CustomIconButton } from 'style/Button/IconButton.style'
+import { OpenListModalPayload } from 'store/listModal/listModal_types'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IByCategory, IByCategoryWithUniqueID } from 'utilities/types/byCategory'
 import { IByCity, IByCityWithUniqueID } from 'utilities/types/byCity'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IUserProfile } from 'utilities/types/userProfile'
-import { IVenue } from 'utilities/types/venue'
 import { IVenueListMeta, IVenueListMetaWithUniqueID } from 'utilities/types/venueListMeta'
+import ByCategoryPaginationView from './PaginationViews/ByCategoryPaginationView'
+import ByCityPaginationView from './PaginationViews/ByCityPaginationView'
+import MyListPaginationView from './PaginationViews/MyListPaginationView'
+import RecommendationsPaginationView from './PaginationViews/RecommendationsPaginationView'
 import {
-    CallMadeIcon,
-    DeleteForeverIcon,
-    EditIcon,
     UserProfileListsContainer,
     UserProfileListsMainViewContainer,
-    UserProfileListsMainViewControlsContainer,
     UserProfileListsMainViewHeaderContainer,
     UserProfileListsMainViewHeaderTextContainer,
     UserProfileListsMainViewListDescription,
@@ -70,6 +57,7 @@ interface IReduxProps {
 }
 interface IUserProfileListsProps extends IReduxProps, IWithAuthInjectedProps {
     user: IUserProfile
+    venueListMetaId: number | null
 }
 
 const UserProfileLists: React.FC<IUserProfileListsProps> = ({
@@ -79,6 +67,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
     getTokenConfig,
     openListModal,
     authenticatedAction,
+    venueListMetaId,
 }) => {
     const classes = useStyles()
     enum CurrentListInViewTypeEnum {
@@ -103,16 +92,10 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
     const [myLists, setMyLists] = React.useState<IVenueListMetaWithUniqueID[]>([])
     const [byCityLists, setByCityLists] = React.useState<IByCityWithUniqueID[]>([])
     const [byCategoryLists, setByCategoryLists] = React.useState<IByCategoryWithUniqueID[]>([])
-    const [recommendationsList, setRecommendationsList] = React.useState([])
-    // Pagination States
-    const [currentVenuesList, setCurrentVenuesList] = React.useState([])
-    const [currentRecommendationsList, setCurrentRecommendationsList] = React.useState([])
-    const [currentPage, setCurrentPage] = React.useState<number | null>(null)
-    const [currentPageSize, setCurrentPageSize] = React.useState<number | null>(null)
-    // Temp States
-    const [currentPaginationView, setCurrentPaginationView] = React.useState<React.ReactElement | null>(null)
-    const [title, setTitle] = React.useState(null)
-    const [subTitle, setSubTitle] = React.useState(null)
+    // List States
+    const [currentMyList, setCurrentMyList] = React.useState<IVenueListMetaWithUniqueID | null>(null)
+    const [currentByCity, setCurrentByCity] = React.useState<IByCityWithUniqueID | null>(null)
+    const [currentByCategory, setCurrentByCategory] = React.useState<IByCategoryWithUniqueID | null>(null)
 
     let uniqueID = 0
 
@@ -124,25 +107,11 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         fetchVenueListsByCategory()
     }, [])
 
-    React.useEffect(() => {
-        console.log('::::Current Pagination in View: ', currentPaginationView)
-    }, [currentPaginationView])
-
-    const fetchMyRecommendations = () => {
-        axios
-            .get(FETCH_USER_RECOMMENDATIONS(user.id, 0))
-            .then((res) => {
-                console.log('My Recommendations: ', res)
-                setRecommendationsList(res.data)
-            })
-            .catch((err) => console.log(err))
-    }
-
     const fetchVenueLists = () => {
         axios
             .get(FETCH_VENUE_LISTS(user.id))
             .then((res) => {
-                const modifiedMyLists = res.data.map((item: IVenueListMeta) => {
+                const modifiedMyLists: IVenueListMetaWithUniqueID[] = res.data.map((item: IVenueListMeta) => {
                     const currentUniqueID = uniqueID
                     uniqueID = uniqueID + 1
                     return {
@@ -152,12 +121,16 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                 })
                 setMyLists(modifiedMyLists)
                 if (modifiedMyLists.length > 0) {
-                    // setCurrentListInView(modifiedMyLists[0])
-                    setCurrentListInViewUniqueID(modifiedMyLists[0].uniqueListID)
-                    setCurrentListInViewType(CurrentListInViewTypeEnum.MyList)
-                    setTitle(modifiedMyLists[0].title)
-                    setSubTitle(modifiedMyLists[0].summary)
                     setExpanded({ ...expanded, myLists: true })
+                    if (venueListMetaId !== null) {
+                        handleViewMyList(
+                            modifiedMyLists.find((modifiedMyList) => {
+                                return modifiedMyList.id === venueListMetaId
+                            })
+                        )
+                    } else {
+                        handleViewMyList(modifiedMyLists[0])
+                    }
                 }
             })
             .catch((err) => console.log(err))
@@ -176,10 +149,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     }
                 })
                 setByCityLists(modifiedMyLists)
-                if (res.data.length > 0) {
-                    // setCurrentListInView(res.data[0])
-                    // setExpanded({ ...expanded, myLists: true })
-                }
             })
             .catch((err) => console.log(err))
     }
@@ -197,10 +166,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     }
                 })
                 setByCategoryLists(modifiedMyLists)
-                if (res.data.length > 0) {
-                    // setCurrentListInView(res.data[0])
-                    // setExpanded({ ...expanded, myLists: true })
-                }
             })
             .catch((err) => console.log(err))
     }
@@ -210,164 +175,31 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
     }
 
     const handleViewMyList = (list: IVenueListMetaWithUniqueID) => {
+        console.log('In handle view my list: ', list)
         setCurrentListInViewUniqueID(list.uniqueListID)
-        console.log('Target object: ', list)
         setCurrentListInView(list)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyList)
+        setCurrentMyList(list)
     }
 
     const handleViewByCityList = (city: IByCityWithUniqueID, page: number) => {
         setCurrentListInViewUniqueID(city.uniqueListID)
-        console.log('Target object: ', city)
-        axios
-            .get(FETCH_VENUE_LIST_CITY(city.id, user.id, page))
-            .then((res) => {
-                console.log('Paginate byCity list: ', res)
-                setTitle(city.city)
-                setSubTitle(null)
-                setCurrentVenuesList(res.data)
-                renderByCityPagination(city.id)
-            })
-            .catch((err) => console.log(err))
+        setCurrentByCity(city)
         setCurrentListInView(city)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCity)
-        // paginateByCity(city.id, page)
     }
     const handleViewByCategoryList = (category: IByCategoryWithUniqueID, page: number) => {
         setCurrentListInViewUniqueID(category.uniqueListID)
-        console.log('Target object: ', category)
-        axios
-            .get(FETCH_VENUE_LIST_CITY(category.id, user.id, page))
-            .then((res) => {
-                console.log('Paginate byCity list: ', res)
-                setTitle(category.longName)
-                setSubTitle(null)
-                renderByCategoryPagination(category.id)
-            })
-            .catch((err) => console.log(err))
+        setCurrentByCategory(category)
         setCurrentListInView(category)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCategory)
-        // paginateByCategory(category.id, page)
     }
 
-    const paginateMyList = (myListID: number, page: number) => {}
-    const paginateByCity = (cityID: number, page: number) => {
-        axios
-            .get(FETCH_VENUE_LIST_CITY(cityID, user.id, page))
-            .then((res) => {
-                console.log('Paginate byCity list: ', res)
-                setCurrentListInView(res.data)
-                // setCurrentListInViewType(CurrentListInViewTypeEnum.VenuesList)
-            })
-            .catch((err) => console.log(err))
+    const handleViewRecommendations = () => {
+        setCurrentListInViewUniqueID(-1)
+        setCurrentListInView(null)
+        setCurrentListInViewType(CurrentListInViewTypeEnum.MyRecommendation)
     }
-    const paginateByCategory = (categoryID: number, page: number) => {
-        axios
-            .get(FETCH_VENUE_LIST_CATEGORY(categoryID, user.id, page))
-            .then((res) => {
-                console.log('Paginate byCategory list: ', res)
-                setCurrentListInView(res.data)
-                // setCurrentListInViewType(CurrentListInViewTypeEnum.VenuesList)
-            })
-            .catch((err) => console.log(err))
-    }
-    const paginateRecommendations = () => {}
-
-    const handleEditList = (placeList: IVenueListMeta) => {
-        if (placeList && placeList.id !== null && placeList.id !== undefined) {
-            authenticatedAction(() => {
-                const openListModalPayload: OpenListModalPayload = {
-                    currentListModalView: ListModalViewEnum.EditRestaurantList,
-                    placeList: placeList,
-                    onSuccess: () => fetchVenueLists(),
-                }
-                openListModal(openListModalPayload)
-            })
-        }
-    }
-
-    const handleDeleteList = (placeList: IVenueListMeta) => {
-        if (placeList && placeList.id !== null && placeList.id !== undefined) {
-            const openListModalPayload: OpenListModalPayload = {
-                currentListModalView: ListModalViewEnum.DeleteRestaurantList,
-                placeList: placeList,
-                onSuccess: () => fetchVenueLists(),
-            }
-            openListModal(openListModalPayload)
-        }
-    }
-
-    const handleShareList = () => {}
-
-    const renderMyListsPagination = (listID: number) => {
-        setCurrentPaginationView(
-            <ListContainer>
-                {currentVenuesList
-                    ? currentVenuesList.map((venue: IVenue) => (
-                          <div key={venue.id}>
-                              <CardPlaceWide place={venue} type={CardPlaceWideEnum.Profile} />
-                          </div>
-                      ))
-                    : null}
-                {currentVenuesList && (
-                    <Pagination
-                        page={currentPage ? currentPage : 0}
-                        count={currentPageSize ? currentPageSize : 0}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={(event: React.ChangeEvent<unknown>, value: number) => paginateMyList(listID, value)}
-                    />
-                )}
-            </ListContainer>
-        )
-    }
-    const renderByCityPagination = (listID: number) => {
-        setCurrentPaginationView(
-            <ListContainer>
-                {currentVenuesList
-                    ? currentVenuesList.map((venue: IVenue) => (
-                          <div key={venue.id}>
-                              <CardPlaceWide place={venue} type={CardPlaceWideEnum.Profile} />
-                          </div>
-                      ))
-                    : null}
-                {currentVenuesList && (
-                    <Pagination
-                        page={currentPage ? currentPage : 0}
-                        count={currentPageSize ? currentPageSize : 0}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={(event: React.ChangeEvent<unknown>, value: number) => paginateByCity(listID, value)}
-                    />
-                )}
-            </ListContainer>
-        )
-    }
-    const renderByCategoryPagination = (listID: number) => {
-        setCurrentPaginationView(
-            <ListContainer>
-                {currentVenuesList
-                    ? currentVenuesList.map((venue: IVenue) => (
-                          <div key={venue.id}>
-                              <CardPlaceWide place={venue} type={CardPlaceWideEnum.Profile} />
-                          </div>
-                      ))
-                    : null}
-                {currentVenuesList && (
-                    <Pagination
-                        page={currentPage ? currentPage : 0}
-                        count={currentPageSize ? currentPageSize : 0}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={(event: React.ChangeEvent<unknown>, value: number) =>
-                            paginateByCategory(listID, value)
-                        }
-                    />
-                )}
-            </ListContainer>
-        )
-    }
-    const renderRecommendationsPagination = () => {}
 
     return (
         <UserProfileListsContainer>
@@ -470,8 +302,10 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     </Collapse>
                 </UserProfileListsNavigationParentListContainer>
                 <UserProfileListsNavigationParentListContainer>
-                    <ListItem id="myRecommendations" button onClick={fetchMyRecommendations}>
-                        <UserProfileListsNavigationParentListTitle>
+                    <ListItem id="myRecommendations" button onClick={handleViewRecommendations}>
+                        <UserProfileListsNavigationParentListTitle
+                            id={currentListInViewUniqueID === -1 ? 'active' : 'list'}
+                        >
                             {S.USER_PROFILE_LISTS.MyRecommendations}
                         </UserProfileListsNavigationParentListTitle>
                     </ListItem>
@@ -481,86 +315,22 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                 <UserProfileListsMainViewHeaderContainer>
                     <UserProfileListsMainViewHeaderTextContainer>
                         <UserProfileListsMainViewListTitle>
-                            {title ? title : S.USER_PROFILE_LISTS.EmptyMessageTitle}
+                            {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageTitle}
                         </UserProfileListsMainViewListTitle>
                         <UserProfileListsMainViewListDescription>
-                            {subTitle ? subTitle : S.USER_PROFILE_LISTS.EmptyMessageSubTitle}
+                            {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageSubTitle}
                         </UserProfileListsMainViewListDescription>
                     </UserProfileListsMainViewHeaderTextContainer>
-                    {isOwner && currentListInView ? (
-                        <UserProfileListsMainViewControlsContainer>
-                            <Tooltip title={S.TOOL_TIPS.EditList} placement="top" arrow={true}>
-                                <CustomIconButton onClick={() => handleEditList(currentListInView)}>
-                                    <EditIcon />
-                                </CustomIconButton>
-                            </Tooltip>
-                            <Tooltip title={S.TOOL_TIPS.DeleteList} placement="top" arrow={true}>
-                                <CustomIconButton onClick={() => handleDeleteList(currentListInView)}>
-                                    <DeleteForeverIcon />
-                                </CustomIconButton>
-                            </Tooltip>
-
-                            <Tooltip title={S.TOOL_TIPS.ShareList} placement="top" arrow={true}>
-                                <CustomIconButton>
-                                    <CallMadeIcon />
-                                </CustomIconButton>
-                            </Tooltip>
-                        </UserProfileListsMainViewControlsContainer>
-                    ) : null}
                 </UserProfileListsMainViewHeaderContainer>
                 {currentListInViewType === CurrentListInViewTypeEnum.MyList ? (
-                    <ListContainer>
-                        {currentVenuesList
-                            ? currentVenuesList.map((venue: IVenue) => (
-                                  <div key={venue.id}>
-                                      <CardPlaceWide place={venue} type={CardPlaceWideEnum.Profile} />
-                                  </div>
-                              ))
-                            : null}
-                        {currentVenuesList && (
-                            <Pagination
-                                page={currentPage ? currentPage : 0}
-                                count={currentPageSize ? currentPageSize : 0}
-                                variant="outlined"
-                                shape="rounded"
-                                onChange={(event: React.ChangeEvent<unknown>, value: number) =>
-                                    paginateMyList(currentListInView.id, value)
-                                }
-                            />
-                        )}
-                    </ListContainer>
+                    <MyListPaginationView inputMyList={currentMyList} user={user} isOwner={isOwner} />
                 ) : currentListInViewType === CurrentListInViewTypeEnum.ByCity ? (
-                    <ListContainer>
-                        {currentVenuesList
-                            ? currentVenuesList.map((venue: IVenue) => (
-                                  <div key={venue.id}>
-                                      <CardPlaceWide place={venue} type={CardPlaceWideEnum.Profile} />
-                                  </div>
-                              ))
-                            : null}
-                        {currentVenuesList && (
-                            <Pagination
-                                page={currentPage ? currentPage : 0}
-                                count={currentPageSize ? currentPageSize : 0}
-                                variant="outlined"
-                                shape="rounded"
-                                onChange={(event: React.ChangeEvent<unknown>, value: number) =>
-                                    paginateByCity(currentListInView.id, value)
-                                }
-                            />
-                        )}
-                    </ListContainer>
+                    <ByCityPaginationView inputByCity={currentByCity} user={user} />
+                ) : currentListInViewType === CurrentListInViewTypeEnum.ByCategory ? (
+                    <ByCategoryPaginationView inputByCategory={currentByCategory} user={user} />
+                ) : currentListInViewType === CurrentListInViewTypeEnum.MyRecommendation ? (
+                    <RecommendationsPaginationView user={user} />
                 ) : null}
-                {/* {currentVenuesList ? (
-                    currentVenuesList && currentVenuesList.length > 0 ? (
-                        <CardPlaceWideList
-                            places={currentVenuesList ? currentVenuesList : null}
-                            type={CardPlaceWideEnum.Profile}
-                        />
-                    ) : (
-                        'Looks like your list is empty!'
-                    )
-                ) : null} */}
             </UserProfileListsMainViewContainer>
         </UserProfileListsContainer>
     )

@@ -36,7 +36,7 @@ const ListModal: React.FC<IListModalProps> = ({
         setCurrentView(currentListModalView)
     }, [currentListModalView])
 
-    const handleClickOutsideSearchModal = (event) => {
+    const handleClickOutsideListModal = (event) => {
         if (
             listModalRef.current &&
             !listModalRef.current.contains(event.target)
@@ -63,9 +63,9 @@ const ListModal: React.FC<IListModalProps> = ({
     // }
 
     React.useEffect(() => {
-        document.addEventListener('click', handleClickOutsideSearchModal, true)
+        document.addEventListener('click', handleClickOutsideListModal, true)
         return () => {
-            document.removeEventListener('click', handleClickOutsideSearchModal, true)
+            document.removeEventListener('click', handleClickOutsideListModal, true)
         }
     }, [])
 

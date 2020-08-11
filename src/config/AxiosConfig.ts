@@ -42,8 +42,12 @@ export const FETCH_VENUE_LISTS = (createdById: number) => {
     return `/venue-list-metas?createdById.equals=${createdById}`
 }
 
+export const FETCH_VENUE_LIST_METAS_BY_ID = (venueListMetaId: number) => {
+    return `/venue-list-metas/${venueListMetaId}`
+}
+
 export const FETCH_VENUES_IN_VENUE_LIST_META = (listID: number, page: number) => {
-    return `/venues?venueListMetaId=${listID}&page=${page}&size=10&sort=createdAt,DESC`
+    return `/venues?venueListMetaId.equals=${listID}&page=${page}&size=10&sort=createdAt,DESC`
 }
 
 export const FETCH_VENUE_LISTS_BY_CATEGORY = (createdById: number) => {

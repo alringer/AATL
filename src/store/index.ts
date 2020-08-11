@@ -16,6 +16,8 @@ import searchModalReducer from './searchModal/searchModal_reducer'
 import { SearchModalReducerState } from './searchModal/searchModal_types'
 import userReducer from './user/user_reducer'
 import { UserReducerState } from './user/user_types'
+import userProfileEditModalReducer from './userProfileEditModal/userProfileEditModal_reducer'
+import { UserProfileEditModalReducerState } from './userProfileEditModal/userProfileEditModal_types'
 
 const reducer = combineReducers({
     userReducer,
@@ -25,6 +27,7 @@ const reducer = combineReducers({
     categoriesReducer,
     locationReducer,
     listModalReducer,
+    userProfileEditModalReducer,
 })
 
 const middleware = applyMiddleware(thunk)
@@ -39,6 +42,7 @@ export interface StoreState {
     recommendationModalReducer: RecommendationModalReducerState
     authModalReducer: AuthModalReducerState
     searchModalReducer: SearchModalReducerState
+    userProfileEditModalReducer: UserProfileEditModalReducerState
 }
 
 export default store

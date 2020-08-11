@@ -178,9 +178,11 @@ const Header: React.FC<IHeaderProps> = ({
             <PopoverArrow />
             <PopoverRowProfileInfo>
                 <PopoverUserNameText>
-                    {(user.firstName ? `${user.firstName} ` : '') + (user.lastName ? `${user.lastName}` : '')}
+                    {user
+                        ? (user.firstName ? `${user.firstName} ` : '') + (user.lastName ? `${user.lastName}` : '')
+                        : ''}
                 </PopoverUserNameText>
-                <PopoverEmailText>{user.email}</PopoverEmailText>
+                <PopoverEmailText>{user ? user.email : ''}</PopoverEmailText>
             </PopoverRowProfileInfo>
             <PopoverRowOption>
                 {/* TODO: Replace with the unique username once DTO is updated */}

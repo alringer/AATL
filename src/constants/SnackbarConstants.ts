@@ -72,6 +72,12 @@ export const RESTAURANT_LINK_COPIED: ISnackbarConstants = {
     Body: 'Restaurant link was copied to clipboard',
 }
 
+export const RESTAURANT_LIST_LINK_COPIED: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Ready to share!',
+    Body: 'Restaurant list link was copied to clipboard',
+}
+
 export const ADDED_TO_LIST: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Success!',
@@ -90,10 +96,10 @@ export const EDITED_LIST: ISnackbarConstants = {
     Body: 'Your list has been updated',
 }
 
-export const USER_PROFILE_UPDATED_PHOTO: ISnackbarConstants = {
+export const USER_PROFILE_UPDATED: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Updated!',
-    Body: 'Your profile image was updated',
+    Body: 'Your profile was updated',
 }
 
 export const USER_PROFILE_UPDATED_NAME: ISnackbarConstants = {

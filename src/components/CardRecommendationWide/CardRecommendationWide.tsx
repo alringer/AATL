@@ -32,13 +32,13 @@ import {
     MobileButtonsContainer,
     MoreHorizontalContainer,
     MoreVerticalContainer,
-    WideHeaderTooltipIconsContainer,
+    WideHeaderTooltipIconsContainer
 } from 'style/Card/Card.style'
 import { query } from 'style/device'
 import {
     chopStringFullRecommendationDescription,
     chopStringRecommendationTitle,
-    chopStringSimpleRecommendationDescription,
+    chopStringSimpleRecommendationDescription
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -62,7 +62,7 @@ import {
     RecommendationPlaceNameText,
     RecommendationSummaryText,
     RecommendationTitleSpan,
-    RecommendationTitleText,
+    RecommendationTitleText
 } from './CardRecommendationWide.style'
 
 interface IReduxProps {
@@ -150,7 +150,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         ) {
             authenticatedAction(() =>
                 openRecommendationModal({
-                    placeID: String(currentRecommendation.id),
+                    placeID: String(currentRecommendation.venue.id),
                     placeName: currentRecommendation.venue.name,
                     isAATL: true,
                 })
@@ -329,6 +329,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     {/* TODO: Replace ID below with UserName once username becomes unique */}
                     <Link
                         href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
+                        // href={
+                        //     recommendation && recommendation.createdBy && recommendation.createdBy.id !== undefined
+                        //         ? `${R.ROUTE_ITEMS.userProfile}/${recommendation.createdBy.id}`
+                        //         : ''
+                        // }
                         passHref={true}
                         prefetch={false}
                     >

@@ -13,10 +13,11 @@ import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IServerSideProps {
     user: IUserProfile | null
+    venueListMetaId: number | null
 }
 interface IUserProfileProps extends IServerSideProps {}
 
-const UserProfile: React.FC<IUserProfileProps> = ({ user }) => {
+const UserProfile: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
 
@@ -42,7 +43,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({ user }) => {
             {user !== null ? (
                 <>
                     <UserProfileBanner user={user} />
-                    <UserProfileLists user={user} />
+                    <UserProfileLists user={user} venueListMetaId={venueListMetaId} />
                     <EmailSubscription />
                 </>
             ) : null}
@@ -56,6 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     //     // categoryList = res.data
     // })
     const userID = context && context.params ? context.params.id : null
+    const venueListMetaId = context.query.v
     const inputUserID = Number(userID)
     let user = null
     if (userID !== undefined) {
@@ -68,7 +70,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     return {
         props: {
-            user: user,
+            user: user ? user : null,
+            venueListMetaId: venueListMetaId !== undefined && venueListMetaId !== null ? Number(venueListMetaId) : null,
         },
     }
 }

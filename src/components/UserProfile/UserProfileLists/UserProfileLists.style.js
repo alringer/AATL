@@ -110,6 +110,14 @@ export const UserProfileListsNavigationParentListTitle = styled.p`
         line-height: 1.67;
         letter-spacing: 2px;
     }
+
+    ${props => {
+        if (props.id === 'active') {
+            return css`
+                color: ${(props) => props.theme.mushroom};
+            `
+        }
+    }}
 `
 export const UserProfileListsNavigationChildListTitle = styled.p`
     font-stretch: normal;
