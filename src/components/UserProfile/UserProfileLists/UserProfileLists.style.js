@@ -172,6 +172,7 @@ export const UserProfileListsMainViewContainer = styled.div`
 `
 
 export const UserProfileListsMainViewHeaderContainer = styled.div`
+    width: 100%;
     display: flex;
 
     @media ${device.mobile} {
