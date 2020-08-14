@@ -11,15 +11,12 @@ export const HomeBannerContainer = styled.div`
     width: 100%;
 
     @media ${device.mobile} {
-        /* height: 212px; */
         padding: 24px 16px 34px;
     }
     @media ${device.tablet} {
-        /* height: 286px; */
         padding: 48px;
     }
     @media ${device.laptop} {
-        /* height: 600px; */
         padding: 198px 320px;
     }
 `
@@ -44,13 +41,10 @@ export const HomeBannerImageContainer = styled.div`
         right: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.25);
-        /* background-blend-mode: multiply;
-        background-image: linear-gradient(to bottom, #cdab95, #cdab95); */
     }
 `
 
 export const HomeBannerCenterContentContainer = styled.div`
-    /* position: absolute; */
     z-index: ${zIndices.homeBannerContent};
     display: flex;
     flex-direction: column;
