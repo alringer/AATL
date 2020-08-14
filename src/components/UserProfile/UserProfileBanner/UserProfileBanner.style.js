@@ -2,6 +2,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import MuiEditIcon from '@material-ui/icons/Edit'
 import ProfileBannerBG from 'assets/profileHeroBG.svg'
 import { CustomButton } from 'style/Button/Button.style'
+import { CustomIconButton } from 'style/Button/IconButton.style'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -20,7 +21,7 @@ export const UserProfileBannerContainer = styled.div`
 
     }
     @media ${device.tablet} {
-        padding: 32px 24px;
+        padding: 102px 24px 78px;
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
@@ -247,8 +248,8 @@ export const UserProfileBannerEditButton = styled(CustomButton)`
     }
 
     @media ${device.mobile} {
-        width: 32px;
-        height: 32px;
+        width: 48px;
+        height: 48px;
         right: 40px;
         top: 40px;
     }
@@ -264,8 +265,27 @@ export const UserProfileBannerEditButton = styled(CustomButton)`
     }
 `
 
+export const UserProfileBannerPencilButton = styled(CustomIconButton)`
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+
+    span {
+        width: fit-content;
+    }
+
+    color: ${(props) => props.theme.white};
+    background-color: transparent;
+    border-color: ${props => props.theme.white};
+    :hover {
+        background-color: transparent;
+        border-color: ${props => props.theme.white};
+    }
+`
+
 export const UserProfileBannerEditIcon = styled(MuiEditIcon)`
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     color: white;
 `

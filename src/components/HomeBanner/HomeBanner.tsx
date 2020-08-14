@@ -3,6 +3,8 @@ import Image from 'components/Image/Image'
 import SearchFull from 'components/SearchFull/SearchFull'
 import { useRouter } from 'next/router'
 import React from 'react'
+import Media from 'react-media'
+import { query } from 'style/device'
 import buildURLWithParams from 'utilities/helpers/buildURLWithParams'
 import { ParamType } from 'utilities/types/clientDTOS/ParamType'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
@@ -34,28 +36,36 @@ const HomeBanner = () => {
     }
 
     return (
-        <HomeBannerContainer>
-            <HomeBannerImageContainer>
-                <Image src={PlaceImage} alt="home-banner-image" />
-            </HomeBannerImageContainer>
-            <HomeBannerCenterContentContainer>
-                <HomeBannerTitleText>ASK A TRAVEL LOCAL</HomeBannerTitleText>
-                <HomeBannerSubTitleText>
-                    Find the best local food when you're traveling. Recommended by locals for the foodie in you.{' '}
-                </HomeBannerSubTitleText>
-                <SearchFull
-                    inputPlace={null}
-                    inputAddress={null}
-                    inputLat={null}
-                    inputLng={null}
-                    handleSearch={handleSearch}
-                />
-            </HomeBannerCenterContentContainer>
-            <HomeBannerBottomContentContainer>
-                <HomeBannerFooterText>Bud and Rob’s New Orleans Bistro</HomeBannerFooterText>
-                <HomeBannerFooterText>Photo by Sean Kepri</HomeBannerFooterText>
-            </HomeBannerBottomContentContainer>
-        </HomeBannerContainer>
+        <Media queries={query} defaultMatches={{ mobile: true }}>
+            {(matches) => (
+                <HomeBannerContainer>
+                    <HomeBannerImageContainer>
+                        <Image src={PlaceImage} alt="home-banner-image" />
+                    </HomeBannerImageContainer>
+                    <HomeBannerCenterContentContainer>
+                        {(matches.laptop || matches.tablet) && (
+                            <HomeBannerTitleText>ASK A TRAVEL LOCAL</HomeBannerTitleText>
+                        )}
+                        <HomeBannerSubTitleText>
+                            Find the best local food when you're traveling. Recommended by locals for the foodie in you.{' '}
+                        </HomeBannerSubTitleText>
+                        <SearchFull
+                            inputPlace={null}
+                            inputAddress={null}
+                            inputLat={null}
+                            inputLng={null}
+                            handleSearch={handleSearch}
+                        />
+                    </HomeBannerCenterContentContainer>
+                    {matches.laptop && (
+                        <HomeBannerBottomContentContainer>
+                            <HomeBannerFooterText>Bud and Rob’s New Orleans Bistro</HomeBannerFooterText>
+                            <HomeBannerFooterText>Photo by Sean Kepri</HomeBannerFooterText>
+                        </HomeBannerBottomContentContainer>
+                    )}
+                </HomeBannerContainer>
+            )}
+        </Media>
     )
 }
 

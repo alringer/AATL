@@ -100,7 +100,9 @@ const Header: React.FC<IHeaderProps> = ({
     }
 
     const handlePopoverOpen = () => {
-        popoverReference.setIsComponentVisible(true)
+        if (user) {
+            popoverReference.setIsComponentVisible(true)
+        }
     }
 
     const handlePopoverLogout = () => {
@@ -186,7 +188,14 @@ const Header: React.FC<IHeaderProps> = ({
             </PopoverRowProfileInfo>
             <PopoverRowOption>
                 {/* TODO: Replace with the unique username once DTO is updated */}
-                <Link href={`${R.ROUTE_ITEMS.userProfile}/${user.id}`} passHref>
+                <Link
+                    href={
+                        user && user.id !== undefined && user.id !== null
+                            ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                            : ``
+                    }
+                    passHref
+                >
                     <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
                         {S.PROFILE_POPOVER_ITEMS.AccountSettings}
                     </PopoverOptionLinkText>

@@ -210,10 +210,10 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                         }
                     })
                 } else {
-                    handleSearch(place, address, preferredLocation.lat, preferredLocation.lng)
+                    handleSearch(place, address, preferredLocation?.lat, preferredLocation?.lng)
                 }
             } else {
-                handleSearch(place, address, preferredLocation.lat, preferredLocation.lng)
+                handleSearch(place, address, preferredLocation?.lat, preferredLocation?.lng)
             }
         } else {
             // Selected address exists

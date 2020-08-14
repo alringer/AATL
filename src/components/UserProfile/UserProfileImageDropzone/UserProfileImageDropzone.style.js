@@ -1,3 +1,4 @@
+import { device } from 'style/device'
 import zIndices from 'style/zIndices'
 import styled from 'styled-components'
 
@@ -44,7 +45,6 @@ export const UserProfileBannerCameraImageContainer = styled.div`
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-    padding: 27px;
     border-radius: 50%;
     
     z-index: ${zIndices.userProfileDropzoneHover};
@@ -52,6 +52,22 @@ export const UserProfileBannerCameraImageContainer = styled.div`
     :hover {
         background-color: rgba(0,0,0,0.5);
     }
+
+    @media ${device.mobile} {
+        padding: 10px;
+    }
+    @media ${device.tablet} {
+        padding: 27px;
+    }
 `
 
-export const UserProfileBannerCameraImage = styled.img``
+export const UserProfileBannerCameraImage = styled.img`
+    @media ${device.mobile} {
+        width: 18px;
+        height: 18px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        height: auto;
+    }
+`

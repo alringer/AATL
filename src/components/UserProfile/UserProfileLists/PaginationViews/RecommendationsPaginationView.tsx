@@ -9,7 +9,8 @@ import { IUserProfile } from 'utilities/types/userProfile'
 import {
     UserProfileListsMainViewHeaderContainer,
     UserProfileListsMainViewHeaderTextContainer,
-    UserProfileListsMainViewListTitle,
+
+    UserProfileListsMainViewListDescription, UserProfileListsMainViewListTitle
 } from '../UserProfileLists.style'
 import { PaginationViewsListContainer } from './PaginationViews.style'
 
@@ -55,20 +56,20 @@ const RecommendationsPaginationView: React.FC<IRecommendationsPaginationViewProp
                     <UserProfileListsMainViewListTitle>
                         {currentRecommendations ? 'Recommendations' : null}
                     </UserProfileListsMainViewListTitle>
-                    {/* <UserProfileListsMainViewListDescription>
-                        {currentByCity ? currentByCity.summary : null}
-                    </UserProfileListsMainViewListDescription> */}
+                    <UserProfileListsMainViewListDescription>
+                        {currentRecommendations && currentRecommendations.length === 0 && 'Looks like you have not written any recommendations yet!'}
+                    </UserProfileListsMainViewListDescription>
                 </UserProfileListsMainViewHeaderTextContainer>
             </UserProfileListsMainViewHeaderContainer>
             <PaginationViewsListContainer>
-                {currentRecommendations
-                    ? currentRecommendations.map((recommendation: IRecommendation, index: number) => (
-                          <RecommendationCardContainer key={index}>
-                              <CardRecommendationWide isFull={true} recommendation={recommendation} />
-                          </RecommendationCardContainer>
-                      ))
-                    : null}
-                {currentRecommendations && (
+                {currentRecommendations && currentRecommendations.length > 0
+                    && currentRecommendations.map((recommendation: IRecommendation, index: number) => (
+                        <RecommendationCardContainer key={index}>
+                            <CardRecommendationWide isFull={true} recommendation={recommendation} />
+                        </RecommendationCardContainer>
+                    ))
+                }
+                {currentRecommendations && currentRecommendations.length > 0 && (
                     <Pagination
                         page={currentPage ? currentPage : 0}
                         count={currentPageCount ? currentPageCount : 0}

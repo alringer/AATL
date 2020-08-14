@@ -150,11 +150,15 @@ export const UserProfileListsNavigationChildListTitle = styled.p`
 
 // Main View
 export const UserProfileListsMainViewContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     flex: 1;
     width: 100%;
 
     @media ${device.mobile} {
         margin-top: 30px;
+        align-items: center;
     }
     @media ${device.tablet} {
         margin-top: 30px;
@@ -163,6 +167,7 @@ export const UserProfileListsMainViewContainer = styled.div`
     @media ${device.laptop} {
         margin-top: 0;
         margin-bottom: 0;
+        align-items: flex-start;
     }
 `
 
@@ -213,12 +218,14 @@ export const UserProfileListsMainViewListTitle = styled.p`
 
     @media ${device.mobile} {
         font-size: 22px;
+        text-align: center;
     }
     @media ${device.tablet} {
         font-size: 36px;
     }
     @media ${device.laptop} {
         font-size: 36px;
+        text-align: left;
     }
 `
 export const UserProfileListsMainViewListDescription = styled.p`
@@ -232,12 +239,14 @@ export const UserProfileListsMainViewListDescription = styled.p`
 
     @media ${device.mobile} {
         font-size: 14px;
+        text-align: center;
     }
     @media ${device.tablet} {
         font-size: 16px;
     }
     @media ${device.laptop} {
         font-size: 16px;
+        text-align: left;
     }
 
     margin-top: 10px;

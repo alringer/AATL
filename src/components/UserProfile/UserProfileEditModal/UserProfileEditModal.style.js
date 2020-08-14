@@ -8,17 +8,47 @@ import styled from 'styled-components'
 // Content Area
 export const UserProfileBannerInputsContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+
+    @media ${device.mobile} {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 `
 
-export const UserProfileBannerLeftContainer = styled.div``
+export const UserProfileBannerLeftContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    @media ${device.mobile} {
+        height: 130px;
+        width: 130px;
+    }
+    @media ${device.tablet} {
+        height: auto;
+        width: auto;
+    }
+`
 export const UserProfileBannerRightContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-left: 40px;
+
+    @media ${device.mobile} {
+        margin-left: 0px;
+        margin-top: 30px;
+    }
+    @media ${device.tablet} {
+        margin-left: 40px;
+        margin-top: 0px;
+    }
 `
 
 
@@ -72,6 +102,26 @@ export const UserProfileEditModalMainAreaContainer = styled.div`
     }
     @media ${device.tablet} {
         padding: 30px;
+    }
+`
+
+export const UserProfileEditModalDropzoneContainer = styled.div`
+    display: flex;
+    border-radius: 50%;
+    border: solid 4px ${props => props.theme.white};
+    overflow: hidden;
+
+    @media ${device.mobile} {
+        width: 130px;
+        height: 130px;
+    }
+    @media ${device.tablet} {
+        width: 255px;
+        height: 255px;
+    }
+    @media ${device.laptop} {
+        width: 360px;
+        height: 360px;
     }
 `
 
@@ -192,16 +242,49 @@ export const CancelButton = styled(CustomButton)`
 
 export const NameInput = styled(CustomTextField)`
     width: 100%;
+
+    label {
+        background-color: white;
+    }
 `
 
 export const TitleInput = styled(CustomTextField)`
     width: 100%;
 
     margin-top: 20px;
+
+    label {
+        background-color: white;
+    }
 `
 
 export const MultiInput = styled(CustomTextField)`
-    height: 228px;
-
+    
+    /* min-height: 228px; */
+    /* height: 100%; */
     margin-top: 22px;
+    padding: 22px 16px;
+    /* overflow: auto !important; */
+
+    .MuiInputLabel-outlined {
+        transform: translate(14px, 22px) scale(1);
+    }
+    .MuiInputLabel-outlined.MuiInputLabel-shrink {
+        transform: translate(14px, -6px) scale(0.75);
+    }
+
+    .MuiOutlinedInput-input {
+        /* height: 100% !important; */
+        padding: 0;
+    }
+    .MuiOutlinedInput-multiline {
+        /* height: 100%; */
+        padding: 0;
+        /* height: 100%; */
+    }
+
+
+    label {
+        background-color: white;
+    }
 `

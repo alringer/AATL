@@ -1,4 +1,6 @@
 enum zIndices {
+    homeBannerImage = '1',
+    homeBannerContent = '2',
     restaurantPlaceBannerImage = '1',
     restaurantMobileShareIcon = '1',
     userProfileDropzone = '1',

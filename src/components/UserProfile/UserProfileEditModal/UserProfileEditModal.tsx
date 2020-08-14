@@ -1,16 +1,18 @@
 import { AxiosResponse } from 'axios'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
-import { UserProfileImageContainer } from 'components/UserProfile/UserProfileBanner/UserProfileBanner.style'
 import axios, { UPLOAD_BLOG, USER_PROFILE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
+import authReducer from 'store/authentication/authentication_reducer'
+import { fetchUser } from 'store/user/user_actions'
 import { closeUserProfileEditModal } from 'store/userProfileEditModal/userProfileEditModal_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -27,6 +29,7 @@ import {
     UserProfileBannerLeftContainer,
     UserProfileBannerRightContainer,
     UserProfileEditModalContentContainer,
+    UserProfileEditModalDropzoneContainer,
     UserProfileEditModalFooterContainer,
     UserProfileEditModalHeaderContainer,
     UserProfileEditModalHeaderText,
@@ -38,6 +41,8 @@ interface IReduxProps {
     isOpen: boolean
     user: IUserProfile
     closeUserProfileEditModal: () => void
+    onSuccess?: () => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IUserProfileEditModalProps extends IReduxProps, IWithAuthInjectedProps {}
 
@@ -47,6 +52,8 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
     user,
     authenticatedAction,
     getTokenConfig,
+    onSuccess,
+    fetchUser,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -200,8 +207,14 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                         </div>
                     ),
                 })
+                if (onSuccess) {
+                    onSuccess()
+                }
+                const keycloak = authReducer.getState().keycloak
+                if (keycloak) {
+                    fetchUser(keycloak)
+                }
                 closeModal()
-                // TODO: Call on Success
             })
             .catch((err) => console.log(err))
     }
@@ -218,21 +231,18 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                             <UserProfileEditModalMainContentContainer>
                                 <UserProfileBannerInputsContainer>
                                     <UserProfileBannerLeftContainer>
-                                        <UserProfileImageContainer>
+                                        <UserProfileEditModalDropzoneContainer>
                                             <UserProfileImageDropzone
                                                 handleDrop={handleDrop}
                                                 handleRemove={handleRemove}
                                                 imageCDNUrl={currentImageCDNURL}
                                             />
-                                        </UserProfileImageContainer>
+                                        </UserProfileEditModalDropzoneContainer>
                                     </UserProfileBannerLeftContainer>
                                     <UserProfileBannerRightContainer>
                                         <NameInput
-                                            // id={'email'}
-                                            // className={errors.email !== '' ? 'error' : null}
                                             value={currentFullName}
                                             label={`Full Name`}
-                                            type={'email'}
                                             onChange={handleChangeFullName}
                                             variant="outlined"
                                             autoFocus={true}
@@ -251,14 +261,10 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             //         : null
                                         />
                                         <TitleInput
-                                            // id={'email'}
-                                            // className={errors.email !== '' ? 'error' : null}
                                             value={currentOccupation}
                                             label={`Occupation`}
-                                            type={'email'}
                                             onChange={handleChangeOccupation}
                                             variant="outlined"
-                                            autoFocus={true}
                                             // disabled={loading}
                                             // InputProps={
                                             //     errors.email !== ''
@@ -274,15 +280,11 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             //         : null
                                         />
                                         <MultiInput
-                                            // id={'email'}
-                                            // className={errors.email !== '' ? 'error' : null}
                                             value={currentBio}
                                             label={`Bio`}
-                                            type={'email'}
                                             onChange={handleChangeBio}
                                             variant="outlined"
-                                            autoFocus={true}
-                                            multiline={true}
+                                            multiline
                                             // disabled={loading}
                                             // InputProps={
                                             //     errors.email !== ''
@@ -320,11 +322,13 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
 const mapStateToProps = (state: StoreState) => ({
     isOpen: state.userProfileEditModalReducer.isOpen,
     user: state.userReducer.user,
+    onSuccess: state.userProfileEditModalReducer.onSuccess,
 })
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
         {
             closeUserProfileEditModal,
+            fetchUser,
         },
         dispatch
     )

@@ -54,6 +54,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .MuiInputLabel-outlined {
+        /* display: flex;
+        align-items: center; */
         transform: translate(14px, 16px) scale(1);
     }
 
