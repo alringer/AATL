@@ -30,6 +30,7 @@
   ],
   "include": [
     "next-env.d.ts",
-    "src"
+    "src",
+    "pages"
   ]
 }

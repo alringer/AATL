@@ -71,9 +71,11 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
                                 <img src={AddedSVG} alt="added-icon" />
                             </Tooltip>
                         </WideHeaderTooltipIconsContainer>
-                        <SmallPlaceCardCategory>
-                            {concatCategories(place.categories.map((category: ICategory) => category.longName))}
-                        </SmallPlaceCardCategory>
+                        {place && place.categories && (
+                            <SmallPlaceCardCategory>
+                                {concatCategories(place.categories.map((category: ICategory) => category.longName))}
+                            </SmallPlaceCardCategory>
+                        )}
                         <SmallPlaceCardDescriptionContainer>
                             <span>{place.content ? chopStringSmallPlaceDescription(place.content) : ''}</span>
                         </SmallPlaceCardDescriptionContainer>

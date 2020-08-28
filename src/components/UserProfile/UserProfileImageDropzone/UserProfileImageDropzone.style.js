@@ -1,6 +1,6 @@
 import { device } from 'style/device'
 import zIndices from 'style/zIndices'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const UserProfileImageDropzoneSection = styled.section`
     width: 100%;
@@ -32,6 +32,16 @@ export const UserProfileImageDropzoneContainer = styled.div`
             background-color: rgba(0,0,0,0.3);
         }
     }
+
+    ${props => {
+        if (props.id === 'uploading') {
+            return css`
+                ::after {
+                    background-color: rgba(0,0,0,0.3);
+                }
+            `
+        }
+    }}
 `
 
 export const UserProfileBannerImage = styled.img`
@@ -59,6 +69,16 @@ export const UserProfileBannerCameraImageContainer = styled.div`
     @media ${device.tablet} {
         padding: 27px;
     }
+`
+
+export const UserProfileBannerLoadingImageContainer = styled.div`
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    /* border-radius: 50%; */
+    
+    z-index: ${zIndices.userProfileDropzoneHover};
 `
 
 export const UserProfileBannerCameraImage = styled.img`

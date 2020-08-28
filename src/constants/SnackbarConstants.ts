@@ -32,6 +32,12 @@ export const ERROR_USER_PROFILE: ISnackbarConstants = {
     Body: 'Meanwhile, browse other restaurants we have!',
 }
 
+export const ERROR_RECOMMENDATION_LIST: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'We cannot load this recommendation list at the moment',
+    Body: 'Meanwhile, browse other restaurants we have!',
+}
+
 export const SIGN_UP: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Sign up complete',
@@ -78,16 +84,28 @@ export const RESTAURANT_LIST_LINK_COPIED: ISnackbarConstants = {
     Body: 'Restaurant list link was copied to clipboard',
 }
 
+export const RECOMMENDATION_LIST_LINK_COPIED: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Ready to share!',
+    Body: 'Recommendation list link was copied to clipboard',
+}
+
 export const ADDED_TO_LIST: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Success!',
     Body: 'was added to your list',
 }
 
-export const REMOVED_FROM_LIST: ISnackbarConstants = {
+export const REMOVE_LIST: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'List deleted',
     Body: 'has been permanently removed from your lists',
+}
+
+export const REMOVE_FROM_LIST: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Restaurant removed',
+    Body: 'has been permanently removed from',
 }
 
 export const EDITED_LIST: ISnackbarConstants = {

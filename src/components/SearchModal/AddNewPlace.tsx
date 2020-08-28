@@ -298,6 +298,7 @@ const AddNewPlace: React.FC<IAddNewPlaceProps> = ({ switchViewToSearch }) => {
                         isUploadingImage={isUploadingImage}
                         isImageDimensionImproper={isImageDimensionImproper}
                         handleDrag={handleDrag}
+                        tooltipMessage={'Upload a photograph'}
                     />
                 </AddPlaceContentRow>
             </AddPlaceContentContainer>

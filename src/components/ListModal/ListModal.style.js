@@ -143,6 +143,18 @@ export const ListModalCardContainer = styled.div`
     }
 `
 
+export const ListModalCardImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 44px;
+    height: 44px;
+
+    margin-right: 20px;
+`
+
 export const ListModalCardTextContainer = styled.div`
     display: flex;
     flex-direction: column;

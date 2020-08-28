@@ -75,6 +75,10 @@ export const GlobalStyle = createGlobalStyle`
         width: 100%
     }
 
+    .carousel .slide {
+        background: white;
+    }
+
     .MuiPaginationItem-root {
         font-size: 12px;
         font-weight: 500;

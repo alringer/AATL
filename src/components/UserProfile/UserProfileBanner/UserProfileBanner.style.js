@@ -266,7 +266,7 @@ export const UserProfileBannerEditButton = styled(CustomButton)`
 `
 
 export const UserProfileBannerPencilButton = styled(CustomIconButton)`
-    min-width: 32px;
+    min-width: 32px !important;
     width: 32px;
     height: 32px;
     padding: 4px;

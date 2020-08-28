@@ -1,19 +1,6 @@
-import MuiCallMadeIcon from '@material-ui/icons/CallMade'
-import MuiDeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import MuiEditIcon from '@material-ui/icons/Edit'
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
-
-export const DeleteForeverIcon = styled(MuiDeleteForeverIcon)`
-    color: ${props => props.theme.darkSlateBlue};
-`
-export const EditIcon = styled(MuiEditIcon)`
-    color: ${props => props.theme.darkSlateBlue};
-`
-export const CallMadeIcon = styled(MuiCallMadeIcon)`
-    color: ${props => props.theme.darkSlateBlue};
-`
 
 export const UserProfileListsContainer = styled(ContentWrapper)`
     display: flex;
@@ -197,7 +184,7 @@ export const UserProfileListsMainViewHeaderTextContainer = styled.div`
         align-items: center;
     }
     @media ${device.tablet} {
-        align-items: center;
+        align-items: flex-start;
     }
     @media ${device.laptop} {
         align-items: flex-start;

@@ -15,31 +15,31 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { RECOMMENDATION_LIST_META_WITH_ID } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
-import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store/index'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
-import { IVenueListMeta } from 'utilities/types/venueListMeta'
+import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
-    currentPlaceList: IVenueListMeta | null
+    currentRecommendationList: IRecommendationListMeta | null
+    onSuccess: () => void
 }
-interface IDeleteRestaurantListProps extends IReduxProps, IWithAuthInjectedProps {
+interface IDeleteRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
 }
 
-const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
+const DeleteRecommendationList: React.FC<IDeleteRecommendationListProps> = ({
     closeModal,
     getTokenConfig,
-    currentPlaceList,
+    currentRecommendationList,
+    onSuccess,
 }) => {
-    const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
 
-    const deleteRecommendationList = (listID: number) => {
-        if (currentPlaceList && currentPlaceList.title !== null) {
+    const deleteVenueList = (listID: number) => {
+        if (currentRecommendationList && currentRecommendationList.title !== null) {
             const token = getTokenConfig()
             const config = {
                 headers: {
@@ -49,6 +49,7 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
             axios
                 .delete(RECOMMENDATION_LIST_META_WITH_ID(listID), config)
                 .then((res) => {
+                    onSuccess()
                     handleCancel()
                     enqueueSnackbar('', {
                         content: (
@@ -58,7 +59,9 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
                                     title={B.REMOVE_LIST.Title}
                                     message={
                                         <SnackbarMessageBody>
-                                            <SnackbarOrangeMessage>{currentPlaceList.title}</SnackbarOrangeMessage>
+                                            <SnackbarOrangeMessage>
+                                                {currentRecommendationList.title}
+                                            </SnackbarOrangeMessage>
                                             &nbsp;
                                             {B.REMOVE_LIST.Body}
                                         </SnackbarMessageBody>
@@ -67,14 +70,17 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
                             </div>
                         ),
                     })
-                    router.push('/')
                 })
                 .catch((err) => console.log(err))
         }
     }
     const handleDelete = () => {
-        if (currentPlaceList && currentPlaceList.id !== undefined && currentPlaceList.id !== null) {
-            deleteRecommendationList(currentPlaceList.id)
+        if (
+            currentRecommendationList &&
+            currentRecommendationList.id !== undefined &&
+            currentRecommendationList.id !== null
+        ) {
+            deleteVenueList(currentRecommendationList.id)
         }
     }
     const handleCancel = () => {
@@ -84,15 +90,16 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
     return (
         <>
             <ListModalHeaderContainer>
-                <ListModalHeaderText>{S.LIST_MODAL.DeleteRestaurantList.Header}</ListModalHeaderText>
+                <ListModalHeaderText>{S.LIST_MODAL.DeleteRecommendationList.Header}</ListModalHeaderText>
             </ListModalHeaderContainer>
             <ListModalMainAreaContainer>
                 <ListModalDeleteListMessageContainer>
                     <ListModalTitleText>
-                        {S.LIST_MODAL.DeleteRestaurantList.FormerMessage}
-                        &nbsp;<ListModalDeleteHighlightText>{currentPlaceList.title}</ListModalDeleteHighlightText>
+                        {S.LIST_MODAL.DeleteRecommendationList.FormerMessage}
                         &nbsp;
-                        {S.LIST_MODAL.DeleteRestaurantList.LadderMessage}
+                        <ListModalDeleteHighlightText>{currentRecommendationList.title}</ListModalDeleteHighlightText>
+                        &nbsp;
+                        {S.LIST_MODAL.DeleteRecommendationList.LadderMessage}
                     </ListModalTitleText>
                 </ListModalDeleteListMessageContainer>
             </ListModalMainAreaContainer>
@@ -107,7 +114,7 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    currentPlaceList: state.listModalReducer.placeList,
+    currentRecommendationList: state.listModalReducer.recommendationList,
     onSuccess: state.listModalReducer.onSuccess,
 })
-export default reduxConnect(mapStateToProps)(withAuth(DeleteRestaurantList))
+export default reduxConnect(mapStateToProps)(withAuth(DeleteRecommendationList))

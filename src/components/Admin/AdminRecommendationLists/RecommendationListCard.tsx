@@ -42,14 +42,16 @@ const RecommendationListCard = ({
             <div>
                 <AdminRecommendationListsTableRow>
                     <AdminRecommendationListsImageColumn>
-                        <Image src={list.imgSrc} alt="image" />
+                        <Image src={list.imageCDNUrl} alt="image" />
                     </AdminRecommendationListsImageColumn>
                     <AdminRecommendationListsTitleColumn>
                         <AdminRecommendationListsClickableText>{list.title}</AdminRecommendationListsClickableText>
                     </AdminRecommendationListsTitleColumn>
-                    <AdminRecommendationListsSubTitleColumn>{list.subTitle}</AdminRecommendationListsSubTitleColumn>
+                    <AdminRecommendationListsSubTitleColumn>{list.subtitle}</AdminRecommendationListsSubTitleColumn>
                     <AdminRecommendationListsRecommendationsColumn>
-                        {list.recommendations}
+                        {list.spotlightedRecommendations && list.spotlightedRecommendations.length
+                            ? list.spotlightedRecommendations.length
+                            : 'null'}
                     </AdminRecommendationListsRecommendationsColumn>
                     <AdminRecommendationListsActionsColumn>
                         <AdminRecommendationListsActionClickableText>

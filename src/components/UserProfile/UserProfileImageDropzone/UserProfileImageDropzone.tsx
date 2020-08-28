@@ -5,10 +5,12 @@ import CameraUploadIcon from 'assets/user-profile-upload-icon.svg'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Dropzone from 'react-dropzone'
+import { CircularProgress } from 'style/Loading/CircularProgress.style'
 import {
     UserProfileBannerCameraImage,
     UserProfileBannerCameraImageContainer,
     UserProfileBannerImage,
+    UserProfileBannerLoadingImageContainer,
     UserProfileImageDropzoneContainer,
     UserProfileImageDropzoneSection,
 } from './UserProfileImageDropzone.style'
@@ -17,9 +19,15 @@ interface IImageDropzoneProps {
     handleDrop: (acceptedFile: any) => void
     handleRemove: (e: React.MouseEvent<HTMLElement>) => void
     imageCDNUrl: string
+    isUploadingImage: boolean
 }
 
-const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageCDNUrl, handleDrop, handleRemove }) => {
+const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({
+    imageCDNUrl,
+    handleDrop,
+    handleRemove,
+    isUploadingImage,
+}) => {
     const [isImageHovered, setImageHovered] = React.useState(false)
     const [isCameraHovered, setCameraHovered] = React.useState(false)
 
@@ -45,13 +53,19 @@ const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageCDNUrl, 
                     {...getRootProps()}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
+                    id={isUploadingImage ? 'uploading' : ''}
                 >
                     <input {...getInputProps()} />
                     <UserProfileBannerImage
                         src={imageCDNUrl ? imageCDNUrl : DefaultUserProfileImage}
                         alt="user-profile-image"
                     />
-                    {imageCDNUrl && isImageHovered ? (
+                    {isUploadingImage === true && (
+                        <UserProfileBannerLoadingImageContainer>
+                            <CircularProgress />
+                        </UserProfileBannerLoadingImageContainer>
+                    )}
+                    {imageCDNUrl && isImageHovered && isUploadingImage === false ? (
                         <Tooltip arrow={true} title={S.TOOL_TIPS.RemoveProfile} placement="top">
                             <UserProfileBannerCameraImageContainer
                                 onMouseEnter={handleCameraMouseEnter}
@@ -73,7 +87,7 @@ const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({ imageCDNUrl, 
     return (
         <Dropzone onDrop={handleDrop} accept="image/png" minSize={0} maxSize={5242880} multiple={false}>
             {({ getRootProps, getInputProps, isDragReject, acceptedFiles }) => {
-                return imageCDNUrl ? (
+                return imageCDNUrl || isUploadingImage ? (
                     renderUserProfileDropzoneComponent(getRootProps, getInputProps)
                 ) : (
                     <Tooltip arrow={true} title={S.TOOL_TIPS.UploadProfile} placement="top">

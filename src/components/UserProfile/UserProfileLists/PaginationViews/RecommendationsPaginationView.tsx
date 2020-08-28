@@ -9,8 +9,8 @@ import { IUserProfile } from 'utilities/types/userProfile'
 import {
     UserProfileListsMainViewHeaderContainer,
     UserProfileListsMainViewHeaderTextContainer,
-
-    UserProfileListsMainViewListDescription, UserProfileListsMainViewListTitle
+    UserProfileListsMainViewListDescription,
+    UserProfileListsMainViewListTitle,
 } from '../UserProfileLists.style'
 import { PaginationViewsListContainer } from './PaginationViews.style'
 
@@ -57,18 +57,20 @@ const RecommendationsPaginationView: React.FC<IRecommendationsPaginationViewProp
                         {currentRecommendations ? 'Recommendations' : null}
                     </UserProfileListsMainViewListTitle>
                     <UserProfileListsMainViewListDescription>
-                        {currentRecommendations && currentRecommendations.length === 0 && 'Looks like you have not written any recommendations yet!'}
+                        {currentRecommendations &&
+                            currentRecommendations.length === 0 &&
+                            'Looks like you have not written any recommendations yet!'}
                     </UserProfileListsMainViewListDescription>
                 </UserProfileListsMainViewHeaderTextContainer>
             </UserProfileListsMainViewHeaderContainer>
             <PaginationViewsListContainer>
-                {currentRecommendations && currentRecommendations.length > 0
-                    && currentRecommendations.map((recommendation: IRecommendation, index: number) => (
+                {currentRecommendations &&
+                    currentRecommendations.length > 0 &&
+                    currentRecommendations.map((recommendation: IRecommendation, index: number) => (
                         <RecommendationCardContainer key={index}>
                             <CardRecommendationWide isFull={true} recommendation={recommendation} />
                         </RecommendationCardContainer>
-                    ))
-                }
+                    ))}
                 {currentRecommendations && currentRecommendations.length > 0 && (
                     <Pagination
                         page={currentPage ? currentPage : 0}

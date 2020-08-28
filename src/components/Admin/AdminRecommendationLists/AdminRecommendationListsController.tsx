@@ -1,7 +1,7 @@
 import update from 'immutability-helper'
 import React from 'react'
 import { DropTarget } from 'react-dnd'
-import { IRecommendationList } from './AdminRecommendationLists'
+import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 import {
     AdminRecommendationListsActionsColumn,
     AdminRecommendationListsImageColumn,
@@ -14,13 +14,13 @@ import {
 import RecommendationListCard from './RecommendationListCard'
 
 interface IAdminRecommendationListsControllerProps {
-    recommendationLists: IRecommendationList[]
+    recommendationLists: IRecommendationListMeta[]
 }
 
 class AdminRecommendationListsController extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
-        this.state = { lists: props.recommendationLists.lists }
+        this.state = { lists: props.recommendationLists }
     }
 
     pushCard(card: any) {
@@ -73,7 +73,7 @@ class AdminRecommendationListsController extends React.Component<any, any> {
                         </AdminRecommendationListsRecommendationsColumn>
                         <AdminRecommendationListsActionsColumn>Actions</AdminRecommendationListsActionsColumn>
                     </AdminRecommendationListsTableHeaderRow>
-                    {lists.map((list: IRecommendationList, index: number) => {
+                    {lists.map((list: IRecommendationListMeta, index: number) => {
                         return (
                             <RecommendationListCard
                                 list={list}

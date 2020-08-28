@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
-import axios, { UPLOAD_BLOG } from 'config/AxiosConfig'
+import axios, { UPLOAD_BLOB } from 'config/AxiosConfig'
+import * as D from 'constants/ImageDimensionConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import authStore from 'store/authentication/authentication_reducer'
@@ -65,7 +66,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                 const image = new Image()
                 image.addEventListener('load', () => {
                     // only select images within width/height limits
-                    if (image.width >= 1600 && image.height >= 1200) {
+                    if (image.width >= D.WIDTH_LIMIT && image.height >= D.HEIGHT_LIMIT) {
                         setImageDimensionImproper(false)
                         const formData = new FormData()
                         formData.append('file', file)
@@ -84,7 +85,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                                   }
                         setUploadingImage(true)
                         axios
-                            .post(UPLOAD_BLOG, formData, config)
+                            .post(UPLOAD_BLOB, formData, config)
                             .then((res: AxiosResponse<any>) => {
                                 setTemporaryImageKey(res.data.key)
                                 setImagePreviewURL(res.data.url)
@@ -132,6 +133,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         handleDrag={handleDrag}
                         isUploadingImage={isUploadingImage}
                         isImageDimensionImproper={isImageDimensionImproper}
+                        tooltipMessage={S.IMAGE_DROPZONE.ToolTipRecommendation}
                     />
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>

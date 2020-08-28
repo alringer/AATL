@@ -13,6 +13,7 @@ import React from 'react'
 import CardPlaceSmallList from 'sections/CardsList/CardPlaceSmallList'
 import CardRecommendationWideList from 'sections/CardsList/CardRecommendationWideList'
 import { IVenue } from 'utilities/types/venue'
+
 interface IServerSideProps {
     recommendationID: number | null
     restaurantID: number | null
@@ -24,6 +25,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
     React.useEffect(() => {
+        console.log('Venue Information Received: ', venueInformation)
         if (venueInformation === null || venueInformation === undefined) {
             enqueueSnackbar('', {
                 content: (
@@ -89,10 +91,10 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
             />
             {venueInformation && venueInformation.similarVenues && venueInformation.similarVenues.length > 0 ? (
                 <CardPlaceSmallList
-                    title={`Places similar to ${venueInformation ? venueInformation.name : null}`}
-                    subTitle={`A sampling of places similar to ${
+                    title={`${S.RESTAURANT_PAGE.PlacesSimilarTitle} ${venueInformation ? venueInformation.name : null}`}
+                    subTitle={`${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne} ${
                         venueInformation ? venueInformation.name : null
-                    } that may peak your appetite.`}
+                    } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne}`}
                     places={venueInformation ? venueInformation.similarVenues : null}
                     category={
                         venueInformation &&

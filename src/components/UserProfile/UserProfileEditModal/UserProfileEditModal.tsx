@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
-import axios, { UPLOAD_BLOG, USER_PROFILE } from 'config/AxiosConfig'
+import axios, { UPLOAD_BLOB, USER_PROFILE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { KeycloakInstance } from 'keycloak-js'
@@ -64,6 +64,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
     const [currentBio, setCurrentBio] = React.useState('')
     const [currentImageCDNURL, setCurrentImageCDNURL] = React.useState('')
     const [isUploadingImage, setUploadingImage] = React.useState(false)
+    const [isSaving, setSaving] = React.useState(false)
 
     const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value) {
@@ -142,7 +143,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                           }
                     setUploadingImage(true)
                     axios
-                        .post(UPLOAD_BLOG, formData, uploadConfig)
+                        .post(UPLOAD_BLOB, formData, uploadConfig)
                         .then((res: AxiosResponse<any>) => {
                             console.log('Uploading User Profile to S3: ', res)
                             setCurrentImageCDNURL(res.data.url)
@@ -192,6 +193,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
             content: currentBio,
             imageCDNUrl: currentImageCDNURL,
         }
+        setSaving(true)
         axios
             .put(USER_PROFILE, userProfilePayload, updateUserProfileConfig)
             .then((res) => {
@@ -217,6 +219,9 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                 closeModal()
             })
             .catch((err) => console.log(err))
+            .finally(() => {
+                setSaving(false)
+            })
     }
 
     return (
@@ -236,6 +241,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                                 handleDrop={handleDrop}
                                                 handleRemove={handleRemove}
                                                 imageCDNUrl={currentImageCDNURL}
+                                                isUploadingImage={isUploadingImage}
                                             />
                                         </UserProfileEditModalDropzoneContainer>
                                     </UserProfileBannerLeftContainer>
@@ -246,38 +252,14 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             onChange={handleChangeFullName}
                                             variant="outlined"
                                             autoFocus={true}
-                                            // disabled={loading}
-                                            // InputProps={
-                                            //     errors.email !== ''
-                                            //         ? {
-                                            //               endAdornment: (
-                                            //                   <InputAdornment position="end">
-                                            //                       <Tooltip title={errors.email} placement="top">
-                                            //                           <ErrorIcon />
-                                            //                       </Tooltip>
-                                            //                   </InputAdornment>
-                                            //               ),
-                                            //           }
-                                            //         : null
+                                            disabled={isSaving}
                                         />
                                         <TitleInput
                                             value={currentOccupation}
                                             label={`Occupation`}
                                             onChange={handleChangeOccupation}
                                             variant="outlined"
-                                            // disabled={loading}
-                                            // InputProps={
-                                            //     errors.email !== ''
-                                            //         ? {
-                                            //               endAdornment: (
-                                            //                   <InputAdornment position="end">
-                                            //                       <Tooltip title={errors.email} placement="top">
-                                            //                           <ErrorIcon />
-                                            //                       </Tooltip>
-                                            //                   </InputAdornment>
-                                            //               ),
-                                            //           }
-                                            //         : null
+                                            disabled={isSaving}
                                         />
                                         <MultiInput
                                             value={currentBio}
@@ -285,32 +267,17 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             onChange={handleChangeBio}
                                             variant="outlined"
                                             multiline
-                                            // disabled={loading}
-                                            // InputProps={
-                                            //     errors.email !== ''
-                                            //         ? {
-                                            //               endAdornment: (
-                                            //                   <InputAdornment position="end">
-                                            //                       <Tooltip title={errors.email} placement="top">
-                                            //                           <ErrorIcon />
-                                            //                       </Tooltip>
-                                            //                   </InputAdornment>
-                                            //               ),
-                                            //           }
-                                            //         : null
+                                            disabled={isSaving}
                                         />
                                     </UserProfileBannerRightContainer>
                                 </UserProfileBannerInputsContainer>
                             </UserProfileEditModalMainContentContainer>
                         </UserProfileEditModalMainAreaContainer>
                         <UserProfileEditModalFooterContainer>
-                            {/* <UserProfileEditModalFooterRightContainer> */}
                             <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                            <SubmitButton onClick={handleSave}>
-                                {/* disabled={!titleInput || isLoading} */}
+                            <SubmitButton onClick={handleSave} disabled={isSaving || isUploadingImage}>
                                 SAVE
                             </SubmitButton>
-                            {/* </UserProfileEditModalFooterRightContainer> */}
                         </UserProfileEditModalFooterContainer>
                     </UserProfileEditModalContentContainer>
                 </CustomDialog>

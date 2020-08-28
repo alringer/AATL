@@ -314,7 +314,16 @@ const Header: React.FC<IHeaderProps> = ({
                     <>
                         {/* TODO: Add profile route  */}
                         <MenuItemRow id="marginBottom">
-                            <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
+                            <Link
+                                href={
+                                    user && user.id !== undefined && user.id !== null
+                                        ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                                        : ``
+                                }
+                                passHref
+                            >
+                                <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
+                            </Link>
                         </MenuItemRow>
                         {/* TODO: Add settings route  */}
                         <MenuItemRow id="marginBottom">
@@ -339,7 +348,7 @@ const Header: React.FC<IHeaderProps> = ({
             {userRole === UserRoleEnum.Admin ? (
                 <MenuItemsSectionRow>
                     <MenuItemRow>
-                        <Link href={R.ROUTE_ITEMS.admin} passHref>
+                        <Link href={`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`} passHref>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Admin}</MenuItemAnchorText>
                         </Link>
                     </MenuItemRow>

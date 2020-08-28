@@ -131,6 +131,10 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     } else {
                         handleViewMyList(modifiedMyLists[0])
                     }
+                } else {
+                    setCurrentListInView(null)
+                    setCurrentListInViewUniqueID(null)
+                    setCurrentListInViewType(null)
                 }
             })
             .catch((err) => console.log(err))
@@ -312,18 +316,25 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                 </UserProfileListsNavigationParentListContainer>
             </UserProfileListsNavigationContainer>
             <UserProfileListsMainViewContainer>
-                <UserProfileListsMainViewHeaderContainer>
-                    <UserProfileListsMainViewHeaderTextContainer>
-                        <UserProfileListsMainViewListTitle>
-                            {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageTitle}
-                        </UserProfileListsMainViewListTitle>
-                        <UserProfileListsMainViewListDescription>
-                            {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageSubTitle}
-                        </UserProfileListsMainViewListDescription>
-                    </UserProfileListsMainViewHeaderTextContainer>
-                </UserProfileListsMainViewHeaderContainer>
+                {currentListInViewType === null && (
+                    <UserProfileListsMainViewHeaderContainer>
+                        <UserProfileListsMainViewHeaderTextContainer>
+                            <UserProfileListsMainViewListTitle>
+                                {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageTitle}
+                            </UserProfileListsMainViewListTitle>
+                            <UserProfileListsMainViewListDescription>
+                                {currentListInViewType === null && S.USER_PROFILE_LISTS.EmptyMessageSubTitle}
+                            </UserProfileListsMainViewListDescription>
+                        </UserProfileListsMainViewHeaderTextContainer>
+                    </UserProfileListsMainViewHeaderContainer>
+                )}
                 {currentListInViewType === CurrentListInViewTypeEnum.MyList ? (
-                    <MyListPaginationView inputMyList={currentMyList} user={user} isOwner={isOwner} />
+                    <MyListPaginationView
+                        inputMyList={currentMyList}
+                        user={user}
+                        isOwner={isOwner}
+                        fetchVenueLists={fetchVenueLists}
+                    />
                 ) : currentListInViewType === CurrentListInViewTypeEnum.ByCity ? (
                     <ByCityPaginationView inputByCity={currentByCity} user={user} />
                 ) : currentListInViewType === CurrentListInViewTypeEnum.ByCategory ? (

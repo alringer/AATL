@@ -59,6 +59,7 @@ export enum CardPlaceWideEnum {
     City,
     Search,
     Profile,
+    ProfileOwnerList,
 }
 
 interface IReduxProps {
@@ -68,6 +69,7 @@ interface IReduxProps {
 interface ICardPlaceWideProps extends IReduxProps, IWithAuthInjectedProps {
     place: IVenue
     type: CardPlaceWideEnum
+    handleRemoveFromList?: (place: IVenue) => void
 }
 
 const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
@@ -76,6 +78,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     openRecommendationModal,
     openListModal,
     authenticatedAction,
+    handleRemoveFromList,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
@@ -147,6 +150,13 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
         e.stopPropagation()
     }
 
+    const handleRemove = (e: React.MouseEvent<HTMLElement>) => {
+        if (_.has(place, 'id') && handleRemoveFromList) {
+            handleRemoveFromList(place)
+        }
+        e.stopPropagation()
+    }
+
     const ViewMore = () => {
         return (
             <CardIcon onClick={handleMore}>
@@ -187,8 +197,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                         <CardPlaceWideButtonsContainer>
                                             {isMoreVisible ? (
                                                 <MoreHorizontalContainer>
-                                                    {type === CardPlaceWideEnum.Profile ? (
-                                                        <RemoveFromListButton handleClick={handleAddToList} />
+                                                    {type === CardPlaceWideEnum.ProfileOwnerList ? (
+                                                        <RemoveFromListButton handleClick={handleRemove} />
                                                     ) : (
                                                         <AddToListButton handleClick={handleAddToList} />
                                                     )}
@@ -242,8 +252,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                 <MobileButtonsContainer>
                                     {isMoreVisible ? (
                                         <MobileActionButtonsContainer>
-                                            {type === CardPlaceWideEnum.Profile ? (
-                                                <RemoveFromListButton handleClick={handleAddToList} isMobile={true} />
+                                            {type === CardPlaceWideEnum.ProfileOwnerList ? (
+                                                <RemoveFromListButton handleClick={handleRemove} isMobile={true} />
                                             ) : (
                                                 <AddToListButton handleClick={handleAddToList} isMobile={true} />
                                             )}
