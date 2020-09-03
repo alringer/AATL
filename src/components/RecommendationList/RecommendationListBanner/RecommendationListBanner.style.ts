@@ -111,9 +111,6 @@ export const RecommendationListBannerDescription = styled.p`
     }
 `
 
-// export const RecommendationListBanner = styled.
-// export const RecommendationListBanner = styled.
-
 export const RecommendationListBannerButton = styled(CustomButton)`
     display: flex;
     flex-direction: row;

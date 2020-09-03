@@ -360,11 +360,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     {/* TODO: Replace ID below with UserName once username becomes unique */}
                     <Link
                         href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
-                        // href={
-                        //     recommendation && recommendation.createdBy && recommendation.createdBy.id !== undefined
-                        //         ? `${R.ROUTE_ITEMS.userProfile}/${recommendation.createdBy.id}`
-                        //         : ''
-                        // }
                         passHref={true}
                         prefetch={false}
                     >

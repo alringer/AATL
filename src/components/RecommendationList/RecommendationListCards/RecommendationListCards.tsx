@@ -1,6 +1,6 @@
+import SpotlightedRecommendation from 'components/SpotlightedRecommendation/SpotlightedRecommendation'
 import React from 'react'
 import { ListContainer, RecommendationCardContainer } from 'sections/CardsList/List.style'
-import SpotlightedRecommendation from 'SpotlightedRecommendation/SpotlightedRecommendation'
 import { ISpotlightedRecommendation } from 'utilities/types/ISpotlightedRecommendation'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
