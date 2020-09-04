@@ -22,8 +22,12 @@ import {
     ListModalTitleText,
     SubmitButton,
 } from 'components/ListModal/ListModal.style'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
 import axios, { RECOMMENDATION_LIST_METAS, RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION } from 'config/AxiosConfig'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -50,6 +54,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     const [recommendationLists, setRecommendationLists] = React.useState([])
     const [selectedID, setSelectedID] = React.useState<number | null>(null)
     const [isLoading, setLoading] = React.useState(false)
+    const { enqueueSnackbar } = useSnackbar()
 
     React.useEffect(() => {
         const token = getTokenConfig()
@@ -96,6 +101,36 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                     .post(RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID), {}, config)
                     .then((res) => {
                         console.log('Adding a recommendation to the recommendation list: ', res)
+                        const spotlightedRecommendations = res.data.spotlightedRecommendations
+                        enqueueSnackbar('', {
+                            content: (
+                                <div>
+                                    <Snackbar
+                                        type={B.ADDED_TO_LIST.Type}
+                                        title={B.ADDED_TO_LIST.Title}
+                                        message={
+                                            <SnackbarMessageBody>
+                                                {spotlightedRecommendations && spotlightedRecommendations.length > 0 ? (
+                                                    <SnackbarOrangeMessage>
+                                                        {
+                                                            spotlightedRecommendations[
+                                                                spotlightedRecommendations.length - 1
+                                                            ].title
+                                                        }
+                                                    </SnackbarOrangeMessage>
+                                                ) : (
+                                                    'Recommendation'
+                                                )}{' '}
+                                                {B.ADDED_TO_LIST.Body}&nbsp;
+                                                {res.data.title ? (
+                                                    <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                                ) : null}
+                                            </SnackbarMessageBody>
+                                        }
+                                    />
+                                </div>
+                            ),
+                        })
                         closeModal()
                     })
                     .catch((err) => console.log(err))
