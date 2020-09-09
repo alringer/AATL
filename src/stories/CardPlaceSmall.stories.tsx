@@ -48,7 +48,7 @@ export const PlaceCardData = {
 export const PlaceCardsListData = {
     default: {
         title: 'Places similar to Sushi Ota',
-        subTitle: 'A sampling of places similar to Sushi Ota that may peak your appetite.',
+        subTitle: 'A sampling of places similar to Sushi Ota that may pique your appetite.',
         places: Object.entries(PlaceCardData).map((entries: any[]) => {
             const placeCardData = entries[1]
             return placeCardData

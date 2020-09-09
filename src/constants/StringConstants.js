@@ -84,13 +84,13 @@ export const CITIES = {
     US: 'United States',
     Canada: 'Canada',
     New: 'New',
-    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+    EmptyMessage: 'Whoops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
 }
 
 export const FOOD_AND_DRINK = {
     Title: 'More Food & Drink to Ask a Travel Local',
     Categories: 'Categories',
-    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+    EmptyMessage: 'Whoops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
 }
 
 export const HOME_PAGE = {
@@ -114,7 +114,7 @@ export const RESTAURANT_PAGE = {
     RecommendationsSectionSubTitlePartThree: 'who love',
     PlacesSimilarTitle: 'Places similar to',
     PlacesSimilarSubTitlePartOne: 'A sampling of places similar to',
-    PlacesSimilarSubTitlePartTwo: 'that may peak your appetite.',
+    PlacesSimilarSubTitlePartTwo: 'that may pique your appetite.',
 }
 
 // Header
