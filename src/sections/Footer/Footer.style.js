@@ -188,11 +188,11 @@ export const FooterLinkRow = styled.div`
 export const FooterAnchor = styled.a`
     cursor: pointer;
     text-decoration: none;
-    text-decoration-color: ${(props) => props.theme.darkGrey};
     margin-bottom: 10px;
 
     &:hover {
         text-decoration: underline;
+        text-decoration-color: ${(props) => props.theme.darkGrey};
     }
 `
 

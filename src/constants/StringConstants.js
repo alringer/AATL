@@ -1,18 +1,25 @@
 export const LOREM_IPSUM_SHORT = 'Lorem ipsum dolor sit amet'
 export const LOREM_IPSUM_LONG = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor sed lacus quis faucibus. Cras pretium vestibulum tellus, a vulputate est placerat dictum. Cras sit amet turpis a metus convallis sodales non ac nulla. Maecenas gravida gravida quam sit amet convallis. Nulla pulvinar, urna eget viverra aliquam, orci arcu fermentum nisl, vitae molestie purus massa a sapien. Phasellus nec porttitor felis. Phasellus quis convallis velit. Ut interdum justo nibh. Nullam auctor venenatis tincidunt. Donec sed mollis odio, et consequat turpis. Donec commodo sodales risus, eget rhoncus diam suscipit vitae. Donec id auctor velit. Fusce blandit eu dui id suscipit. Phasellus nibh ex, tempor non placerat in, finibus bibendum nisi.'
 
+// Inputs
 export const TOOL_TIPS = {
     Added: 'Added to your list',
     Recommended: 'Recommended by you',
     AddToList: 'Add to list',
+    DeleteList: 'Delete list',
+    EditList: 'Edit list',
     RemoveFromList: 'Remove from list',
     WriteRecommendation: 'Write a recommendation',
     ShareRestaurant: 'Share restaurant',
     Flag: 'Flag as inappropriate',
     Share: 'Share',
+    ShareList: 'Share list',
     Recommend: 'Recommend',
     RemoveProfile: 'Remove profile image',
-    UploadProfile: 'Click or drop a photo to upload a profile picture'
+    UploadProfile: 'Click or drop a photo to upload a profile picture',
+    ProfileNameEdit: 'Click to edit your displayed name',
+    ProfileByLineEdit: 'Click to edit your profession or tagline',
+    ProfileDescriptionEdit: 'Click to edit your description'
 }
 
 export const BUTTON_LABELS = {
@@ -44,7 +51,10 @@ export const BUTTON_LABELS = {
     Cancel: 'CANCEL',
     AddNewPlace: 'ADD A NEW PLACE',
     RecommendNewPlace: 'RECOMMEND NEW PLACE',
-    Add: 'ADD'
+    Add: 'ADD',
+    Update: 'UPDATE',
+    Delete: 'DELETE',
+    ReadMore: 'READ MORE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -64,9 +74,57 @@ export const INPUT_PLACEHOLDERS = {
     PhoneNumber: 'Phone Number',
     WebsiteURL: 'Website URL',
     Title: 'Title',
+    SubTitle: 'Subtitle',
     Optional: '(Optional)'
-
 }
+
+// Pages
+export const CITIES = {
+    Title: 'More Places to Ask a Travel Local',
+    US: 'United States',
+    Canada: 'Canada',
+    New: 'New',
+    EmptyMessage: 'Whoops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+}
+
+export const FOOD_AND_DRINK = {
+    Title: 'More Food & Drink to Ask a Travel Local',
+    Categories: 'Categories',
+    EmptyMessage: 'Whoops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
+}
+
+export const HOME_PAGE = {
+    MostRecommendedTitle: 'Most Recommended',
+    MostRecommendedSubTitle: 'Our favorite and most essential restaurants from locals near you.',
+}
+
+export const ADMIN_PAGE = {
+    AdminRecommendationLists: {
+        Title: 'Recommendation Lists',
+        SubTitle: 'A curated lists of recommendations. Selected lists will be displayed in the featured slideshow in the order arranged here. Up to 7 lists can be featured.',
+        FeaturedLists: 'Featured Lists',
+        OtherLists: 'Other Lists',
+        CardImage: 'Image',
+        CardTitle: 'Title',
+        CardSubtitle: 'Subtitle',
+        CardRecommendations: 'Recommendations',
+        CardActions: '',
+        CardFeature: 'Feature',
+        CardDontFeature: 'Don\'t Feature'
+    }
+}
+
+export const RESTAURANT_PAGE = {
+    RecommendationsSectionTitle: 'Recommendations',
+    RecommendationsSectionSubTitlePartOne: 'Recommendations of',
+    RecommendationsSectionSubTitlePartTwo: 'by locals',
+    RecommendationsSectionSubTitlePartThree: 'who love',
+    PlacesSimilarTitle: 'Places similar to',
+    PlacesSimilarSubTitlePartOne: 'A sampling of places similar to',
+    PlacesSimilarSubTitlePartTwo: 'that may pique your appetite.',
+}
+
+// Header
 
 export const HEADER_ITEMS = {
     FoodAndDrinks: 'FOOD & DRINK',
@@ -148,20 +206,6 @@ export const ERROR_MESSAGES = {
     EmptyPassword: 'Must enter password',
 }
 
-export const CITIES = {
-    Title: 'More Places to Ask a Travel Local',
-    US: 'United States',
-    Canada: 'Canada',
-    New: 'New',
-    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
-}
-
-export const FOOD_AND_DRINK = {
-    Title: 'More Food & Drink to Ask a Travel Local',
-    Categories: 'Categories',
-    EmptyMessage: 'Woops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!'
-}
-
 export const RECOMMENDATION_EDITOR = {
     Title: 'Recommending',
     LabelImage: 'Image',
@@ -184,11 +228,12 @@ export const IMAGE_DROPZONE = {
     LabelSupportedFormats: 'Supported Formats',
     SupportedFormats: 'PNG, JPG',
     LabelImageDimensions: 'Image Dimensions',
-    ImageDimensions: 'Minimum 1600x1200',
+    ImageDimensions: 'Minimum',
     LabelFileSize: 'File Size',
     FileSize: 'Maximum 5 MB',
-    Tooltip: 'Upload a photograph to go along with your recommendation.',
     ErrorImproperFileType: 'File type not accepted. Please use .png or .jpg file.',
+    ToolTipRecommendation: 'Upload a photograph to go along with your recommendation.',
+    ToolTipRecommendationList: 'Upload a photograph'
 }
 
 export const RECOMMENDATION_TIPS = {
@@ -237,22 +282,72 @@ export const SEARCH_PAGE = {
     NoResultsSubTitle: 'Try a different location, alternative spelling or a more generalized search.'
 }
 
-export const RESTAURANT_PAGE = {
-    RecommendationsSectionTitle: 'Recommendations',
-    RecommendationsSectionSubTitlePartOne: 'Recommendations of',
-    RecommendationsSectionSubTitlePartTwo: 'by locals',
-    RecommendationsSectionSubTitlePartThree: 'who love'
-}
-
 export const LIST_MODAL = {
     AddToRestaurant: {
         Header: 'Add restaurant to a list',
         Title: 'Restaurant Lists',
-        Restaurants: 'Restaurants'
+        Restaurants: 'Restaurants',
+        EmptyMessage: 'You have not yet created a restaurant list. Why don’t you go ahead and create one?'
     },
     AddNewRestaurantList: {
         Header: 'Add to a new list',
         Title: 'New list details',
         Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    AddToRecommendation: {
+        Header: 'Add recommendation to a list',
+        Title: 'Recommendation Lists',
+        Recommendations: 'Recommendations',
+        EmptyMessage: 'You have not yet created a recommendation list. Why don’t you go ahead and create one?'
+    },
+    AddNewRecommendationList: {
+        Header: 'Add to a new recommendation list',
+        Title: 'New list details',
+        Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    EditRestaurantList: {
+        Header: 'Edit list',
+        Title: 'List details',
+        Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    EditRecommendationList: {
+        Header: 'Edit recommendation list',
+        Title: 'List details',
+        Message: 'URLs are hyerlinked. Only <a> allowed.'
+    },
+    DeleteRestaurantList: {
+        Header: 'Delete list',
+        FormerMessage: 'Deleting your list',
+        LadderMessage: 'cannot be undone. Please make sure this list is no longer needed before permanently deleting it. '
+    },
+    DeleteRecommendationList: {
+        Header: 'Delete recommendation list',
+        FormerMessage: 'Deleting your recommendation list',
+        LadderMessage: 'cannot be undone. Please make sure this list is no longer needed before permanently deleting it. '
+    }
+}
+
+export const USER_PROFILE_BANNER = {
+    EmptyMessageByLine: 'What is your profession or tagline',
+    EmptyMessageDescription: 'Add a little something about you to share with other foodies',
+    Recommends: 'Recommends',
+    Places: 'Places'
+}
+
+export const USER_PROFILE_LISTS = {
+    FoodAndTravelJournal: 'Food & Travel Journal',
+    MyLists: 'LISTS',
+    ByCity:'BY CITY',
+    ByCategory:'BY CATEGORY',
+    MyRecommendations:'RECOMMENDATIONS',
+    EmptyMessageTitle: 'Start building your lists!',
+    EmptyMessageSubTitle: 'This is where all your lists of places will be saved. To build your list find restaurants you would like to save and select the “Heart” symbol. We will automatically build lists for you by category, location, and your very own recommendations as well.'
+}
+
+export const RECOMMENDATION_LIST = {
+    Banner: {
+        EditButtonText: 'EDIT',
+        DeleteButtonText: 'DELETE',
+        ShareButtonText: 'SHARE',
     }
 }

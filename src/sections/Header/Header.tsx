@@ -53,6 +53,7 @@ import {
     SearchToggleButton,
     SignedInMenuItemsContainer,
     SignUpButton,
+    UserIconContainer,
 } from './Header.style'
 
 interface IReduxProps {
@@ -99,7 +100,9 @@ const Header: React.FC<IHeaderProps> = ({
     }
 
     const handlePopoverOpen = () => {
-        popoverReference.setIsComponentVisible(true)
+        if (user) {
+            popoverReference.setIsComponentVisible(true)
+        }
     }
 
     const handlePopoverLogout = () => {
@@ -165,9 +168,9 @@ const Header: React.FC<IHeaderProps> = ({
     const SignedInItems = () => (
         <SignedInMenuItemsContainer>
             <IconButton onClick={handlePopoverOpen}>
-                {/* TODO: Replace the icon with the default or custom user profile */}
-                {/* TODO: Add a Tooltip and Tooltip options */}
-                <Image src={UserProfileSVG} alt="close-icon" />
+                <UserIconContainer>
+                    <Image src={user && user.imageCDNUrl ? user.imageCDNUrl : UserProfileSVG} alt="close-icon" />
+                </UserIconContainer>
             </IconButton>
         </SignedInMenuItemsContainer>
     )
@@ -177,27 +180,36 @@ const Header: React.FC<IHeaderProps> = ({
             <PopoverArrow />
             <PopoverRowProfileInfo>
                 <PopoverUserNameText>
-                    {(user.firstName ? `${user.firstName} ` : '') + (user.lastName ? `${user.lastName}` : '')}
+                    {user
+                        ? (user.firstName ? `${user.firstName} ` : '') + (user.lastName ? `${user.lastName}` : '')
+                        : ''}
                 </PopoverUserNameText>
-                <PopoverEmailText>{user.email}</PopoverEmailText>
+                <PopoverEmailText>{user ? user.email : ''}</PopoverEmailText>
             </PopoverRowProfileInfo>
             <PopoverRowOption>
-                {/* TODO: Add account settings route */}
-                <Link href={`${R.ROUTE_ITEMS.userProfile}/${user.id}`} passHref>
+                {/* TODO: Replace with the unique username once DTO is updated */}
+                <Link
+                    href={
+                        user && user.id !== undefined && user.id !== null
+                            ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                            : ``
+                    }
+                    passHref
+                >
                     <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
                         {S.PROFILE_POPOVER_ITEMS.AccountSettings}
                     </PopoverOptionLinkText>
                 </Link>
             </PopoverRowOption>
-            <PopoverRowOption>
-                {userRole === UserRoleEnum.Admin ? (
+            {userRole === UserRoleEnum.Admin ? (
+                <PopoverRowOption>
                     <Link href={R.ROUTE_ITEMS.admin} passHref>
                         <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
                             {S.PROFILE_POPOVER_ITEMS.AdminMenu}
                         </PopoverOptionLinkText>
                     </Link>
-                ) : null}
-            </PopoverRowOption>
+                </PopoverRowOption>
+            ) : null}
             <PopoverRowOption>
                 {/* TODO: Add help route */}
                 <Link href={R.ROUTE_ITEMS.home} passHref>
@@ -302,7 +314,16 @@ const Header: React.FC<IHeaderProps> = ({
                     <>
                         {/* TODO: Add profile route  */}
                         <MenuItemRow id="marginBottom">
-                            <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
+                            <Link
+                                href={
+                                    user && user.id !== undefined && user.id !== null
+                                        ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                                        : ``
+                                }
+                                passHref
+                            >
+                                <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
+                            </Link>
                         </MenuItemRow>
                         {/* TODO: Add settings route  */}
                         <MenuItemRow id="marginBottom">
@@ -324,12 +345,15 @@ const Header: React.FC<IHeaderProps> = ({
                     </>
                 )}
             </MenuItemsSectionRow>
-            <MenuItemsSectionRow>
-                {/* TODO: Add admin route  */}
-                <MenuItemRow>
-                    <MenuItemAnchorText>{S.HEADER_ITEMS.Admin}</MenuItemAnchorText>
-                </MenuItemRow>
-            </MenuItemsSectionRow>
+            {userRole === UserRoleEnum.Admin ? (
+                <MenuItemsSectionRow>
+                    <MenuItemRow>
+                        <Link href={`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`} passHref>
+                            <MenuItemAnchorText>{S.HEADER_ITEMS.Admin}</MenuItemAnchorText>
+                        </Link>
+                    </MenuItemRow>
+                </MenuItemsSectionRow>
+            ) : null}
         </MenuContainerMobile>
     )
 

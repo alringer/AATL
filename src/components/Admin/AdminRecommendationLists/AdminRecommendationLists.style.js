@@ -71,7 +71,7 @@ export const AdminRecommendationListsActionsColumn = styled.div`
     margin-right: 40px;
 `
 
-export const AdminRecommendationListsClickableText = styled.p`
+export const AdminRecommendationListsClickableText = styled.a`
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;
@@ -81,6 +81,11 @@ export const AdminRecommendationListsClickableText = styled.p`
     text-decoration: underline;
     cursor: pointer;
     color: ${(props) => props.theme.darkSlateBlue};
+    text-decoration-color: ${(props) => props.theme.darkSlateBlue} !important;
+    :hover {
+        text-decoration: underline;
+        text-decoration-color: ${(props) => props.theme.darkSlateBlue} !important;
+    }
 `
 
 export const AdminRecommendationListsActionClickableText = styled.p`

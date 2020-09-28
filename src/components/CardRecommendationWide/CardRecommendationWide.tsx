@@ -5,15 +5,18 @@ import ExpandSVG from 'assets/expand-icon.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import FlagButton from 'components/CardButtons/FlagButton'
+import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { FETCH_RECOMMENDATION } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import _ from 'lodash'
+import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
@@ -44,6 +47,7 @@ import { ICategory } from 'utilities/types/category'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
 import {
+    RecommendationAnchor,
     RecommendationAuthorNameText,
     RecommendationAuthorTitleText,
     RecommendationButtonsContainer,
@@ -62,6 +66,10 @@ import {
     RecommendationTitleText,
 } from './CardRecommendationWide.style'
 
+export enum CardRecommendationWideEnum {
+    RecommendationList,
+}
+
 interface IReduxProps {
     userRole: UserRoleEnum
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
@@ -72,6 +80,8 @@ interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
     isHighlighted?: boolean
     isFull: boolean
     recommendation: IRecommendation
+    handleRemoveFromList?: () => void
+    type?: CardRecommendationWideEnum
 }
 
 const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
@@ -82,6 +92,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     userRole,
     openRecommendationModal,
     openListModal,
+    handleRemoveFromList,
+    type,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -112,6 +124,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             )
         }
         e.stopPropagation()
+        setMoreVisible(false)
     }
 
     const handleLike = (e: React.MouseEvent<HTMLElement>) => {
@@ -127,6 +140,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         if (currentRecommendation) {
             if (userRole === UserRoleEnum.Admin) {
                 console.log('TODO: Add the current recommendation to a recommendation list ', currentRecommendation.id)
+                const openListModalPayload: OpenListModalPayload = {
+                    currentListModalView: ListModalViewEnum.AddToRecommendationList,
+                    recommendationID: currentRecommendation.id,
+                }
+                openListModal(openListModalPayload)
             } else if (userRole === UserRoleEnum.User && currentRecommendation.venue) {
                 const openListModalPayload: OpenListModalPayload = {
                     currentListModalView: ListModalViewEnum.AddToRestaurantList,
@@ -136,6 +154,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             }
         }
         e.stopPropagation()
+        setMoreVisible(false)
     }
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
         if (
@@ -147,13 +166,14 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         ) {
             authenticatedAction(() =>
                 openRecommendationModal({
-                    placeID: String(currentRecommendation.id),
+                    placeID: String(currentRecommendation.venue.id),
                     placeName: currentRecommendation.venue.name,
                     isAATL: true,
                 })
             )
         }
         e.stopPropagation()
+        setMoreVisible(false)
     }
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
         if (currentRecommendation) {
@@ -168,7 +188,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 <Snackbar
                                     type={B.RECOMMENDATION_LINK_COPIED.Type}
                                     title={B.RECOMMENDATION_LINK_COPIED.Title}
-                                    message={B.RECOMMENDATION_LINK_COPIED.Body}
+                                    message={
+                                        <SnackbarMessageBody>{B.RECOMMENDATION_LINK_COPIED.Body}</SnackbarMessageBody>
+                                    }
                                 />
                             </div>
                         ),
@@ -179,15 +201,24 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 })
         }
         e.stopPropagation()
+        setMoreVisible(false)
+    }
+
+    const handleDelete = (e: React.MouseEvent<HTMLElement>) => {
+        if (currentRecommendation && handleRemoveFromList) {
+            handleRemoveFromList()
+        }
+        e.stopPropagation()
+        setMoreVisible(false)
     }
 
     const handleMore = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Display more options
-        setMoreVisible(!isMoreVisible)
-        e.stopPropagation()
         if (currentRecommendation) {
             console.log('Recommendation ellipses clicked. Recommendation ID: ', currentRecommendation.id)
         }
+        setMoreVisible(!isMoreVisible)
+        e.stopPropagation()
     }
 
     const ViewMore = () => {
@@ -242,16 +273,21 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                         <RecommendationButtonsContainer>
                                             {isMoreVisible ? (
                                                 <MoreHorizontalContainer>
-                                                    {/* {type === CardPlaceWideEnum.Profile ? (
-                                                        <RemoveFromListButton handleClick={handleAddToList} />
-                                                    ) : (
-                                                        )} */}
                                                     <FlagButton handleClick={handleFlag} />
-                                                    <AddToListButton
-                                                        handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                            authenticatedAction(() => handleAddToList(e))
-                                                        }
-                                                    />
+                                                    {type === CardRecommendationWideEnum.RecommendationList &&
+                                                    userRole === UserRoleEnum.Admin ? (
+                                                        <RemoveFromListButton
+                                                            handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                authenticatedAction(() => handleDelete(e))
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <AddToListButton
+                                                            handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                authenticatedAction(() => handleAddToList(e))
+                                                            }
+                                                        />
+                                                    )}
                                                     <WriteRecommendationButton
                                                         handleClick={handleWriteRecommendation}
                                                     />
@@ -321,12 +357,23 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     </RecommendationSummaryText>
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
-                    <RecommendationAuthorNameText>
-                        {_.has(currentRecommendation, 'createdBy.firstName') &&
-                        _.has(currentRecommendation, 'createdBy.lastName')
-                            ? currentRecommendation.createdBy.firstName + ' ' + currentRecommendation.createdBy.lastName
-                            : ''}
-                    </RecommendationAuthorNameText>
+                    {/* TODO: Replace ID below with UserName once username becomes unique */}
+                    <Link
+                        href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
+                        passHref={true}
+                        prefetch={false}
+                    >
+                        <RecommendationAnchor onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}>
+                            <RecommendationAuthorNameText>
+                                {_.has(currentRecommendation, 'createdBy.firstName') &&
+                                _.has(currentRecommendation, 'createdBy.lastName')
+                                    ? currentRecommendation.createdBy.firstName +
+                                      ' ' +
+                                      currentRecommendation.createdBy.lastName
+                                    : ''}
+                            </RecommendationAuthorNameText>
+                        </RecommendationAnchor>
+                    </Link>
                     <RecommendationAuthorTitleText>
                         {_.has(currentRecommendation, 'createdBy.userByLine')
                             ? currentRecommendation.createdBy.userByLine
@@ -338,16 +385,22 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 <MobileButtonsContainer>
                                     {isMoreVisible ? (
                                         <MobileActionButtonsContainer>
-                                            {/* {type === CardPlaceWideEnum.Profile ? (
-                                                <RemoveFromListButton handleClick={(e:React.MouseEvent<HTMLElement>) => authenticatedAction(() => handleAddToList(e))} isMobile={true} />
+                                            {type === CardRecommendationWideEnum.RecommendationList &&
+                                            userRole === UserRoleEnum.Admin ? (
+                                                <RemoveFromListButton
+                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                        authenticatedAction(() => handleDelete(e))
+                                                    }
+                                                    isMobile={true}
+                                                />
                                             ) : (
-                                                )} */}
-                                            <AddToListButton
-                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                    authenticatedAction(() => handleAddToList(e))
-                                                }
-                                                isMobile={true}
-                                            />
+                                                <AddToListButton
+                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                        authenticatedAction(() => handleAddToList(e))
+                                                    }
+                                                    isMobile={true}
+                                                />
+                                            )}
                                             <WriteRecommendationButton
                                                 handleClick={handleWriteRecommendation}
                                                 isMobile={true}

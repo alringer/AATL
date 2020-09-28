@@ -40,3 +40,12 @@ export const RecommendationAuthorTitleText = styled(WideAuthorTitleText)``
 export const RecommendationTitleSpan = styled.span`
     margin-right: 10px;
 `
+
+export const RecommendationAnchor = styled.a`
+    cursor: pointer;
+    text-decoration: none;
+    :hover {
+        text-decoration: underline;
+        text-decoration-color: ${(props) => props.theme.darkGrey};
+    }
+`

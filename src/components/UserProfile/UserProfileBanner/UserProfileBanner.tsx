@@ -1,16 +1,27 @@
+import DefaultUserProfileImage from 'assets/user-profile-icon.svg'
 import UserProfileInstagramIcon from 'assets/user-profile-instagram-icon.svg'
+import Image from 'components/Image/Image'
+import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
+import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { StoreState } from 'store'
+import { openUserProfileEditModal } from 'store/userProfileEditModal/userProfileEditModal_actions'
+import { OpenUserProfileEditModalPayload } from 'store/userProfileEditModal/userProfileEditModal_types'
 import { query } from 'style/device'
-import UserProfileImageDropzone from '../UserProfileImageDropzone/UserProfileImageDropzone'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { IUserProfile } from 'utilities/types/userProfile'
 import {
     UserProfileBannerContainer,
+    UserProfileBannerEditButton,
+    UserProfileBannerEditIcon,
+    UserProfileBannerPencilButton,
     UserProfileContentBodyContainer,
     UserProfileContentContainer,
     UserProfileContentHeaderContainer,
     UserProfileDescription,
     UserProfileDescriptionContainer,
-    UserProfileDescriptionInput,
     UserProfileImageContainer,
     UserProfileInstagram,
     UserProfileInstagramContainer,
@@ -18,114 +29,72 @@ import {
     UserProfileMainInformationContainer,
     UserProfileName,
     UserProfileNameContainer,
-    UserProfileNameInput,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
     UserProfileTitleContainer,
-    UserProfileTitleInput,
 } from './UserProfileBanner.style'
 
-const UserProfileBanner = () => {
-    const [imageFile, setImageFile] = React.useState(null)
+interface IReduxProps {
+    currentUser: IUserProfile | null
+    openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
+}
+interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
+    user: IUserProfile | null
+    fetchUser: () => void
+}
+
+const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
+    user,
+    currentUser,
+    openUserProfileEditModal,
+    fetchUser,
+}) => {
+    const isOwner = currentUser && user && currentUser.id === user.id
     // Input States
+    const [viewedUser, setViewedUser] = React.useState(user)
     const [userInformation, setUserInformation] = React.useState({
-        userName: 'Jane Doe',
-        userTitle: 'Magazine Writer & Actor',
-        userDescription:
-            'A wannabe musician and later fake life coach, I am a "work-shy freeloader" who has been unemployed for most of my life. I love good food and am obsessed with finding the perfect item on any menu. I love burgers, kebabs, curry, sushi, fish and chips, falafel, wraps, cupcakes, unhealthy salads and alcohol.',
+        userName:
+            user.firstName && user.lastName
+                ? user.firstName + ' ' + user.lastName
+                : user.firstName
+                ? user.firstName
+                : user.lastName
+                ? user.lastName
+                : '',
+        userTitle: user.userByLine ? user.userByLine : '',
+        userDescription: user.content ? user.content : '',
     })
-    const [editing, setEditing] = React.useState({
-        userName: false,
-        userTitle: false,
-        userDescription: false,
-    })
 
-    const handleDrop = (acceptedFiles: any) => {
-        if (acceptedFiles && acceptedFiles.length > 0) {
-            acceptedFiles.forEach((file: any) => {
-                console.log('TODO: Call API to upload the image and get the updated user profile')
-                // TODO: Call API to upload the image and get the updated user profile
-                const reader = new FileReader()
-                reader.onabort = () => console.log('file reading was aborted')
-                reader.onerror = () => console.log('file reading has failed')
-                reader.onload = () => {
-                    // Do whatever you want with the file contents
-                    const binaryStr = reader.result
-                    // console.log(binaryStr)
-                }
-                reader.readAsArrayBuffer(file)
-            })
-            setImageFile(acceptedFiles[0])
-        }
-    }
+    React.useEffect(() => {
+        setUserInformation({
+            userName:
+                user.firstName && user.lastName
+                    ? user.firstName + ' ' + user.lastName
+                    : user.firstName
+                    ? user.firstName
+                    : user.lastName
+                    ? user.lastName
+                    : '',
+            userTitle: user.userByLine ? user.userByLine : '',
+            userDescription: user.content ? user.content : '',
+        })
+        setViewedUser(user)
+    }, [user])
 
-    const handleRemove = (e: React.MouseEvent<HTMLElement>) => {
-        e.stopPropagation()
-        console.log('TODO: Call API to remove the profile image and get the updated user profile')
-        setImageFile(null)
-    }
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserInformation({ ...userInformation, [e.target.id]: e.target.value })
-    }
-
-    const handleTextFieldKeyDown = (e: React.KeyboardEvent) => {
-        switch (e.key) {
-            case 'Enter':
-                setEditing({ ...editing, [e.currentTarget.id]: false })
-                break
-            case 'Escape':
-                setEditing({ ...editing, [e.currentTarget.id]: false })
-                break
-            default:
-                break
-        }
-    }
-
-    const handleSetEditing = (e: React.MouseEvent<HTMLElement>) => {
-        setEditing({ ...editing, [e.currentTarget.id]: true })
-    }
-
-    const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-        setEditing({ ...editing, [e.currentTarget.id]: false })
+    const handleEditProfile = () => {
+        openUserProfileEditModal({
+            onSuccess: fetchUser,
+        })
     }
 
     const renderHeaderAndDescription = () => {
         return (
             <UserProfileContentHeaderContainer>
                 <UserProfileNameContainer>
-                    {editing.userName ? (
-                        <UserProfileNameInput
-                            id="userName"
-                            value={userInformation.userName}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            onKeyDown={handleTextFieldKeyDown}
-                            autoFocus={true}
-                            wrap="soft"
-                        />
-                    ) : (
-                        <UserProfileName id="userName" onClick={handleSetEditing}>
-                            {userInformation.userName}
-                        </UserProfileName>
-                    )}
+                    <UserProfileName id="userName">{userInformation.userName}</UserProfileName>
                 </UserProfileNameContainer>
                 <UserProfileTitleContainer>
-                    {editing.userTitle ? (
-                        <UserProfileTitleInput
-                            id="userTitle"
-                            value={userInformation.userTitle}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            onKeyDown={handleTextFieldKeyDown}
-                            autoFocus={true}
-                            wrap="soft"
-                        />
-                    ) : (
-                        <UserProfileTitle id="userTitle" onClick={handleSetEditing}>
-                            {userInformation.userTitle}
-                        </UserProfileTitle>
-                    )}
+                    <UserProfileTitle id="userTitle">{userInformation.userTitle}</UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
         )
@@ -137,45 +106,52 @@ const UserProfileBanner = () => {
                 {(matches) => (
                     <>
                         <UserProfileMainInformationContainer>
+                            {isOwner && (matches.laptop || matches.tablet) && (
+                                <UserProfileBannerEditButton onClick={handleEditProfile}>
+                                    <UserProfileBannerEditIcon />
+                                    &nbsp; EDIT PROFILE
+                                </UserProfileBannerEditButton>
+                            )}
                             <UserProfileImageContainer>
-                                <UserProfileImageDropzone
-                                    handleDrop={handleDrop}
-                                    handleRemove={handleRemove}
-                                    imageFile={imageFile}
+                                <Image
+                                    src={viewedUser.imageCDNUrl ? viewedUser.imageCDNUrl : DefaultUserProfileImage}
+                                    alt="user-profile-image"
                                 />
                             </UserProfileImageContainer>
                             {matches.mobile && renderHeaderAndDescription()}
+                            {matches.mobile && (
+                                <UserProfileBannerPencilButton onClick={handleEditProfile}>
+                                    <UserProfileBannerEditIcon />
+                                </UserProfileBannerPencilButton>
+                            )}
                         </UserProfileMainInformationContainer>
                         <UserProfileContentContainer>
                             {(matches.laptop || matches.tablet) && renderHeaderAndDescription()}
                             <UserProfileContentBodyContainer>
                                 <UserProfileDescriptionContainer>
-                                    {editing.userDescription ? (
-                                        <UserProfileDescriptionInput
-                                            id="userDescription"
-                                            value={userInformation.userDescription}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            onKeyDown={handleTextFieldKeyDown}
-                                            autoFocus={true}
-                                            wrap="soft"
-                                        />
-                                    ) : (
-                                        <UserProfileDescription id="userDescription" onClick={handleSetEditing}>
-                                            {userInformation.userDescription}
-                                        </UserProfileDescription>
-                                    )}
+                                    <UserProfileDescription id="userDescription">
+                                        {userInformation.userDescription}
+                                    </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
-                                    Recommends: 266 Places
+                                    {S.USER_PROFILE_BANNER.Recommends}:{' '}
+                                    {viewedUser.recommendations && viewedUser.recommendations.length
+                                        ? viewedUser.recommendations.length
+                                        : 0}{' '}
+                                    {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
-                                <UserProfileInstagramContainer href="https://instagram.com" target="_blank">
-                                    <UserProfileInstagramIconImg
-                                        src={UserProfileInstagramIcon}
-                                        alt="user-profile-instagram-icon"
-                                    />
-                                    <UserProfileInstagram>@JaneDoe</UserProfileInstagram>
-                                </UserProfileInstagramContainer>
+                                {viewedUser.instagramId ? (
+                                    <UserProfileInstagramContainer
+                                        href={`https://instagram.com/${viewedUser.instagramId}`}
+                                        target="_blank"
+                                    >
+                                        <UserProfileInstagramIconImg
+                                            src={UserProfileInstagramIcon}
+                                            alt="user-profile-instagram-icon"
+                                        />
+                                        <UserProfileInstagram>@JaneDoe</UserProfileInstagram>
+                                    </UserProfileInstagramContainer>
+                                ) : null}
                             </UserProfileContentBodyContainer>
                         </UserProfileContentContainer>
                     </>
@@ -185,4 +161,16 @@ const UserProfileBanner = () => {
     )
 }
 
-export default UserProfileBanner
+const mapStateToProps = (state: StoreState) => ({
+    currentUser: state.userReducer.user,
+})
+
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            openUserProfileEditModal,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(UserProfileBanner))

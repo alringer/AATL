@@ -8,6 +8,10 @@ export interface ICategory {
     tagName: string
 }
 
+export interface ICategoryWithCount extends ICategory {
+    venueCount: number
+}
+
 export const mockCategoryList: ICategory[] = [
     { tagName: 'Ainu', longName: 'Ainu', id: 0, source: sourceEnum.Yelp, sourceId: null },
     { tagName: 'Albanian', longName: 'Albanian', id: 1, source: sourceEnum.Yelp, sourceId: null },

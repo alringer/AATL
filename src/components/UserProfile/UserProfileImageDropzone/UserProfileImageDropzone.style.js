@@ -1,5 +1,6 @@
+import { device } from 'style/device'
 import zIndices from 'style/zIndices'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const UserProfileImageDropzoneSection = styled.section`
     width: 100%;
@@ -12,8 +13,6 @@ export const UserProfileImageDropzoneContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props => props.theme.darkSlateBlue};
-    border-radius: 50%;
-    border: solid 4px ${props => props.theme.white};
     cursor: pointer;
     overflow: hidden;
 
@@ -33,6 +32,16 @@ export const UserProfileImageDropzoneContainer = styled.div`
             background-color: rgba(0,0,0,0.3);
         }
     }
+
+    ${props => {
+        if (props.id === 'uploading') {
+            return css`
+                ::after {
+                    background-color: rgba(0,0,0,0.3);
+                }
+            `
+        }
+    }}
 `
 
 export const UserProfileBannerImage = styled.img`
@@ -46,7 +55,6 @@ export const UserProfileBannerCameraImageContainer = styled.div`
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-    padding: 27px;
     border-radius: 50%;
     
     z-index: ${zIndices.userProfileDropzoneHover};
@@ -54,6 +62,32 @@ export const UserProfileBannerCameraImageContainer = styled.div`
     :hover {
         background-color: rgba(0,0,0,0.5);
     }
+
+    @media ${device.mobile} {
+        padding: 10px;
+    }
+    @media ${device.tablet} {
+        padding: 27px;
+    }
 `
 
-export const UserProfileBannerCameraImage = styled.img``
+export const UserProfileBannerLoadingImageContainer = styled.div`
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    /* border-radius: 50%; */
+    
+    z-index: ${zIndices.userProfileDropzoneHover};
+`
+
+export const UserProfileBannerCameraImage = styled.img`
+    @media ${device.mobile} {
+        width: 18px;
+        height: 18px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        height: auto;
+    }
+`

@@ -1,10 +1,14 @@
+import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
+import { IVenueListMeta } from 'utilities/types/venueListMeta'
+
 export interface ListModalReducerState {
     isOpen: boolean
     currentListModalView: ListModalViewEnum | null
     placeID: number | null
     recommendationID: number | null
-    placeListID: number | null
-    recommendationListID: number | null
+    placeList: IVenueListMeta | null
+    recommendationList: IRecommendationListMeta | null
+    onSuccess: () => void
 }
 
 export enum ListModalViewEnum {
@@ -14,14 +18,17 @@ export enum ListModalViewEnum {
     AddToNewRecommendationList,
     EditRestaurantList,
     EditRecommendationList,
+    DeleteRestaurantList,
+    DeleteRecommendationList,
 }
 
 export type OpenListModalPayload = {
     currentListModalView: ListModalViewEnum
     placeID?: number
     recommendationID?: number
-    placeListID?: number
-    recommendationListID?: number
+    placeList?: IVenueListMeta
+    recommendationList?: IRecommendationListMeta
+    onSuccess?: () => void
 }
 
 // Action Types

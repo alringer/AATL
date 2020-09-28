@@ -11,8 +11,9 @@ const initialState: ListModalReducerState = {
     currentListModalView: null,
     placeID: null,
     recommendationID: null,
-    placeListID: null,
-    recommendationListID: null,
+    placeList: null,
+    recommendationList: null,
+    onSuccess: () => {},
 }
 
 const listModalReducer = (state = initialState, action: ListModalActionTypes): ListModalReducerState => {

@@ -30,7 +30,7 @@ import { IRecommendation } from './recommendation'
 //     street?: string
 //     streetNumber?: string
 //     updatedAt?: string
-//     venueListMeta: IVenueListMeta
+//     venueListMeta: IVenueMetaList
 //     venueViews?: IVenueView[]
 //     venuetype?: venueTypeEnum
 //     websiteURL?: string

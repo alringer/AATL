@@ -116,6 +116,15 @@ export const ButtonContainer = styled.div`
     }}
 `
 
+export const UserIconContainer = styled.div`
+    display: flex;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+
+`
+
 export const LoginItemsContainer = styled.div``
 export const AdminItemsContainer = styled.div``
 export const ProfileItemsContainer = styled.div``

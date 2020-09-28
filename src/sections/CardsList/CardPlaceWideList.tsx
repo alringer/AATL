@@ -4,18 +4,20 @@ import { IVenue } from 'utilities/types/venue'
 import { RecommendationCardContainer } from './List.style'
 
 interface ICardPlaceWideList {
-    places: IVenue[]
+    places: IVenue[] | null
     type: CardPlaceWideEnum
 }
 
 const CardPlaceWideList: React.FC<ICardPlaceWideList> = ({ places, type }) => {
     return (
         <>
-            {places.map((place: IVenue) => (
-                <RecommendationCardContainer key={place.id}>
-                    <CardPlaceWide place={place} type={type} />
-                </RecommendationCardContainer>
-            ))}
+            {places
+                ? places.map((place: IVenue) => (
+                      <RecommendationCardContainer key={place.id}>
+                          <CardPlaceWide place={place} type={type} />
+                      </RecommendationCardContainer>
+                  ))
+                : null}
         </>
     )
 }

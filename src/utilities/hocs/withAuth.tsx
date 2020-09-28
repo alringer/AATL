@@ -1,8 +1,10 @@
 import { withKeycloak } from '@react-keycloak/nextjs'
+import { KeycloakInstance } from 'keycloak-js'
 import React from 'react'
 import { Subtract } from 'utility-types'
 
 export interface IWithAuthInjectedProps {
+    keycloak: KeycloakInstance
     keycloakLogin: () => void
     keycloakLogout: () => void
     keycloakSignUp: () => void
@@ -63,6 +65,7 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
         return (
             <WrappedComponent
                 {...((passProps as unknown) as P)}
+                keycloak={keycloak}
                 keycloakLogin={handleLogin}
                 keycloakLogout={handleLogout}
                 keycloakSignUp={handleSignUp}

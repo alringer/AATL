@@ -9,6 +9,7 @@ import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -58,6 +59,7 @@ export enum CardPlaceWideEnum {
     City,
     Search,
     Profile,
+    ProfileOwnerList,
 }
 
 interface IReduxProps {
@@ -67,6 +69,7 @@ interface IReduxProps {
 interface ICardPlaceWideProps extends IReduxProps, IWithAuthInjectedProps {
     place: IVenue
     type: CardPlaceWideEnum
+    handleRemoveFromList?: (place: IVenue) => void
 }
 
 const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
@@ -75,6 +78,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     openRecommendationModal,
     openListModal,
     authenticatedAction,
+    handleRemoveFromList,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
@@ -128,7 +132,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                 <Snackbar
                                     type={B.RESTAURANT_LINK_COPIED.Type}
                                     title={B.RESTAURANT_LINK_COPIED.Title}
-                                    message={B.RESTAURANT_LINK_COPIED.Body}
+                                    message={<SnackbarMessageBody>{B.RESTAURANT_LINK_COPIED.Body}</SnackbarMessageBody>}
                                 />
                             </div>
                         ),
@@ -143,6 +147,13 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
 
     const handleMore = (e: React.MouseEvent<HTMLElement>) => {
         setMoreVisible(!isMoreVisible)
+        e.stopPropagation()
+    }
+
+    const handleRemove = (e: React.MouseEvent<HTMLElement>) => {
+        if (_.has(place, 'id') && handleRemoveFromList) {
+            handleRemoveFromList(place)
+        }
         e.stopPropagation()
     }
 
@@ -186,8 +197,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                         <CardPlaceWideButtonsContainer>
                                             {isMoreVisible ? (
                                                 <MoreHorizontalContainer>
-                                                    {type === CardPlaceWideEnum.Profile ? (
-                                                        <RemoveFromListButton handleClick={handleAddToList} />
+                                                    {type === CardPlaceWideEnum.ProfileOwnerList ? (
+                                                        <RemoveFromListButton handleClick={handleRemove} />
                                                     ) : (
                                                         <AddToListButton handleClick={handleAddToList} />
                                                     )}
@@ -241,8 +252,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                 <MobileButtonsContainer>
                                     {isMoreVisible ? (
                                         <MobileActionButtonsContainer>
-                                            {type === CardPlaceWideEnum.Profile ? (
-                                                <RemoveFromListButton handleClick={handleAddToList} isMobile={true} />
+                                            {type === CardPlaceWideEnum.ProfileOwnerList ? (
+                                                <RemoveFromListButton handleClick={handleRemove} isMobile={true} />
                                             ) : (
                                                 <AddToListButton handleClick={handleAddToList} isMobile={true} />
                                             )}

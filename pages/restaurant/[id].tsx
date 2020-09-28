@@ -2,6 +2,7 @@ import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import HaveYouBeenTo from 'components/HaveYouBeenTo/HaveYouBeenTo'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { FETCH_RESTAURANT, REGISTER_VIEW } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -12,6 +13,7 @@ import React from 'react'
 import CardPlaceSmallList from 'sections/CardsList/CardPlaceSmallList'
 import CardRecommendationWideList from 'sections/CardsList/CardRecommendationWideList'
 import { IVenue } from 'utilities/types/venue'
+
 interface IServerSideProps {
     recommendationID: number | null
     restaurantID: number | null
@@ -23,6 +25,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
     React.useEffect(() => {
+        console.log('Venue Information Received: ', venueInformation)
         if (venueInformation === null || venueInformation === undefined) {
             enqueueSnackbar('', {
                 content: (
@@ -30,7 +33,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
                         <Snackbar
                             type={B.ERROR_RESTAURANT.Type}
                             title={B.ERROR_RESTAURANT.Title}
-                            message={B.ERROR_RESTAURANT.Body}
+                            message={<SnackbarMessageBody>{B.ERROR_RESTAURANT.Body}</SnackbarMessageBody>}
                         />
                     </div>
                 ),
@@ -86,21 +89,23 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
                 placeID={venueInformation ? venueInformation.id : null}
                 placeName={venueInformation ? venueInformation.name : null}
             />
-            <CardPlaceSmallList
-                title={`Places similar to ${venueInformation ? venueInformation.name : null}`}
-                subTitle={`A sampling of places similar to ${
-                    venueInformation ? venueInformation.name : null
-                } that may peak your appetite.`}
-                places={venueInformation ? venueInformation.similarVenues : null}
-                category={
-                    venueInformation &&
-                    venueInformation.categories &&
-                    venueInformation.categories[0] &&
-                    venueInformation.categories[0].longName
-                        ? venueInformation.categories[0].longName
-                        : ''
-                }
-            />
+            {venueInformation && venueInformation.similarVenues && venueInformation.similarVenues.length > 0 ? (
+                <CardPlaceSmallList
+                    title={`${S.RESTAURANT_PAGE.PlacesSimilarTitle} ${venueInformation ? venueInformation.name : null}`}
+                    subTitle={`${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne} ${
+                        venueInformation ? venueInformation.name : null
+                    } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne}`}
+                    places={venueInformation ? venueInformation.similarVenues : null}
+                    category={
+                        venueInformation &&
+                        venueInformation.categories &&
+                        venueInformation.categories[0] &&
+                        venueInformation.categories[0].longName
+                            ? venueInformation.categories[0].longName
+                            : ''
+                    }
+                />
+            ) : null}
             <EmailSubscription />
         </>
     ) : null

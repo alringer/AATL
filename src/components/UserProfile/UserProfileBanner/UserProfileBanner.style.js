@@ -1,5 +1,8 @@
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import MuiEditIcon from '@material-ui/icons/Edit'
 import ProfileBannerBG from 'assets/profileHeroBG.svg'
+import { CustomButton } from 'style/Button/Button.style'
+import { CustomIconButton } from 'style/Button/IconButton.style'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -18,7 +21,7 @@ export const UserProfileBannerContainer = styled.div`
 
     }
     @media ${device.tablet} {
-        padding: 32px 24px;
+        padding: 102px 24px 78px;
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
@@ -46,6 +49,9 @@ export const UserProfileMainInformationContainer = styled.div`
 
 export const UserProfileImageContainer = styled.div`
     display: flex;
+    border-radius: 50%;
+    border: solid 4px ${props => props.theme.white};
+    overflow: hidden;
 
     @media ${device.mobile} {
         width: 70px;
@@ -112,7 +118,9 @@ const UserProfileNameCSS = css`
         font-size: 36px;
     }
 `
-export const UserProfileNameContainer = styled.div``
+export const UserProfileNameContainer = styled.div`
+    display: flex;
+`
 export const UserProfileName = styled.p`
     ${UserProfileNameCSS}
 `
@@ -137,7 +145,9 @@ const UserProfileTitleCSS = css`
         font-size: 18px;
     }
 `
-export const UserProfileTitleContainer = styled.div``
+export const UserProfileTitleContainer = styled.div`
+    display: flex;
+`
 export const UserProfileTitle = styled.p`
     ${UserProfileTitleCSS}
 `
@@ -156,6 +166,7 @@ const UserProfileDescriptionCSS = css`
     color: ${(props) => props.theme.white};
 `
 export const UserProfileDescriptionContainer = styled.div`
+    display: flex;
     width: 100%;
     @media ${device.mobile} {
         margin-top: 24px;
@@ -218,4 +229,63 @@ export const UserProfileContentBodyContainer = styled.div`
     display: flex;
     width: 100%;
     flex-direction: column;
+`
+
+// Buttons
+export const UserProfileBannerEditButton = styled(CustomButton)`
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    color: ${(props) => props.theme.white};
+    background-color: transparent;
+    border-color: ${props => props.theme.white};
+    :hover {
+        background-color: transparent;
+        border-color: ${props => props.theme.white};
+    }
+
+    @media ${device.mobile} {
+        width: 48px;
+        height: 48px;
+        right: 40px;
+        top: 40px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        height: auto;
+        right: 24px;
+        top: 24px;
+    }
+    @media ${device.laptop} {
+        right: 40px;
+        top: 40px;
+    }
+`
+
+export const UserProfileBannerPencilButton = styled(CustomIconButton)`
+    min-width: 32px !important;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+
+    span {
+        width: fit-content;
+    }
+
+    color: ${(props) => props.theme.white};
+    background-color: transparent;
+    border-color: ${props => props.theme.white};
+    :hover {
+        background-color: transparent;
+        border-color: ${props => props.theme.white};
+    }
+`
+
+export const UserProfileBannerEditIcon = styled(MuiEditIcon)`
+    width: 18px;
+    height: 18px;
+    color: white;
 `

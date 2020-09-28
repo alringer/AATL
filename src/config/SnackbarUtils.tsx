@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as B from 'constants/SnackbarConstants'
 import { useSnackbar, VariantType, WithSnackbarProps } from 'notistack'
 import React from 'react'
@@ -33,21 +34,27 @@ export default {
         this.toast(msg, 'info')
     },
     error(error: AxiosError) {
-        useSnackbarRef.enqueueSnackbar('', {
-            content: (
-                <div>
-                    <Snackbar
-                        type={B.SNACKBAR_TYPES.Error}
-                        title={
-                            error && error.response && error.response.status ? `Status ${String(error.response.status)}` : 'Error'
-                        }
-                        message={error.message}
-                    />
-                </div>
-            ),
-        })
+        if (useSnackbarRef) {
+            useSnackbarRef.enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.SNACKBAR_TYPES.Error}
+                            title={
+                                error && error.response && error.response.status
+                                    ? `Status ${String(error.response.status)}`
+                                    : 'Error'
+                            }
+                            message={<SnackbarMessageBody>{error.message}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
+        }
     },
     toast(msg: string, variant: VariantType = 'default') {
-        useSnackbarRef.enqueueSnackbar(msg, { variant })
+        if (useSnackbarRef) {
+            useSnackbarRef.enqueueSnackbar(msg, { variant })
+        }
     },
 }

@@ -47,6 +47,15 @@ export const ListModalMainAreaContainer = styled.div`
     }
 `
 
+export const ListModalDeleteListMessageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    @media ${device.mobile} {
+        padding: 30px 0;
+    }
+`
+
 export const ListModalTitleText = styled.div`
     font-size: 18px;
     font-weight: 500;
@@ -57,8 +66,19 @@ export const ListModalTitleText = styled.div`
     color: ${props => props.theme.charcoalGrey};
 `
 
+export const ListModalDeleteHighlightText = styled.span`
+    color: ${props => props.theme.dustyOrange};
+`
+
 
 // Cards
+export const ListModalLoadingContainer = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
 export const ListModalMainContentContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -121,6 +141,18 @@ export const ListModalCardContainer = styled.div`
             background-color: rgba(0,0,0,0.1);
         }
     }
+`
+
+export const ListModalCardImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 44px;
+    height: 44px;
+
+    margin-right: 20px;
 `
 
 export const ListModalCardTextContainer = styled.div`
@@ -226,6 +258,7 @@ export const ListModalFooterRightContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: auto;
 
     @media ${device.mobile} {
         justify-content: space-between;
@@ -265,7 +298,7 @@ export const ListModalNavigationButton = styled(CustomButton)`
     }
 `
 
-export const AddPlaceButton = styled(CustomButton)`
+export const SubmitButton = styled(CustomButton)`
     color: ${(props) => props.theme.white};
     background-color: ${(props) => props.theme.dustyOrange};
     :hover {

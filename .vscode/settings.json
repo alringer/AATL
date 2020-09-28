@@ -10,5 +10,6 @@
     "[typescriptreact]": {
         "editor.formatOnSave": true
     },
-    "prettier.configPath": ".prettierrc"
+    "prettier.configPath": ".prettierrc",
+    "typescript.preferences.importModuleSpecifier": "non-relative"
 }

@@ -6,6 +6,7 @@ import styled, { css, keyframes } from 'styled-components'
 
 export const CardContainer = styled(ContentWrapper)`
     transition: all 0.2s linear;
+    box-sizing: content-box;
 
     :hover {
         box-shadow: 0 3px 50px 0 #dedede;
@@ -46,7 +47,6 @@ export const TooltipIcon = styled.span`
 export const WideCardContainer = styled(CardContainer)`
     display: flex;
     width: 100%;
-    /* border: solid 2px rgba(54, 57, 64, 0.06); */
     border: solid 2px rgba(242,243,243,1); 
 
     @media ${device.mobile} {

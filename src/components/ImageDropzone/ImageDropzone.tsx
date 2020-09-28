@@ -1,6 +1,7 @@
 import { Tooltip } from '@material-ui/core'
 import CameraAltIcon from '@material-ui/icons/CameraAlt'
 import ImageDropzoneDefaultBackground from 'assets/image-dropzone-background.svg'
+import * as D from 'constants/ImageDimensionConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Dropzone from 'react-dropzone'
@@ -23,6 +24,7 @@ interface IImageDropzoneProps {
     preview: string
     isUploadingImage: boolean
     isImageDimensionImproper: boolean
+    tooltipMessage: string
     handleDrop: (acceptedFile: any) => void
     handleDrag: () => void
 }
@@ -34,6 +36,7 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({
     preview,
     isUploadingImage,
     isImageDimensionImproper,
+    tooltipMessage,
 }) => {
     return (
         <Dropzone
@@ -60,7 +63,7 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({
                             </ImageDropzoneBackgroundContainer>
                             <ImageDropzoneContainer {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <Tooltip title={S.IMAGE_DROPZONE.Tooltip} placement="top">
+                                <Tooltip title={tooltipMessage} placement="top">
                                     <ImageDropzoneIconContainer>
                                         <CameraAltIcon />
                                     </ImageDropzoneIconContainer>
@@ -83,7 +86,8 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({
                                                             {S.IMAGE_DROPZONE.LabelImageDimensions}
                                                         </ImageDropzoneFileInformationText>
                                                         <ImageDropzoneFileInformationText>
-                                                            {S.IMAGE_DROPZONE.ImageDimensions}
+                                                            {S.IMAGE_DROPZONE.ImageDimensions} {D.WIDTH_LIMIT}x
+                                                            {D.HEIGHT_LIMIT}
                                                         </ImageDropzoneFileInformationText>
                                                     </ImageDropzoneFileInformationColumnContainer>
                                                     <ImageDropzoneFileInformationColumnContainer>

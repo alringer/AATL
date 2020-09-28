@@ -66,7 +66,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
     )
 }
 
-export const mapStateToProps = (state: StoreState) => ({
+const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
 })
 

@@ -1,3 +1,9 @@
+import AddNewRecommendationList from 'components/ListModal/AddNewRecommendationList'
+import AddToRecommendationList from 'components/ListModal/AddToRecommendationList'
+import DeleteRecommendationList from 'components/ListModal/DeleteRecommendationList'
+import DeleteRestaurantList from 'components/ListModal/DeleteRestaurantList'
+import EditRecommendationList from 'components/ListModal/EditRecommendationList'
+import EditRestaurantList from 'components/ListModal/EditRestaurantList'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -34,7 +40,7 @@ const ListModal: React.FC<IListModalProps> = ({
         setCurrentView(currentListModalView)
     }, [currentListModalView])
 
-    const handleClickOutsideSearchModal = (event) => {
+    const handleClickOutsideListModal = (event) => {
         if (
             listModalRef.current &&
             !listModalRef.current.contains(event.target)
@@ -61,9 +67,9 @@ const ListModal: React.FC<IListModalProps> = ({
     // }
 
     React.useEffect(() => {
-        document.addEventListener('click', handleClickOutsideSearchModal, true)
+        document.addEventListener('click', handleClickOutsideListModal, true)
         return () => {
-            document.removeEventListener('click', handleClickOutsideSearchModal, true)
+            document.removeEventListener('click', handleClickOutsideListModal, true)
         }
     }, [])
 
@@ -74,8 +80,20 @@ const ListModal: React.FC<IListModalProps> = ({
                     <ListModalContentContainer ref={listModalRef}>
                         {currentView === ListModalViewEnum.AddToRestaurantList ? (
                             <AddToRestaurantList closeModal={closeModal} switchView={switchView} />
+                        ) : currentView === ListModalViewEnum.AddToRecommendationList ? (
+                            <AddToRecommendationList closeModal={closeModal} switchView={switchView} />
                         ) : currentView === ListModalViewEnum.AddToNewRestaurantList ? (
                             <AddNewRestaurantList closeModal={closeModal} switchView={switchView} />
+                        ) : currentView === ListModalViewEnum.AddToNewRecommendationList ? (
+                            <AddNewRecommendationList closeModal={closeModal} switchView={switchView} />
+                        ) : currentView === ListModalViewEnum.EditRestaurantList ? (
+                            <EditRestaurantList closeModal={closeModal} />
+                        ) : currentView === ListModalViewEnum.EditRecommendationList ? (
+                            <EditRecommendationList closeModal={closeModal} />
+                        ) : currentView === ListModalViewEnum.DeleteRestaurantList ? (
+                            <DeleteRestaurantList closeModal={closeModal} />
+                        ) : currentView === ListModalViewEnum.DeleteRecommendationList ? (
+                            <DeleteRecommendationList closeModal={closeModal} />
                         ) : null}
                     </ListModalContentContainer>
                 </CustomDialog>

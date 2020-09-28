@@ -1,5 +1,6 @@
 import Snackbar from 'components/Snackbar/Snackbar'
-import axios, { POST_NEW_VENUE, VENUE_LIST } from 'config/AxiosConfig'
+import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
+import axios, { FETCH_VENUE_LISTS, POST_NEW_VENUE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { useSnackbar } from 'notistack'
@@ -9,11 +10,12 @@ import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
 import { query } from 'style/device'
+import { CircularProgress } from 'style/Loading/CircularProgress.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
-import { IVenueMetaList } from 'utilities/types/venueMetaList'
+import { IUserProfile } from 'utilities/types/userProfile'
+import { IVenueListMeta } from 'utilities/types/venueListMeta'
 import {
     AddIcon,
-    AddPlaceButton,
     CancelButton,
     ListModalAddToListWideButton,
     ListModalCardButton,
@@ -26,14 +28,17 @@ import {
     ListModalFooterRightContainer,
     ListModalHeaderContainer,
     ListModalHeaderText,
+    ListModalLoadingContainer,
     ListModalMainAreaContainer,
     ListModalMainContentContainer,
     ListModalNavigationButton,
     ListModalTitleText,
+    SubmitButton,
 } from './ListModal.style'
 
 interface IReduxProps {
     placeID: number | null
+    user: IUserProfile
 }
 interface IAddToRestaurantListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -45,32 +50,41 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     closeModal,
     switchView,
     getTokenConfig,
+    user,
 }) => {
-    const [restaurantLists, setRestaurantLists] = React.useState<IVenueMetaList[]>([])
+    const [restaurantLists, setRestaurantLists] = React.useState<IVenueListMeta[]>([])
     const [selectedListID, setSelectedListID] = React.useState<number | null>(null)
+    const [isLoading, setLoading] = React.useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar()
 
     React.useEffect(() => {
-        // TODO: Set the current active list to the first item in the list if the list length is greater than 0
         const config = {
             headers: {
                 Authorization: getTokenConfig(),
             },
         }
+        setLoading(true)
         axios
-            .get(VENUE_LIST, config)
+            .get(FETCH_VENUE_LISTS(user.id), config)
             .then((res) => {
-                console.log('Fetched venue lists: ', res)
-                setRestaurantLists(res.data)
-                setSelectedListID(res.data[0].id)
+                if (res && res.data && res.data.length && res.data[0] && res.data[0].id) {
+                    setRestaurantLists(res.data)
+                    setSelectedListID(res.data[0].id)
+                }
             })
             .catch((err) => console.log(err))
-            .finally(() => {})
+            .finally(() => {
+                setLoading(false)
+            })
     }, [])
 
     const handleSelect = (restaurantListID: number) => {
-        if (restaurantListID) {
-            setSelectedListID(restaurantListID)
+        if (restaurantListID !== undefined && restaurantListID !== null) {
+            if (restaurantListID === selectedListID) {
+                setSelectedListID(null)
+            } else {
+                setSelectedListID(restaurantListID)
+            }
         }
     }
 
@@ -100,8 +114,12 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
                                 <Snackbar
                                     type={B.ADDED_TO_LIST.Type}
                                     title={B.ADDED_TO_LIST.Title}
-                                    message={`${res.data.venues[0].name} ${B.ADDED_TO_LIST.Body}`}
-                                    orangeMessage={`${res.data.title}`}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            {res.data.venues[0].name} {B.ADDED_TO_LIST.Body}&nbsp;
+                                            <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                        </SnackbarMessageBody>
+                                    }
                                 />
                             </div>
                         ),
@@ -120,23 +138,34 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
             <ListModalMainAreaContainer>
                 <ListModalTitleText>{S.LIST_MODAL.AddToRestaurant.Title}</ListModalTitleText>
                 <ListModalMainContentContainer>
-                    {restaurantLists.map((restaurantList: IVenueMetaList) => (
-                        <ListModalCardButton onClick={() => handleSelect(restaurantList.id)} key={restaurantList.id}>
-                            <ListModalCardContainer
-                                id={selectedListID === restaurantList.id ? 'selected' : 'not-selected'}
+                    {isLoading ? (
+                        <ListModalLoadingContainer>
+                            <CircularProgress />
+                        </ListModalLoadingContainer>
+                    ) : restaurantLists.length > 0 ? (
+                        restaurantLists.map((restaurantList: IVenueListMeta) => (
+                            <ListModalCardButton
+                                onClick={() => handleSelect(restaurantList.id)}
+                                key={restaurantList.id}
                             >
-                                <ListModalCardTextContainer>
-                                    <ListModalCardTitle>{restaurantList.title}</ListModalCardTitle>
-                                    <ListModalCardSubTitle>
-                                        {restaurantList.venues && restaurantList.venues.length
-                                            ? restaurantList.venues.length
-                                            : 0}{' '}
-                                        {S.LIST_MODAL.AddToRestaurant.Restaurants}
-                                    </ListModalCardSubTitle>
-                                </ListModalCardTextContainer>
-                            </ListModalCardContainer>
-                        </ListModalCardButton>
-                    ))}
+                                <ListModalCardContainer
+                                    id={selectedListID === restaurantList.id ? 'selected' : 'not-selected'}
+                                >
+                                    <ListModalCardTextContainer>
+                                        <ListModalCardTitle>{restaurantList.title}</ListModalCardTitle>
+                                        <ListModalCardSubTitle>
+                                            {restaurantList.venues && restaurantList.venues.length
+                                                ? restaurantList.venues.length
+                                                : 0}{' '}
+                                            {S.LIST_MODAL.AddToRestaurant.Restaurants}
+                                        </ListModalCardSubTitle>
+                                    </ListModalCardTextContainer>
+                                </ListModalCardContainer>
+                            </ListModalCardButton>
+                        ))
+                    ) : (
+                        <p>{S.LIST_MODAL.AddToRestaurant.EmptyMessage}</p>
+                    )}
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) => (
                             <>
@@ -167,9 +196,9 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
                 </Media>
                 <ListModalFooterRightContainer>
                     <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                    <AddPlaceButton onClick={handleAddPlace} disabled={selectedListID === null}>
+                    <SubmitButton onClick={handleAddPlace} disabled={selectedListID === null}>
                         {S.BUTTON_LABELS.Add}
-                    </AddPlaceButton>
+                    </SubmitButton>
                 </ListModalFooterRightContainer>
             </ListModalFooterContainer>
         </>
@@ -178,6 +207,7 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     placeID: state.listModalReducer.placeID,
+    user: state.userReducer.user,
 })
 
 export default reduxConnect(mapStateToProps)(withAuth(AddToRestaurantList))
