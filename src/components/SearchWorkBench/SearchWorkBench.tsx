@@ -187,7 +187,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <Media queries={query}>
                         {(matches) => (
                             <>
-                                {(matches.laptop || matches.tablet) && (
+                                {(matches.laptop || matches.tablet) && searchResults && searchResults.length > 0 && (
                                     <SearchCouldNotFind openSearchModal={openSearchModal} />
                                 )}
                             </>
