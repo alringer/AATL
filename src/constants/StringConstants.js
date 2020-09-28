@@ -103,7 +103,14 @@ export const ADMIN_PAGE = {
         Title: 'Recommendation Lists',
         SubTitle: 'A curated lists of recommendations. Selected lists will be displayed in the featured slideshow in the order arranged here. Up to 7 lists can be featured.',
         FeaturedLists: 'Featured Lists',
-        OtherLists: 'Other Lists'
+        OtherLists: 'Other Lists',
+        CardImage: 'Image',
+        CardTitle: 'Title',
+        CardSubtitle: 'Subtitle',
+        CardRecommendations: 'Recommendations',
+        CardActions: '',
+        CardFeature: 'Feature',
+        CardDontFeature: 'Don\'t Feature'
     }
 }
 

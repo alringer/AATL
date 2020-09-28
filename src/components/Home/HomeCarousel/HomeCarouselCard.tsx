@@ -23,6 +23,7 @@ interface IHomeCarouselCardProps {
     isCurrent: boolean
     handleMoveForward: () => void
     handleMoveBackward: () => void
+    length: number
 }
 
 const HomeCarouselCard: React.FC<IHomeCarouselCardProps> = ({
@@ -30,6 +31,7 @@ const HomeCarouselCard: React.FC<IHomeCarouselCardProps> = ({
     handleMoveForward,
     handleMoveBackward,
     isCurrent,
+    length,
 }) => {
     return featuredRecommendationList ? (
         <HomeCarouselCardContainer>
@@ -60,12 +62,16 @@ const HomeCarouselCard: React.FC<IHomeCarouselCardProps> = ({
                 >
                     <HomeCarouselViewMoreButton>{S.BUTTON_LABELS.ReadMore}</HomeCarouselViewMoreButton>
                 </Link>
-                <HomeCarouselBackwardIconButton onClick={handleMoveBackward} isCurrent={isCurrent}>
-                    <HomeCarouselForwardIcon />
-                </HomeCarouselBackwardIconButton>
-                <HomeCarouselForwardIconButton onClick={handleMoveForward} isCurrent={isCurrent}>
-                    <HomeCarouselForwardIcon />
-                </HomeCarouselForwardIconButton>
+                {length > 1 && (
+                    <>
+                        <HomeCarouselBackwardIconButton onClick={handleMoveBackward} isCurrent={isCurrent}>
+                            <HomeCarouselForwardIcon />
+                        </HomeCarouselBackwardIconButton>
+                        <HomeCarouselForwardIconButton onClick={handleMoveForward} isCurrent={isCurrent}>
+                            <HomeCarouselForwardIcon />
+                        </HomeCarouselForwardIconButton>
+                    </>
+                )}
             </HomeCarouselTextContainer>
         </HomeCarouselCardContainer>
     ) : null

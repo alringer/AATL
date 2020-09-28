@@ -10,10 +10,14 @@ import AdminRecommendationListsController from './AdminRecommendationListsContro
 interface IAdminRecommendationListsProps extends IWithAuthInjectedProps {}
 
 const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ getTokenConfig }) => {
-    const [featuredLists, setFeaturedLists] = React.useState({ id: 0, lists: [] })
-    const [otherLists, setOtherLists] = React.useState({ id: 1, lists: [] })
+    const [featuredLists, setFeaturedLists] = React.useState<IRecommendationListMeta[]>([])
+    const [otherLists, setOtherLists] = React.useState<IRecommendationListMeta[]>([])
 
     React.useEffect(() => {
+        fetchRecommendationLists()
+    }, [])
+
+    const fetchRecommendationLists = () => {
         const token = getTokenConfig()
         const config = {
             headers: {
@@ -27,27 +31,38 @@ const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ ge
                 const tempOtherLists = []
                 console.log('Fetched Recommendation List Metas: ', res)
                 res.data.map((recommendationList: IRecommendationListMeta) => {
-                    console.log('Each list: ', recommendationList)
                     if (recommendationList.featuredList) {
                         tempFeaturedLists.push(recommendationList)
                     } else {
                         tempOtherLists.push(recommendationList)
                     }
                 })
-                setFeaturedLists({ ...featuredLists, lists: tempFeaturedLists })
-                setOtherLists({ ...otherLists, lists: tempOtherLists })
+                const sortedFeaturedLists = tempFeaturedLists.sort((a, b) =>
+                    a.featuredList.sortOrder > b.featuredList.sortOrder ? 1 : -1
+                )
+                const sortedOtherLists = tempOtherLists
+                setFeaturedLists(sortedFeaturedLists)
+                setOtherLists(sortedOtherLists)
             })
             .catch((err) => console.log(err))
-    }, [])
+    }
 
     return (
         <AdminRecommendationListsContainer>
             <AdminMenuPageTitle>{S.ADMIN_PAGE.AdminRecommendationLists.Title}</AdminMenuPageTitle>
             <AdminMenuPageSubTitle>{S.ADMIN_PAGE.AdminRecommendationLists.SubTitle}</AdminMenuPageSubTitle>
             <FeatureListsTitle>{S.ADMIN_PAGE.AdminRecommendationLists.FeaturedLists}</FeatureListsTitle>
-            <AdminRecommendationListsController recommendationLists={featuredLists.lists} />
+            <AdminRecommendationListsController
+                recommendationLists={featuredLists}
+                featured={true}
+                fetchRecommendationLists={fetchRecommendationLists}
+            />
             <FeatureListsTitle>{S.ADMIN_PAGE.AdminRecommendationLists.OtherLists}</FeatureListsTitle>
-            <AdminRecommendationListsController recommendationLists={otherLists.lists} />
+            <AdminRecommendationListsController
+                recommendationLists={otherLists}
+                featured={false}
+                fetchRecommendationLists={fetchRecommendationLists}
+            />
         </AdminRecommendationListsContainer>
     )
 }

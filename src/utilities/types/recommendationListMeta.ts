@@ -6,7 +6,7 @@ export interface IRecommendationListMeta {
     createdAt?: string
     deletedAt?: string
     featuredList?: IFeaturedList
-    id?: number
+    id: number
     imageCDNUrl?: string
     listOwner: any // TODO: Type this strictly
     publishState?: publishedStateEnum

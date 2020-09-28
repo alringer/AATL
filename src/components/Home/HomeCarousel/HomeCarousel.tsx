@@ -64,6 +64,7 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                         handleMoveForward={handleMoveForward}
                         handleMoveBackward={handleMoveBackward}
                         isCurrent={currentSlideIndex === index}
+                        length={featuredRecommendationsLists.length}
                     />
                 ))}
             </Carousel>
