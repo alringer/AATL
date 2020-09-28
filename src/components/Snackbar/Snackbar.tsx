@@ -18,15 +18,7 @@ interface ISnackbarProps {
     linkDestination?: string
 }
 
-const Snackbar: React.FC<ISnackbarProps> = ({
-    type,
-    iconPath,
-    title,
-    message,
-    linkMessage,
-    linkDestination,
-    orangeMessage,
-}) => {
+const Snackbar: React.FC<ISnackbarProps> = ({ type, iconPath, title, message, linkMessage, linkDestination }) => {
     // Snackbar Full Props Example:
     // enqueueSnackbar('', {
     //     content: (

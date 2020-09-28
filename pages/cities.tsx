@@ -21,7 +21,7 @@ const Cities: NextPage<ICitiesProps> = ({ stateList, provinceList }) => {
     )
 }
 
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetStaticProps = async () => {
     let stateList: IParentRegion[] = []
     let provinceList: IParentRegion[] = []
     await axios
