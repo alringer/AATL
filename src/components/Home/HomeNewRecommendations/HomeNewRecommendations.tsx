@@ -71,7 +71,7 @@ const HomeNewRecommendations: React.FC<IHomeNewRecommendationsProps> = ({
 
     const fetchNewRecommendations = (page: number) => {
         axios
-            .get(FETCH_NEW_RECOMMENDATIONS(page))
+            .get(FETCH_NEW_RECOMMENDATIONS(page, currentPageSize))
             .then((res) => {
                 setCurrentRecommendations(res.data.content)
                 setCurrentPage(res.data.number + 1)
