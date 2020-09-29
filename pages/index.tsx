@@ -39,7 +39,6 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
                     longitude: preferredLocation.lng,
                 })
                 .then((res) => {
-                    console.log('Fetch Home Response:', res)
                     setHomeData(res.data)
                 })
                 .catch((err) => console.log(err))
@@ -49,7 +48,6 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
     return (
         <>
             <HomeBanner />
-            {/* New Recommendations */}
             <HomeNewRecommendations
                 initialRecommendations={
                     homeData && homeData.newRecommendations ? homeData.newRecommendations.content : []

@@ -85,7 +85,7 @@ const HomeNewRecommendations: React.FC<IHomeNewRecommendationsProps> = ({
         fetchNewRecommendations(value - 1)
     }
 
-    return (
+    return currentRecommendations && currentRecommendations.length > 0 ? (
         <ListContainer>
             <ListTitle>{S.HOME_PAGE.NewRecommendationsTitle}</ListTitle>
             <ListSubTitle>{S.HOME_PAGE.NewRecommendationsSubTitle}</ListSubTitle>
@@ -109,7 +109,7 @@ const HomeNewRecommendations: React.FC<IHomeNewRecommendationsProps> = ({
                 onChange={handlePagination}
             />
         </ListContainer>
-    )
+    ) : null
 }
 
 export default HomeNewRecommendations
