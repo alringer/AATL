@@ -20,7 +20,11 @@ storiesOf('Card: Wide Place Card', module)
         )
     })
     .add('Profile Page - Default', () => {
-        return <CardPlaceWide place={mockVenue} type={CardPlaceWideEnum.Profile} />
+        return (
+            <div style={{ width: '690px' }}>
+                <CardPlaceWide place={longNameVenue} type={CardPlaceWideEnum.Profile} />
+            </div>
+        )
     })
 // .add('Small Card - Default', () => {
 //     return <CardPlaceWide {...PlaceBannerData.default} type={CardPlaceWideEnum.City}/>
