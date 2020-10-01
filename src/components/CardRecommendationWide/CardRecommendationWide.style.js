@@ -1,4 +1,5 @@
 import { WideAuthorNameText, WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceAddressText, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText, WideTitleText } from 'style/Card/Card.style'
+import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
 export const RecommendationCardContainer = styled(WideCardContainer)``
@@ -10,6 +11,10 @@ export const RecommendationCardContentContainer = styled(WideCardContentContaine
             `
         }
     }}
+
+    @media ${device.mobile} {
+        width: 100%;
+    }
 `
 
 export const RecommendationCardImageContainer = styled(WideCardImageContainer)``

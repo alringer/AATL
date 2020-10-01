@@ -1,9 +1,9 @@
-import { IRecommendation } from 'utilities/types/recommendation'
+import { IPageable } from 'utilities/types/pageable'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 import { IVenue } from 'utilities/types/venue'
 
 export interface IHomepage {
-    newRecommendations: IRecommendation[]
+    newRecommendations: IPageable
     featuredRecommendationsLists: IRecommendationListMeta[]
     recommendedNearby: IVenue[]
     haveYouBeenTo: IVenue[]

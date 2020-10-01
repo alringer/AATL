@@ -94,6 +94,8 @@ export const FOOD_AND_DRINK = {
 }
 
 export const HOME_PAGE = {
+    NewRecommendationsTitle: 'New Recommendations',
+    NewRecommendationsSubTitle: 'Our essential restaurants from around the United States and Cananda.',
     MostRecommendedTitle: 'Most Recommended',
     MostRecommendedSubTitle: 'Our favorite and most essential restaurants from locals near you.',
 }

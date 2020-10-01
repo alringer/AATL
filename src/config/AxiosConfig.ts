@@ -10,6 +10,9 @@ export const BASE_URL = process.env.HOSTNAME + API_URL
 // Home Page
 export const FETCH_HOME = '/homepage'
 export const FETCH_FOOTER = '/homepage/footer'
+export const FETCH_NEW_RECOMMENDATIONS = (page: number, pageSize: number) => {
+    return `/homepage/new-recommendations?page=${page}&size=${pageSize}&sort=createdAt,DESC`
+}
 
 // Cities Page
 export const FETCH_CITIES = '/parent-regions/active-with-recommendations'

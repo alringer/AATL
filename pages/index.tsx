@@ -1,4 +1,5 @@
 import HomeCarousel from 'components/Home/HomeCarousel/HomeCarousel'
+import HomeNewRecommendations from 'components/Home/HomeNewRecommendations/HomeNewRecommendations'
 import HomeBanner from 'components/HomeComponents/HomeBanner/HomeBanner'
 import MostRecommended from 'components/HomeComponents/MostRecommended/MostRecommended'
 import axios, { FETCH_HOME } from 'config/AxiosConfig'
@@ -38,7 +39,6 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
                     longitude: preferredLocation.lng,
                 })
                 .then((res) => {
-                    console.log('Fetch Home Response:', res)
                     setHomeData(res.data)
                 })
                 .catch((err) => console.log(err))
@@ -48,6 +48,24 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
     return (
         <>
             <HomeBanner />
+            <HomeNewRecommendations
+                initialRecommendations={
+                    homeData && homeData.newRecommendations ? homeData.newRecommendations.content : []
+                }
+                initialTotalPages={
+                    homeData && homeData.newRecommendations ? homeData && homeData.newRecommendations.totalPages : 1
+                }
+                initialPage={
+                    homeData && homeData.newRecommendations && homeData.newRecommendations.pageable
+                        ? homeData.newRecommendations.pageable.pageNumber
+                        : 0
+                }
+                initialPageSize={
+                    homeData && homeData.newRecommendations && homeData.newRecommendations.pageable
+                        ? homeData.newRecommendations.pageable.pageSize
+                        : 3
+                }
+            />
             <HomeCarousel featuredRecommendationsLists={homeData ? homeData.featuredRecommendationsLists : null} />
             <MostRecommended venues={homeData && homeData.recommendedNearby ? homeData.recommendedNearby : []} />
             <EmailSubscription />
