@@ -1,7 +1,7 @@
 import Tooltip from '@material-ui/core/Tooltip'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
-import EllipsesSVG from 'assets/horizontalEllipses.svg'
+import ExpandSVG from 'assets/expand-icon.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
@@ -34,13 +34,42 @@ import {
     WideHeaderTooltipIconsContainer,
     WidePlaceAddressText,
 } from 'style/Card/Card.style'
-import { query } from 'style/device'
-import { chopStringFullRecommendationDescription } from 'utilities/helpers/chopString'
+import { deviceNames, query, size } from 'style/device'
+import {
+    chopStringPlaceCategoriesLaptop,
+    chopStringPlaceCategoriesMobile,
+    chopStringPlaceCategoriesTablet,
+    chopStringPlaceLatestRecommendationContentLaptop,
+    chopStringPlaceLatestRecommendationContentMobile,
+    chopStringPlaceLatestRecommendationContentTablet,
+    chopStringPlaceLatestRecommendationTitleLaptop,
+    chopStringPlaceLatestRecommendationTitleMobile,
+    chopStringPlaceLatestRecommendationTitleTablet,
+    chopStringPlaceNameLaptop,
+    chopStringPlaceNameMobile,
+    chopStringPlaceNameTablet,
+    chopStringPlaceUserByLineLaptop,
+    chopStringPlaceUserByLineMobile,
+    chopStringPlaceUserByLineTablet,
+    chopStringPlaceUserNameLaptop,
+    chopStringPlaceUserNameMobile,
+    chopStringPlaceUserNameTablet,
+    chopStringSearchPlaceCategoriesLaptop,
+    chopStringSearchPlaceCategoriesTablet,
+    chopStringSearchPlaceLatestRecommendationContentLaptop,
+    chopStringSearchPlaceLatestRecommendationContentTablet,
+    chopStringSearchPlaceLatestRecommendationTitleLaptop,
+    chopStringSearchPlaceLatestRecommendationTitleTablet,
+    chopStringSearchPlaceNameLaptop,
+    chopStringSearchPlaceNameTablet,
+} from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import { IVenue } from 'utilities/types/venue'
 import {
+    CardPlaceWideAuthorNameText,
     CardPlaceWideAuthorTitleText,
     CardPlaceWideButtonsContainer,
     CardPlaceWideCardContainer,
@@ -53,6 +82,7 @@ import {
     CardPlaceWidePlaceCategoryText,
     CardPlaceWidePlaceNameText,
     CardPlaceWideSummaryText,
+    CardPlaceWideTitleText,
 } from './CardPlaceWide.style'
 
 export enum CardPlaceWideEnum {
@@ -84,6 +114,13 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     const { enqueueSnackbar } = useSnackbar()
     const [isMoreVisible, setMoreVisible] = React.useState(false)
     const [placeLink, setPlaceLink] = React.useState('')
+    const windowSize = useWindowSize()
+    const viewport: string =
+        windowSize.width >= Number(size.laptop)
+            ? deviceNames.laptop
+            : windowSize.width >= Number(size.tablet)
+            ? deviceNames.tablet
+            : deviceNames.mobile
 
     React.useEffect(() => {
         if (window) {
@@ -93,7 +130,6 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     }, [place])
 
     const handleView = () => {
-        console.log('View a place from wide place card')
         router.push(`${R.ROUTE_ITEMS.restaurant}/${place.id}`)
     }
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
@@ -163,7 +199,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                 {isMoreVisible ? (
                     <Image src={CloseSVG} alt="close-icon" />
                 ) : (
-                    <Image src={EllipsesSVG} alt="ellipses-icon" />
+                    <Image src={ExpandSVG} alt="ellipses-icon" />
                 )}
             </CardIcon>
         )
@@ -179,7 +215,19 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                     <CardPlaceWideHeaderContainer>
                         <WideHeaderLeftContainer>
                             <CardPlaceWidePlaceNameText>
-                                {place && place.name ? place.name : null}
+                                {place && place.name
+                                    ? viewport === deviceNames.laptop
+                                        ? type === CardPlaceWideEnum.Search
+                                            ? chopStringSearchPlaceNameLaptop(place.name)
+                                            : chopStringPlaceNameLaptop(place.name)
+                                        : viewport === deviceNames.tablet
+                                        ? type === CardPlaceWideEnum.Search
+                                            ? chopStringSearchPlaceNameTablet(place.name)
+                                            : chopStringPlaceNameTablet(place.name)
+                                        : viewport === deviceNames.mobile
+                                        ? chopStringPlaceNameMobile(place.name)
+                                        : chopStringPlaceNameLaptop(place.name)
+                                    : null}
                                 <WideHeaderTooltipIconsContainer>
                                     <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                         <img src={AuthoredSVG} />
@@ -221,30 +269,120 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                     </CardPlaceWideHeaderContainer>
                     {type === CardPlaceWideEnum.Search && (
                         <WidePlaceAddressText>
-                            {place && place.parentRegion && place.parentRegion.city
-                                ? place.parentRegion.city + ', '
-                                : null}
-                            {place && place.parentRegion && place.parentRegion.state ? place.parentRegion.state : null}
+                            {place && place.locality ? place.locality + ', ' : null}
+                            {place && place.state ? place.state : null}
                         </WidePlaceAddressText>
                     )}
                     <CardPlaceWidePlaceCategoryText>
                         {place && place.categories
-                            ? concatCategories(place.categories.map((category: ICategory) => category.longName))
+                            ? viewport === deviceNames.laptop
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceCategoriesLaptop(
+                                          concatCategories(
+                                              place.categories.map((category: ICategory) => category.longName)
+                                          )
+                                      )
+                                    : chopStringPlaceCategoriesLaptop(
+                                          concatCategories(
+                                              place.categories.map((category: ICategory) => category.longName)
+                                          )
+                                      )
+                                : viewport === deviceNames.tablet
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceCategoriesTablet(
+                                          concatCategories(
+                                              place.categories.map((category: ICategory) => category.longName)
+                                          )
+                                      )
+                                    : chopStringPlaceCategoriesTablet(
+                                          concatCategories(
+                                              place.categories.map((category: ICategory) => category.longName)
+                                          )
+                                      )
+                                : viewport === deviceNames.mobile
+                                ? chopStringPlaceCategoriesMobile(
+                                      concatCategories(place.categories.map((category: ICategory) => category.longName))
+                                  )
+                                : chopStringPlaceCategoriesLaptop(
+                                      concatCategories(place.categories.map((category: ICategory) => category.longName))
+                                  )
                             : null}
                     </CardPlaceWidePlaceCategoryText>
                 </CardPlaceWideContentTopContainer>
                 <CardPlaceWideContentMiddleContainer>
+                    <CardPlaceWideTitleText>
+                        {place && place.latestRecommendation && place.latestRecommendation.title
+                            ? viewport === deviceNames.laptop
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceLatestRecommendationTitleLaptop(
+                                          place.latestRecommendation.title
+                                      )
+                                    : chopStringPlaceLatestRecommendationTitleLaptop(place.latestRecommendation.title)
+                                : viewport === deviceNames.tablet
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceLatestRecommendationTitleTablet(
+                                          place.latestRecommendation.title
+                                      )
+                                    : chopStringPlaceLatestRecommendationTitleTablet(place.latestRecommendation.title)
+                                : viewport === deviceNames.mobile
+                                ? chopStringPlaceLatestRecommendationTitleMobile(place.latestRecommendation.title)
+                                : chopStringPlaceLatestRecommendationTitleLaptop(place.latestRecommendation.title)
+                            : null}
+                    </CardPlaceWideTitleText>
                     <CardPlaceWideSummaryText>
-                        {place && place.content ? chopStringFullRecommendationDescription(place.content) : null}
+                        {place && place.latestRecommendation && place.latestRecommendation.content
+                            ? viewport === deviceNames.laptop
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceLatestRecommendationContentLaptop(
+                                          place.latestRecommendation.content
+                                      )
+                                    : chopStringPlaceLatestRecommendationContentLaptop(
+                                          place.latestRecommendation.content
+                                      )
+                                : viewport === deviceNames.tablet
+                                ? type === CardPlaceWideEnum.Search
+                                    ? chopStringSearchPlaceLatestRecommendationContentTablet(
+                                          place.latestRecommendation.content
+                                      )
+                                    : chopStringPlaceLatestRecommendationContentTablet(
+                                          place.latestRecommendation.content
+                                      )
+                                : viewport === deviceNames.mobile
+                                ? chopStringPlaceLatestRecommendationContentMobile(place.latestRecommendation.content)
+                                : chopStringPlaceLatestRecommendationContentLaptop(place.latestRecommendation.content)
+                            : null}
                     </CardPlaceWideSummaryText>
                 </CardPlaceWideContentMiddleContainer>
                 <CardPlaceWideContentBottomContainer>
+                    <CardPlaceWideAuthorNameText>
+                        {place && place.latestRecommendation && place.latestRecommendation.createdBy
+                            ? viewport === deviceNames.laptop
+                                ? chopStringPlaceUserNameLaptop(
+                                      `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`
+                                  )
+                                : viewport === deviceNames.tablet
+                                ? chopStringPlaceUserNameTablet(
+                                      `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`
+                                  )
+                                : viewport === deviceNames.mobile
+                                ? chopStringPlaceUserNameMobile(
+                                      `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`
+                                  )
+                                : chopStringPlaceUserNameLaptop(
+                                      `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`
+                                  )
+                            : null}
+                    </CardPlaceWideAuthorNameText>
                     <CardPlaceWideAuthorTitleText>
-                        {`${S.PLACE_CARD.Recommended} ${
-                            place && place.recommendations && place.recommendations.items
-                                ? place.recommendations.items.length
-                                : 0
-                        } ${S.PLACE_CARD.Times}`}
+                        {place && place.latestRecommendation && place.latestRecommendation.createdBy
+                            ? viewport === deviceNames.laptop
+                                ? chopStringPlaceUserByLineLaptop(place.latestRecommendation.createdBy.userByLine)
+                                : viewport === deviceNames.tablet
+                                ? chopStringPlaceUserByLineTablet(place.latestRecommendation.createdBy.userByLine)
+                                : viewport === deviceNames.mobile
+                                ? chopStringPlaceUserByLineMobile(place.latestRecommendation.createdBy.userByLine)
+                                : chopStringPlaceUserByLineLaptop(place.latestRecommendation.createdBy.userByLine)
+                            : null}
                     </CardPlaceWideAuthorTitleText>
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) =>

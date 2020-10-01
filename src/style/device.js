@@ -78,3 +78,9 @@ export const contentWidth = {
     tablet: '720px',
     laptop: '940px'
 }
+
+export const deviceNames = {
+    mobile: 'mobile',
+    tablet: 'tablet',
+    laptop: 'laptop'
+}

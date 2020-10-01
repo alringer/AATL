@@ -56,7 +56,8 @@ export const mockUser: IUserProfile = {
     instagramId: null,
     lastName: 'Administrator',
     updatedAt: null,
-    userByLine: null,
+    userByLine:
+        'Foodie/Journalist/Software Engineer/Writer/Author/Thinker/Receiver/Kicker/Goal Keeper/Narrator/Protagonist/Antagonist',
     userId: '4c973896-5761-41fc-8217-07c5d13a004b',
     username: 'admin',
     venues: null,
