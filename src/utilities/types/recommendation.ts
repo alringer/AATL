@@ -11,7 +11,7 @@
 // }
 
 import { flaggedEnum } from './enumerations'
-import { IUserProfile } from './userProfile'
+import { IUserProfile, mockUser } from './userProfile'
 import { IVenue } from './venue'
 
 export interface IRecommendation {
@@ -39,6 +39,20 @@ export const mockRecommendation: IRecommendation = {
     content:
         'This restaurant is situated in the heart of semi-urban area between three lakes and close to the motorsports academy near Gurgaon. It is the favorite hangout place for motor sports lovers.\n\nAs you step your foot into the restaurant, you are welcomed by the magnificent urban setting, a beautiful combination of vintage sports cars and an immense luxury of modernity. Every table gives you a clear view of the chef working in the kitchen. Those, with no prior reservation, are welcomed to wait in the lounge with comfortable armchairs. The lounge has pictures of sports player displayed on the wall.',
     venue: {
+        latestRecommendation: {
+            content:
+                'This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation!',
+            createdAt: '2020-07-09T14:42:48.832389Z',
+            createdBy: mockUser,
+            deletedAt: null,
+            flagged: flaggedEnum.None,
+            id: 2401,
+            imageCDNUrl: 'https://s3-media2.fl.yelpcdn.com/bphoto/GAoU-rXVso7GDwSm4C1B2A/o.jpg',
+            title:
+                'Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place!',
+            updatedAt: '2020-07-09T14:42:48.832389Z',
+            venue: null,
+        },
         id: 5551,
         name: 'Cross Street Chicken and Beer',
         imageCDNUrl:
