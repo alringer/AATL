@@ -1,3 +1,5 @@
+import { flaggedEnum, sourceEnum } from 'utilities/types/enumerations'
+import { IUserProfile, mockUser } from 'utilities/types/userProfile'
 import { ICategory } from './category'
 import { IParentRegion } from './parentRegion'
 import { IRecommendation } from './recommendation'
@@ -87,6 +89,18 @@ export interface IVenue {
         totalCount: number
         items: any[]
     }
+    latestRecommendation: {
+        content: string
+        createdAt: string
+        createdBy: IUserProfile
+        deletedAt: string
+        flagged: flaggedEnum
+        id: number
+        imageCDNUrl: string
+        title: string
+        updatedAt: string
+        venue: IVenue
+    }
 }
 
 export interface IVenueRecommendationsInformation {
@@ -155,7 +169,35 @@ export const mockVenue: IVenue = {
         deletedAt: null,
         content: '',
     },
-    categories: [],
+    categories: [
+        { tagName: 'Albanian', longName: 'Albanian', id: 1, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Argentine', longName: 'Argentine', id: 2, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+        { tagName: 'Andhra', longName: 'Andhra', id: 3, source: sourceEnum.Yelp, sourceId: null },
+    ],
     similarVenues: [],
     recommendations: { pageNumber: 0, pageSize: 3, totalCount: 5, items: [Array] },
+    latestRecommendation: {
+        content:
+            'This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation! This is an awesome recommendation!',
+        createdAt: '2020-07-09T14:42:48.832389Z',
+        createdBy: mockUser,
+        deletedAt: null,
+        flagged: flaggedEnum.None,
+        id: 2401,
+        imageCDNUrl: 'https://s3-media2.fl.yelpcdn.com/bphoto/GAoU-rXVso7GDwSm4C1B2A/o.jpg',
+        title:
+            'Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place!',
+        updatedAt: '2020-07-09T14:42:48.832389Z',
+        venue: null,
+    },
 }

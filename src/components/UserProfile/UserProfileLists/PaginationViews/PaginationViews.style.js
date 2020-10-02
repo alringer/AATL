@@ -9,6 +9,7 @@ export const PaginationViewsListContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 `
 
 export const ListControlButton = styled(CustomButton)`

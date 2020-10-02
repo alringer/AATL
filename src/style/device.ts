@@ -7,7 +7,7 @@ export const size = {
 export const device = {
     mobile: `(min-width: ${size.mobile}px)`,
     tablet: `(min-width: ${size.tablet}px)`,
-    laptop: `(min-width: ${size.laptop}px)`
+    laptop: `(min-width: ${size.laptop}px)`,
 }
 
 export const query = {
@@ -55,26 +55,32 @@ export const viewportDevices = {
     },
     mobile: {
         width: `${size.mobile}px`,
-        height: '560px'
+        height: '560px',
     },
     tablet: {
         width: `${size.tablet}px`,
-        height: '500px'
+        height: '500px',
     },
     laptop: {
         width: `${size.laptop}px`,
-        height: '800px'
-    }
+        height: '800px',
+    },
 }
 
 export const sidePaddings = {
     mobile: '17px',
     tablet: '24px',
-    laptop: '250px'
+    laptop: '250px',
 }
 
 export const contentWidth = {
     mobile: '328px',
     tablet: '720px',
-    laptop: '940px'
+    laptop: '940px',
+}
+
+export enum DeviceNameEnum {
+    mobile = 'mobile',
+    tablet = 'tablet',
+    laptop = 'laptop',
 }

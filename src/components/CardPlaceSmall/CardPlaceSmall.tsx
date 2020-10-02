@@ -17,6 +17,7 @@ import {
     SmallPlaceCardCategory,
     SmallPlaceCardContainer,
     SmallPlaceCardContentContainer,
+    SmallPlaceCardDescription,
     SmallPlaceCardDescriptionContainer,
     SmallPlaceCardImageContainer,
     SmallPlaceCardPlaceName,
@@ -46,6 +47,10 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
         console.log('Place ellipses clicked. place ID: ', place.id)
     }
 
+    React.useEffect(() => {
+        console.log('Place in small card: ', place)
+    }, [place])
+
     return place ? (
         <Link href={`${R.ROUTE_ITEMS.restaurant}/${place.id}`} prefetch={false} passHref={true}>
             <SmallPlaceCardAnchor>
@@ -62,7 +67,7 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
                 </ImageButtonsContainer> */}
                     </SmallPlaceCardImageContainer>
                     <SmallPlaceCardContentContainer>
-                        <SmallPlaceCardPlaceName>{place.name}</SmallPlaceCardPlaceName>
+                        <SmallPlaceCardPlaceName>{place ? place.name : null}</SmallPlaceCardPlaceName>
                         <WideHeaderTooltipIconsContainer>
                             <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                 <img src={AuthoredSVG} />
@@ -77,7 +82,11 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
                             </SmallPlaceCardCategory>
                         )}
                         <SmallPlaceCardDescriptionContainer>
-                            <span>{place.content ? chopStringSmallPlaceDescription(place.content) : ''}</span>
+                            <SmallPlaceCardDescription>
+                                {place && place.latestRecommendation && place.latestRecommendation.content
+                                    ? `"${chopStringSmallPlaceDescription(place.latestRecommendation.content)}"`
+                                    : null}
+                            </SmallPlaceCardDescription>
                         </SmallPlaceCardDescriptionContainer>
                     </SmallPlaceCardContentContainer>
                 </SmallPlaceCardContainer>
