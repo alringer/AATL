@@ -1,4 +1,4 @@
-import { WideAuthorNameText, WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText, WideTitleText } from 'style/Card/Card.style'
+import { CardAnchor, WideAuthorNameText, WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText, WideTitleText } from 'style/Card/Card.style'
 import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
@@ -51,3 +51,4 @@ export const CardPlaceWideTitleText = styled(WideTitleText)``
 export const CardPlaceWideSummaryText = styled(WideSummaryText)``
 export const CardPlaceWideAuthorNameText = styled(WideAuthorNameText)``
 export const CardPlaceWideAuthorTitleText = styled(WideAuthorTitleText)``
+export const CardPlaceWideAnchor = styled(CardAnchor)``

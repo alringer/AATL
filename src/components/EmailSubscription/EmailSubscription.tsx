@@ -5,6 +5,7 @@ import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { useSnackbar } from 'notistack'
 import React from 'react'
+import { validateEmail } from 'utilities/helpers/validateEmail'
 import {
     EmailSubscriptionBody,
     EmailSubscriptionButtonContainer,
@@ -14,7 +15,7 @@ import {
     EmailSubscriptionSubscribeButton,
     EmailSubscriptionTextContainer,
     EmailSubscriptionTextInput,
-    EmailSubscriptionTitle,
+    EmailSubscriptionTitle
 } from './EmailSubscription.style'
 
 const EmailSubscription = () => {
@@ -26,14 +27,10 @@ const EmailSubscription = () => {
     }
 
     const handleSubscribe = () => {
-        // TODO: Add more validations to check the validity of the input email
-        const pattern = new RegExp(
-            /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
-        )
-        if (pattern.test(email) && email !== '') {
-            // TODO: Call email subscription API
-            console.log('TODO: Call subscribe API with ', email)
-            const config = {}
+        const isValidEmail = validateEmail(email)
+        const isEmpty = email === ''
+
+        if (isValidEmail && !isEmpty) {
             axios
                 .post(SUBSCRIBE_MAILCHIMP, { emailAddress: email })
                 .then((res) => {
@@ -53,6 +50,30 @@ const EmailSubscription = () => {
                     })
                 })
                 .catch((err) => console.log(err))
+        } else if (isEmpty) {
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.EMAIL_SUBSCRIPTION.Type}
+                            title={'Empty Email'}
+                            message={<SnackbarMessageBody>{'Empty!'}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
+        } else if (!isValidEmail) {
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.EMAIL_SUBSCRIPTION.Type}
+                            title={'Invalid Email'}
+                            message={<SnackbarMessageBody>{'Invalid!'}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
         }
     }
 

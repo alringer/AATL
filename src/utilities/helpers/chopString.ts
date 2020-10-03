@@ -178,3 +178,55 @@ export const chopStringPlaceUserByLine = (input: string, viewport: DeviceNameEnu
             return input
     }
 }
+
+export const chopStringRecommendationsListsCardTitle = (input: string, viewport: DeviceNameEnum) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            return input.length > 30 ? `${input.slice(0, 30)}...` : input
+
+        case DeviceNameEnum.tablet:
+            return input.length > 30 ? `${input.slice(0, 30)}...` : input
+        case DeviceNameEnum.mobile:
+            return input.length > 20 ? `${input.slice(0, 20)}...` : input
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationsListsCardSubTitle = (input: string, viewport: DeviceNameEnum) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            return input.length > 41 ? `${input.slice(0, 41)}...` : input
+
+        case DeviceNameEnum.tablet:
+            return input.length > 41 ? `${input.slice(0, 41)}...` : input
+        case DeviceNameEnum.mobile:
+            return input.length > 26 ? `${input.slice(0, 26)}...` : input
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationsListsCardContent = (input: string, viewport: DeviceNameEnum) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            return input.length > 100 ? `${input.slice(0, 100)}...` : input
+
+        case DeviceNameEnum.tablet:
+            return input.length > 100 ? `${input.slice(0, 100)}...` : input
+        case DeviceNameEnum.mobile:
+            return input.length > 70 ? `${input.slice(0, 70)}...` : input
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationsListsCardNumber = (input: number) => {
+    if (input === undefined || input === null) {
+        return '0'
+    } else if (input > 999) {
+        return '999+'
+    } else {
+        return input
+    }
+}

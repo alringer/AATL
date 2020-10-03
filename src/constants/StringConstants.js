@@ -358,3 +358,14 @@ export const RECOMMENDATION_LIST = {
         ShareButtonText: 'SHARE',
     }
 }
+
+export const RECOMMENDATIONS_LISTS = {
+    Banner: {
+        Title: 'Recommendations Lists',
+        SubTitle: 'Personalized curated  recommendations lists to browse through if you need a lists of ideas on a variety of categories and themes.'
+    },
+    Card: {
+        Recommendations: 'RECOMMENDATIONS',
+        Venues: 'VENUES'
+    }
+}
