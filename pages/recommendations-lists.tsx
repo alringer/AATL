@@ -13,9 +13,6 @@ interface IServerSideProps {
 interface IRecommendationsListsProps extends IServerSideProps {}
 
 const RecommendationsLists: NextPage<IRecommendationsListsProps> = ({ recommendationsLists }) => {
-    React.useEffect(() => {
-        console.log(recommendationsLists)
-    }, [recommendationsLists])
     return (
         <>
             <RecommendationsListsBanner />
@@ -26,6 +23,7 @@ const RecommendationsLists: NextPage<IRecommendationsListsProps> = ({ recommenda
 
 export const getServerSideProps: GetStaticProps = async () => {
     let recommendationsLists: IRecommendationListMeta[] = []
+    // TODO: Replace the endpoint with the new endpoint for this page
     await axios
         .get(RECOMMENDATION_LIST_METAS)
         .then((res) => {

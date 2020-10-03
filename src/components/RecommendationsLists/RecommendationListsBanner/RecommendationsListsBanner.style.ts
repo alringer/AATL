@@ -32,7 +32,6 @@ export const RecommendationsListsBannerImageContainer = styled.div`
         bottom: 0;
         right: 0;
         left: 0;
-        /* background-color: rgba(0, 0, 0, 0.25); */
     }
 `
 
@@ -101,7 +100,3 @@ export const RecommendationsListsBannerSubTitle = styled.p`
         margin-top: 10px;
     }
 `
-// export const RecommendationsListsBanner
-// export const RecommendationsListsBanner
-// export const RecommendationsListsBanner
-// export const RecommendationsListsBanner
