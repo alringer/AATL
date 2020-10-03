@@ -14,6 +14,18 @@ export const SNACKBAR_TYPES = {
     Error: 'error',
 }
 
+export const ERROR_EMAIL_INVALID: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'Email entry is empty',
+    Body: 'Please enter an email address',
+}
+
+export const ERROR_EMAIL_EMPTY: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'Email entry is invalid',
+    Body: 'Please enter a valid email address',
+}
+
 export const ERROR_RESTAURANT: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Error,
     Title: 'We cannot load this restaurant at the moment',

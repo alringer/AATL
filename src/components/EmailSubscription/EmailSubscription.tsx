@@ -15,7 +15,7 @@ import {
     EmailSubscriptionSubscribeButton,
     EmailSubscriptionTextContainer,
     EmailSubscriptionTextInput,
-    EmailSubscriptionTitle
+    EmailSubscriptionTitle,
 } from './EmailSubscription.style'
 
 const EmailSubscription = () => {
@@ -55,9 +55,9 @@ const EmailSubscription = () => {
                 content: (
                     <div>
                         <Snackbar
-                            type={B.EMAIL_SUBSCRIPTION.Type}
-                            title={'Empty Email'}
-                            message={<SnackbarMessageBody>{'Empty!'}</SnackbarMessageBody>}
+                            type={B.ERROR_EMAIL_EMPTY.Type}
+                            title={B.ERROR_EMAIL_EMPTY.Title}
+                            message={<SnackbarMessageBody>{B.ERROR_EMAIL_EMPTY.Body}</SnackbarMessageBody>}
                         />
                     </div>
                 ),
@@ -67,9 +67,9 @@ const EmailSubscription = () => {
                 content: (
                     <div>
                         <Snackbar
-                            type={B.EMAIL_SUBSCRIPTION.Type}
-                            title={'Invalid Email'}
-                            message={<SnackbarMessageBody>{'Invalid!'}</SnackbarMessageBody>}
+                            type={B.ERROR_EMAIL_INVALID.Type}
+                            title={B.ERROR_EMAIL_INVALID.Title}
+                            message={<SnackbarMessageBody>{B.ERROR_EMAIL_INVALID.Body}</SnackbarMessageBody>}
                         />
                     </div>
                 ),
