@@ -124,6 +124,9 @@ export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
 // Image Upload
 export const UPLOAD_BLOB = '/blob'
 
+// Admin Cities
+export const ADMIN_CITIES = `/parent-regions/summary`
+
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
 })

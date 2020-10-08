@@ -17,14 +17,9 @@ const Admin: React.FC<IAdminProps> = () => {
             router.query.menu !== R.ROUTE_ITEMS.adminFlaggedContent &&
             router.query.menu !== R.ROUTE_ITEMS.adminRecommendationLists
         ) {
-            router.push(
-                `${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`,
-                // `${R.ROUTE_ITEMS.admin}/${R.ROUTE_ITEMS.adminCities}`,
-                undefined,
-                {
-                    shallow: true,
-                }
-            )
+            router.push(`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`, undefined, {
+                shallow: true,
+            })
         }
     }, [])
 
