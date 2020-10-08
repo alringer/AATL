@@ -58,9 +58,17 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
             isDescending
                 ? a.recommendationsCount < b.recommendationsCount
                     ? 1
+                    : a.recommendationsCount === b.recommendationsCount
+                    ? a.city > b.city
+                        ? 1
+                        : -1
                     : -1
                 : a.recommendationsCount > b.recommendationsCount
                 ? 1
+                : a.recommendationsCount === b.recommendationsCount
+                ? a.city > b.city
+                    ? 1
+                    : -1
                 : -1
         )
         setDescending(!isDescending)
