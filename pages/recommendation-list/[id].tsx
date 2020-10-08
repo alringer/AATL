@@ -27,8 +27,6 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
     const [recommendationListMeta, setRecommendationListMeta] = React.useState(recommendationListMetaInput)
 
     React.useEffect(() => {
-        console.log('Received Recommendation List Meta: ', recommendationListMetaInput)
-        console.log('Received Recommendation List Meta ID: ', recommendationListMetaID)
         if (!recommendationListMetaInput) {
             enqueueSnackbar('', {
                 content: (
@@ -36,7 +34,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
                         <Snackbar
                             type={B.ERROR_RECOMMENDATION_LIST.Type}
                             title={B.ERROR_RECOMMENDATION_LIST.Title}
-                            message={<SnackbarMessageBody>{B.ERROR_USER_PROFILE.Body}</SnackbarMessageBody>}
+                            message={<SnackbarMessageBody>{B.ERROR_RECOMMENDATION_LIST.Body}</SnackbarMessageBody>}
                         />
                     </div>
                 ),

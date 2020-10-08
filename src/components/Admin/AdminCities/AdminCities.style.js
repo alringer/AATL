@@ -21,13 +21,19 @@ export const AdminCitiesTableContainer = styled.div`
     margin-top: 40px;
 `
 
-export const AdminCitiesTableRow = styled.div`
+export const AdminCitiesRow = styled.div`
     display: flex;
     flex-direction: row;
-    box-shadow: inset 0 -1px 0 0 #e9e9e9;
     height: 116px;
 
     padding: 15px 20px;
+`
+
+export const AdminCitiesLoadingContainer = styled(AdminCitiesRow)`
+`
+
+export const AdminCitiesTableRow = styled(AdminCitiesRow)`
+    box-shadow: inset 0 -1px 0 0 #e9e9e9;
 `
 
 export const AdminCitiesTableHeaderRow = styled.div`

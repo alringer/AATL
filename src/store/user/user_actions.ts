@@ -4,10 +4,11 @@ import { KeycloakInstance } from 'keycloak-js'
 import { action } from 'typesafe-actions'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IUserProfile } from 'utilities/types/userProfile'
-import { IUserInformation, LOGIN, LOGOUT } from './user_types'
+import { IUserInformation, LOGIN, LOGOUT, SET_LOADING } from './user_types'
 
 export const login = (userInformation: IUserInformation) => action(LOGIN, userInformation)
 export const logout = () => action(LOGOUT)
+export const setLoading = (isLoading: boolean) => action(SET_LOADING, isLoading)
 
 export const fetchUser = (keycloak: KeycloakInstance) => {
     return (dispatch) => {
@@ -24,6 +25,7 @@ export const fetchUser = (keycloak: KeycloakInstance) => {
             },
         }
         if (decodedToken && role) {
+            dispatch(setLoading(true))
             axios
                 .get(FETCH_CURRENT_USER_PROFILE, config)
                 .then((res) => {
@@ -32,6 +34,7 @@ export const fetchUser = (keycloak: KeycloakInstance) => {
                         login({
                             user: userProfileInformation,
                             userRole: role,
+                            isLoading: false,
                         })
                     )
                     console.log('User Profile Results: ', res.data)

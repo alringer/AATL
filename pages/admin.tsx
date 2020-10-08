@@ -2,15 +2,47 @@ import AdminCities from 'components/Admin/AdminCities/AdminCities'
 import AdminFlaggedContent from 'components/Admin/AdminFlaggedContent/AdminFlaggedContent'
 import AdminMenu from 'components/Admin/AdminMenu/AdminMenu'
 import AdminRecommendationLists from 'components/Admin/AdminRecommendationLists/AdminRecommendationLists'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as R from 'constants/RouteConstants'
+import * as B from 'constants/SnackbarConstants'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import React from 'react'
-import { AdminContainer, AdminContentContainer } from 'style/Admin.style'
+import { connect as reduxConnect } from 'react-redux'
+import { StoreState } from 'store'
+import { AdminContainer, AdminContentContainer, AdminVerifyingText } from 'style/Admin.style'
+import { useAuth } from 'utilities/providers/AuthProvider'
+import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 
-interface IAdminProps {}
+interface IReduxProps {
+    userRole: string | null
+    isLoading: boolean
+}
+interface IAdminProps extends IReduxProps {}
 
-const Admin: React.FC<IAdminProps> = () => {
+const Admin: React.FC<IAdminProps> = ({ userRole, isLoading }) => {
     const router = useRouter()
+    const { enqueueSnackbar } = useSnackbar()
+    const { isMounted } = useAuth()
+
+    React.useEffect(() => {
+        if (isMounted === true && isLoading === false && userRole !== UserRoleEnum.Admin) {
+            router.push('/')
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.ERROR_NOT_ADMIN.Type}
+                            title={B.ERROR_NOT_ADMIN.Title}
+                            message={<SnackbarMessageBody>{B.ERROR_NOT_ADMIN.Body}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
+        }
+    }, [userRole, isMounted, isLoading])
+
     React.useEffect(() => {
         if (
             router.query.menu !== R.ROUTE_ITEMS.adminCities &&
@@ -23,7 +55,7 @@ const Admin: React.FC<IAdminProps> = () => {
         }
     }, [])
 
-    return (
+    return isMounted === true && isLoading === false && userRole === UserRoleEnum.Admin ? (
         <AdminContainer>
             <AdminMenu />
             <AdminContentContainer>
@@ -36,7 +68,14 @@ const Admin: React.FC<IAdminProps> = () => {
                 ) : null}
             </AdminContentContainer>
         </AdminContainer>
+    ) : (
+        <AdminVerifyingText>Verifying user role...</AdminVerifyingText>
     )
 }
 
-export default Admin
+const mapStateToProps = (state: StoreState) => ({
+    userRole: state.userReducer.userRole,
+    isLoading: state.userReducer.isLoading,
+})
+
+export default reduxConnect(mapStateToProps)(Admin)

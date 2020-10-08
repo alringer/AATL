@@ -1,3 +1,4 @@
+import { CircularProgress } from '@material-ui/core'
 import Image from 'components/Image/Image'
 import axios, { ADMIN_CITIES } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
@@ -10,6 +11,7 @@ import {
     AdminCitiesCityColumn,
     AdminCitiesContainer,
     AdminCitiesImageColumn,
+    AdminCitiesLoadingContainer,
     AdminCitiesPlacesColumn,
     AdminCitiesRecommendationsColumn,
     AdminCitiesRecommendationsSortIcon,
@@ -25,12 +27,14 @@ import {
 interface IAdminCitiesProps extends IWithAuthInjectedProps {}
 
 const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
-    const [cities, setCities] = React.useState<IAdminCity[]>([])
     // TBD: Search
     // const [searchInput, setSearchInput] = React.useState('')
+    const [cities, setCities] = React.useState<IAdminCity[]>([])
     const [isDescending, setDescending] = React.useState(true)
+    const [isLoading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
+        setLoading(true)
         const token = getTokenConfig()
         const config = {
             headers: {
@@ -44,6 +48,9 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                 setCities(sortedCities)
             })
             .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
     }, [])
 
     const sortCities = (inputCities: IAdminCity[], isDescending: boolean) => {
@@ -95,23 +102,29 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                         <AdminCitiesRecommendationsSortIcon onClick={handleSort} />
                     </AdminCitiesRecommendationsColumn>
                 </AdminCitiesTableHeaderRow>
-                {cities.map((cityItem: IAdminCity) => {
-                    return (
-                        <AdminCitiesTableRow>
-                            <AdminCitiesImageColumn>
-                                <Image src={cityItem.imageCDNUrl} alt="city-image" />
-                            </AdminCitiesImageColumn>
-                            <AdminCitiesCityColumn>
-                                <AdminCityText>{cityItem.city}</AdminCityText>
-                            </AdminCitiesCityColumn>
-                            <AdminCitiesStateColumn>{cityItem.state}</AdminCitiesStateColumn>
-                            <AdminCitiesPlacesColumn>{cityItem.venuesCount}</AdminCitiesPlacesColumn>
-                            <AdminCitiesRecommendationsColumn>
-                                {cityItem.recommendationsCount}
-                            </AdminCitiesRecommendationsColumn>
-                        </AdminCitiesTableRow>
-                    )
-                })}
+                {isLoading ? (
+                    <AdminCitiesLoadingContainer>
+                        <CircularProgress />
+                    </AdminCitiesLoadingContainer>
+                ) : (
+                    cities.map((cityItem: IAdminCity) => {
+                        return (
+                            <AdminCitiesTableRow>
+                                <AdminCitiesImageColumn>
+                                    <Image src={cityItem.imageCDNUrl} alt="city-image" />
+                                </AdminCitiesImageColumn>
+                                <AdminCitiesCityColumn>
+                                    <AdminCityText>{cityItem.city}</AdminCityText>
+                                </AdminCitiesCityColumn>
+                                <AdminCitiesStateColumn>{cityItem.state}</AdminCitiesStateColumn>
+                                <AdminCitiesPlacesColumn>{cityItem.venuesCount}</AdminCitiesPlacesColumn>
+                                <AdminCitiesRecommendationsColumn>
+                                    {cityItem.recommendationsCount}
+                                </AdminCitiesRecommendationsColumn>
+                            </AdminCitiesTableRow>
+                        )
+                    })
+                )}
             </AdminCitiesTableContainer>
         </AdminCitiesContainer>
     )

@@ -26,6 +26,12 @@ export const ERROR_EMAIL_INVALID: ISnackbarConstants = {
     Body: 'Please enter a valid email address',
 }
 
+export const ERROR_NOT_ADMIN: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'You need to be an admin to access this page!',
+    Body: '',
+}
+
 export const ERROR_RESTAURANT: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Error,
     Title: 'We cannot load this restaurant at the moment',

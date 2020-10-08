@@ -15,8 +15,17 @@ interface IReduxProps {
 interface IAuthProviderProps extends IReduxProps, IWithAuthInjectedProps {
     children: React.ReactChildren[]
 }
+
+interface IAuthContext {
+    isMounted: boolean
+}
+
+const AuthContext = React.createContext<IAuthContext>({ isMounted: false })
 const AuthProvider = ({ keycloak, children, logout, loggedIn, fetchUser }: IAuthProviderProps) => {
+    const [isMounted, setMounted] = React.useState(false)
+
     React.useEffect(() => {
+        setMounted(true)
         authStore.dispatch({ type: SET_KEYCLOAK, payload: keycloak })
         if (keycloak.authenticated === true && loggedIn === false) {
             fetchUser(keycloak)
@@ -25,8 +34,10 @@ const AuthProvider = ({ keycloak, children, logout, loggedIn, fetchUser }: IAuth
         }
     }, [keycloak])
 
-    return <>{children}</>
+    return <AuthContext.Provider value={{ isMounted: isMounted }}>{children}</AuthContext.Provider>
 }
+
+export const useAuth = () => React.useContext(AuthContext)
 
 const mapStateToProps = (state: StoreState) => ({
     loggedIn: state.userReducer.loggedIn,

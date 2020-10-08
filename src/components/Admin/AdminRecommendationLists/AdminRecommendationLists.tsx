@@ -1,10 +1,15 @@
+import { CircularProgress } from '@material-ui/core'
 import axios, { RECOMMENDATION_LIST_METAS } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 import { AdminMenuPageSubTitle, AdminMenuPageTitle } from '../AdminShared.style'
-import { AdminRecommendationListsContainer, FeatureListsTitle } from './AdminRecommendationLists.style'
+import {
+    AdminRecommendationListsContainer,
+    AdminRecommendationListsTableContainer,
+    FeatureListsTitle,
+} from './AdminRecommendationLists.style'
 import AdminRecommendationListsController from './AdminRecommendationListsController'
 
 interface IAdminRecommendationListsProps extends IWithAuthInjectedProps {}
@@ -12,12 +17,14 @@ interface IAdminRecommendationListsProps extends IWithAuthInjectedProps {}
 const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ getTokenConfig }) => {
     const [featuredLists, setFeaturedLists] = React.useState<IRecommendationListMeta[]>([])
     const [otherLists, setOtherLists] = React.useState<IRecommendationListMeta[]>([])
+    const [isLoading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
         fetchRecommendationLists()
     }, [])
 
     const fetchRecommendationLists = () => {
+        setLoading(true)
         const token = getTokenConfig()
         const config = {
             headers: {
@@ -45,6 +52,9 @@ const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ ge
                 setOtherLists(sortedOtherLists)
             })
             .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
     }
 
     return (
@@ -52,17 +62,29 @@ const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ ge
             <AdminMenuPageTitle>{S.ADMIN_PAGE.AdminRecommendationLists.Title}</AdminMenuPageTitle>
             <AdminMenuPageSubTitle>{S.ADMIN_PAGE.AdminRecommendationLists.SubTitle}</AdminMenuPageSubTitle>
             <FeatureListsTitle>{S.ADMIN_PAGE.AdminRecommendationLists.FeaturedLists}</FeatureListsTitle>
-            <AdminRecommendationListsController
-                recommendationLists={featuredLists}
-                featured={true}
-                fetchRecommendationLists={fetchRecommendationLists}
-            />
+            {isLoading ? (
+                <AdminRecommendationListsTableContainer>
+                    <CircularProgress />
+                </AdminRecommendationListsTableContainer>
+            ) : (
+                <AdminRecommendationListsController
+                    recommendationLists={featuredLists}
+                    featured={true}
+                    fetchRecommendationLists={fetchRecommendationLists}
+                />
+            )}
             <FeatureListsTitle>{S.ADMIN_PAGE.AdminRecommendationLists.OtherLists}</FeatureListsTitle>
-            <AdminRecommendationListsController
-                recommendationLists={otherLists}
-                featured={false}
-                fetchRecommendationLists={fetchRecommendationLists}
-            />
+            {isLoading ? (
+                <AdminRecommendationListsTableContainer>
+                    <CircularProgress />
+                </AdminRecommendationListsTableContainer>
+            ) : (
+                <AdminRecommendationListsController
+                    recommendationLists={otherLists}
+                    featured={false}
+                    fetchRecommendationLists={fetchRecommendationLists}
+                />
+            )}
         </AdminRecommendationListsContainer>
     )
 }
