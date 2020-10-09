@@ -23,6 +23,8 @@ import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
+import { openFlagModal } from 'store/flagModal/flagModal_actions'
+import { OpenFlagModalPayload } from 'store/flagModal/flagModal_types'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
@@ -33,13 +35,13 @@ import {
     MobileButtonsContainer,
     MoreHorizontalContainer,
     MoreVerticalContainer,
-    WideHeaderTooltipIconsContainer,
+    WideHeaderTooltipIconsContainer
 } from 'style/Card/Card.style'
 import { query } from 'style/device'
 import {
     chopStringFullRecommendationDescription,
     chopStringRecommendationTitle,
-    chopStringSimpleRecommendationDescription,
+    chopStringSimpleRecommendationDescription
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -63,7 +65,7 @@ import {
     RecommendationPlaceNameText,
     RecommendationSummaryText,
     RecommendationTitleSpan,
-    RecommendationTitleText,
+    RecommendationTitleText
 } from './CardRecommendationWide.style'
 
 export enum CardRecommendationWideEnum {
@@ -74,6 +76,7 @@ interface IReduxProps {
     userRole: UserRoleEnum
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
+    openFlagModal: (payload: OpenFlagModalPayload) => void
 }
 
 interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
@@ -92,6 +95,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     userRole,
     openRecommendationModal,
     openListModal,
+    openFlagModal,
     handleRemoveFromList,
     type,
 }) => {
@@ -118,9 +122,15 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to flag the recommendation
-        if (currentRecommendation) {
+        if (
+            currentRecommendation &&
+            currentRecommendation.id !== undefined &&
+            currentRecommendation.id !== null
+        ) {
             authenticatedAction(() =>
-                console.log('handleFlag clicked in the recommendation card with id: ', currentRecommendation.id)
+                openFlagModal({
+                    recommendationID: currentRecommendation.id,
+                })
             )
         }
         e.stopPropagation()
@@ -424,6 +434,6 @@ const mapStateToProps = (state: StoreState) => ({
     userRole: state.userReducer.userRole,
 })
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal, openFlagModal }, dispatch)
 
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(CardRecommendationWide))
