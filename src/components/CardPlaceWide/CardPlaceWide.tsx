@@ -33,7 +33,7 @@ import {
     MoreVerticalContainer,
     WideHeaderLeftContainer,
     WideHeaderTooltipIconsContainer,
-    WidePlaceAddressText,
+    WidePlaceAddressText
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
 import {
@@ -42,7 +42,7 @@ import {
     chopStringPlaceLatestRecommendationTitle,
     chopStringPlaceName,
     chopStringPlaceUserByLine,
-    chopStringPlaceUserName,
+    chopStringPlaceUserName
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -64,7 +64,7 @@ import {
     CardPlaceWidePlaceCategoryText,
     CardPlaceWidePlaceNameText,
     CardPlaceWideSummaryText,
-    CardPlaceWideTitleText,
+    CardPlaceWideTitleText
 } from './CardPlaceWide.style'
 
 export enum CardPlaceWideEnum {
@@ -231,7 +231,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                                     ) : null}
                                                     {isMoreVisible ? (
                                                         <MoreVerticalContainer>
-                                                            <ShareButton handleClick={handleShare} />
+                                                            <ShareButton handleClick={handleShare} isRestaurant={true} />
                                                         </MoreVerticalContainer>
                                                     ) : null}
                                                     <ViewMore />
@@ -319,7 +319,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                                         handleClick={handleWriteRecommendation}
                                                         isMobile={true}
                                                     />
-                                                    <ShareButton handleClick={handleShare} isMobile={true} />
+                                                    <ShareButton handleClick={handleShare} isMobile={true} isRestaurant={true} />
                                                     {/* <FlagButton handleClick={handleShare} isMobile={true} /> */}
                                                 </MobileActionButtonsContainer>
                                             ) : null}

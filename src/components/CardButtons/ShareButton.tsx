@@ -6,17 +6,18 @@ import {
     MobileMoreOptionButton,
     MobileMoreOptionButtonLabel,
     MobileMoreOptionSpan,
-    MoreOptionButton,
+    MoreOptionButton
 } from './CardButton.style'
 
 interface IShareButtonProps {
     handleClick: (e: React.MouseEvent<HTMLElement>) => void
     isMobile?: boolean
+    isRestaurant?: boolean
 }
 
-const ShareButton: React.FC<IShareButtonProps> = ({ handleClick, isMobile }) => {
+const ShareButton: React.FC<IShareButtonProps> = ({ handleClick, isMobile, isRestaurant }) => {
     return isMobile ? (
-        <Tooltip placement="top" title={S.TOOL_TIPS.AddToList}>
+        <Tooltip placement="top" title={isRestaurant ? S.TOOL_TIPS.ShareRestaurant : S.TOOL_TIPS.ShareRecommendation}>
             <MobileMoreOptionButton onClick={handleClick}>
                 <MobileMoreOptionSpan>
                     <CallMadeIcon />
@@ -25,7 +26,7 @@ const ShareButton: React.FC<IShareButtonProps> = ({ handleClick, isMobile }) => 
             </MobileMoreOptionButton>
         </Tooltip>
     ) : (
-        <Tooltip placement="top" title={S.TOOL_TIPS.ShareRestaurant}>
+        <Tooltip placement="top" title={isRestaurant ? S.TOOL_TIPS.ShareRestaurant : S.TOOL_TIPS.ShareRecommendation}>
             <MoreOptionButton onClick={handleClick}>
                 <CallMadeIcon />
             </MoreOptionButton>

@@ -305,7 +305,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                             ) : null}
                                             {isMoreVisible ? (
                                                 <MoreVerticalContainer>
-                                                    <ShareButton handleClick={handleShare} />
+                                                    <ShareButton handleClick={handleShare} isRestaurant={false}/>
                                                 </MoreVerticalContainer>
                                             ) : null}
                                             <ViewMore />
@@ -415,7 +415,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                 handleClick={handleWriteRecommendation}
                                                 isMobile={true}
                                             />
-                                            <ShareButton handleClick={handleShare} isMobile={true} />
+                                            <ShareButton handleClick={handleShare} isMobile={true} isRestaurant={false}/>
                                             <FlagButton handleClick={handleFlag} isMobile={true} />
                                         </MobileActionButtonsContainer>
                                     ) : null}

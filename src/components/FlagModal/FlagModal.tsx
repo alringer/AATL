@@ -28,12 +28,6 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal }) => {
         if (
             flagModalRef.current &&
             !flagModalRef.current.contains(event.target)
-            // &&
-            // !(
-            //     event.srcElement.className === 'MuiAutocomplete-option' ||
-            //     event.target.id === 'suggestion' ||
-            //     event.className === 'MuiAutocomplete-option'
-            // )
         ) {
             closeFlagModal()
         }
