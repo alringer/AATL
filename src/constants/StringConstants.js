@@ -334,6 +334,7 @@ export const LIST_MODAL = {
 export const USER_PROFILE_BANNER = {
     EmptyMessageByLine: 'What\'s your profession or tagline',
     EmptyMessageDescription: 'Add a little something about you to share with other foodies',
+    EmptyInstagram: 'UNLOCK PHOTOSTREAM WITH INSTAGRAM.',
     Recommends: 'Recommends',
     Places: 'Places',
     EditProfile: 'Edit Profile'
