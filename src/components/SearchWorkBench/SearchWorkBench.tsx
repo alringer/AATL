@@ -26,7 +26,7 @@ import {
     SearchWorkBenchPaginationFilterText,
     SearchWorkBenchPlaceCardContainer,
     SearchWorkBenchSubTitle,
-    SearchWorkBenchTitle,
+    SearchWorkBenchTitle
 } from './SearchWorkBench.style'
 
 interface ISearchWorkBenchProps {
@@ -121,11 +121,8 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             handleSearch={handleSearch}
                         />
                     </SearchWorkBenchInputsContainer>
-                    <Media queries={query}>
-                        {(matches) => <>{matches.mobile && <SearchCouldNotFind openSearchModal={openSearchModal} />}</>}
-                    </Media>
 
-                    <SearchWorkBenchPaginationFilterContainer id={searchResults.length > 0 ? 'active' : 'inactive'}>
+                    {searchResults && searchResults.length > 0 && <SearchWorkBenchPaginationFilterContainer id={searchResults.length > 0 ? 'active' : 'inactive'}>
                         <SearchWorkBenchPaginationFilterText>SORT BY </SearchWorkBenchPaginationFilterText>
                         <FormControl className={classes.formControl}>
                             <Select
@@ -144,7 +141,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                 })}
                             </Select>
                         </FormControl>
-                    </SearchWorkBenchPaginationFilterContainer>
+                    </SearchWorkBenchPaginationFilterContainer>}
                     {searchResults && searchResults.length > 0 ? (
                         <>
                             {searchResults.map((searchResult: IVenue, index: number) => {
@@ -168,6 +165,9 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                         {matches.laptop && (
                                             <SearchCouldNotFind openSearchModal={openSearchModal} fullWidth={true} />
                                         )}
+                                        {(matches.mobile || matches.tablet) && (
+                                            <SearchCouldNotFind openSearchModal={openSearchModal} fullWidth={false} />
+                                        )}
                                     </>
                                 )}
                             </Media>
@@ -187,7 +187,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <Media queries={query}>
                         {(matches) => (
                             <>
-                                {(matches.laptop || matches.tablet) && searchResults && searchResults.length > 0 && (
+                                { searchResults && searchResults.length > 0 && (
                                     <SearchCouldNotFind openSearchModal={openSearchModal} />
                                 )}
                             </>
