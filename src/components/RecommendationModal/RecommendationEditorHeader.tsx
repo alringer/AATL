@@ -6,7 +6,6 @@ import Tips from './Tips'
 
 interface IRecommendationEditorHeader {
     closeRecommendationModal: () => void
-    handleMoreTips: () => void
     published: boolean
 }
 
@@ -20,7 +19,7 @@ const RecommendationEditorHeader: React.FC<IRecommendationEditorHeader> = ({
             <RecommendationModalCloseButton onClick={closeRecommendationModal}>
                 <Image src={CloseButton} alt="close" />
             </RecommendationModalCloseButton>
-            {!published ? <Tips handleMoreTips={handleMoreTips} /> : null}
+            {!published ? <Tips /> : null}
         </RecommendationModalHeaderContainer>
     )
 }

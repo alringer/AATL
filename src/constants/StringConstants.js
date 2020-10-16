@@ -241,7 +241,8 @@ export const IMAGE_DROPZONE = {
 }
 
 export const RECOMMENDATION_TIPS = {
-    Title: 'Tips on writing a scrumptious recommendation'
+    Title: 'Tips on writing a scrumptious recommendation',
+    Tips: ['It’s all about the ambiance. Speak to the decor, lighting and service. How did the restaurant make you feel? Tap into the emotional aspect of fine dining.','Set the stage. Describe how you found out about the restaurant and your expectations. ', 'Dining is a sensory experience. Odor, texture, flavor; don’t leave out any tasty detail. ','Show, don’t tell. Visualize and relive the experience before writing your recommendation. You might be surprised by the new details you remember.',]
 }
 
 export const MOST_POPULAR = {

@@ -13,18 +13,30 @@ import {
     TipsHR,
     TipsMoreButton,
     TipsTitle,
-    TipsToggledContainer,
+    TipsToggledContainer
 } from './RecommendationModal.style'
 
-interface ITipsProps {
-    handleMoreTips: () => void
-}
+interface ITipsProps {}
 
-const Tips: React.FC<ITipsProps> = ({ handleMoreTips }) => {
+const Tips: React.FC<ITipsProps> = () => {
     const [isTipToggled, setTipToggled] = React.useState(false)
-    const [currentTip, setCurrentTip] = React.useState(S.RECOMMENDATION_EDITOR.TipOne)
+    // Tips
+    const tips = S.RECOMMENDATION_TIPS.Tips
+    const [currentTipIndex, setCurrentTipIndex] = React.useState(0)
+    const [currentTip, setCurrentTip] = React.useState<string>(tips[0])
 
     const tipRef = useComponentVisible(false)
+
+    const handleMoreTips = () => {
+        const newTipsIndex = currentTipIndex + 1
+        if (newTipsIndex === tips.length) {
+            setCurrentTipIndex(0)
+            setCurrentTip(tips[0])
+        } else {
+            setCurrentTipIndex(newTipsIndex)
+            setCurrentTip(tips[newTipsIndex])
+        }
+    }
 
     const handleViewTip = () => {
         tipRef.setIsComponentVisible(true)
