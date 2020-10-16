@@ -31,7 +31,7 @@ import {
     UserProfileNameContainer,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
-    UserProfileTitleContainer,
+    UserProfileTitleContainer
 } from './UserProfileBanner.style'
 
 interface IReduxProps {
@@ -94,7 +94,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     <UserProfileName id="userName">{userInformation.userName}</UserProfileName>
                 </UserProfileNameContainer>
                 <UserProfileTitleContainer>
-                    <UserProfileTitle id="userTitle">{userInformation.userTitle}</UserProfileTitle>
+                    <UserProfileTitle id="userTitle">{userInformation.userTitle ? userInformation.userTitle : S.USER_PROFILE_BANNER.EmptyMessageByLine}</UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
         )
@@ -130,7 +130,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                             <UserProfileContentBodyContainer>
                                 <UserProfileDescriptionContainer>
                                     <UserProfileDescription id="userDescription">
-                                        {userInformation.userDescription}
+                                        {userInformation.userDescription ? userInformation.userDescription : S.USER_PROFILE_BANNER.EmptyMessageDescription}
                                     </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>

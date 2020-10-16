@@ -54,7 +54,8 @@ export const BUTTON_LABELS = {
     Add: 'ADD',
     Update: 'UPDATE',
     Delete: 'DELETE',
-    ReadMore: 'READ MORE'
+    ReadMore: 'READ MORE',
+    Save: 'SAVE'
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -206,6 +207,7 @@ export const ERROR_MESSAGES = {
     FullName: 'Must enter your name',
     ConfirmPassword: 'Passwords do not match',
     EmptyPassword: 'Must enter password',
+    ErrorFullName: 'Please enter your name'
 }
 
 export const RECOMMENDATION_EDITOR = {
@@ -330,10 +332,11 @@ export const LIST_MODAL = {
 }
 
 export const USER_PROFILE_BANNER = {
-    EmptyMessageByLine: 'What is your profession or tagline',
+    EmptyMessageByLine: 'What\'s your profession or tagline',
     EmptyMessageDescription: 'Add a little something about you to share with other foodies',
     Recommends: 'Recommends',
-    Places: 'Places'
+    Places: 'Places',
+    EditProfile: 'Edit Profile'
 }
 
 export const USER_PROFILE_LISTS = {
