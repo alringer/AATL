@@ -23,4 +23,4 @@ interface CloseFlagModalAction {
     type: typeof CLOSE_FLAG_MODAL
 }
 
-export type FlagModalActionTypes = OpenFlagModalAction | CloseFlagModalAction | SwitchListModalViewAction
+export type FlagModalActionTypes = OpenFlagModalAction | CloseFlagModalAction
