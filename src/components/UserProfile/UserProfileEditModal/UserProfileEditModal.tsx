@@ -1,3 +1,4 @@
+import { InputAdornment, Tooltip } from '@material-ui/core'
 import { AxiosResponse } from 'axios'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
@@ -15,6 +16,7 @@ import authReducer from 'store/authentication/authentication_reducer'
 import { fetchUser } from 'store/user/user_actions'
 import { closeUserProfileEditModal } from 'store/userProfileEditModal/userProfileEditModal_actions'
 import { query } from 'style/device'
+import { ErrorIcon } from 'style/ErrorIcon/ErrorIcon.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IUserProfile } from 'utilities/types/userProfile'
 import UserProfileImageDropzone from '../UserProfileImageDropzone/UserProfileImageDropzone'
@@ -34,7 +36,7 @@ import {
     UserProfileEditModalHeaderContainer,
     UserProfileEditModalHeaderText,
     UserProfileEditModalMainAreaContainer,
-    UserProfileEditModalMainContentContainer,
+    UserProfileEditModalMainContentContainer
 } from './UserProfileEditModal.style'
 
 interface IReduxProps {
@@ -65,8 +67,15 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
     const [currentImageCDNURL, setCurrentImageCDNURL] = React.useState('')
     const [isUploadingImage, setUploadingImage] = React.useState(false)
     const [isSaving, setSaving] = React.useState(false)
+    interface IErrors {
+        isFullNameValid: boolean
+    }
+    const [errors, setErrors] = React.useState<IErrors>({ isFullNameValid: true })
 
     const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (errors.isFullNameValid === false) {
+            setErrors({...errors, isFullNameValid: true})
+        }
         if (e.target.value) {
             setCurrentFullName(e.target.value)
         } else {
@@ -175,53 +184,65 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
         closeModal()
     }
     const handleSave = () => {
-        const splitName = currentFullName.trim().split(' ')
-        const firstName = splitName.length > 1 ? splitName.slice(0, splitName.length - 1).join(' ') : splitName[0]
-        const lastName = splitName.length > 1 ? splitName[splitName.length - 1] : ''
-
-        const token = getTokenConfig()
-        const updateUserProfileConfig = {
-            headers: {
-                Authorization: token,
-            },
-        }
-        let userProfilePayload: IUserProfile = {
-            ...user,
-            firstName: firstName,
-            lastName: lastName,
-            userByLine: currentOccupation,
-            content: currentBio,
-            imageCDNUrl: currentImageCDNURL,
-        }
-        setSaving(true)
-        axios
-            .put(USER_PROFILE, userProfilePayload, updateUserProfileConfig)
-            .then((res) => {
-                console.log('PUT request result for User Profile: ', res)
-                enqueueSnackbar('', {
-                    content: (
-                        <div>
-                            <Snackbar
-                                type={B.USER_PROFILE_UPDATED.Type}
-                                title={B.USER_PROFILE_UPDATED.Title}
-                                message={<SnackbarMessageBody>{B.USER_PROFILE_UPDATED.Body}</SnackbarMessageBody>}
-                            />
-                        </div>
-                    ),
+        const isValid = validate()
+        if (isValid) {
+            const splitName = currentFullName.trim().split(' ')
+            const firstName = splitName.length > 1 ? splitName.slice(0, splitName.length - 1).join(' ') : splitName[0]
+            const lastName = splitName.length > 1 ? splitName[splitName.length - 1] : ''
+    
+            const token = getTokenConfig()
+            const updateUserProfileConfig = {
+                headers: {
+                    Authorization: token,
+                },
+            }
+            let userProfilePayload: IUserProfile = {
+                ...user,
+                firstName: firstName,
+                lastName: lastName,
+                userByLine: currentOccupation,
+                content: currentBio,
+                imageCDNUrl: currentImageCDNURL,
+            }
+            setSaving(true)
+            axios
+                .put(USER_PROFILE, userProfilePayload, updateUserProfileConfig)
+                .then((res) => {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.USER_PROFILE_UPDATED.Type}
+                                    title={B.USER_PROFILE_UPDATED.Title}
+                                    message={<SnackbarMessageBody>{B.USER_PROFILE_UPDATED.Body}</SnackbarMessageBody>}
+                                />
+                            </div>
+                        ),
+                    })
+                    if (onSuccess) {
+                        onSuccess()
+                    }
+                    const keycloak = authReducer.getState().keycloak
+                    if (keycloak) {
+                        fetchUser(keycloak)
+                    }
+                    closeModal()
                 })
-                if (onSuccess) {
-                    onSuccess()
-                }
-                const keycloak = authReducer.getState().keycloak
-                if (keycloak) {
-                    fetchUser(keycloak)
-                }
-                closeModal()
-            })
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setSaving(false)
-            })
+                .catch((err) => console.log(err))
+                .finally(() => {
+                    setSaving(false)
+                })
+        }
+    }
+
+    const validate = () => {
+        if (currentFullName.length > 0) {
+            setErrors({ ...errors, isFullNameValid: true })
+            return true
+        } else {
+            setErrors({ ...errors, isFullNameValid: false })
+            return false
+        }
     }
 
     return (
@@ -230,7 +251,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                 <CustomDialog open={isOpen} fullScreen={matches.laptop || matches.tablet ? false : true} maxWidth="lg">
                     <UserProfileEditModalContentContainer ref={userProfileEditModalRef}>
                         <UserProfileEditModalHeaderContainer>
-                            <UserProfileEditModalHeaderText>Edit Profile</UserProfileEditModalHeaderText>
+            <UserProfileEditModalHeaderText>{S.USER_PROFILE_BANNER.EditProfile}</UserProfileEditModalHeaderText>
                         </UserProfileEditModalHeaderContainer>
                         <UserProfileEditModalMainAreaContainer>
                             <UserProfileEditModalMainContentContainer>
@@ -253,6 +274,21 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             variant="outlined"
                                             autoFocus={true}
                                             disabled={isSaving}
+                                            error={!errors.isFullNameValid}
+                                            className={errors.isFullNameValid === false ? 'error' : null}
+                                            InputProps={
+                                                errors.isFullNameValid === false
+                                                    ? {
+                                                          endAdornment: (
+                                                              <InputAdornment position="end">
+                                                                  <Tooltip title={S.ERROR_MESSAGES.ErrorFullName} placement="top">
+                                                                      <ErrorIcon />
+                                                                  </Tooltip>
+                                                              </InputAdornment>
+                                                          ),
+                                                      }
+                                                    : null
+                                            }
                                         />
                                         <TitleInput
                                             value={currentOccupation}
@@ -276,7 +312,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                         <UserProfileEditModalFooterContainer>
                             <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
                             <SubmitButton onClick={handleSave} disabled={isSaving || isUploadingImage}>
-                                SAVE
+                                {S.BUTTON_LABELS.Save}
                             </SubmitButton>
                         </UserProfileEditModalFooterContainer>
                     </UserProfileEditModalContentContainer>

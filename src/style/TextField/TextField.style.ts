@@ -1,7 +1,11 @@
 import { TextField } from '@material-ui/core'
 import styled, { css } from 'styled-components'
 
-export const CustomTextField = styled(TextField)`
+type ICustomTextField = {
+    error?: boolean
+}
+
+export const CustomTextField = styled(TextField)<ICustomTextField>`
     border-radius: 4px;
     border: solid 2px rgba(30, 31, 34, 0.1);
     background-color: ${props => props.theme.white};
@@ -24,15 +28,13 @@ export const CustomTextField = styled(TextField)`
     }
 
     ${props => {
-        if (props.className === 'error') {
+        if (props.error === true) {
             return css`
-                input {
+                border: solid 2px ${props.theme.dustyRed};
+                .MuiFormLabel-root {
                     color: ${props => props.theme.dustyRed} !important;
                 }
-                fieldset {
-                    border-color: color: ${props => props.theme.dustyRed} !important;
-                }
-                .MuiFormLabel-root {
+                input {
                     color: ${props => props.theme.dustyRed} !important;
                 }
             `

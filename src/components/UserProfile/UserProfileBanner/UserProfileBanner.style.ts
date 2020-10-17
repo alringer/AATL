@@ -202,13 +202,24 @@ export const UserProfileNumberOfRecommendations = styled.p`
 `
 
 // User Instagram
-export const UserProfileInstagramContainer = styled.a`
+type IUserProfileInstagramContainer = {
+    disabled: boolean
+}
+export const UserProfileInstagramContainer = styled.a<IUserProfileInstagramContainer>`
     display: flex;
     flex-direction: row;
     align-items: center;
     text-decoration: none;
 
     margin-top: 20px;
+
+    ${props => {
+        if (props.disabled) {
+            return css`
+                pointer-events: none;
+            `
+        }
+    }}
 `
 export const UserProfileInstagramIconImg = styled.img`
     margin-right: 8px;

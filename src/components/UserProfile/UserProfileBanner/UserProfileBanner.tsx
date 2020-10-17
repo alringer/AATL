@@ -31,7 +31,7 @@ import {
     UserProfileNameContainer,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
-    UserProfileTitleContainer,
+    UserProfileTitleContainer
 } from './UserProfileBanner.style'
 
 interface IReduxProps {
@@ -64,6 +64,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         userTitle: user.userByLine ? user.userByLine : '',
         userDescription: user.content ? user.content : '',
     })
+    const [instagramLink, setInstagramLink] = React.useState(null)
 
     React.useEffect(() => {
         setUserInformation({
@@ -79,6 +80,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
             userDescription: user.content ? user.content : '',
         })
         setViewedUser(user)
+        // TODO: Set the link to activation link if the user has no instagram ID or disable the link
+        setInstagramLink(user.instagramId ? `https://instagram.com/${viewedUser.instagramId}` : null)
     }, [user])
 
     const handleEditProfile = () => {
@@ -94,7 +97,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     <UserProfileName id="userName">{userInformation.userName}</UserProfileName>
                 </UserProfileNameContainer>
                 <UserProfileTitleContainer>
-                    <UserProfileTitle id="userTitle">{userInformation.userTitle}</UserProfileTitle>
+                    <UserProfileTitle id="userTitle">{userInformation.userTitle ? userInformation.userTitle : S.USER_PROFILE_BANNER.EmptyMessageByLine}</UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
         )
@@ -130,7 +133,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                             <UserProfileContentBodyContainer>
                                 <UserProfileDescriptionContainer>
                                     <UserProfileDescription id="userDescription">
-                                        {userInformation.userDescription}
+                                        {userInformation.userDescription ? userInformation.userDescription : S.USER_PROFILE_BANNER.EmptyMessageDescription}
                                     </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
@@ -140,18 +143,19 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
-                                {viewedUser.instagramId ? (
+                                {(
                                     <UserProfileInstagramContainer
-                                        href={`https://instagram.com/${viewedUser.instagramId}`}
+                                        href={instagramLink}
                                         target="_blank"
+                                        disabled={instagramLink ? false : true}
                                     >
                                         <UserProfileInstagramIconImg
                                             src={UserProfileInstagramIcon}
                                             alt="user-profile-instagram-icon"
                                         />
-                                        <UserProfileInstagram>@JaneDoe</UserProfileInstagram>
+                                        <UserProfileInstagram>{viewedUser.instagramId ? `@${viewedUser.instagramId}`: S.USER_PROFILE_BANNER.EmptyInstagram}</UserProfileInstagram>
                                     </UserProfileInstagramContainer>
-                                ) : null}
+                                )}
                             </UserProfileContentBodyContainer>
                         </UserProfileContentContainer>
                     </>
