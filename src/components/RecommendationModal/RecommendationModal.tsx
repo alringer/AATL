@@ -2,7 +2,7 @@ import Dialog from '@material-ui/core/Dialog'
 import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
 import {
     RecommendationModalContainer,
-    RecommendationModalContentContainer,
+    RecommendationModalContentContainer
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import axios, { POST_RECOMMENDATION } from 'config/AxiosConfig'
@@ -13,7 +13,7 @@ import { StoreState } from 'store'
 import authStore from 'store/authentication/authentication_reducer'
 import {
     clearRecommendationModal,
-    closeRecommendationModal,
+    closeRecommendationModal
 } from 'store/recommendationModal/recommendationModal_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import RecommendationEditorHeader from './RecommendationEditorHeader'
@@ -92,16 +92,12 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     const handleReadOurGuidelines = () => {
         console.log('TODO: Wire up API for handleReadOurGuidelines')
     }
-    const handleMoreTips = () => {
-        console.log('TODO: Wire up API for handleMoreTips')
-    }
 
     return (
         <Dialog open={isOpen} fullScreen>
             <RecommendationModalContainer>
                 <RecommendationEditorHeader
                     closeRecommendationModal={closeRecommendationModal}
-                    handleMoreTips={handleMoreTips}
                     published={published}
                 />
                 <RecommendationModalContentContainer>
