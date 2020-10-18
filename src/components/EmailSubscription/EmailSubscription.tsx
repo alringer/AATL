@@ -5,6 +5,7 @@ import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { useSnackbar } from 'notistack'
 import React from 'react'
+import { validateEmail } from 'utilities/helpers/validateEmail'
 import {
     EmailSubscriptionBody,
     EmailSubscriptionButtonContainer,
@@ -26,11 +27,10 @@ const EmailSubscription = () => {
     }
 
     const handleSubscribe = () => {
-        // TODO: Add more validations to check the validity of the input email
-        if (email !== '') {
-            // TODO: Call email subscription API
-            console.log('TODO: Call subscribe API with ', email)
-            const config = {}
+        const isValidEmail = validateEmail(email)
+        const isEmpty = email === ''
+
+        if (isValidEmail && !isEmpty) {
             axios
                 .post(SUBSCRIBE_MAILCHIMP, { emailAddress: email })
                 .then((res) => {
@@ -50,6 +50,30 @@ const EmailSubscription = () => {
                     })
                 })
                 .catch((err) => console.log(err))
+        } else if (isEmpty) {
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.ERROR_EMAIL_EMPTY.Type}
+                            title={B.ERROR_EMAIL_EMPTY.Title}
+                            message={<SnackbarMessageBody>{B.ERROR_EMAIL_EMPTY.Body}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
+        } else if (!isValidEmail) {
+            enqueueSnackbar('', {
+                content: (
+                    <div>
+                        <Snackbar
+                            type={B.ERROR_EMAIL_INVALID.Type}
+                            title={B.ERROR_EMAIL_INVALID.Title}
+                            message={<SnackbarMessageBody>{B.ERROR_EMAIL_INVALID.Body}</SnackbarMessageBody>}
+                        />
+                    </div>
+                ),
+            })
         }
     }
 

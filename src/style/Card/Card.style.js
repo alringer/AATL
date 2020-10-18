@@ -106,6 +106,7 @@ export const WideCardContentContainer = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     flex: 1;
+    width: 100%; /* TODO: Determine the width behaviors in different viewports */
     height: 100%;
 
     background-color: ${props => props.theme.white};
@@ -128,7 +129,7 @@ export const WideHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
 `
 
@@ -404,4 +405,9 @@ export const MobileActionButtonsContainer = styled.div`
     align-items: center;
     
     flex-wrap: wrap;
+`
+
+export const CardAnchor = styled.a`
+    width: 100%;
+    text-decoration: none;
 `

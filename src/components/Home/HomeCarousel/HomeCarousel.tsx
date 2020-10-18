@@ -11,14 +11,20 @@ interface IHomeCarouselProps {
 }
 
 const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLists }) => {
+    const [currentFeaturedRecommendationsLists, setCurrentFeaturedRecommendationsLists] = React.useState([])
     const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0)
+
+    React.useEffect(() => {
+        if (featuredRecommendationsLists) {
+            const sortedFeaturedLists = featuredRecommendationsLists.sort((a, b) =>
+                a.featuredList.sortOrder > b.featuredList.sortOrder ? 1 : -1
+            )
+            setCurrentFeaturedRecommendationsLists(sortedFeaturedLists)
+        }
+    }, [featuredRecommendationsLists])
 
     const windowSize = useWindowSize()
     const centerWidth: number = windowSize.width < Number(size.laptop) ? Number(90) : Number(100)
-
-    React.useEffect(() => {
-        console.log('Featured Lists: ', featuredRecommendationsLists)
-    }, [featuredRecommendationsLists])
 
     const updateCurrentSlide = (index: number) => {
         if (currentSlideIndex !== index) {
@@ -58,7 +64,7 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                 onChange={updateCurrentSlide}
                 onClickItem={updateCurrentSlide}
             >
-                {featuredRecommendationsLists.map((featuredRecommendationList, index) => (
+                {currentFeaturedRecommendationsLists.map((featuredRecommendationList, index) => (
                     <HomeCarouselCard
                         featuredRecommendationList={featuredRecommendationList}
                         handleMoveForward={handleMoveForward}

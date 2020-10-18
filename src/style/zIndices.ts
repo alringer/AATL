@@ -14,6 +14,8 @@ enum zIndices {
     imageDropzoneBackgroundOvaerlay = '103',
     imageDropzoneContainer = '104',
     recommendationEditorHeader = '105',
+    recommendationsListsImage = '1',
+    recommendationsListsContent = '2',
 }
 
 export default zIndices
