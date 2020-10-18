@@ -46,12 +46,14 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
     }, [])
 
     const fetchRecommendationListMeta = () => {
-        axios
-            .get(RECOMMENDATION_LIST_META_WITH_ID(recommendationListMetaID))
-            .then((res) => {
-                setRecommendationListMeta(res.data)
-            })
-            .catch((err) => console.log('Error: ', err))
+        if (recommendationListMetaID !== null && recommendationListMetaID !== undefined) {
+            axios
+                .get(RECOMMENDATION_LIST_META_WITH_ID(recommendationListMetaID))
+                .then((res) => {
+                    setRecommendationListMeta(res.data)
+                })
+                .catch((err) => console.log('Error: ', err))
+        }
     }
 
     return (

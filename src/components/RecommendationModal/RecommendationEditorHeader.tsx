@@ -11,7 +11,6 @@ interface IRecommendationEditorHeader {
 
 const RecommendationEditorHeader: React.FC<IRecommendationEditorHeader> = ({
     closeRecommendationModal,
-    handleMoreTips,
     published,
 }) => {
     return (

@@ -3,7 +3,7 @@ import RecommendationEditor from 'components/RecommendationModal/RecommendationE
 import RecommendationEditorHeader from 'components/RecommendationModal/RecommendationEditorHeader'
 import {
     RecommendationModalContainer,
-    RecommendationModalContentContainer,
+    RecommendationModalContentContainer
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import React from 'react'
@@ -23,7 +23,6 @@ storiesOf('Recommendation Editor Modal', module)
             <RecommendationModalContainer>
                 <RecommendationEditorHeader
                     published={false}
-                    handleMoreTips={() => {}}
                     closeRecommendationModal={() => {}}
                 />
                 <RecommendationModalContentContainer>
@@ -42,7 +41,6 @@ storiesOf('Recommendation Editor Modal', module)
             <RecommendationModalContainer>
                 <RecommendationEditorHeader
                     published={true}
-                    handleMoreTips={() => {}}
                     closeRecommendationModal={() => {}}
                 />
                 <RecommendationModalContentContainer>
