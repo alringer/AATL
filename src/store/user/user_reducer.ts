@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT, UserActionTypes, UserReducerState } from './user_types'
+import { LOGIN, LOGOUT, SET_LOADING, UserActionTypes, UserReducerState } from './user_types'
 
 const initialState: UserReducerState = {
     user: null,
     userRole: null,
     loggedIn: false,
+    isLoading: false,
 }
 
 const userReducer = (state = initialState, action: UserActionTypes): UserReducerState => {
@@ -17,6 +18,11 @@ const userReducer = (state = initialState, action: UserActionTypes): UserReducer
         case LOGOUT:
             return {
                 ...initialState,
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                isLoading: action.payload,
             }
         default:
             return state

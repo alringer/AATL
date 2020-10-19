@@ -1,8 +1,10 @@
+import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IUserProfile } from 'utilities/types/userProfile'
 
 export interface IUserInformation {
     user: IUserProfile | null
-    userRole: string | null
+    userRole: UserRoleEnum | null
+    isLoading: boolean
 }
 export interface UserReducerState extends IUserInformation {
     loggedIn: boolean
@@ -22,4 +24,11 @@ interface LogoutAction {
     type: typeof LOGOUT
 }
 
-export type UserActionTypes = LoginAction | LogoutAction
+export const SET_LOADING = 'SET_LOADING'
+
+interface SetLoadingAction {
+    type: typeof SET_LOADING
+    payload: boolean
+}
+
+export type UserActionTypes = LoginAction | LogoutAction | SetLoadingAction

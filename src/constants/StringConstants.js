@@ -114,6 +114,15 @@ export const ADMIN_PAGE = {
         CardActions: '',
         CardFeature: 'Feature',
         CardDontFeature: 'Don\'t Feature'
+    },
+    AdminCities: {
+        Title: 'Cities',
+        SubTitle: 'This is the list of supported cities. You may access them directly from here.',
+        Image: 'Image',
+        City: 'City',
+        State: 'State',
+        Places: 'Places',
+        Recommendations: 'Recommendations',
     }
 }
 
