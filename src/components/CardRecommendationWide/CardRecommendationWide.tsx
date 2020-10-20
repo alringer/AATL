@@ -11,7 +11,6 @@ import WriteRecommendationButton from 'components/CardButtons/WriteRecommendatio
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
-import axios, { FETCH_RECOMMENDATION } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
@@ -37,14 +36,29 @@ import {
     MoreVerticalContainer,
     WideHeaderTooltipIconsContainer
 } from 'style/Card/Card.style'
-import { query } from 'style/device'
+import { DeviceNameEnum, query, size } from 'style/device'
 import {
-    chopStringFullRecommendationDescription,
-    chopStringRecommendationTitle,
-    chopStringSimpleRecommendationDescription
+    chopStringRecommendationCardAddress,
+
+
+
+    chopStringRecommendationCardByLine,
+
+    chopStringRecommendationCardCategories, chopStringRecommendationCardDescription,
+
+
+
+
+
+    chopStringRecommendationCardPlaceName,
+    chopStringRecommendationCardTitle,
+
+
+    chopStringRecommendationCardUserName
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
@@ -55,7 +69,16 @@ import {
     RecommendationButtonsContainer,
     RecommendationCardContainer,
     RecommendationCardContentContainer,
-    RecommendationCardImageContainer,
+
+
+
+
+
+
+
+
+
+    RecommendationCardImage, RecommendationCardImageContainer,
     RecommendationContentBottomContainer,
     RecommendationContentMiddleContainer,
     RecommendationContentTopContainer,
@@ -64,12 +87,16 @@ import {
     RecommendationPlaceCategoryText,
     RecommendationPlaceNameText,
     RecommendationSummaryText,
-    RecommendationTitleSpan,
+
     RecommendationTitleText
 } from './CardRecommendationWide.style'
 
 export enum CardRecommendationWideEnum {
     RecommendationList,
+    Restaurant,
+    Profile,
+    Home,
+    City
 }
 
 interface IReduxProps {
@@ -105,20 +132,30 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     const [isLoading, setLoading] = React.useState(false)
     const [isMoreVisible, setMoreVisible] = React.useState(false)
 
+    const windowSize = useWindowSize()
+    const viewport: DeviceNameEnum =
+        windowSize.width >= Number(size.laptop)
+            ? DeviceNameEnum.laptop
+            : windowSize.width >= Number(size.tablet)
+            ? DeviceNameEnum.tablet
+            : DeviceNameEnum.mobile
+
     React.useEffect(() => {
-        setLoading(true)
-        if (_.has(recommendation, 'id')) {
-            axios
-                .get(FETCH_RECOMMENDATION(recommendation.id))
-                .then((res) => {
-                    setCurrentRecommendation(res.data)
-                })
-                .catch((err) => console.log(err))
-                .finally(() => {
-                    setLoading(false)
-                })
-        }
-    }, [])
+        setCurrentRecommendation(recommendation)
+        // setLoading(true)
+        // if (_.has(recommendation, 'id')) {
+        //     axios
+        //         .get(FETCH_RECOMMENDATION(recommendation.id))
+        //         .then((res) => {
+        //             setCurrentRecommendation(res.data)
+        //         })
+        //         .catch((err) => console.log(err))
+        //         .finally(() => {
+        //             setLoading(false)
+        //         })
+        // }
+        console.log(recommendation)
+    }, [recommendation])
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to flag the recommendation
@@ -245,28 +282,27 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
 
     return currentRecommendation ? (
         <RecommendationCardContainer onClick={handleMore} id={isMoreVisible ? 'toggled' : 'not-toggled'}>
-            <RecommendationCardImageContainer id={isMoreVisible ? 'toggled' : 'not-toggled'}>
-                <Image src={recommendation ? recommendation.imageCDNUrl : ''} alt="recommendation-image" />
+            <RecommendationCardImageContainer src={recommendation ? recommendation.imageCDNUrl : ''} isToggled={isMoreVisible}>
+                <RecommendationCardImage src={recommendation ? recommendation.imageCDNUrl : ''} alt="recommendation-image" isToggled={isMoreVisible} />
             </RecommendationCardImageContainer>
-            <RecommendationCardContentContainer id={isHighlighted === true ? 'highlighted' : 'not-highlighted'}>
+            <RecommendationCardContentContainer isHighlighted={isHighlighted} isToggled={isMoreVisible}>
                 <RecommendationContentTopContainer>
                     <RecommendationHeaderContainer>
                         <RecommendationPlaceNameText>
-                            <RecommendationTitleSpan>
-                                {isFull === true
+                            {/* <RecommendationTitleSpan> */}
+                                {type !== CardRecommendationWideEnum.Restaurant
                                     ? currentRecommendation &&
                                       currentRecommendation.venue &&
                                       currentRecommendation.venue.name
-                                        ? currentRecommendation.venue.name
+                                        ? (isMoreVisible ? currentRecommendation.venue.name : chopStringRecommendationCardPlaceName(currentRecommendation.venue.name, viewport, isFull))
                                         : ''
                                     : isMoreVisible
                                     ? currentRecommendation && currentRecommendation.title
                                         ? currentRecommendation.title
                                         : ''
                                     : currentRecommendation && currentRecommendation.title
-                                    ? chopStringRecommendationTitle(currentRecommendation.title)
+                                    ? chopStringRecommendationCardPlaceName(currentRecommendation.title, viewport, isFull)
                                     : ''}
-                            </RecommendationTitleSpan>
                             <WideHeaderTooltipIconsContainer>
                                 <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                     <img src={AuthoredSVG} />
@@ -275,6 +311,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     <img src={AddedSVG} alt="added-icon" />
                                 </Tooltip>
                             </WideHeaderTooltipIconsContainer>
+                            {/* </RecommendationTitleSpan> */}
                         </RecommendationPlaceNameText>
                         <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) => (
@@ -315,7 +352,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                             )}
                         </Media>
                     </RecommendationHeaderContainer>
-                    {isFull === true && (
+                    {type !== CardRecommendationWideEnum.Restaurant && (
                         <>
                             <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
@@ -323,7 +360,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                         {(matches.laptop || matches.tablet) && (
                                             <RecommendationPlaceAddressText>
                                                 {_.has(currentRecommendation, 'venue.formattedAddress')
-                                                    ? currentRecommendation.venue.formattedAddress
+                                                    ? (isMoreVisible ? currentRecommendation.venue.formattedAddress : chopStringRecommendationCardAddress(currentRecommendation.venue.formattedAddress, viewport, isFull))
                                                     : ''}
                                             </RecommendationPlaceAddressText>
                                         )}
@@ -334,10 +371,13 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 {currentRecommendation &&
                                 currentRecommendation.venue &&
                                 currentRecommendation.venue.categories
-                                    ? concatCategories(
+                                    ? isMoreVisible ? concatCategories(
+                                        currentRecommendation.venue.categories.map((category: ICategory) => {
+                                            return category.longName
+                                        })) : chopStringRecommendationCardCategories(concatCategories(
                                           currentRecommendation.venue.categories.map((category: ICategory) => {
                                               return category.longName
-                                          })
+                                          })), viewport, isFull
                                       )
                                     : ''}
                             </RecommendationPlaceCategoryText>
@@ -345,11 +385,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     )}
                 </RecommendationContentTopContainer>
                 <RecommendationContentMiddleContainer>
-                    {isFull === true && (
+                    {type !== CardRecommendationWideEnum.Restaurant && (
                         <RecommendationTitleText>
                             {isMoreVisible
                                 ? currentRecommendation.title
-                                : chopStringRecommendationTitle(currentRecommendation.title)}
+                                : chopStringRecommendationCardTitle(currentRecommendation.title, viewport, isFull)}
                         </RecommendationTitleText>
                     )}
                     <RecommendationSummaryText>
@@ -357,13 +397,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                             ? currentRecommendation && currentRecommendation.content
                                 ? currentRecommendation.content
                                 : ''
-                            : isFull === true
-                            ? currentRecommendation && currentRecommendation.content
-                                ? chopStringFullRecommendationDescription(currentRecommendation.content)
-                                : ''
                             : currentRecommendation && currentRecommendation.content
-                            ? chopStringSimpleRecommendationDescription(currentRecommendation.content)
-                            : ''}
+                                ? chopStringRecommendationCardDescription(currentRecommendation.content, viewport, type)
+                                : ''}
                     </RecommendationSummaryText>
                 </RecommendationContentMiddleContainer>
                 <RecommendationContentBottomContainer>
@@ -377,16 +413,18 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                             <RecommendationAuthorNameText>
                                 {_.has(currentRecommendation, 'createdBy.firstName') &&
                                 _.has(currentRecommendation, 'createdBy.lastName')
-                                    ? currentRecommendation.createdBy.firstName +
+                                    ? (isMoreVisible ? currentRecommendation.createdBy.firstName +
+                                    ' ' +
+                                    currentRecommendation.createdBy.lastName : chopStringRecommendationCardUserName(`${currentRecommendation.createdBy.firstName +
                                       ' ' +
-                                      currentRecommendation.createdBy.lastName
+                                      currentRecommendation.createdBy.lastName}`, viewport, isFull))
                                     : ''}
                             </RecommendationAuthorNameText>
                         </RecommendationAnchor>
                     </Link>
                     <RecommendationAuthorTitleText>
                         {_.has(currentRecommendation, 'createdBy.userByLine')
-                            ? currentRecommendation.createdBy.userByLine
+                            ? (isMoreVisible ? currentRecommendation.createdBy.userByLine : chopStringRecommendationCardByLine(currentRecommendation.createdBy.userByLine, viewport, isFull))
                             : ''}
                     </RecommendationAuthorTitleText>
                     <Media queries={query} defaultMatches={{ mobile: true }}>

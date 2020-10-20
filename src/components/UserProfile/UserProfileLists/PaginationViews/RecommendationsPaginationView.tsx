@@ -1,5 +1,5 @@
 import Pagination from '@material-ui/lab/Pagination'
-import CardRecommendationWide from 'components/CardRecommendationWide/CardRecommendationWide'
+import CardRecommendationWide, { CardRecommendationWideEnum } from 'components/CardRecommendationWide/CardRecommendationWide'
 import axios, { FETCH_USER_RECOMMENDATIONS } from 'config/AxiosConfig'
 import parse from 'parse-link-header'
 import React from 'react'
@@ -10,7 +10,7 @@ import {
     UserProfileListsMainViewHeaderContainer,
     UserProfileListsMainViewHeaderTextContainer,
     UserProfileListsMainViewListDescription,
-    UserProfileListsMainViewListTitle,
+    UserProfileListsMainViewListTitle
 } from '../UserProfileLists.style'
 import { PaginationViewsListContainer } from './PaginationViews.style'
 
@@ -68,7 +68,7 @@ const RecommendationsPaginationView: React.FC<IRecommendationsPaginationViewProp
                     currentRecommendations.length > 0 &&
                     currentRecommendations.map((recommendation: IRecommendation, index: number) => (
                         <RecommendationCardContainer key={index}>
-                            <CardRecommendationWide isFull={true} recommendation={recommendation} />
+                            <CardRecommendationWide isFull={false} recommendation={recommendation} type={CardRecommendationWideEnum.Profile} />
                         </RecommendationCardContainer>
                     ))}
                 {currentRecommendations && currentRecommendations.length > 0 && (

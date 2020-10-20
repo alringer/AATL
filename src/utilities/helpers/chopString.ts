@@ -1,17 +1,6 @@
 import { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
+import { CardRecommendationWideEnum } from 'components/CardRecommendationWide/CardRecommendationWide'
 import { DeviceNameEnum } from 'style/device'
-
-export const chopStringFullRecommendationDescription = (input: string) => {
-    return input.length > 141 ? `${input.slice(0, 141)}...` : input
-}
-
-export const chopStringRecommendationTitle = (input: string) => {
-    return input.length > 57 ? `${input.slice(0, 57)}...` : input
-}
-
-export const chopStringSimpleRecommendationDescription = (input: string) => {
-    return input.length > 250 ? `${input.slice(0, 250)}...` : input
-}
 
 export const chopStringSmallCallToAction = (input: string) => {
     return input.length > 65 ? `${input.slice(0, 65)}...` : input
@@ -174,6 +163,183 @@ export const chopStringPlaceUserByLine = (input: string, viewport: DeviceNameEnu
             }
         case DeviceNameEnum.mobile:
             return input.length > 30 ? `${input.slice(0, 30)}...` : input
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardPlaceName = (input: string, viewport: DeviceNameEnum, isFull: boolean) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 10 ? `${input.slice(0, 10)}...` : input
+            } else {
+                return input.length > 22 ? `${input.slice(0, 22)}...` : input
+            }
+
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 13 ? `${input.slice(0, 13)}...` : input
+            } else {
+                return input.length > 16 ? `${input.slice(0, 16)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (isFull === false) {
+                return input.length > 13 ? `${input.slice(0, 13)}...` : input
+            } else {
+                return input.length > 12 ? `${input.slice(0, 12)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardAddress = (input: string, viewport: DeviceNameEnum, isFull: boolean) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 60 ? `${input.slice(0, 60)}...` : input
+            }
+
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 34 ? `${input.slice(0, 34)}...` : input
+            } else {
+                return input.length > 38 ? `${input.slice(0, 38)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardCategories = (input: string, viewport: DeviceNameEnum, isFull: boolean ) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 60 ? `${input.slice(0, 60)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 40 ? `${input.slice(0, 40)}...` : input
+            } else {
+                return input.length > 44 ? `${input.slice(0, 44)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardTitle = (input: string, viewport: DeviceNameEnum, isFull: boolean) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 29 ? `${input.slice(0, 29)}...` : input
+            } else {
+                return input.length > 55 ? `${input.slice(0, 55)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 35 ? `${input.slice(0, 35)}...` : input
+            } else {
+                return input.length > 35 ? `${input.slice(0, 35)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardDescription = (input: string, viewport: DeviceNameEnum, type: CardRecommendationWideEnum) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (type === CardRecommendationWideEnum.Profile) {
+                return input.length > 80 ? `${input.slice(0, 80)}...` : input
+            } else if (type === CardRecommendationWideEnum.Restaurant) {
+                return input.length > 400 ? `${input.slice(0, 400)}...` : input
+            } else {
+                return input.length > 160 ? `${input.slice(0, 160)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (type === CardRecommendationWideEnum.Profile) {
+                return input.length > 140 ? `${input.slice(0, 140)}...` : input
+            } else if (type === CardRecommendationWideEnum.Restaurant) {
+                return input.length > 300 ? `${input.slice(0, 300)}...` : input
+            } else {
+                return input.length > 140 ? `${input.slice(0, 140)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (type === CardRecommendationWideEnum.Profile) {
+                return input.length > 180 ? `${input.slice(0, 180)}...` : input
+            } else if (type === CardRecommendationWideEnum.Restaurant) {
+                return input.length > 180 ? `${input.slice(0, 180)}...` : input
+            } else {
+                return input.length > 180 ? `${input.slice(0, 180)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardUserName = (input: string, viewport: DeviceNameEnum, isFull: boolean ) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 60 ? `${input.slice(0, 60)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 34 ? `${input.slice(0, 34)}...` : input
+            } else {
+                return input.length > 37 ? `${input.slice(0, 37)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            }
+        default:
+            return input
+    }
+}
+
+export const chopStringRecommendationCardByLine = (input: string, viewport: DeviceNameEnum, isFull: boolean ) => {
+    switch (viewport) {
+        case DeviceNameEnum.laptop:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 60 ? `${input.slice(0, 60)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (isFull === false) {
+                return input.length > 38 ? `${input.slice(0, 38)}...` : input
+            } else {
+                return input.length > 43 ? `${input.slice(0, 43)}...` : input
+            }
+        case DeviceNameEnum.mobile:
+            if (isFull === false) {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            } else {
+                return input.length > 30 ? `${input.slice(0, 30)}...` : input
+            }
         default:
             return input
     }

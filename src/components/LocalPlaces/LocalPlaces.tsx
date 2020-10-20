@@ -11,7 +11,7 @@ import {
     LocalPlacesHeaderSubTitleText,
     LocalPlacesHeaderTitleText,
     LocalPlacesTab,
-    LocalPlacesTabsContainer,
+    LocalPlacesTabsContainer
 } from './LocalPlaces.style'
 
 interface ILocalPlacesProps {
@@ -103,6 +103,7 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
                 </LocalPlacesTab>
             </LocalPlacesTabsContainer>
             <CardPlaceWideList places={currentPlaces} type={CardPlaceWideEnum.City} />
+            {/* TODO: Render Recommendations if the selected tab is latest recommendations (type === CardRecommendationWideEnum.City) */}
             <Pagination className={classes.root} count={1} variant="outlined" shape="rounded" />
         </LocalPlacesContainer>
     )

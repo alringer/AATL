@@ -112,10 +112,10 @@ export interface IVenueRecommendationsInformation {
 
 export const mockVenue: IVenue = {
     id: 1101,
-    name: 'OEB Breakfast Co. | Bridgeland',
+    name: 'OEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEB',
     imageCDNUrl: 'https://s3-media2.fl.yelpcdn.com/bphoto/GAoU-rXVso7GDwSm4C1B2A/o.jpg',
     websiteURL: null,
-    formattedAddress: '825 1 Avenue NE,Calgary,AB,CA',
+    formattedAddress: '825 1 Avenue NE,Calgary,AB,CA 825 1 Avenue NE,Calgary,AB,CA 825 1 Avenue NE,Calgary,AB,CA',
     openTableID: null,
     sourcePlaceId: '5aK167zvZhGs_i7Vf4A1NQ',
     streetNumber: null,

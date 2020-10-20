@@ -9,7 +9,7 @@ import {
     chopStringRecommendationsListsCardContent,
     chopStringRecommendationsListsCardNumber,
     chopStringRecommendationsListsCardSubTitle,
-    chopStringRecommendationsListsCardTitle,
+    chopStringRecommendationsListsCardTitle
 } from 'utilities/helpers/chopString'
 import useWindowSize from 'utilities/hooks/useWindowSize'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
@@ -24,7 +24,7 @@ import {
     RecommendationsListsCardIconContainer,
     RecommendationsListsCardImageContainer,
     RecommendationsListsCardSubTitle,
-    RecommendationsListsCardTitle,
+    RecommendationsListsCardTitle
 } from './RecommendationsListsCard.style'
 
 interface IRecommendationsListsCardProps {
