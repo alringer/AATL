@@ -57,6 +57,7 @@ import {
 } from './Header.style'
 
 interface IReduxProps {
+    isPrelaunch: boolean
     user: IUserProfile
     userRole: string | null
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
@@ -71,6 +72,7 @@ const Header: React.FC<IHeaderProps> = ({
     keycloakLogin,
     keycloakSignUp,
     authenticated,
+    isPrelaunch,
 }) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
@@ -152,9 +154,11 @@ const Header: React.FC<IHeaderProps> = ({
 
     const NotSignedInItems = () => (
         <MenuItemsContainer>
-            <ButtonContainer>
-                <SignUpButton onClick={handleOpenSignUp}>{S.BUTTON_LABELS.SignUp}</SignUpButton>
-            </ButtonContainer>
+            {!isPrelaunch && (
+                <ButtonContainer>
+                    <SignUpButton onClick={handleOpenSignUp}>{S.BUTTON_LABELS.SignUp}</SignUpButton>
+                </ButtonContainer>
+            )}
             <ButtonContainer id={'leftPadded'}>
                 <LoginButton onClick={handleOpenLogin}>{S.BUTTON_LABELS.Login}</LoginButton>
             </ButtonContainer>
@@ -251,7 +255,7 @@ const Header: React.FC<IHeaderProps> = ({
                 <Logo />
             </LeftItemsContainer>
             <RightItemsContainer>
-                <MenuItems />
+                {!isPrelaunch && <MenuItems />}
                 {authenticated === true ? <SignedInItems /> : <NotSignedInItems />}
             </RightItemsContainer>
         </>
@@ -292,14 +296,16 @@ const Header: React.FC<IHeaderProps> = ({
                     </IconButton>
                 </MenuItemRow>
             </MenuItemsSectionRow>
-            <MenuItemsSectionRow>
-                <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.foodAndDrink)}>
-                    <MenuItemAnchorText>{S.HEADER_ITEMS.FoodAndDrinks}</MenuItemAnchorText>
-                </MenuItemRow>
-                <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.cities)}>
-                    <MenuItemAnchorText>{S.HEADER_ITEMS.Cities}</MenuItemAnchorText>
-                </MenuItemRow>
-            </MenuItemsSectionRow>
+            {!isPrelaunch && (
+                <MenuItemsSectionRow>
+                    <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.foodAndDrink)}>
+                        <MenuItemAnchorText>{S.HEADER_ITEMS.FoodAndDrinks}</MenuItemAnchorText>
+                    </MenuItemRow>
+                    <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.cities)}>
+                        <MenuItemAnchorText>{S.HEADER_ITEMS.Cities}</MenuItemAnchorText>
+                    </MenuItemRow>
+                </MenuItemsSectionRow>
+            )}
             <MenuItemsSectionRow>
                 {authenticated ? (
                     <>
@@ -315,10 +321,11 @@ const Header: React.FC<IHeaderProps> = ({
                     </>
                 ) : (
                     <>
-                        {/* TODO: Add sign up modal  */}
-                        <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
-                            <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
-                        </MenuItemRow>
+                        {!isPrelaunch && (
+                            <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
+                                <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
+                            </MenuItemRow>
+                        )}
                         <MenuItemRow onClick={handleOpenLogin}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
                         </MenuItemRow>
@@ -361,6 +368,7 @@ const Header: React.FC<IHeaderProps> = ({
 const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
     userRole: state.userReducer.userRole,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

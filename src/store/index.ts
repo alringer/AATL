@@ -15,6 +15,8 @@ import flagModalReducer from './flagModal/flagModal_reducer'
 import { FlagModalReducerState } from './flagModal/flagModal_types'
 import locationReducer from './location/location_reducer'
 import { LocationReducerState } from './location/location_types'
+import prelaunchReducer from './prelaunch/prelaunch_reducer'
+import { PrelaunchReducerState } from './prelaunch/prelaunch_types'
 import recommendationModalReducer from './recommendationModal/recommendationModal_reducer'
 import searchModalReducer from './searchModal/searchModal_reducer'
 import { SearchModalReducerState } from './searchModal/searchModal_types'
@@ -22,7 +24,6 @@ import userReducer from './user/user_reducer'
 import { UserReducerState } from './user/user_types'
 import userProfileEditModalReducer from './userProfileEditModal/userProfileEditModal_reducer'
 import { UserProfileEditModalReducerState } from './userProfileEditModal/userProfileEditModal_types'
-
 
 const reducer = combineReducers({
     userReducer,
@@ -34,7 +35,8 @@ const reducer = combineReducers({
     listModalReducer,
     userProfileEditModalReducer,
     flagModalReducer,
-    deleteRecommendationModalReducer
+    deleteRecommendationModalReducer,
+    prelaunchReducer,
 })
 
 const middleware = applyMiddleware(thunk)
@@ -52,6 +54,7 @@ export interface StoreState {
     userProfileEditModalReducer: UserProfileEditModalReducerState
     flagModalReducer: FlagModalReducerState
     deleteRecommendationModalReducer: DeleteRecommendationModalReducerState
+    prelaunchReducer: PrelaunchReducerState
 }
 
 export default store

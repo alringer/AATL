@@ -61,6 +61,7 @@ export const BUTTON_LABELS = {
     Save: 'SAVE',
     Flag: 'FLAG',
     MarkAppropriate: 'MARK APPROPRIATE',
+    YesSignMeUp: 'YES, SIGN ME UP!',
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -529,4 +530,11 @@ P.O. Box 4089, Incline Village, NV  89450`,
             Body: 'January 7, 2018',
         },
     ],
+}
+export const PRELAUNCH = {
+    Welcome: {
+        Title: 'Hey there Foodie!',
+        Message:
+            'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an inflencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
+    },
 }
