@@ -3,7 +3,7 @@ import CardPlaceWide, { CardPlaceWideEnum } from 'components/CardPlaceWide/CardP
 import React from 'react'
 import { IVenue, mockVenue } from 'utilities/types/venue'
 
-const longNameVenue: IVenue = { ...mockVenue, name: 'American Chicken Pizza Burger Ribs Sandwich Place' }
+const longNameVenue: IVenue = { ...mockVenue, name: 'OEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEBOEB' }
 
 storiesOf('Card: Wide Place Card', module)
     .add('City - Default', () => {

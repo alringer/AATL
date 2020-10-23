@@ -1,4 +1,5 @@
 import { Tooltip } from '@material-ui/core'
+import Grow from '@material-ui/core/Grow'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
@@ -34,26 +35,17 @@ import {
     MobileButtonsContainer,
     MoreHorizontalContainer,
     MoreVerticalContainer,
+    WideHeaderContentContainer,
     WideHeaderTooltipIconsContainer
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
 import {
     chopStringRecommendationCardAddress,
-
-
-
     chopStringRecommendationCardByLine,
-
-    chopStringRecommendationCardCategories, chopStringRecommendationCardDescription,
-
-
-
-
-
+    chopStringRecommendationCardCategories,
+    chopStringRecommendationCardDescription,
     chopStringRecommendationCardPlaceName,
     chopStringRecommendationCardTitle,
-
-
     chopStringRecommendationCardUserName
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
@@ -69,16 +61,8 @@ import {
     RecommendationButtonsContainer,
     RecommendationCardContainer,
     RecommendationCardContentContainer,
-
-
-
-
-
-
-
-
-
-    RecommendationCardImage, RecommendationCardImageContainer,
+    RecommendationCardImage,
+    RecommendationCardImageContainer,
     RecommendationContentBottomContainer,
     RecommendationContentMiddleContainer,
     RecommendationContentTopContainer,
@@ -87,7 +71,6 @@ import {
     RecommendationPlaceCategoryText,
     RecommendationPlaceNameText,
     RecommendationSummaryText,
-
     RecommendationTitleText
 } from './CardRecommendationWide.style'
 
@@ -96,7 +79,7 @@ export enum CardRecommendationWideEnum {
     Restaurant,
     Profile,
     Home,
-    City
+    City,
 }
 
 interface IReduxProps {
@@ -154,16 +137,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         //             setLoading(false)
         //         })
         // }
-        console.log(recommendation)
     }, [recommendation])
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
         // TODO: Call API to flag the recommendation
-        if (
-            currentRecommendation &&
-            currentRecommendation.id !== undefined &&
-            currentRecommendation.id !== null
-        ) {
+        if (currentRecommendation && currentRecommendation.id !== undefined && currentRecommendation.id !== null) {
             authenticatedAction(() =>
                 openFlagModal({
                     recommendationID: currentRecommendation.id,
@@ -281,190 +259,266 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     }
 
     return currentRecommendation ? (
-        <RecommendationCardContainer onClick={handleMore} id={isMoreVisible ? 'toggled' : 'not-toggled'}>
-            <RecommendationCardImageContainer src={recommendation ? recommendation.imageCDNUrl : ''} isToggled={isMoreVisible}>
-                <RecommendationCardImage src={recommendation ? recommendation.imageCDNUrl : ''} alt="recommendation-image" isToggled={isMoreVisible} />
-            </RecommendationCardImageContainer>
-            <RecommendationCardContentContainer isHighlighted={isHighlighted} isToggled={isMoreVisible}>
-                <RecommendationContentTopContainer>
-                    <RecommendationHeaderContainer>
-                        <RecommendationPlaceNameText>
+        <Grow in={true}>
+            <RecommendationCardContainer id={isMoreVisible ? 'toggled' : 'not-toggled'}>
+                <RecommendationCardImageContainer
+                    src={recommendation ? recommendation.imageCDNUrl : ''}
+                    isToggled={isMoreVisible}
+                >
+                    <RecommendationCardImage
+                        src={recommendation ? recommendation.imageCDNUrl : ''}
+                        alt="recommendation-image"
+                        isToggled={isMoreVisible}
+                    />
+                </RecommendationCardImageContainer>
+                <RecommendationCardContentContainer isHighlighted={isHighlighted} isToggled={isMoreVisible}>
+                    <RecommendationContentTopContainer>
+                        <RecommendationHeaderContainer>
+                            {/* <RecommendationPlaceNameText> */}
                             {/* <RecommendationTitleSpan> */}
-                                {type !== CardRecommendationWideEnum.Restaurant
-                                    ? currentRecommendation &&
-                                      currentRecommendation.venue &&
-                                      currentRecommendation.venue.name
-                                        ? (isMoreVisible ? currentRecommendation.venue.name : chopStringRecommendationCardPlaceName(currentRecommendation.venue.name, viewport, isFull))
-                                        : ''
-                                    : isMoreVisible
-                                    ? currentRecommendation && currentRecommendation.title
-                                        ? currentRecommendation.title
-                                        : ''
-                                    : currentRecommendation && currentRecommendation.title
-                                    ? chopStringRecommendationCardPlaceName(currentRecommendation.title, viewport, isFull)
-                                    : ''}
-                            <WideHeaderTooltipIconsContainer>
-                                <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                    <img src={AuthoredSVG} />
-                                </Tooltip>
-                                <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                    <img src={AddedSVG} alt="added-icon" />
-                                </Tooltip>
-                            </WideHeaderTooltipIconsContainer>
+                            <WideHeaderContentContainer>
+                                {type !== CardRecommendationWideEnum.Restaurant ? (
+                                    currentRecommendation &&
+                                    currentRecommendation.venue &&
+                                    currentRecommendation.venue.name ? (
+                                        <Link
+                                            href={`${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}`}
+                                            passHref={true}
+                                            prefetch={false}
+                                        >
+                                            <RecommendationAnchor
+                                                onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
+                                            >
+                                                <RecommendationPlaceNameText>
+                                                    {isMoreVisible
+                                                        ? currentRecommendation.venue.name
+                                                        : chopStringRecommendationCardPlaceName(
+                                                              currentRecommendation.venue.name,
+                                                              viewport,
+                                                              isFull
+                                                          )}
+                                                </RecommendationPlaceNameText>
+                                            </RecommendationAnchor>
+                                        </Link>
+                                    ) : (
+                                        ''
+                                    )
+                                ) : isMoreVisible ? (
+                                    currentRecommendation && currentRecommendation.title ? (
+                                        <RecommendationPlaceNameText>
+                                            {currentRecommendation.title}
+                                        </RecommendationPlaceNameText>
+                                    ) : (
+                                        ''
+                                    )
+                                ) : currentRecommendation && currentRecommendation.title ? (
+                                    <RecommendationPlaceNameText>
+                                        {chopStringRecommendationCardPlaceName(
+                                            currentRecommendation.title,
+                                            viewport,
+                                            isFull
+                                        )}
+                                    </RecommendationPlaceNameText>
+                                ) : (
+                                    ''
+                                )}
+                                <WideHeaderTooltipIconsContainer>
+                                    <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                        <img src={AuthoredSVG} />
+                                    </Tooltip>
+                                    <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                        <img src={AddedSVG} alt="added-icon" />
+                                    </Tooltip>
+                                </WideHeaderTooltipIconsContainer>
+                            </WideHeaderContentContainer>
                             {/* </RecommendationTitleSpan> */}
-                        </RecommendationPlaceNameText>
-                        <Media queries={query} defaultMatches={{ mobile: true }}>
-                            {(matches) => (
-                                <>
-                                    {(matches.laptop || matches.tablet) && (
-                                        <RecommendationButtonsContainer>
-                                            {isMoreVisible ? (
-                                                <MoreHorizontalContainer>
-                                                    <FlagButton handleClick={handleFlag} />
-                                                    {type === CardRecommendationWideEnum.RecommendationList &&
-                                                    userRole === UserRoleEnum.Admin ? (
-                                                        <RemoveFromListButton
-                                                            handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                                authenticatedAction(() => handleDelete(e))
-                                                            }
-                                                        />
-                                                    ) : (
-                                                        <AddToListButton
-                                                            handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                                authenticatedAction(() => handleAddToList(e))
-                                                            }
-                                                        />
-                                                    )}
-                                                    <WriteRecommendationButton
-                                                        handleClick={handleWriteRecommendation}
-                                                    />
-                                                </MoreHorizontalContainer>
-                                            ) : null}
-                                            {isMoreVisible ? (
-                                                <MoreVerticalContainer>
-                                                    <ShareButton handleClick={handleShare} isRestaurant={false}/>
-                                                </MoreVerticalContainer>
-                                            ) : null}
-                                            <ViewMore />
-                                        </RecommendationButtonsContainer>
-                                    )}
-                                </>
-                            )}
-                        </Media>
-                    </RecommendationHeaderContainer>
-                    {type !== CardRecommendationWideEnum.Restaurant && (
-                        <>
+                            {/* </RecommendationPlaceNameText> */}
                             <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
                                     <>
                                         {(matches.laptop || matches.tablet) && (
-                                            <RecommendationPlaceAddressText>
-                                                {_.has(currentRecommendation, 'venue.formattedAddress')
-                                                    ? (isMoreVisible ? currentRecommendation.venue.formattedAddress : chopStringRecommendationCardAddress(currentRecommendation.venue.formattedAddress, viewport, isFull))
-                                                    : ''}
-                                            </RecommendationPlaceAddressText>
+                                            <RecommendationButtonsContainer>
+                                                {isMoreVisible ? (
+                                                    <MoreHorizontalContainer>
+                                                        <FlagButton handleClick={handleFlag} />
+                                                        {type === CardRecommendationWideEnum.RecommendationList &&
+                                                        userRole === UserRoleEnum.Admin ? (
+                                                            <RemoveFromListButton
+                                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                    authenticatedAction(() => handleDelete(e))
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <AddToListButton
+                                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                    authenticatedAction(() => handleAddToList(e))
+                                                                }
+                                                            />
+                                                        )}
+                                                        <WriteRecommendationButton
+                                                            handleClick={handleWriteRecommendation}
+                                                        />
+                                                    </MoreHorizontalContainer>
+                                                ) : null}
+                                                {isMoreVisible ? (
+                                                    <MoreVerticalContainer>
+                                                        <ShareButton handleClick={handleShare} isRestaurant={false} />
+                                                    </MoreVerticalContainer>
+                                                ) : null}
+                                                <ViewMore />
+                                            </RecommendationButtonsContainer>
                                         )}
                                     </>
                                 )}
                             </Media>
-                            <RecommendationPlaceCategoryText>
-                                {currentRecommendation &&
-                                currentRecommendation.venue &&
-                                currentRecommendation.venue.categories
-                                    ? isMoreVisible ? concatCategories(
-                                        currentRecommendation.venue.categories.map((category: ICategory) => {
-                                            return category.longName
-                                        })) : chopStringRecommendationCardCategories(concatCategories(
-                                          currentRecommendation.venue.categories.map((category: ICategory) => {
-                                              return category.longName
-                                          })), viewport, isFull
-                                      )
-                                    : ''}
-                            </RecommendationPlaceCategoryText>
-                        </>
-                    )}
-                </RecommendationContentTopContainer>
-                <RecommendationContentMiddleContainer>
-                    {type !== CardRecommendationWideEnum.Restaurant && (
-                        <RecommendationTitleText>
+                        </RecommendationHeaderContainer>
+                        {type !== CardRecommendationWideEnum.Restaurant && (
+                            <>
+                                <Media queries={query} defaultMatches={{ mobile: true }}>
+                                    {(matches) => (
+                                        <>
+                                            {(matches.laptop || matches.tablet) && (
+                                                <RecommendationPlaceAddressText>
+                                                    {_.has(currentRecommendation, 'venue.formattedAddress')
+                                                        ? isMoreVisible
+                                                            ? currentRecommendation.venue.formattedAddress
+                                                            : chopStringRecommendationCardAddress(
+                                                                  currentRecommendation.venue.formattedAddress,
+                                                                  viewport,
+                                                                  isFull
+                                                              )
+                                                        : ''}
+                                                </RecommendationPlaceAddressText>
+                                            )}
+                                        </>
+                                    )}
+                                </Media>
+                                <RecommendationPlaceCategoryText>
+                                    {currentRecommendation &&
+                                    currentRecommendation.venue &&
+                                    currentRecommendation.venue.categories
+                                        ? isMoreVisible
+                                            ? concatCategories(
+                                                  currentRecommendation.venue.categories.map((category: ICategory) => {
+                                                      return category.longName
+                                                  })
+                                              )
+                                            : chopStringRecommendationCardCategories(
+                                                  concatCategories(
+                                                      currentRecommendation.venue.categories.map(
+                                                          (category: ICategory) => {
+                                                              return category.longName
+                                                          }
+                                                      )
+                                                  ),
+                                                  viewport,
+                                                  isFull
+                                              )
+                                        : ''}
+                                </RecommendationPlaceCategoryText>
+                            </>
+                        )}
+                    </RecommendationContentTopContainer>
+                    <RecommendationContentMiddleContainer>
+                        {type !== CardRecommendationWideEnum.Restaurant && (
+                            <RecommendationTitleText>
+                                {isMoreVisible
+                                    ? currentRecommendation.title
+                                    : chopStringRecommendationCardTitle(currentRecommendation.title, viewport, isFull)}
+                            </RecommendationTitleText>
+                        )}
+                        <RecommendationSummaryText>
                             {isMoreVisible
-                                ? currentRecommendation.title
-                                : chopStringRecommendationCardTitle(currentRecommendation.title, viewport, isFull)}
-                        </RecommendationTitleText>
-                    )}
-                    <RecommendationSummaryText>
-                        {isMoreVisible
-                            ? currentRecommendation && currentRecommendation.content
-                                ? currentRecommendation.content
-                                : ''
-                            : currentRecommendation && currentRecommendation.content
+                                ? currentRecommendation && currentRecommendation.content
+                                    ? currentRecommendation.content
+                                    : ''
+                                : currentRecommendation && currentRecommendation.content
                                 ? chopStringRecommendationCardDescription(currentRecommendation.content, viewport, type)
                                 : ''}
-                    </RecommendationSummaryText>
-                </RecommendationContentMiddleContainer>
-                <RecommendationContentBottomContainer>
-                    {/* TODO: Replace ID below with UserName once username becomes unique */}
-                    <Link
-                        href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
-                        passHref={true}
-                        prefetch={false}
-                    >
-                        <RecommendationAnchor onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}>
-                            <RecommendationAuthorNameText>
-                                {_.has(currentRecommendation, 'createdBy.firstName') &&
-                                _.has(currentRecommendation, 'createdBy.lastName')
-                                    ? (isMoreVisible ? currentRecommendation.createdBy.firstName +
-                                    ' ' +
-                                    currentRecommendation.createdBy.lastName : chopStringRecommendationCardUserName(`${currentRecommendation.createdBy.firstName +
-                                      ' ' +
-                                      currentRecommendation.createdBy.lastName}`, viewport, isFull))
-                                    : ''}
-                            </RecommendationAuthorNameText>
-                        </RecommendationAnchor>
-                    </Link>
-                    <RecommendationAuthorTitleText>
-                        {_.has(currentRecommendation, 'createdBy.userByLine')
-                            ? (isMoreVisible ? currentRecommendation.createdBy.userByLine : chopStringRecommendationCardByLine(currentRecommendation.createdBy.userByLine, viewport, isFull))
-                            : ''}
-                    </RecommendationAuthorTitleText>
-                    <Media queries={query} defaultMatches={{ mobile: true }}>
-                        {(matches) =>
-                            matches.mobile && (
-                                <MobileButtonsContainer>
-                                    {isMoreVisible ? (
-                                        <MobileActionButtonsContainer>
-                                            {type === CardRecommendationWideEnum.RecommendationList &&
-                                            userRole === UserRoleEnum.Admin ? (
-                                                <RemoveFromListButton
-                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                        authenticatedAction(() => handleDelete(e))
-                                                    }
+                        </RecommendationSummaryText>
+                    </RecommendationContentMiddleContainer>
+                    <RecommendationContentBottomContainer>
+                        {/* TODO: Replace ID below with UserName once username becomes unique */}
+                        <Link
+                            href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
+                            passHref={true}
+                            prefetch={false}
+                        >
+                            <RecommendationAnchor onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}>
+                                <RecommendationAuthorNameText>
+                                    {_.has(currentRecommendation, 'createdBy.firstName') &&
+                                    _.has(currentRecommendation, 'createdBy.lastName')
+                                        ? isMoreVisible
+                                            ? currentRecommendation.createdBy.firstName +
+                                              ' ' +
+                                              currentRecommendation.createdBy.lastName
+                                            : chopStringRecommendationCardUserName(
+                                                  `${
+                                                      currentRecommendation.createdBy.firstName +
+                                                      ' ' +
+                                                      currentRecommendation.createdBy.lastName
+                                                  }`,
+                                                  viewport,
+                                                  isFull
+                                              )
+                                        : ''}
+                                </RecommendationAuthorNameText>
+                            </RecommendationAnchor>
+                        </Link>
+                        <RecommendationAuthorTitleText>
+                            {_.has(currentRecommendation, 'createdBy.userByLine')
+                                ? isMoreVisible
+                                    ? currentRecommendation.createdBy.userByLine
+                                    : chopStringRecommendationCardByLine(
+                                          currentRecommendation.createdBy.userByLine,
+                                          viewport,
+                                          isFull
+                                      )
+                                : ''}
+                        </RecommendationAuthorTitleText>
+                        <Media queries={query} defaultMatches={{ mobile: true }}>
+                            {(matches) =>
+                                matches.mobile && (
+                                    <MobileButtonsContainer>
+                                        {isMoreVisible ? (
+                                            <MobileActionButtonsContainer>
+                                                {type === CardRecommendationWideEnum.RecommendationList &&
+                                                userRole === UserRoleEnum.Admin ? (
+                                                    <RemoveFromListButton
+                                                        handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                            authenticatedAction(() => handleDelete(e))
+                                                        }
+                                                        isMobile={true}
+                                                    />
+                                                ) : (
+                                                    <AddToListButton
+                                                        handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                            authenticatedAction(() => handleAddToList(e))
+                                                        }
+                                                        isMobile={true}
+                                                    />
+                                                )}
+                                                <WriteRecommendationButton
+                                                    handleClick={handleWriteRecommendation}
                                                     isMobile={true}
                                                 />
-                                            ) : (
-                                                <AddToListButton
-                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                        authenticatedAction(() => handleAddToList(e))
-                                                    }
+                                                <ShareButton
+                                                    handleClick={handleShare}
                                                     isMobile={true}
+                                                    isRestaurant={false}
                                                 />
-                                            )}
-                                            <WriteRecommendationButton
-                                                handleClick={handleWriteRecommendation}
-                                                isMobile={true}
-                                            />
-                                            <ShareButton handleClick={handleShare} isMobile={true} isRestaurant={false}/>
-                                            <FlagButton handleClick={handleFlag} isMobile={true} />
-                                        </MobileActionButtonsContainer>
-                                    ) : null}
-                                    <ViewMore />
-                                </MobileButtonsContainer>
-                            )
-                        }
-                    </Media>
-                </RecommendationContentBottomContainer>
-            </RecommendationCardContentContainer>
-        </RecommendationCardContainer>
+                                                <FlagButton handleClick={handleFlag} isMobile={true} />
+                                            </MobileActionButtonsContainer>
+                                        ) : null}
+                                        <ViewMore />
+                                    </MobileButtonsContainer>
+                                )
+                            }
+                        </Media>
+                    </RecommendationContentBottomContainer>
+                </RecommendationCardContentContainer>
+            </RecommendationCardContainer>
+        </Grow>
     ) : null
 }
 
@@ -472,6 +526,7 @@ const mapStateToProps = (state: StoreState) => ({
     userRole: state.userReducer.userRole,
 })
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal, openFlagModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators({ openRecommendationModal, openListModal, openFlagModal }, dispatch)
 
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(CardRecommendationWide))

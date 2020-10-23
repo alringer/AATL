@@ -26,18 +26,18 @@ export const chopStringPlaceName = (input: string, viewport: DeviceNameEnum, typ
             } else if (type === CardPlaceWideEnum.Search) {
                 return input.length > 18 ? `${input.slice(0, 18)}...` : input
             } else {
-                return input.length > 29 ? `${input.slice(0, 29)}...` : input
+                return input.length > 25 ? `${input.slice(0, 25)}...` : input
             }
         case DeviceNameEnum.tablet:
             if (type === CardPlaceWideEnum.Profile || type === CardPlaceWideEnum.ProfileOwnerList) {
-                return input.length > 16 ? `${input.slice(0, 16)}...` : input
+                return input.length > 17 ? `${input.slice(0, 17)}...` : input
             } else if (type === CardPlaceWideEnum.Search) {
-                return input.length > 24 ? `${input.slice(0, 24)}...` : input
+                return input.length > 22 ? `${input.slice(0, 22)}...` : input
             } else {
-                return input.length > 20 ? `${input.slice(0, 20)}...` : input
+                return input.length > 19 ? `${input.slice(0, 19)}...` : input
             }
         case DeviceNameEnum.mobile:
-            return input.length > 40 ? `${input.slice(0, 40)}...` : input
+            return input.length > 18 ? `${input.slice(0, 18)}...` : input
         default:
             return input
     }
@@ -105,11 +105,11 @@ export const chopStringPlaceLatestRecommendationContent = (
     switch (viewport) {
         case DeviceNameEnum.laptop:
             if (type === CardPlaceWideEnum.Profile || type === CardPlaceWideEnum.ProfileOwnerList) {
-                return input.length > 120 ? `${input.slice(0, 120)}...` : input
+                return input.length > 75 ? `${input.slice(0, 75)}...` : input
             } else if (type === CardPlaceWideEnum.Search) {
-                return input.length > 150 ? `${input.slice(0, 150)}...` : input
+                return input.length > 95 ? `${input.slice(0, 95)}...` : input
             } else {
-                return input.length > 210 ? `${input.slice(0, 210)}...` : input
+                return input.length > 140 ? `${input.slice(0, 140)}...` : input
             }
         case DeviceNameEnum.tablet:
             if (type === CardPlaceWideEnum.Profile || type === CardPlaceWideEnum.ProfileOwnerList) {
@@ -179,9 +179,9 @@ export const chopStringRecommendationCardPlaceName = (input: string, viewport: D
 
         case DeviceNameEnum.tablet:
             if (isFull === false) {
-                return input.length > 13 ? `${input.slice(0, 13)}...` : input
-            } else {
                 return input.length > 16 ? `${input.slice(0, 16)}...` : input
+            } else {
+                return input.length > 18 ? `${input.slice(0, 18)}...` : input
             }
         case DeviceNameEnum.mobile:
             if (isFull === false) {
@@ -268,19 +268,19 @@ export const chopStringRecommendationCardDescription = (input: string, viewport:
     switch (viewport) {
         case DeviceNameEnum.laptop:
             if (type === CardRecommendationWideEnum.Profile) {
-                return input.length > 80 ? `${input.slice(0, 80)}...` : input
-            } else if (type === CardRecommendationWideEnum.Restaurant) {
-                return input.length > 400 ? `${input.slice(0, 400)}...` : input
-            } else {
-                return input.length > 160 ? `${input.slice(0, 160)}...` : input
-            }
-        case DeviceNameEnum.tablet:
-            if (type === CardRecommendationWideEnum.Profile) {
-                return input.length > 140 ? `${input.slice(0, 140)}...` : input
+                return input.length > 40 ? `${input.slice(0, 40)}...` : input
             } else if (type === CardRecommendationWideEnum.Restaurant) {
                 return input.length > 300 ? `${input.slice(0, 300)}...` : input
             } else {
-                return input.length > 140 ? `${input.slice(0, 140)}...` : input
+                return input.length > 75 ? `${input.slice(0, 75)}...` : input
+            }
+        case DeviceNameEnum.tablet:
+            if (type === CardRecommendationWideEnum.Profile) {
+                return input.length > 80 ? `${input.slice(0, 80)}...` : input
+            } else if (type === CardRecommendationWideEnum.Restaurant) {
+                return input.length > 250 ? `${input.slice(0, 250)}...` : input
+            } else {
+                return input.length > 90 ? `${input.slice(0, 90)}...` : input
             }
         case DeviceNameEnum.mobile:
             if (type === CardRecommendationWideEnum.Profile) {

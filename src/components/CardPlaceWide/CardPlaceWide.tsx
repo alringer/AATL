@@ -1,3 +1,4 @@
+import Grow from '@material-ui/core/Grow'
 import Tooltip from '@material-ui/core/Tooltip'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
@@ -31,9 +32,9 @@ import {
     MobileButtonsContainer,
     MoreHorizontalContainer,
     MoreVerticalContainer,
-    WideHeaderLeftContainer,
+    WideHeaderContentContainer,
     WideHeaderTooltipIconsContainer,
-    WidePlaceAddressText
+    WidePlaceAddressText,
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
 import {
@@ -42,7 +43,7 @@ import {
     chopStringPlaceLatestRecommendationTitle,
     chopStringPlaceName,
     chopStringPlaceUserByLine,
-    chopStringPlaceUserName
+    chopStringPlaceUserName,
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -64,7 +65,7 @@ import {
     CardPlaceWidePlaceCategoryText,
     CardPlaceWidePlaceNameText,
     CardPlaceWideSummaryText,
-    CardPlaceWideTitleText
+    CardPlaceWideTitleText,
 } from './CardPlaceWide.style'
 
 export enum CardPlaceWideEnum {
@@ -94,6 +95,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
+    const [currentPlace, setCurrentPlace] = React.useState(null)
     const [isMoreVisible, setMoreVisible] = React.useState(false)
     const [placeLink, setPlaceLink] = React.useState('')
     const windowSize = useWindowSize()
@@ -109,6 +111,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
             const link = `${window.location.origin}${R.ROUTE_ITEMS.restaurant}/${place.id}`
             setPlaceLink(link)
         }
+        setCurrentPlace(place)
     }, [place])
 
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
@@ -190,149 +193,166 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     }
 
     return (
-        <Link href={`${R.ROUTE_ITEMS.restaurant}/${place.id}`} passHref={true} prefetch={false}>
-            <CardPlaceWideAnchor>
-                <CardPlaceWideCardContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
-                    <CardPlaceWideCardImageContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
-                        <Image src={place ? place.imageCDNUrl : null} alt="recommendation-image" />
-                    </CardPlaceWideCardImageContainer>
-                    <CardPlaceWideCardContentContainer>
-                        <CardPlaceWideContentTopContainer>
-                            <CardPlaceWideHeaderContainer>
-                                <WideHeaderLeftContainer>
-                                    <CardPlaceWidePlaceNameText>
-                                        {place && place.name ? chopStringPlaceName(place.name, viewport, type) : null}
-                                        <WideHeaderTooltipIconsContainer>
-                                            <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                                <img src={AuthoredSVG} />
-                                            </Tooltip>
-                                            <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                                <img src={AddedSVG} alt="added-icon" />
-                                            </Tooltip>
-                                        </WideHeaderTooltipIconsContainer>
-                                    </CardPlaceWidePlaceNameText>
-                                </WideHeaderLeftContainer>
-                                <Media queries={query} defaultMatches={{ mobile: true }}>
-                                    {(matches) => (
-                                        <>
-                                            {(matches.laptop || matches.tablet) && (
-                                                <CardPlaceWideButtonsContainer>
+        currentPlace && (
+            <Link href={`${R.ROUTE_ITEMS.restaurant}/${place.id}`} passHref={true} prefetch={false}>
+                <CardPlaceWideAnchor>
+                    <Grow in={true}>
+                        <CardPlaceWideCardContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
+                            <CardPlaceWideCardImageContainer id={type === CardPlaceWideEnum.Search ? 'search' : ''}>
+                                <Image src={place ? place.imageCDNUrl : null} alt="recommendation-image" />
+                            </CardPlaceWideCardImageContainer>
+                            <CardPlaceWideCardContentContainer>
+                                <CardPlaceWideContentTopContainer>
+                                    <CardPlaceWideHeaderContainer>
+                                        <WideHeaderContentContainer>
+                                            <CardPlaceWidePlaceNameText>
+                                                {place && place.name
+                                                    ? chopStringPlaceName(place.name, viewport, type)
+                                                    : null}
+                                            </CardPlaceWidePlaceNameText>
+                                            <WideHeaderTooltipIconsContainer>
+                                                <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                                    <img src={AuthoredSVG} />
+                                                </Tooltip>
+                                                <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                                    <img src={AddedSVG} alt="added-icon" />
+                                                </Tooltip>
+                                            </WideHeaderTooltipIconsContainer>
+                                        </WideHeaderContentContainer>
+                                        <Media queries={query} defaultMatches={{ mobile: true }}>
+                                            {(matches) => (
+                                                <>
+                                                    {(matches.laptop || matches.tablet) && (
+                                                        <CardPlaceWideButtonsContainer>
+                                                            {isMoreVisible ? (
+                                                                <MoreHorizontalContainer>
+                                                                    {type === CardPlaceWideEnum.ProfileOwnerList ? (
+                                                                        <RemoveFromListButton
+                                                                            handleClick={handleRemove}
+                                                                        />
+                                                                    ) : (
+                                                                        <AddToListButton
+                                                                            handleClick={handleAddToList}
+                                                                        />
+                                                                    )}
+                                                                    <WriteRecommendationButton
+                                                                        handleClick={handleWriteRecommendation}
+                                                                    />
+                                                                </MoreHorizontalContainer>
+                                                            ) : null}
+                                                            {isMoreVisible ? (
+                                                                <MoreVerticalContainer>
+                                                                    <ShareButton
+                                                                        handleClick={handleShare}
+                                                                        isRestaurant={true}
+                                                                    />
+                                                                </MoreVerticalContainer>
+                                                            ) : null}
+                                                            <ViewMore />
+                                                        </CardPlaceWideButtonsContainer>
+                                                    )}
+                                                </>
+                                            )}
+                                        </Media>
+                                    </CardPlaceWideHeaderContainer>
+                                    {type === CardPlaceWideEnum.Search && (
+                                        <WidePlaceAddressText>
+                                            {place && place.locality ? place.locality + ', ' : null}
+                                            {place && place.state ? place.state : null}
+                                        </WidePlaceAddressText>
+                                    )}
+                                    <CardPlaceWidePlaceCategoryText>
+                                        {place && place.categories
+                                            ? chopStringPlaceCategories(
+                                                  concatCategories(
+                                                      place.categories.map((category: ICategory) => category.longName)
+                                                  ),
+                                                  viewport,
+                                                  type
+                                              )
+                                            : null}
+                                    </CardPlaceWidePlaceCategoryText>
+                                </CardPlaceWideContentTopContainer>
+                                <CardPlaceWideContentMiddleContainer>
+                                    <CardPlaceWideTitleText>
+                                        {place && place.latestRecommendation && place.latestRecommendation.title
+                                            ? chopStringPlaceLatestRecommendationTitle(
+                                                  place.latestRecommendation.title,
+                                                  viewport,
+                                                  type
+                                              )
+                                            : null}
+                                    </CardPlaceWideTitleText>
+                                    <CardPlaceWideSummaryText>
+                                        {place && place.latestRecommendation && place.latestRecommendation.content
+                                            ? chopStringPlaceLatestRecommendationContent(
+                                                  place.latestRecommendation.content,
+                                                  viewport,
+                                                  type
+                                              )
+                                            : null}
+                                    </CardPlaceWideSummaryText>
+                                </CardPlaceWideContentMiddleContainer>
+                                <CardPlaceWideContentBottomContainer>
+                                    <CardPlaceWideAuthorNameText>
+                                        {place && place.latestRecommendation && place.latestRecommendation.createdBy
+                                            ? chopStringPlaceUserName(
+                                                  `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`,
+                                                  viewport,
+                                                  type
+                                              )
+                                            : null}
+                                    </CardPlaceWideAuthorNameText>
+                                    <CardPlaceWideAuthorTitleText>
+                                        {place && place.latestRecommendation && place.latestRecommendation.createdBy
+                                            ? chopStringPlaceUserByLine(
+                                                  place.latestRecommendation.createdBy.userByLine,
+                                                  viewport,
+                                                  type
+                                              )
+                                            : null}
+                                    </CardPlaceWideAuthorTitleText>
+                                    <Media queries={query} defaultMatches={{ mobile: true }}>
+                                        {(matches) =>
+                                            matches.mobile && (
+                                                <MobileButtonsContainer>
                                                     {isMoreVisible ? (
-                                                        <MoreHorizontalContainer>
+                                                        <MobileActionButtonsContainer>
                                                             {type === CardPlaceWideEnum.ProfileOwnerList ? (
-                                                                <RemoveFromListButton handleClick={handleRemove} />
+                                                                <RemoveFromListButton
+                                                                    handleClick={handleRemove}
+                                                                    isMobile={true}
+                                                                />
                                                             ) : (
-                                                                <AddToListButton handleClick={handleAddToList} />
+                                                                <AddToListButton
+                                                                    handleClick={handleAddToList}
+                                                                    isMobile={true}
+                                                                />
                                                             )}
                                                             <WriteRecommendationButton
                                                                 handleClick={handleWriteRecommendation}
+                                                                isMobile={true}
                                                             />
-                                                        </MoreHorizontalContainer>
-                                                    ) : null}
-                                                    {isMoreVisible ? (
-                                                        <MoreVerticalContainer>
-                                                            <ShareButton handleClick={handleShare} isRestaurant={true} />
-                                                        </MoreVerticalContainer>
+                                                            <ShareButton
+                                                                handleClick={handleShare}
+                                                                isMobile={true}
+                                                                isRestaurant={true}
+                                                            />
+                                                            {/* <FlagButton handleClick={handleShare} isMobile={true} /> */}
+                                                        </MobileActionButtonsContainer>
                                                     ) : null}
                                                     <ViewMore />
-                                                </CardPlaceWideButtonsContainer>
-                                            )}
-                                        </>
-                                    )}
-                                </Media>
-                            </CardPlaceWideHeaderContainer>
-                            {type === CardPlaceWideEnum.Search && (
-                                <WidePlaceAddressText>
-                                    {place && place.locality ? place.locality + ', ' : null}
-                                    {place && place.state ? place.state : null}
-                                </WidePlaceAddressText>
-                            )}
-                            <CardPlaceWidePlaceCategoryText>
-                                {place && place.categories
-                                    ? chopStringPlaceCategories(
-                                          concatCategories(
-                                              place.categories.map((category: ICategory) => category.longName)
-                                          ),
-                                          viewport,
-                                          type
-                                      )
-                                    : null}
-                            </CardPlaceWidePlaceCategoryText>
-                        </CardPlaceWideContentTopContainer>
-                        <CardPlaceWideContentMiddleContainer>
-                            <CardPlaceWideTitleText>
-                                {place && place.latestRecommendation && place.latestRecommendation.title
-                                    ? chopStringPlaceLatestRecommendationTitle(
-                                          place.latestRecommendation.title,
-                                          viewport,
-                                          type
-                                      )
-                                    : null}
-                            </CardPlaceWideTitleText>
-                            <CardPlaceWideSummaryText>
-                                {place && place.latestRecommendation && place.latestRecommendation.content
-                                    ? chopStringPlaceLatestRecommendationContent(
-                                          place.latestRecommendation.content,
-                                          viewport,
-                                          type
-                                      )
-                                    : null}
-                            </CardPlaceWideSummaryText>
-                        </CardPlaceWideContentMiddleContainer>
-                        <CardPlaceWideContentBottomContainer>
-                            <CardPlaceWideAuthorNameText>
-                                {place && place.latestRecommendation && place.latestRecommendation.createdBy
-                                    ? chopStringPlaceUserName(
-                                          `${place.latestRecommendation.createdBy.firstName} ${place.latestRecommendation.createdBy.lastName}`,
-                                          viewport,
-                                          type
-                                      )
-                                    : null}
-                            </CardPlaceWideAuthorNameText>
-                            <CardPlaceWideAuthorTitleText>
-                                {place && place.latestRecommendation && place.latestRecommendation.createdBy
-                                    ? chopStringPlaceUserByLine(
-                                          place.latestRecommendation.createdBy.userByLine,
-                                          viewport,
-                                          type
-                                      )
-                                    : null}
-                            </CardPlaceWideAuthorTitleText>
-                            <Media queries={query} defaultMatches={{ mobile: true }}>
-                                {(matches) =>
-                                    matches.mobile && (
-                                        <MobileButtonsContainer>
-                                            {isMoreVisible ? (
-                                                <MobileActionButtonsContainer>
-                                                    {type === CardPlaceWideEnum.ProfileOwnerList ? (
-                                                        <RemoveFromListButton
-                                                            handleClick={handleRemove}
-                                                            isMobile={true}
-                                                        />
-                                                    ) : (
-                                                        <AddToListButton
-                                                            handleClick={handleAddToList}
-                                                            isMobile={true}
-                                                        />
-                                                    )}
-                                                    <WriteRecommendationButton
-                                                        handleClick={handleWriteRecommendation}
-                                                        isMobile={true}
-                                                    />
-                                                    <ShareButton handleClick={handleShare} isMobile={true} isRestaurant={true} />
-                                                    {/* <FlagButton handleClick={handleShare} isMobile={true} /> */}
-                                                </MobileActionButtonsContainer>
-                                            ) : null}
-                                            <ViewMore />
-                                        </MobileButtonsContainer>
-                                    )
-                                }
-                            </Media>
-                        </CardPlaceWideContentBottomContainer>
-                    </CardPlaceWideCardContentContainer>
-                </CardPlaceWideCardContainer>
-            </CardPlaceWideAnchor>
-        </Link>
+                                                </MobileButtonsContainer>
+                                            )
+                                        }
+                                    </Media>
+                                </CardPlaceWideContentBottomContainer>
+                            </CardPlaceWideCardContentContainer>
+                        </CardPlaceWideCardContainer>
+                    </Grow>
+                </CardPlaceWideAnchor>
+            </Link>
+        )
     )
 }
 
