@@ -399,6 +399,25 @@ export const USER_PROFILE_BANNER = {
     EditProfile: 'Edit Profile',
 }
 
+export const USER_PROFILE_INFLUENCER_GUIDE = {
+    Incomplete: {
+        Title: 'Complete Your Profile.',
+        Message:
+            'Complete your profile by updating your Name, Occupation, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
+        ButtonLabel: 'EDIT PROFILE',
+    },
+    Complete: {
+        Title: 'Start building your lists!',
+        Message:
+            'Be one of the first people to write recommendations. Write three to become an insider and unlock an exclusive badge to showcase on the website.',
+        ButtonLabel: 'WRITE A RECOMMENDATION',
+        RecommendationWritten: 'Recommendation Written',
+        First: '1st',
+        Second: '2nd',
+        Third: '3rd'
+    },
+}
+
 export const USER_PROFILE_LISTS = {
     FoodAndTravelJournal: 'Food & Travel Journal',
     MyLists: 'LISTS',

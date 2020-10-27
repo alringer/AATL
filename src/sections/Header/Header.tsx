@@ -206,14 +206,6 @@ const Header: React.FC<IHeaderProps> = ({
                 </PopoverRowOption>
             ) : null}
             <PopoverRowOption>
-                {/* TODO: Add help route */}
-                <Link href={R.ROUTE_ITEMS.home} passHref>
-                    <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
-                        {S.PROFILE_POPOVER_ITEMS.Help}
-                    </PopoverOptionLinkText>
-                </Link>
-            </PopoverRowOption>
-            <PopoverRowOption>
                 <PopoverSignOutText onClick={handlePopoverLogout}>{S.PROFILE_POPOVER_ITEMS.SignOut}</PopoverSignOutText>
             </PopoverRowOption>
         </PopoverContainer>

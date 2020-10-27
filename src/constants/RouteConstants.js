@@ -13,4 +13,5 @@ export const ROUTE_ITEMS = {
     adminRecommendationLists: 'recommendation-lists',
     termsAndConditions: '/terms-of-use',
     me: '/user-profile/me',
+    influencerWelcome: '/influencer-welcome',
 }

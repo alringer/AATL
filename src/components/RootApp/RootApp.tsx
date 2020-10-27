@@ -42,7 +42,6 @@ const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaun
         <>
             <Header />
             <PageContainer>{children}</PageContainer>
-            {/* {!isPrelaunch && <Footer />} */}
             <Footer />
         </>
     )

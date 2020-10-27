@@ -7,16 +7,20 @@ import { StoreState } from 'store'
 
 interface IReduxProps {
     isPrelaunch: boolean
+    isLoggedIn: boolean
+    userID: number | undefined
 }
 interface IInfluencerWelcomeProps extends IReduxProps {}
 
-const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch }) => {
+const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch, isLoggedIn, userID }) => {
     const router = useRouter()
     React.useEffect(() => {
         if (!isPrelaunch) {
             router.push('/')
+        } else if (isLoggedIn && userID !== undefined && userID !== null) {
+            router.push(`/user-profile/${userID}`)
         }
-    }, [isPrelaunch])
+    }, [isPrelaunch, isLoggedIn])
 
     return (
         <>
@@ -28,6 +32,8 @@ const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch }) =
 
 const mapStateToProps = (state: StoreState) => ({
     isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    isLoggedIn: state.userReducer.loggedIn,
+    userID: state.userReducer.user?.id,
 })
 
 export default reduxConnect(mapStateToProps)(InfluencerWelcome)

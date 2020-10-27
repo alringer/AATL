@@ -88,6 +88,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                 setPublished(true)
                 setPublishedTitle(title)
                 setRecommendation(res.data)
+                fetchUser(authStore.getState().keycloak)
             })
             .catch((err) => console.log(err))
             .finally(() => {

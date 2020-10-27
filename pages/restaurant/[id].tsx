@@ -26,7 +26,6 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
     React.useEffect(() => {
-        console.log('Venue Information Received: ', venueInformation)
         if (!venueInformation) {
             enqueueSnackbar('', {
                 content: (
