@@ -5,6 +5,9 @@ const initialState: UserReducerState = {
     userRole: null,
     loggedIn: false,
     isLoading: false,
+    venuesListsVenueIDs: [],
+venuesRecommendedVenueIDs: [],
+venuesRecommendationPromptsVenueIDs: [],
 }
 
 const userReducer = (state = initialState, action: UserActionTypes): UserReducerState => {
