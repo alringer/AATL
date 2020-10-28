@@ -16,6 +16,8 @@ enum zIndices {
     recommendationEditorHeader = '105',
     recommendationsListsImage = '1',
     recommendationsListsContent = '2',
+    recommendationCardImageBackground = '1',
+    recommendationCardImage = '2',
 }
 
 export default zIndices

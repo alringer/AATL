@@ -11,7 +11,6 @@ export const CardContainer = styled(ContentWrapper)`
     :hover {
         box-shadow: 0 3px 50px 0 #dedede;
         transform: translateY(-2px);
-        cursor: pointer;
     }
 `
 
@@ -47,7 +46,7 @@ export const TooltipIcon = styled.span`
 export const WideCardContainer = styled(CardContainer)`
     display: flex;
     width: 100%;
-    border: solid 2px rgba(242,243,243,1); 
+    border: solid 2px rgba(242, 243, 243, 1);
 
     @media ${device.mobile} {
         flex-direction: column;
@@ -97,7 +96,8 @@ export const WideCardImageContainer = styled(ImageContainer)`
         width: 300px;
     }
 
-    @media ${device.laptop} {}
+    @media ${device.laptop} {
+    }
 `
 
 export const WideCardContentContainer = styled.div`
@@ -109,7 +109,7 @@ export const WideCardContentContainer = styled.div`
     width: 100%; /* TODO: Determine the width behaviors in different viewports */
     height: 100%;
 
-    background-color: ${props => props.theme.white};
+    background-color: ${(props) => props.theme.white};
 
     @media ${device.mobile} {
         padding: 8px 16px 20px;
@@ -133,12 +133,11 @@ export const WideHeaderContainer = styled.div`
     width: 100%;
 `
 
-export const WideHeaderLeftContainer = styled.div`
+export const WideHeaderContentContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: flex-start;
 `
 
 export const WideHeaderTooltipIconsContainer = styled.span`
@@ -193,7 +192,7 @@ export const WidePlaceNameText = styled.p`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 20px;
@@ -213,9 +212,10 @@ export const WidePlaceAddressText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 0.83;
+    /* line-height: 0.83; */
+    line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         margin-top: 5px;
@@ -236,7 +236,7 @@ export const WidePlaceCategoryText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 
     @media ${device.mobile} {
         font-size: 10px;
@@ -260,7 +260,7 @@ export const WideTitleText = styled.p`
     font-style: normal;
     line-height: 1.22;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         font-size: 15px;
@@ -281,7 +281,7 @@ export const WideSummaryText = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         font-size: 11px;
@@ -305,7 +305,7 @@ export const WideAuthorNameText = styled.p`
     font-style: normal;
     line-height: 1.5;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 14px;
@@ -327,7 +327,7 @@ export const WideAuthorTitleText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         /* margin-top: 9px; */
@@ -403,7 +403,7 @@ export const MobileActionButtonsContainer = styled.div`
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    
+
     flex-wrap: wrap;
 `
 

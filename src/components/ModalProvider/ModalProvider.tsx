@@ -1,4 +1,5 @@
 import AuthenticationModal from 'components/AuthenticationModal/AuthenticationModal'
+import FlagModal from 'components/FlagModal/FlagModal'
 import ListModal from 'components/ListModal/ListModal'
 import RecommendationModal from 'components/RecommendationModal/RecommendationModal'
 import SearchModal from 'components/SearchModal/SearchModal'
@@ -13,6 +14,7 @@ interface IReduxProps {
     isSearchModalOpen: boolean
     isListModalOpen: boolean
     isUserProfileEditModalOpen: boolean
+    isFlagModalOpen: boolean
 }
 
 interface IModalProviderProps extends IReduxProps {
@@ -26,6 +28,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
     isSearchModalOpen,
     isListModalOpen,
     isUserProfileEditModalOpen,
+    isFlagModalOpen
 }) => {
     return (
         <>
@@ -34,6 +37,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
             {isSearchModalOpen && <SearchModal />}
             {isListModalOpen && <ListModal />}
             {isUserProfileEditModalOpen && <UserProfileEditModal />}
+            {isFlagModalOpen && <FlagModal />}
             {children}
         </>
     )
@@ -45,6 +49,7 @@ const mapStateToProps = (state: StoreState) => ({
     isSearchModalOpen: state.searchModalReducer.isOpen,
     isListModalOpen: state.listModalReducer.isOpen,
     isUserProfileEditModalOpen: state.userProfileEditModalReducer.isOpen,
+    isFlagModalOpen: state.flagModalReducer.isOpen
 })
 
 export default reduxConnect(mapStateToProps)(ModalProvider)

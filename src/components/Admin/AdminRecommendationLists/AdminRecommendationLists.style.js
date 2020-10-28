@@ -98,4 +98,8 @@ export const AdminRecommendationListsActionClickableText = styled.p`
     /* text-decoration: underline; */
     cursor: pointer;
     color: ${(props) => props.theme.mushroom};
+
+    :hover {
+        text-decoration: underline;
+    }
 `

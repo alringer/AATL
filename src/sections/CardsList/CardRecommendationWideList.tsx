@@ -1,5 +1,5 @@
 import Pagination from '@material-ui/lab/Pagination'
-import CardRecommendationWide from 'components/CardRecommendationWide/CardRecommendationWide'
+import CardRecommendationWide, { CardRecommendationWideEnum } from 'components/CardRecommendationWide/CardRecommendationWide'
 import axios, { PAGINATE_RECOMMENDATIONS } from 'config/AxiosConfig'
 import React from 'react'
 import { IRecommendation } from 'utilities/types/recommendation'
@@ -9,6 +9,7 @@ import { ListContainer, ListSubTitle, ListTitle, RecommendationCardContainer } f
 interface IRecommendationCardsListProps {
     highlightedRecommendationID: number | null
     isFull: boolean
+    type: CardRecommendationWideEnum
     title: string
     subTitle: string
     venueRecommendationsInformation: IVenueRecommendationsInformation | null
@@ -21,6 +22,7 @@ interface IRecommendationCardsListProps {
 const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
     isFull,
     title,
+    type,
     subTitle,
     venueRecommendationsInformation,
     pageNumber,
@@ -68,6 +70,7 @@ const RecommendationCardsList: React.FC<IRecommendationCardsListProps> = ({
                       <RecommendationCardContainer key={recommendation.id}>
                           <CardRecommendationWide
                               isFull={isFull}
+                              type={type}
                               recommendation={recommendation}
                               isHighlighted={String(highlightedRecommendationID) === String(recommendation.id)}
                           />

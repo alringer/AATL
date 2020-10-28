@@ -1,3 +1,4 @@
+import { CardRecommendationWideEnum } from 'components/CardRecommendationWide/CardRecommendationWide'
 import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import HaveYouBeenTo from 'components/HaveYouBeenTo/HaveYouBeenTo'
 import PlaceBanner from 'components/PlaceBanner/PlaceBanner'
@@ -62,7 +63,8 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
             <PlaceBanner venueInformation={venueInformation} />
             <CardRecommendationWideList
                 highlightedRecommendationID={recommendationID}
-                isFull={false}
+                isFull={true}
+                type={CardRecommendationWideEnum.Restaurant}
                 placeID={venueInformation ? venueInformation.id : null}
                 title={S.RESTAURANT_PAGE.RecommendationsSectionTitle}
                 subTitle={recommendationsSubTitle}
