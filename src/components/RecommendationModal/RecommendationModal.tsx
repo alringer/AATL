@@ -2,10 +2,11 @@ import Dialog from '@material-ui/core/Dialog'
 import RecommendationEditor from 'components/RecommendationModal/RecommendationEditor'
 import {
     RecommendationModalContainer,
-    RecommendationModalContentContainer
+    RecommendationModalContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import axios, { POST_RECOMMENDATION } from 'config/AxiosConfig'
+import { KeycloakInstance } from 'keycloak-js'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -13,8 +14,9 @@ import { StoreState } from 'store'
 import authStore from 'store/authentication/authentication_reducer'
 import {
     clearRecommendationModal,
-    closeRecommendationModal
+    closeRecommendationModal,
 } from 'store/recommendationModal/recommendationModal_actions'
+import { fetchUser } from 'store/user/user_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import RecommendationEditorHeader from './RecommendationEditorHeader'
 
@@ -25,6 +27,7 @@ interface IReduxProps {
     isOpen: boolean
     closeRecommendationModal: () => void
     clearRecommendationModal: () => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 
 interface IRecommendationModalProps extends IReduxProps, IWithAuthInjectedProps {}
@@ -38,6 +41,8 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     authenticatedAction,
     getTokenConfig,
     isAATL,
+    fetchUser,
+    keycloak,
 }) => {
     const [isLoading, setLoading] = React.useState(false)
     const [publishedTitle, setPublishedTitle] = React.useState('')
@@ -79,6 +84,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                     : {}
             )
             .then((res) => {
+                fetchUser(keycloak)
                 setPublished(true)
                 setPublishedTitle(title)
                 setRecommendation(res.data)
@@ -96,10 +102,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     return (
         <Dialog open={isOpen} fullScreen>
             <RecommendationModalContainer>
-                <RecommendationEditorHeader
-                    closeRecommendationModal={closeRecommendationModal}
-                    published={published}
-                />
+                <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} published={published} />
                 <RecommendationModalContentContainer>
                     {published ? (
                         <RecommendationPublished publishedTitle={publishedTitle} recommendation={recommendation} />
@@ -124,6 +127,6 @@ const mapStateToProps = (state: StoreState) => ({
     isAATL: state.recommendationModalReducer.isAATL,
 })
 const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators({ closeRecommendationModal, clearRecommendationModal }, dispatch)
+    bindActionCreators({ closeRecommendationModal, clearRecommendationModal, fetchUser }, dispatch)
 
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(RecommendationModal))

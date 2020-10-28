@@ -3,12 +3,15 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { FETCH_VENUE_LISTS, POST_NEW_VENUE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import { CircularProgress } from 'style/Loading/CircularProgress.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -39,6 +42,7 @@ import {
 interface IReduxProps {
     placeID: number | null
     user: IUserProfile
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IAddToRestaurantListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -51,6 +55,8 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     switchView,
     getTokenConfig,
     user,
+    fetchUser,
+    keycloak,
 }) => {
     const [restaurantLists, setRestaurantLists] = React.useState<IVenueListMeta[]>([])
     const [selectedListID, setSelectedListID] = React.useState<number | null>(null)
@@ -107,7 +113,7 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
             axios
                 .post(POST_NEW_VENUE(selectedListID), addVenuePayload, config)
                 .then((res) => {
-                    console.log('Adding a venue to the new list: ', res)
+                    fetchUser(keycloak)
                     enqueueSnackbar('', {
                         content: (
                             <div>
@@ -210,4 +216,12 @@ const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddToRestaurantList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddToRestaurantList))

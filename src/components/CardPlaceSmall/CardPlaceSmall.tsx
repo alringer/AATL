@@ -7,6 +7,8 @@ import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { connect as reduxConnect } from 'react-redux'
+import { StoreState } from 'store'
 import { WideHeaderTooltipIconsContainer } from 'style/Card/Card.style'
 import { chopStringSmallPlaceDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
@@ -22,11 +24,17 @@ import {
     SmallPlaceCardImageContainer,
     SmallPlaceCardPlaceName,
 } from './CardPlaceSmall.style'
-interface ICardPlaceSmallProps {
+
+interface IReduxProps {
+    venuesInList: number[]
+    venuesRecommended: number[]
+}
+
+interface ICardPlaceSmallProps extends IReduxProps {
     place: IVenue
 }
 
-const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
+const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, venuesRecommended }) => {
     const router = useRouter()
     const handleView = () => {
         router.push(
@@ -57,24 +65,26 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
                 <SmallPlaceCardContainer>
                     <SmallPlaceCardImageContainer>
                         <Image src={place.imageCDNUrl} alt="place-image" />
-                        {/* <ImageButtonsContainer>
-                    <CardIcon onClick={handleMore}>
-                        <Image src={GrayEllipsesSVG} alt="ellipses-icon" />
-                    </CardIcon>
-                    <CardIcon onClick={handleLike}>
-                        <Image src={GrayHeartSVG} alt="heart-icon" />
-                    </CardIcon>
-                </ImageButtonsContainer> */}
                     </SmallPlaceCardImageContainer>
                     <SmallPlaceCardContentContainer>
                         <SmallPlaceCardPlaceName>{place ? place.name : null}</SmallPlaceCardPlaceName>
                         <WideHeaderTooltipIconsContainer>
-                            <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                <img src={AuthoredSVG} />
-                            </Tooltip>
-                            <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                <img src={AddedSVG} alt="added-icon" />
-                            </Tooltip>
+                            {place &&
+                                place.id !== undefined &&
+                                place.id !== null &&
+                                venuesRecommended.includes(Number(place.id)) && (
+                                    <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                        <img src={AuthoredSVG} />
+                                    </Tooltip>
+                                )}
+                            {place &&
+                                place.id !== undefined &&
+                                place.id !== null &&
+                                venuesInList.includes(Number(place.id)) && (
+                                    <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                        <img src={AddedSVG} alt="added-icon" />
+                                    </Tooltip>
+                                )}
                         </WideHeaderTooltipIconsContainer>
                         {place && place.categories && (
                             <SmallPlaceCardCategory>
@@ -95,4 +105,9 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place }) => {
     ) : null
 }
 
-export default CardPlaceSmall
+const mapStateToProps = (state: StoreState) => ({
+    venuesInList: state.userReducer.venuesListsVenueIDs,
+    venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
+})
+
+export default reduxConnect(mapStateToProps)(CardPlaceSmall)

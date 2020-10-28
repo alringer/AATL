@@ -11,6 +11,7 @@ import axios, {
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import parse from 'parse-link-header'
 import React from 'react'
@@ -20,6 +21,7 @@ import { RecommendationCardContainer } from 'sections/CardsList/List.style'
 import { StoreState } from 'store'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IUserProfile } from 'utilities/types/userProfile'
 import { IVenue } from 'utilities/types/venue'
@@ -41,6 +43,7 @@ import {
 
 interface IReduxProps {
     openListModal: (payload: OpenListModalPayload) => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IMyListPaginationViewProps extends IWithAuthInjectedProps, IReduxProps {
     inputMyList: IVenueListMetaWithUniqueID
@@ -57,6 +60,8 @@ const MyListPaginationView: React.FC<IMyListPaginationViewProps> = ({
     user,
     fetchVenueLists,
     getTokenConfig,
+    fetchUser,
+    keycloak,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -71,10 +76,6 @@ const MyListPaginationView: React.FC<IMyListPaginationViewProps> = ({
             fetchVenues(inputMyList.id, 0)
         }
     }, [inputMyList])
-
-    React.useEffect(() => {
-        console.log('current vnues:', currentVenues)
-    }, [currentVenues])
 
     const fetchMyList = (id: number) => {
         axios
@@ -174,7 +175,7 @@ const MyListPaginationView: React.FC<IMyListPaginationViewProps> = ({
                 axios
                     .delete(DELETE_VENUE_FROM_LIST(currentMyList.id, venue.id), config)
                     .then((res) => {
-                        console.log('Successfully deleted the venue: ', res)
+                        fetchUser(keycloak)
                         enqueueSnackbar('', {
                             content: (
                                 <div>
@@ -272,5 +273,5 @@ const mapStateToProps = (state: StoreState) => ({
     currentUser: state.userReducer.user,
     userRole: state.userReducer.userRole,
 })
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openListModal }, dispatch)
+const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openListModal, fetchUser }, dispatch)
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(MyListPaginationView))

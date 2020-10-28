@@ -127,6 +127,10 @@ export const UPLOAD_BLOB = '/blob'
 // Admin Cities
 export const ADMIN_CITIES = `/parent-regions/summary`
 
+// Venue Recommendation Prompt
+export const VENUE_RECOMMENDATION_PROMPT = `/venue-recommendation-prompts`
+
+
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
 })

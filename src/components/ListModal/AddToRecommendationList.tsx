@@ -27,18 +27,22 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { RECOMMENDATION_LIST_METAS, RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
     recommendationID: number | null
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IAddToRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -50,6 +54,8 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     switchView,
     recommendationID,
     getTokenConfig,
+    fetchUser,
+    keycloak,
 }) => {
     const [recommendationLists, setRecommendationLists] = React.useState([])
     const [selectedID, setSelectedID] = React.useState<number | null>(null)
@@ -67,7 +73,6 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
         axios
             .get(RECOMMENDATION_LIST_METAS, config)
             .then((res) => {
-                console.log('Fetched Recommendation List Metas: ', res)
                 if (res && res.data && res.data.length && res.data[0] && res.data[0].id) {
                     setRecommendationLists(res.data)
                     setSelectedID(res.data[0].id)
@@ -100,7 +105,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                 axios
                     .post(RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID), {}, config)
                     .then((res) => {
-                        console.log('Adding a recommendation to the recommendation list: ', res)
+                        fetchUser(keycloak)
                         const spotlightedRecommendations = res.data.spotlightedRecommendations
                         enqueueSnackbar('', {
                             content: (
@@ -224,4 +229,12 @@ const mapStateToProps = (state: StoreState) => ({
     recommendationID: state.listModalReducer.recommendationID,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddToRecommendationList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddToRecommendationList))

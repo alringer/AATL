@@ -15,16 +15,20 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { RECOMMENDATION_LIST_META_WITH_ID } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store/index'
+import { fetchUser } from 'store/user/user_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IVenueListMeta } from 'utilities/types/venueListMeta'
 
 interface IReduxProps {
     currentPlaceList: IVenueListMeta | null
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IDeleteRestaurantListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -34,6 +38,8 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
     closeModal,
     getTokenConfig,
     currentPlaceList,
+    keycloak,
+    fetchUser,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
@@ -49,6 +55,7 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
             axios
                 .delete(RECOMMENDATION_LIST_META_WITH_ID(listID), config)
                 .then((res) => {
+                    fetchUser(keycloak)
                     handleCancel()
                     enqueueSnackbar('', {
                         content: (
@@ -110,4 +117,13 @@ const mapStateToProps = (state: StoreState) => ({
     currentPlaceList: state.listModalReducer.placeList,
     onSuccess: state.listModalReducer.onSuccess,
 })
-export default reduxConnect(mapStateToProps)(withAuth(DeleteRestaurantList))
+
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(DeleteRestaurantList))

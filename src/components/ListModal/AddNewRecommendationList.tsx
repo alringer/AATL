@@ -25,16 +25,20 @@ import axios, {
 } from 'config/AxiosConfig'
 import * as D from 'constants/ImageDimensionConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 
 interface IReduxProps {
     recommendationID: number | null
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IAddToRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -46,6 +50,8 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     switchView,
     getTokenConfig,
     recommendationID,
+    keycloak,
+    fetchUser,
 }) => {
     const InputEnum = {
         title: 'title',
@@ -117,11 +123,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                 axios
                     .post(RECOMMENDATION_LIST_METAS, createNewRecommendationListPayload, config)
                     .then((res) => {
-                        console.log('Posting a new recommendation list: ', res)
                         const newRecommendationListMetaID = res.data.id
-                        // const addRecommendationPayload = {
-                        //     id: recommendationID,
-                        // }
                         axios
                             .post(
                                 RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(
@@ -132,7 +134,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                                 config
                             )
                             .then((res) => {
-                                console.log('Adding a recommendation to the new recommendation list: ', res)
+                                fetchUser(keycloak)
                                 closeModal()
                             })
                             .catch((err) => console.log(err))
@@ -320,4 +322,12 @@ const mapStateToProps = (state: StoreState) => ({
     recommendationID: state.listModalReducer.recommendationID,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddToRecommendationList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddToRecommendationList))
