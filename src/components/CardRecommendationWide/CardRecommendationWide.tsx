@@ -156,19 +156,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         setMoreVisible(false)
     }
 
-    const handleLike = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Call API to like the recommendation
-        if (currentRecommendation) {
-            console.log('Recommendation heart clicked. Recommendation ID: ', currentRecommendation.id)
-        }
-        e.stopPropagation()
-    }
-
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Call API to flag the recommendation
         if (currentRecommendation) {
             if (userRole === UserRoleEnum.Admin) {
-                console.log('TODO: Add the current recommendation to a recommendation list ', currentRecommendation.id)
                 const openListModalPayload: OpenListModalPayload = {
                     currentListModalView: ListModalViewEnum.AddToRecommendationList,
                     recommendationID: currentRecommendation.id,
@@ -242,10 +232,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     }
 
     const handleMore = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Display more options
-        if (currentRecommendation) {
-            console.log('Recommendation ellipses clicked. Recommendation ID: ', currentRecommendation.id)
-        }
         setMoreVisible(!isMoreVisible)
         e.stopPropagation()
     }
