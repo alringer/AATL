@@ -35,8 +35,8 @@ const withCallToAction = <P extends IWithCallToActionInjectedProps>(Component: R
                 console.log('New Candidates: ', newCandidates)
                 setPlaceToShowID(newCandidates.length > 0 ? newCandidates[0] : -1)
             }, [venuesInLists, venuesRecommended, venuesPrompted])
-            console.log('All Props in Enhanced Component: ', props)
-            console.log('Pass Props in Enhanced Component: ', passProps)
+            // console.log('All Props in Enhanced Component: ', props)
+            // console.log('Pass Props in Enhanced Component: ', passProps)
             console.log('placeToShowID in HOC: ', placeToShowID)
             return <Component {...(passProps as P)} placeToShowID={placeToShowID} />
         }

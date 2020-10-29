@@ -19,29 +19,30 @@ interface IPlaceCardsList extends IWithCallToActionInjectedProps {
 const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places, category, placeToShowID }) => {
     const [callToActionID, setCallToActionID] = React.useState<number | null>(null)
 
+    const router = useRouter()
+    const truncatedPlaces = places ? places.slice(0, 6) : []
+
     React.useEffect(() => {
         setCallToActionID(placeToShowID === -1 ? null : placeToShowID)
     }, [placeToShowID])
 
-    const router = useRouter()
     const handleViewMore = () => {
         router.push(`${R.ROUTE_ITEMS.search}/?place=${category}`)
     }
 
-    const truncatedPlaces = places ? places.slice(0, 6) : []
     return (
         <ListContainer>
             <ListTitle>{title}</ListTitle>
             <ListSubTitle>{subTitle}</ListSubTitle>
             <PlaceCardsGrid>
-                {truncatedPlaces.map((place: IVenue, index: number) =>
-                    index === 5 && placeToShowID !== -1 ? null : (
-                        <PlaceCardContainer key={place.id}>
-                            <CardPlaceSmall place={place} />
-                        </PlaceCardContainer>
-                    )
-                )}
-                {placeToShowID !== null ? <CallToAction isLarge={false} placeID={callToActionID} /> : null}
+                {truncatedPlaces.map((place: IVenue) => (
+                    <PlaceCardContainer key={place.id}>
+                        <CardPlaceSmall place={place} />
+                    </PlaceCardContainer>
+                ))}
+                {callToActionID !== null && callToActionID !== undefined ? (
+                    <CallToAction isLarge={false} placeID={callToActionID} />
+                ) : null}
             </PlaceCardsGrid>
             <ViewMoreButton onClick={handleViewMore}>{S.BUTTON_LABELS.ViewMore}</ViewMoreButton>
         </ListContainer>
