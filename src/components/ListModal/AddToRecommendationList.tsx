@@ -38,6 +38,7 @@ import { ListModalViewEnum } from 'store/listModal/listModal_types'
 import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { ISpotlightedRecommendation } from 'utilities/types/ISpotlightedRecommendation'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
@@ -95,50 +96,89 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     }
     const handleAddRecommendation = () => {
         if (recommendationID !== null && recommendationID !== undefined && selectedID !== null) {
-            const token = getTokenConfig()
-            if (token) {
-                const config = {
-                    headers: {
-                        Authorization: token,
-                    },
-                }
-                axios
-                    .post(RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID), {}, config)
-                    .then((res) => {
-                        fetchUser(keycloak)
-                        const spotlightedRecommendations = res.data.spotlightedRecommendations
-                        enqueueSnackbar('', {
-                            content: (
-                                <div>
-                                    <Snackbar
-                                        type={B.ADDED_TO_LIST.Type}
-                                        title={B.ADDED_TO_LIST.Title}
-                                        message={
-                                            <SnackbarMessageBody>
-                                                {spotlightedRecommendations && spotlightedRecommendations.length > 0 ? (
-                                                    <SnackbarOrangeMessage>
-                                                        {
-                                                            spotlightedRecommendations[
-                                                                spotlightedRecommendations.length - 1
-                                                            ].title
-                                                        }
-                                                    </SnackbarOrangeMessage>
-                                                ) : (
-                                                    'Recommendation'
-                                                )}{' '}
-                                                {B.ADDED_TO_LIST.Body}&nbsp;
-                                                {res.data.title ? (
-                                                    <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
-                                                ) : null}
-                                            </SnackbarMessageBody>
-                                        }
-                                    />
-                                </div>
-                            ),
-                        })
-                        closeModal()
+            const targetList: IRecommendationListMeta = recommendationLists.find(
+                (recommendationList: IRecommendationListMeta) => recommendationList.id === selectedID
+            )
+            if (targetList !== undefined && targetList.spotlightedRecommendations) {
+                const targetRecommendation = targetList.spotlightedRecommendations.find(
+                    (spotlightedRecommendation: ISpotlightedRecommendation) =>
+                        spotlightedRecommendation.originalRecommendation &&
+                        spotlightedRecommendation.originalRecommendation.id === recommendationID
+                )
+                // console.log('Original Recommendations: ', targetList.spotlightedRecommendations)
+                // console.log('Target ID: ', recommendationID)
+                if (targetRecommendation === undefined) {
+                    const token = getTokenConfig()
+                    if (token) {
+                        const config = {
+                            headers: {
+                                Authorization: token,
+                            },
+                        }
+                        axios
+                            .post(
+                                RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID),
+                                {},
+                                config
+                            )
+                            .then((res) => {
+                                fetchUser(keycloak)
+                                const spotlightedRecommendations = res.data.spotlightedRecommendations
+                                enqueueSnackbar('', {
+                                    content: (
+                                        <div>
+                                            <Snackbar
+                                                type={B.ADDED_TO_LIST.Type}
+                                                title={B.ADDED_TO_LIST.Title}
+                                                message={
+                                                    <SnackbarMessageBody>
+                                                        {spotlightedRecommendations &&
+                                                        spotlightedRecommendations.length > 0 ? (
+                                                            <SnackbarOrangeMessage>
+                                                                {
+                                                                    spotlightedRecommendations[
+                                                                        spotlightedRecommendations.length - 1
+                                                                    ].title
+                                                                }
+                                                            </SnackbarOrangeMessage>
+                                                        ) : (
+                                                            'Recommendation'
+                                                        )}{' '}
+                                                        {B.ADDED_TO_LIST.Body}&nbsp;
+                                                        {res.data.title ? (
+                                                            <SnackbarOrangeMessage>
+                                                                {res.data.title}
+                                                            </SnackbarOrangeMessage>
+                                                        ) : null}
+                                                    </SnackbarMessageBody>
+                                                }
+                                            />
+                                        </div>
+                                    ),
+                                })
+                                closeModal()
+                            })
+                            .catch((err) => console.log(err))
+                    }
+                } else {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.ALREADY_ADDED_TO_LIST.Type}
+                                    title={B.ALREADY_ADDED_TO_LIST.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            <SnackbarOrangeMessage>{targetRecommendation.title}</SnackbarOrangeMessage>
+                                            &nbsp; is already in{' '}
+                                            <SnackbarOrangeMessage>{targetList.title}</SnackbarOrangeMessage>
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
                     })
-                    .catch((err) => console.log(err))
+                }
             }
         }
     }

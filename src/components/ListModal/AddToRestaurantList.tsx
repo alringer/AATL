@@ -16,6 +16,7 @@ import { query } from 'style/device'
 import { CircularProgress } from 'style/Loading/CircularProgress.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IUserProfile } from 'utilities/types/userProfile'
+import { IVenue } from 'utilities/types/venue'
 import { IVenueListMeta } from 'utilities/types/venueListMeta'
 import {
     AddIcon,
@@ -102,37 +103,71 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     }
     const handleAddPlace = () => {
         if (placeID !== null) {
-            const addVenuePayload = {
-                id: placeID,
-            }
-            const config = {
-                headers: {
-                    Authorization: getTokenConfig(),
-                },
-            }
-            axios
-                .post(POST_NEW_VENUE(selectedListID), addVenuePayload, config)
-                .then((res) => {
-                    fetchUser(keycloak)
+            const targetList: IVenueListMeta = restaurantLists.find(
+                (restaurantList: IVenueListMeta) => restaurantList.id === selectedListID
+            )
+            if (targetList !== undefined && targetList.venues) {
+                const targetVenue = targetList.venues.find((venue: IVenue) => venue.id === placeID)
+                if (targetVenue === undefined) {
+                    const addVenuePayload = {
+                        id: placeID,
+                    }
+                    const config = {
+                        headers: {
+                            Authorization: getTokenConfig(),
+                        },
+                    }
+                    axios
+                        .post(POST_NEW_VENUE(selectedListID), addVenuePayload, config)
+                        .then((res) => {
+                            fetchUser(keycloak)
+                            if (res && res.data && res.data.venues) {
+                                const targetPlace = res.data.venues.filter((venue) => venue.id === placeID)
+                                if (targetPlace.length > 0 && targetPlace[0] && targetPlace[0].name) {
+                                    enqueueSnackbar('', {
+                                        content: (
+                                            <div>
+                                                <Snackbar
+                                                    type={B.ADDED_TO_LIST.Type}
+                                                    title={B.ADDED_TO_LIST.Title}
+                                                    message={
+                                                        <SnackbarMessageBody>
+                                                            {targetPlace[0].name} {B.ADDED_TO_LIST.Body}
+                                                            &nbsp;
+                                                            <SnackbarOrangeMessage>
+                                                                {res.data.title}
+                                                            </SnackbarOrangeMessage>
+                                                        </SnackbarMessageBody>
+                                                    }
+                                                />
+                                            </div>
+                                        ),
+                                    })
+                                }
+                            }
+                            closeModal()
+                        })
+                        .catch((err) => console.log(err))
+                } else {
                     enqueueSnackbar('', {
                         content: (
                             <div>
                                 <Snackbar
-                                    type={B.ADDED_TO_LIST.Type}
-                                    title={B.ADDED_TO_LIST.Title}
+                                    type={B.ALREADY_ADDED_TO_LIST.Type}
+                                    title={B.ALREADY_ADDED_TO_LIST.Title}
                                     message={
                                         <SnackbarMessageBody>
-                                            {res.data.venues[0].name} {B.ADDED_TO_LIST.Body}&nbsp;
-                                            <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                            <SnackbarOrangeMessage>{targetVenue.name}</SnackbarOrangeMessage>
+                                            &nbsp; is already in{' '}
+                                            <SnackbarOrangeMessage>{targetList.title}</SnackbarOrangeMessage>
                                         </SnackbarMessageBody>
                                     }
                                 />
                             </div>
                         ),
                     })
-                    closeModal()
-                })
-                .catch((err) => console.log(err))
+                }
+            }
         }
     }
 
