@@ -108,6 +108,10 @@ export const FEATURE_LIST = (recommendationListMetaId: number) => {
     return `/recommendation-list-metas/${recommendationListMetaId}/featured-list`
 }
 
+export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) =>  {
+    return `/recommendation-list-metas/details?page=${page}&size=${pageSize}&sort=updatedAt,DESC`
+}
+
 // Featured List
 export const FEATURED_LISTS = `/featured-lists`
 

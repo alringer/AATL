@@ -52,9 +52,7 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
                 initialRecommendations={
                     homeData && homeData.newRecommendations ? homeData.newRecommendations.content : []
                 }
-                initialTotalPages={
-                    homeData && homeData.newRecommendations ? homeData && homeData.newRecommendations.totalPages : 1
-                }
+                initialTotalPages={homeData && homeData.newRecommendations ? homeData.newRecommendations.totalPages : 1}
                 initialPage={
                     homeData && homeData.newRecommendations && homeData.newRecommendations.pageable
                         ? homeData.newRecommendations.pageable.pageNumber
