@@ -141,6 +141,7 @@ export const RESTAURANT_PAGE = {
     PlacesSimilarTitle: 'Places similar to',
     PlacesSimilarSubTitlePartOne: 'A sampling of places similar to',
     PlacesSimilarSubTitlePartTwo: 'that may pique your appetite.',
+    VisitWebsite: 'Visit Website /',
 }
 
 // Header

@@ -36,7 +36,7 @@ import {
     MoreHorizontalContainer,
     MoreVerticalContainer,
     WideHeaderContentContainer,
-    WideHeaderTooltipIconsContainer
+    WideHeaderTooltipIconsContainer,
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
 import {
@@ -46,7 +46,7 @@ import {
     chopStringRecommendationCardDescription,
     chopStringRecommendationCardPlaceName,
     chopStringRecommendationCardTitle,
-    chopStringRecommendationCardUserName
+    chopStringRecommendationCardUserName,
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -71,7 +71,7 @@ import {
     RecommendationPlaceCategoryText,
     RecommendationPlaceNameText,
     RecommendationSummaryText,
-    RecommendationTitleText
+    RecommendationTitleText,
 } from './CardRecommendationWide.style'
 
 export enum CardRecommendationWideEnum {
@@ -87,6 +87,8 @@ interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
     openFlagModal: (payload: OpenFlagModalPayload) => void
+    venuesInLists: number[]
+    venuesRecommended: number[]
 }
 
 interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
@@ -108,6 +110,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     openFlagModal,
     handleRemoveFromList,
     type,
+    venuesInLists,
+    venuesRecommended,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -152,19 +156,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         setMoreVisible(false)
     }
 
-    const handleLike = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Call API to like the recommendation
-        if (currentRecommendation) {
-            console.log('Recommendation heart clicked. Recommendation ID: ', currentRecommendation.id)
-        }
-        e.stopPropagation()
-    }
-
     const handleAddToList = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Call API to flag the recommendation
         if (currentRecommendation) {
             if (userRole === UserRoleEnum.Admin) {
-                console.log('TODO: Add the current recommendation to a recommendation list ', currentRecommendation.id)
                 const openListModalPayload: OpenListModalPayload = {
                     currentListModalView: ListModalViewEnum.AddToRecommendationList,
                     recommendationID: currentRecommendation.id,
@@ -238,10 +232,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     }
 
     const handleMore = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Display more options
-        if (currentRecommendation) {
-            console.log('Recommendation ellipses clicked. Recommendation ID: ', currentRecommendation.id)
-        }
         setMoreVisible(!isMoreVisible)
         e.stopPropagation()
     }
@@ -274,8 +264,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 <RecommendationCardContentContainer isHighlighted={isHighlighted} isToggled={isMoreVisible}>
                     <RecommendationContentTopContainer>
                         <RecommendationHeaderContainer>
-                            {/* <RecommendationPlaceNameText> */}
-                            {/* <RecommendationTitleSpan> */}
                             <WideHeaderContentContainer>
                                 {type !== CardRecommendationWideEnum.Restaurant ? (
                                     currentRecommendation &&
@@ -323,16 +311,28 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     ''
                                 )}
                                 <WideHeaderTooltipIconsContainer>
-                                    <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                        <img src={AuthoredSVG} />
-                                    </Tooltip>
-                                    <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                        <img src={AddedSVG} alt="added-icon" />
-                                    </Tooltip>
+                                    {currentRecommendation &&
+                                        currentRecommendation.venue &&
+                                        currentRecommendation.venue.id !== undefined &&
+                                        currentRecommendation.venue.id !== null &&
+                                        venuesRecommended &&
+                                        venuesRecommended.includes(currentRecommendation.venue.id) && (
+                                            <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                                <img src={AuthoredSVG} />
+                                            </Tooltip>
+                                        )}
+                                    {currentRecommendation &&
+                                        currentRecommendation.venue &&
+                                        currentRecommendation.venue.id !== undefined &&
+                                        currentRecommendation.venue.id !== null &&
+                                        venuesInLists &&
+                                        venuesInLists.includes(currentRecommendation.venue.id) && (
+                                            <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                                <img src={AddedSVG} alt="added-icon" />
+                                            </Tooltip>
+                                        )}
                                 </WideHeaderTooltipIconsContainer>
                             </WideHeaderContentContainer>
-                            {/* </RecommendationTitleSpan> */}
-                            {/* </RecommendationPlaceNameText> */}
                             <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
                                     <>
@@ -524,6 +524,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     userRole: state.userReducer.userRole,
+    venuesInLists: state.userReducer.venuesListsVenueIDs,
+    venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

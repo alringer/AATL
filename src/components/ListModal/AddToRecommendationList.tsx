@@ -27,18 +27,23 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { RECOMMENDATION_LIST_METAS, RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { ISpotlightedRecommendation } from 'utilities/types/ISpotlightedRecommendation'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
     recommendationID: number | null
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IAddToRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -50,6 +55,8 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     switchView,
     recommendationID,
     getTokenConfig,
+    fetchUser,
+    keycloak,
 }) => {
     const [recommendationLists, setRecommendationLists] = React.useState([])
     const [selectedID, setSelectedID] = React.useState<number | null>(null)
@@ -67,7 +74,6 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
         axios
             .get(RECOMMENDATION_LIST_METAS, config)
             .then((res) => {
-                console.log('Fetched Recommendation List Metas: ', res)
                 if (res && res.data && res.data.length && res.data[0] && res.data[0].id) {
                     setRecommendationLists(res.data)
                     setSelectedID(res.data[0].id)
@@ -90,50 +96,89 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     }
     const handleAddRecommendation = () => {
         if (recommendationID !== null && recommendationID !== undefined && selectedID !== null) {
-            const token = getTokenConfig()
-            if (token) {
-                const config = {
-                    headers: {
-                        Authorization: token,
-                    },
-                }
-                axios
-                    .post(RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID), {}, config)
-                    .then((res) => {
-                        console.log('Adding a recommendation to the recommendation list: ', res)
-                        const spotlightedRecommendations = res.data.spotlightedRecommendations
-                        enqueueSnackbar('', {
-                            content: (
-                                <div>
-                                    <Snackbar
-                                        type={B.ADDED_TO_LIST.Type}
-                                        title={B.ADDED_TO_LIST.Title}
-                                        message={
-                                            <SnackbarMessageBody>
-                                                {spotlightedRecommendations && spotlightedRecommendations.length > 0 ? (
-                                                    <SnackbarOrangeMessage>
-                                                        {
-                                                            spotlightedRecommendations[
-                                                                spotlightedRecommendations.length - 1
-                                                            ].title
-                                                        }
-                                                    </SnackbarOrangeMessage>
-                                                ) : (
-                                                    'Recommendation'
-                                                )}{' '}
-                                                {B.ADDED_TO_LIST.Body}&nbsp;
-                                                {res.data.title ? (
-                                                    <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
-                                                ) : null}
-                                            </SnackbarMessageBody>
-                                        }
-                                    />
-                                </div>
-                            ),
-                        })
-                        closeModal()
+            const targetList: IRecommendationListMeta = recommendationLists.find(
+                (recommendationList: IRecommendationListMeta) => recommendationList.id === selectedID
+            )
+            if (targetList !== undefined && targetList.spotlightedRecommendations) {
+                const targetRecommendation = targetList.spotlightedRecommendations.find(
+                    (spotlightedRecommendation: ISpotlightedRecommendation) =>
+                        spotlightedRecommendation.originalRecommendation &&
+                        spotlightedRecommendation.originalRecommendation.id === recommendationID
+                )
+                // console.log('Original Recommendations: ', targetList.spotlightedRecommendations)
+                // console.log('Target ID: ', recommendationID)
+                if (targetRecommendation === undefined) {
+                    const token = getTokenConfig()
+                    if (token) {
+                        const config = {
+                            headers: {
+                                Authorization: token,
+                            },
+                        }
+                        axios
+                            .post(
+                                RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION(selectedID, recommendationID),
+                                {},
+                                config
+                            )
+                            .then((res) => {
+                                fetchUser(keycloak)
+                                const spotlightedRecommendations = res.data.spotlightedRecommendations
+                                enqueueSnackbar('', {
+                                    content: (
+                                        <div>
+                                            <Snackbar
+                                                type={B.ADDED_TO_LIST.Type}
+                                                title={B.ADDED_TO_LIST.Title}
+                                                message={
+                                                    <SnackbarMessageBody>
+                                                        {spotlightedRecommendations &&
+                                                        spotlightedRecommendations.length > 0 ? (
+                                                            <SnackbarOrangeMessage>
+                                                                {
+                                                                    spotlightedRecommendations[
+                                                                        spotlightedRecommendations.length - 1
+                                                                    ].title
+                                                                }
+                                                            </SnackbarOrangeMessage>
+                                                        ) : (
+                                                            'Recommendation'
+                                                        )}{' '}
+                                                        {B.ADDED_TO_LIST.Body}&nbsp;
+                                                        {res.data.title ? (
+                                                            <SnackbarOrangeMessage>
+                                                                {res.data.title}
+                                                            </SnackbarOrangeMessage>
+                                                        ) : null}
+                                                    </SnackbarMessageBody>
+                                                }
+                                            />
+                                        </div>
+                                    ),
+                                })
+                                closeModal()
+                            })
+                            .catch((err) => console.log(err))
+                    }
+                } else {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.ALREADY_ADDED_TO_LIST.Type}
+                                    title={B.ALREADY_ADDED_TO_LIST.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            <SnackbarOrangeMessage>{targetRecommendation.title}</SnackbarOrangeMessage>
+                                            &nbsp; is already in{' '}
+                                            <SnackbarOrangeMessage>{targetList.title}</SnackbarOrangeMessage>
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
                     })
-                    .catch((err) => console.log(err))
+                }
             }
         }
     }
@@ -224,4 +269,12 @@ const mapStateToProps = (state: StoreState) => ({
     recommendationID: state.listModalReducer.recommendationID,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddToRecommendationList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddToRecommendationList))

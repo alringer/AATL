@@ -34,7 +34,7 @@ const HomeCarouselCard: React.FC<IHomeCarouselCardProps> = ({
     length,
 }) => {
     return featuredRecommendationList ? (
-        <HomeCarouselCardContainer>
+        <HomeCarouselCardContainer key={featuredRecommendationList.id}>
             <HomeCarouselImageContainer>
                 <Image
                     src={featuredRecommendationList.imageCDNUrl ? featuredRecommendationList.imageCDNUrl : ''}

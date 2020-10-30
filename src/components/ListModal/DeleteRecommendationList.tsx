@@ -15,16 +15,20 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { RECOMMENDATION_LIST_META_WITH_ID } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store/index'
+import { fetchUser } from 'store/user/user_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
     currentRecommendationList: IRecommendationListMeta | null
     onSuccess: () => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IDeleteRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -35,6 +39,8 @@ const DeleteRecommendationList: React.FC<IDeleteRecommendationListProps> = ({
     getTokenConfig,
     currentRecommendationList,
     onSuccess,
+    keycloak,
+    fetchUser,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -49,6 +55,7 @@ const DeleteRecommendationList: React.FC<IDeleteRecommendationListProps> = ({
             axios
                 .delete(RECOMMENDATION_LIST_META_WITH_ID(listID), config)
                 .then((res) => {
+                    fetchUser(keycloak)
                     onSuccess()
                     handleCancel()
                     enqueueSnackbar('', {
@@ -117,4 +124,13 @@ const mapStateToProps = (state: StoreState) => ({
     currentRecommendationList: state.listModalReducer.recommendationList,
     onSuccess: state.listModalReducer.onSuccess,
 })
-export default reduxConnect(mapStateToProps)(withAuth(DeleteRecommendationList))
+
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(DeleteRecommendationList))

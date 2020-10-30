@@ -22,6 +22,7 @@ import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { StoreState } from 'store'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
@@ -78,6 +79,8 @@ export enum CardPlaceWideEnum {
 interface IReduxProps {
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
+    venuesInLists: number[]
+    venuesRecommended: number[]
 }
 interface ICardPlaceWideProps extends IReduxProps, IWithAuthInjectedProps {
     place: IVenue
@@ -92,6 +95,8 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     openListModal,
     authenticatedAction,
     handleRemoveFromList,
+    venuesInLists,
+    venuesRecommended,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
@@ -211,12 +216,22 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                                     : null}
                                             </CardPlaceWidePlaceNameText>
                                             <WideHeaderTooltipIconsContainer>
-                                                <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                                    <img src={AuthoredSVG} />
-                                                </Tooltip>
-                                                <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                                    <img src={AddedSVG} alt="added-icon" />
-                                                </Tooltip>
+                                                {place &&
+                                                    place.id !== undefined &&
+                                                    place.id !== null &&
+                                                    venuesRecommended.includes(Number(place.id)) && (
+                                                        <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                                            <img src={AuthoredSVG} />
+                                                        </Tooltip>
+                                                    )}
+                                                {place &&
+                                                    place.id !== undefined &&
+                                                    place.id !== null &&
+                                                    venuesInLists.includes(Number(place.id)) && (
+                                                        <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                                            <img src={AddedSVG} alt="added-icon" />
+                                                        </Tooltip>
+                                                    )}
                                             </WideHeaderTooltipIconsContainer>
                                         </WideHeaderContentContainer>
                                         <Media queries={query} defaultMatches={{ mobile: true }}>
@@ -356,6 +371,11 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
     )
 }
 
+const mapStateToProps = (state: StoreState) => ({
+    venuesInLists: state.userReducer.venuesListsVenueIDs,
+    venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
+})
+
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ openRecommendationModal, openListModal }, dispatch)
 
-export default reduxConnect(null, mapDispatchToProps)(withAuth(CardPlaceWide))
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(CardPlaceWide))

@@ -29,12 +29,18 @@ export const fetchUser = (keycloak: KeycloakInstance) => {
             axios
                 .get(FETCH_CURRENT_USER_PROFILE, config)
                 .then((res) => {
-                    const userProfileInformation: IUserProfile = res.data
+                    const userProfileInformation: IUserProfile = res.data.userProfile
+                    const venuesInLists: number[] = res.data.venuesListsVenueIds
+                    const venuesRecommended: number[] = res.data.venuesRecommendedVenueIds
+                    const venuesRecommendationPromptsVenueIds: number[] = res.data.venuesRecommendationPromptsVenueIds
                     dispatch(
                         login({
                             user: userProfileInformation,
                             userRole: role,
                             isLoading: false,
+                            venuesListsVenueIDs: venuesInLists,
+                            venuesRecommendedVenueIDs: venuesRecommended,
+                            venuesRecommendationPromptsVenueIDs: venuesRecommendationPromptsVenueIds
                         })
                     )
                     console.log('User Profile Results: ', res.data)

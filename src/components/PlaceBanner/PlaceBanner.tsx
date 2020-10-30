@@ -22,7 +22,6 @@ import { ICategory } from 'utilities/types/category'
 import { IVenue } from 'utilities/types/venue'
 import {
     AddToListButton,
-    FindATableButton,
     PlaceBannerAddressCityStateZip,
     PlaceBannerAddressOne,
     PlaceBannerAddressSpan,
@@ -88,14 +87,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
         }
     }
 
-    const handleFindATable = () => {
-        // TODO: Wire up Find-A-Table API
-        if (_.has(venueInformation, 'id')) {
-            console.log(`Find-A-Table button is clicked for place with ID of ${venueInformation.id}`)
-        }
-    }
     const handleRecommend = () => {
-        // TODO: Send the user to the recommendation editor
         if (_.has(venueInformation, 'id') && _.has(venueInformation, 'name')) {
             authenticatedAction(() =>
                 openRecommendationModal({
@@ -104,7 +96,6 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                     isAATL: true,
                 })
             )
-            console.log(`Recommend-restaurant button is clicked for place with ID of ${venueInformation.id}`)
         }
     }
 
@@ -170,7 +161,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         {venueInformation.websiteURL ? (
                             <Link href={venueInformation.websiteURL} passHref={true} prefetch={false}>
                                 <PlaceBannerAnchor target="_blank">
-                                    <PlaceBannerVisitWebsite>Visit Website /</PlaceBannerVisitWebsite>
+                                    <PlaceBannerVisitWebsite>{S.RESTAURANT_PAGE.VisitWebsite}</PlaceBannerVisitWebsite>
                                 </PlaceBannerAnchor>
                             </Link>
                         ) : null}
@@ -187,11 +178,10 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                     </PlaceBannerContactInformationSpan>
                     <PlaceBannerButtonsContainer>
                         <PlaceBannerButtonsTopContainer>
-                            <FindATableButton onClick={handleFindATable}>{S.BUTTON_LABELS.FindATable}</FindATableButton>
                             <RecommendButton onClick={handleRecommend}>{S.BUTTON_LABELS.Recommend}</RecommendButton>
+                            <AddToListButton onClick={handleAddToList}>{S.BUTTON_LABELS.AddToList}</AddToListButton>
                         </PlaceBannerButtonsTopContainer>
                         <PlaceBannerButtonsBottomContainer>
-                            <AddToListButton onClick={handleAddToList}>{S.BUTTON_LABELS.AddToList}</AddToListButton>
                             <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
                                     <>

@@ -4,12 +4,15 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { POST_NEW_VENUE, VENUE_LIST } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store/index'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import {
@@ -32,6 +35,7 @@ import {
 
 interface IReduxProps {
     placeID: number | null
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 
 interface IAddNewRestaurantListProps extends IWithAuthInjectedProps, IReduxProps {
@@ -44,6 +48,8 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
     switchView,
     getTokenConfig,
     placeID,
+    fetchUser,
+    keycloak,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
     const [titleInput, setTitleInput] = React.useState('')
@@ -65,7 +71,6 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
             axios
                 .post(VENUE_LIST, createNewVenueListPayload, config)
                 .then((res) => {
-                    console.log('Creating a new venue list: ', res)
                     const newRestaurantListID = res.data.id
                     const addVenuePayload = {
                         id: placeID,
@@ -73,7 +78,7 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
                     axios
                         .post(POST_NEW_VENUE(newRestaurantListID), addVenuePayload, config)
                         .then((res) => {
-                            console.log('Adding a venue to the new list: ', res)
+                            fetchUser(keycloak)
                             enqueueSnackbar('', {
                                 content: (
                                     <div>
@@ -193,4 +198,12 @@ const mapStateToProps = (state: StoreState) => ({
     placeID: state.listModalReducer.placeID,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddNewRestaurantList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddNewRestaurantList))

@@ -3,16 +3,20 @@ import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/
 import axios, { FETCH_VENUE_LISTS, POST_NEW_VENUE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { ListModalViewEnum } from 'store/listModal/listModal_types'
+import { fetchUser } from 'store/user/user_actions'
 import { query } from 'style/device'
 import { CircularProgress } from 'style/Loading/CircularProgress.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IUserProfile } from 'utilities/types/userProfile'
+import { IVenue } from 'utilities/types/venue'
 import { IVenueListMeta } from 'utilities/types/venueListMeta'
 import {
     AddIcon,
@@ -39,6 +43,7 @@ import {
 interface IReduxProps {
     placeID: number | null
     user: IUserProfile
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 interface IAddToRestaurantListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
@@ -51,6 +56,8 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     switchView,
     getTokenConfig,
     user,
+    fetchUser,
+    keycloak,
 }) => {
     const [restaurantLists, setRestaurantLists] = React.useState<IVenueListMeta[]>([])
     const [selectedListID, setSelectedListID] = React.useState<number | null>(null)
@@ -96,37 +103,71 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     }
     const handleAddPlace = () => {
         if (placeID !== null) {
-            const addVenuePayload = {
-                id: placeID,
-            }
-            const config = {
-                headers: {
-                    Authorization: getTokenConfig(),
-                },
-            }
-            axios
-                .post(POST_NEW_VENUE(selectedListID), addVenuePayload, config)
-                .then((res) => {
-                    console.log('Adding a venue to the new list: ', res)
+            const targetList: IVenueListMeta = restaurantLists.find(
+                (restaurantList: IVenueListMeta) => restaurantList.id === selectedListID
+            )
+            if (targetList !== undefined && targetList.venues) {
+                const targetVenue = targetList.venues.find((venue: IVenue) => venue.id === placeID)
+                if (targetVenue === undefined) {
+                    const addVenuePayload = {
+                        id: placeID,
+                    }
+                    const config = {
+                        headers: {
+                            Authorization: getTokenConfig(),
+                        },
+                    }
+                    axios
+                        .post(POST_NEW_VENUE(selectedListID), addVenuePayload, config)
+                        .then((res) => {
+                            fetchUser(keycloak)
+                            if (res && res.data && res.data.venues) {
+                                const targetPlace = res.data.venues.filter((venue) => venue.id === placeID)
+                                if (targetPlace.length > 0 && targetPlace[0] && targetPlace[0].name) {
+                                    enqueueSnackbar('', {
+                                        content: (
+                                            <div>
+                                                <Snackbar
+                                                    type={B.ADDED_TO_LIST.Type}
+                                                    title={B.ADDED_TO_LIST.Title}
+                                                    message={
+                                                        <SnackbarMessageBody>
+                                                            {targetPlace[0].name} {B.ADDED_TO_LIST.Body}
+                                                            &nbsp;
+                                                            <SnackbarOrangeMessage>
+                                                                {res.data.title}
+                                                            </SnackbarOrangeMessage>
+                                                        </SnackbarMessageBody>
+                                                    }
+                                                />
+                                            </div>
+                                        ),
+                                    })
+                                }
+                            }
+                            closeModal()
+                        })
+                        .catch((err) => console.log(err))
+                } else {
                     enqueueSnackbar('', {
                         content: (
                             <div>
                                 <Snackbar
-                                    type={B.ADDED_TO_LIST.Type}
-                                    title={B.ADDED_TO_LIST.Title}
+                                    type={B.ALREADY_ADDED_TO_LIST.Type}
+                                    title={B.ALREADY_ADDED_TO_LIST.Title}
                                     message={
                                         <SnackbarMessageBody>
-                                            {res.data.venues[0].name} {B.ADDED_TO_LIST.Body}&nbsp;
-                                            <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                            <SnackbarOrangeMessage>{targetVenue.name}</SnackbarOrangeMessage>
+                                            &nbsp; is already in{' '}
+                                            <SnackbarOrangeMessage>{targetList.title}</SnackbarOrangeMessage>
                                         </SnackbarMessageBody>
                                     }
                                 />
                             </div>
                         ),
                     })
-                    closeModal()
-                })
-                .catch((err) => console.log(err))
+                }
+            }
         }
     }
 
@@ -210,4 +251,12 @@ const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
 })
 
-export default reduxConnect(mapStateToProps)(withAuth(AddToRestaurantList))
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(AddToRestaurantList))

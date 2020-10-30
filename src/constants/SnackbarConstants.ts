@@ -114,6 +114,12 @@ export const ADDED_TO_LIST: ISnackbarConstants = {
     Body: 'was added to your list',
 }
 
+export const ALREADY_ADDED_TO_LIST: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Already added',
+    Body: 'was added to your list',
+}
+
 export const REMOVE_LIST: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'List deleted',
