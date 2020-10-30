@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components'
 
 export const AdminMenuContainer = styled.div`
+    min-width: 310px;
     width: 310px;
     height: auto;
-    
+
     display: flex;
     flex-direction: column;
     padding: 40px 50px;
@@ -21,7 +22,7 @@ export const AdminMenuTitle = styled.p`
     font-style: normal;
     line-height: 1.17;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 40px;
 `
@@ -33,12 +34,12 @@ export const AdminMenuItem = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     cursor: pointer;
-    
+
     margin-bottom: 20px;
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'active') {
             return css`
                 color: ${(props) => props.theme.mushroom};
