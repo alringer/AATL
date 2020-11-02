@@ -25,6 +25,7 @@ import {
     FooterLinkTitleAnchor,
     FooterRightColumn,
     FooterSecondRow,
+    FooterTermsOfUseAnchor,
     FooterTinyText,
 } from './Footer.style'
 
@@ -111,7 +112,12 @@ const Footer = () => {
                 </FooterRightColumn>
             </FooterFirstRow>
             <FooterSecondRow>
-                <FooterTinyText>{S.FOOTER_ITEMS.WithLove}</FooterTinyText>
+                <FooterTinyText>
+                    {S.FOOTER_ITEMS.WithLove} {S.FOOTER_ITEMS.SeeOur}{' '}
+                    <Link href={`${R.ROUTE_ITEMS.termsAndConditions}`} passHref={true} prefetch={false}>
+                        <FooterTermsOfUseAnchor>{S.FOOTER_ITEMS.TermsOfUse}</FooterTermsOfUseAnchor>
+                    </Link>
+                </FooterTinyText>
                 <FooterTinyText>{S.FOOTER_ITEMS.CopyRightText} </FooterTinyText>
             </FooterSecondRow>
         </FooterContainer>

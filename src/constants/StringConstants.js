@@ -181,10 +181,12 @@ export const FOOTER_ITEMS = {
     FoodAndDrinks: 'Food & Drink',
     Cities: 'Cities',
     WithLove: '♥ With love from Lake Tahoe',
+    SeeOur: 'See our',
+    TermsOfUse: 'Terms of Use',
     CopyRightText: 'AskaTravelLocal ©',
     CompanyName: 'About Ask a Travel Local',
     FooterMessage:
-        'We are dedicated to creating a space for the foodie in you. We feature places that are recommended by the community. Everything else is moot.',
+        'We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.  We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!',
 }
 
 export const CALL_TO_ACTION = {

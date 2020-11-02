@@ -29,7 +29,7 @@ export const FooterContainer = styled.div`
 
 export const FooterFirstRow = styled.div`
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
 
     @media ${device.mobile} {
         flex-direction: column;
@@ -63,7 +63,7 @@ export const FooterSecondRow = styled.div`
     @media ${device.laptop} {
         flex-direction: row;
         justify-content: space-between;
-        align-items: flex-start
+        align-items: flex-start;
     }
 `
 
@@ -112,7 +112,7 @@ export const FooterInformationTitle = styled.p`
     font-style: normal;
     line-height: 1.22;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         font-size: 20px;
@@ -132,7 +132,7 @@ export const FooterInformationBody = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         text-align: center;
@@ -162,22 +162,22 @@ export const FooterLinksContainer = styled.div`
         margin-left: 0;
     }
     @media ${device.tablet} {
-        ${props => {
-        if (props.id === 'marginLeft') {
-            return css`
-                margin-left: 120px;
-            `
-        }
-    }}
+        ${(props) => {
+            if (props.id === 'marginLeft') {
+                return css`
+                    margin-left: 120px;
+                `
+            }
+        }}
     }
     @media ${device.laptop} {
-        ${props => {
-        if (props.id === 'marginLeft') {
-            return css`
-                margin-left: 120px;
-            `
-        }
-    }}
+        ${(props) => {
+            if (props.id === 'marginLeft') {
+                return css`
+                    margin-left: 120px;
+                `
+            }
+        }}
     }
 `
 
@@ -196,6 +196,15 @@ export const FooterAnchor = styled.a`
     }
 `
 
+export const FooterTermsOfUseAnchor = styled.a`
+    color: ${(props) => props.theme.darkGrey};
+    cursor: pointer;
+
+    &:hover {
+        text-decoration-color: ${(props) => props.theme.darkGrey};
+    }
+`
+
 export const FooterLinkTitleAnchor = styled(FooterAnchor)`
     margin-bottom: 20px;
 `
@@ -207,7 +216,7 @@ export const FooterLinkTitle = styled.p`
     font-style: normal;
     line-height: 1.22;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 `
 
 export const FooterLinkItem = styled.p`
@@ -217,7 +226,7 @@ export const FooterLinkItem = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 `
 
 export const FooterTinyText = styled.p`
@@ -228,5 +237,5 @@ export const FooterTinyText = styled.p`
     line-height: 1.83;
     letter-spacing: normal;
     text-align: right;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 `
