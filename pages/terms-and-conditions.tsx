@@ -1,7 +1,12 @@
+import StaticWelcomeBanner from 'components/StaticWelcome/StaticWelcomeBanner/StaticWelcomeBanner'
 import React from 'react'
 
 const TermsAndConditions = () => {
-    return <div>Terms and Conditions</div>
+    return (
+        <>
+            <StaticWelcomeBanner />
+        </>
+    )
 }
 
 export default TermsAndConditions
