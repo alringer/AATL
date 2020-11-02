@@ -13,8 +13,9 @@ import {
     AdminCitiesImageColumn,
     AdminCitiesLoadingContainer,
     AdminCitiesPlacesColumn,
+    AdminCitiesRecommendationsAscendingSortIcon,
     AdminCitiesRecommendationsColumn,
-    AdminCitiesRecommendationsSortIcon,
+    AdminCitiesRecommendationsDescendingSortIcon,
     // AdminCitiesSearchButton,
     // AdminCitiesSearchContainer,
     AdminCitiesStateColumn,
@@ -63,17 +64,21 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                         ? 1
                         : -1
                     : -1
-                : a.recommendationsCount > b.recommendationsCount
-                ? 1
+                : a.recommendationsCount < b.recommendationsCount
+                ? -1
                 : a.recommendationsCount === b.recommendationsCount
                 ? a.city > b.city
                     ? 1
                     : -1
-                : -1
+                : 1
         )
         setDescending(!isDescending)
         return sortedCities
     }
+
+    React.useEffect(() => {
+        console.log(`Filter is ${isDescending ? 'Descending' : 'Ascending'}`)
+    }, [isDescending])
 
     // TBD: Search
     // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +112,11 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                     <AdminCitiesPlacesColumn>{S.ADMIN_PAGE.AdminCities.Places}</AdminCitiesPlacesColumn>
                     <AdminCitiesRecommendationsColumn>
                         {S.ADMIN_PAGE.AdminCities.Recommendations}{' '}
-                        <AdminCitiesRecommendationsSortIcon onClick={handleSort} />
+                        {isDescending ? (
+                            <AdminCitiesRecommendationsAscendingSortIcon onClick={handleSort} />
+                        ) : (
+                            <AdminCitiesRecommendationsDescendingSortIcon onClick={handleSort} />
+                        )}
                     </AdminCitiesRecommendationsColumn>
                 </AdminCitiesTableHeaderRow>
                 {isLoading ? (
@@ -115,11 +124,11 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                         <CircularProgress />
                     </AdminCitiesLoadingContainer>
                 ) : (
-                    cities.map((cityItem: IAdminCity) => {
+                    cities.map((cityItem: IAdminCity, index: number) => {
                         return (
-                            <AdminCitiesTableRow>
+                            <AdminCitiesTableRow key={index}>
                                 <AdminCitiesImageColumn>
-                                    <Image src={cityItem.imageCDNUrl} alt="city-image" />
+                                    <Image src={cityItem.imageUrlMobile} alt="city-image" />
                                 </AdminCitiesImageColumn>
                                 <AdminCitiesCityColumn>
                                     <AdminCityText>{cityItem.city}</AdminCityText>

@@ -1,4 +1,6 @@
-import SortIcon from '@material-ui/icons/Sort'
+// import SortIcon from '@material-ui/icons/Sort'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { CustomButton } from 'style/Button/Button.style'
 import styled from 'styled-components'
 
@@ -29,8 +31,7 @@ export const AdminCitiesRow = styled.div`
     padding: 15px 20px;
 `
 
-export const AdminCitiesLoadingContainer = styled(AdminCitiesRow)`
-`
+export const AdminCitiesLoadingContainer = styled(AdminCitiesRow)``
 
 export const AdminCitiesTableRow = styled(AdminCitiesRow)`
     box-shadow: inset 0 -1px 0 0 #e9e9e9;
@@ -76,21 +77,33 @@ export const AdminCityText = styled.p`
     letter-spacing: normal;
     text-decoration: underline;
     cursor: pointer;
-    color: ${props => props.theme.darkSlateBlue};
+    color: ${(props) => props.theme.darkSlateBlue};
 `
 
 export const AdminCitiesSearchButton = styled(CustomButton)`
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.darkSlateBlue};
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.darkSlateBlue};
 
     :hover {
-        background-color: ${props => props.theme.darkSlateBlue};
+        background-color: ${(props) => props.theme.darkSlateBlue};
     }
-    
+
     margin-left: 10px;
 `
 
-export const AdminCitiesRecommendationsSortIcon = styled(SortIcon)`
+// export const AdminCitiesRecommendationsSortIcon = styled(SortIcon)`
+//     margin-left: 5px;
+//     color: ${(props) => props.theme.mushroom};
+//     cursor: pointer;
+// `
+
+export const AdminCitiesRecommendationsAscendingSortIcon = styled(ArrowUpwardIcon)`
+    margin-left: 5px;
+    color: ${(props) => props.theme.mushroom};
+    cursor: pointer;
+`
+
+export const AdminCitiesRecommendationsDescendingSortIcon = styled(ArrowDownwardIcon)`
     margin-left: 5px;
     color: ${(props) => props.theme.mushroom};
     cursor: pointer;
