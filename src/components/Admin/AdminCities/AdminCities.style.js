@@ -1,4 +1,3 @@
-// import SortIcon from '@material-ui/icons/Sort'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { CustomButton } from 'style/Button/Button.style'
@@ -90,12 +89,6 @@ export const AdminCitiesSearchButton = styled(CustomButton)`
 
     margin-left: 10px;
 `
-
-// export const AdminCitiesRecommendationsSortIcon = styled(SortIcon)`
-//     margin-left: 5px;
-//     color: ${(props) => props.theme.mushroom};
-//     cursor: pointer;
-// `
 
 export const AdminCitiesRecommendationsAscendingSortIcon = styled(ArrowUpwardIcon)`
     margin-left: 5px;
