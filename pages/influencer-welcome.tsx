@@ -1,5 +1,5 @@
-import InfluencerWelcomeBanner from 'components/InfluencerWelcome/InfluencerWelcomeBanner/InfluencerWelcomeBanner'
-import InfluencerWelcomeContent from 'components/InfluencerWelcome/InfluencerWelcomeContent/InfluencerWelcomeContent'
+import StaticWelcomeBanner from 'components/StaticWelcome/StaticWelcomeBanner/StaticWelcomeBanner'
+import StaticWelcomeContent from 'components/StaticWelcome/StaticWelcomeContent/StaticWelcomeContent'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
@@ -24,8 +24,8 @@ const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch, isL
 
     return (
         <>
-            <InfluencerWelcomeBanner />
-            <InfluencerWelcomeContent />
+            <StaticWelcomeBanner />
+            <StaticWelcomeContent />
         </>
     )
 }
