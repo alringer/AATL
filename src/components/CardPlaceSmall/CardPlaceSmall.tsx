@@ -46,18 +46,16 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                         <SmallPlaceCardContentContainer>
                             <SmallPlaceCardPlaceName>{place ? place.name : null}</SmallPlaceCardPlaceName>
                             <WideHeaderTooltipIconsContainer>
-                                {place &&
-                                    place.id !== undefined &&
-                                    place.id !== null &&
+                                {place?.id !== undefined &&
+                                    place?.id !== null &&
                                     venuesRecommended !== undefined &&
                                     venuesRecommended.includes(Number(place.id)) && (
                                         <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                             <img src={AuthoredSVG} />
                                         </Tooltip>
                                     )}
-                                {place &&
-                                    place.id !== undefined &&
-                                    place.id !== null &&
+                                {place?.id !== undefined &&
+                                    place?.id !== null &&
                                     venuesInList !== undefined &&
                                     venuesInList.includes(Number(place.id)) && (
                                         <Tooltip title={S.TOOL_TIPS.Added} placement="top">
@@ -65,14 +63,14 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                                         </Tooltip>
                                     )}
                             </WideHeaderTooltipIconsContainer>
-                            {place && place.categories && (
+                            {place?.categories && (
                                 <SmallPlaceCardCategory>
                                     {concatCategories(place.categories.map((category: ICategory) => category.longName))}
                                 </SmallPlaceCardCategory>
                             )}
                             <SmallPlaceCardDescriptionContainer>
                                 <SmallPlaceCardDescription>
-                                    {place && place.latestRecommendation && place.latestRecommendation.content
+                                    {place?.latestRecommendation && place?.latestRecommendation?.content
                                         ? `"${chopStringSmallPlaceDescription(place.latestRecommendation.content)}"`
                                         : null}
                                 </SmallPlaceCardDescription>
