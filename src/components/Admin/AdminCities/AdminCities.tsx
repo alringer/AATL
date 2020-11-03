@@ -76,10 +76,6 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
         return sortedCities
     }
 
-    React.useEffect(() => {
-        console.log(`Filter is ${isDescending ? 'Descending' : 'Ascending'}`)
-    }, [isDescending])
-
     // TBD: Search
     // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //     setSearchInput(e.target.value)
