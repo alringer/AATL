@@ -32,11 +32,11 @@ const HomeBanner = () => {
     ) => {
         const paramsArray: ParamType[] = [
             { label: 'place', value: place },
+            { label: 'categoryID', value: categoryID },
             { label: 'address', value: address },
             { label: 'lat', value: lat },
             { label: 'lng', value: lng },
             { label: 'sort', value: sort },
-            { label: 'categoryID', value: categoryID },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
