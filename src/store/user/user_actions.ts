@@ -13,7 +13,7 @@ export const setLoading = (isLoading: boolean) => action(SET_LOADING, isLoading)
 export const fetchUser = (keycloak: KeycloakInstance) => {
     return (dispatch) => {
         const decodedToken = jwt(keycloak.token)
-        const roles = decodedToken.roles
+        const roles = decodedToken?.roles ? decodedToken.roles : []
         const role = roles.includes(UserRoleEnum.Admin)
             ? UserRoleEnum.Admin
             : roles.includes(UserRoleEnum.User)

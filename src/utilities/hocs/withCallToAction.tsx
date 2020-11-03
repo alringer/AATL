@@ -26,10 +26,12 @@ const withCallToAction = <P extends IWithCallToActionInjectedProps>(Component: R
             const { venuesInLists, venuesRecommended, venuesPrompted, ...passProps } = props
 
             React.useEffect(() => {
-                const newCandidates = venuesInLists
-                    .filter((venueID: number) => !venuesRecommended.includes(venueID))
-                    .filter((venueID: number) => !venuesPrompted.includes(venueID))
-                setPlaceToShowID(newCandidates.length > 0 ? newCandidates[0] : -1)
+                if (venuesInLists && venuesRecommended && venuesPrompted) {
+                    const newCandidates = venuesInLists
+                        .filter((venueID: number) => !venuesRecommended.includes(venueID))
+                        .filter((venueID: number) => !venuesPrompted.includes(venueID))
+                    setPlaceToShowID(newCandidates.length > 0 ? newCandidates[0] : -1)
+                }
             }, [venuesInLists, venuesRecommended, venuesPrompted])
             return <Component {...(passProps as P)} placeToShowID={placeToShowID} />
         }

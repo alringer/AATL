@@ -46,31 +46,25 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                         <SmallPlaceCardContentContainer>
                             <SmallPlaceCardPlaceName>{place ? place.name : null}</SmallPlaceCardPlaceName>
                             <WideHeaderTooltipIconsContainer>
-                                {place &&
-                                    place.id !== undefined &&
-                                    place.id !== null &&
-                                    venuesRecommended.includes(Number(place.id)) && (
-                                        <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
-                                            <img src={AuthoredSVG} />
-                                        </Tooltip>
-                                    )}
-                                {place &&
-                                    place.id !== undefined &&
-                                    place.id !== null &&
-                                    venuesInList.includes(Number(place.id)) && (
-                                        <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                            <img src={AddedSVG} alt="added-icon" />
-                                        </Tooltip>
-                                    )}
+                                {place?.id && venuesRecommended && venuesRecommended.includes(Number(place.id)) && (
+                                    <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
+                                        <img src={AuthoredSVG} />
+                                    </Tooltip>
+                                )}
+                                {place?.id && venuesInList && venuesInList.includes(Number(place.id)) && (
+                                    <Tooltip title={S.TOOL_TIPS.Added} placement="top">
+                                        <img src={AddedSVG} alt="added-icon" />
+                                    </Tooltip>
+                                )}
                             </WideHeaderTooltipIconsContainer>
-                            {place && place.categories && (
+                            {place?.categories && (
                                 <SmallPlaceCardCategory>
                                     {concatCategories(place.categories.map((category: ICategory) => category.longName))}
                                 </SmallPlaceCardCategory>
                             )}
                             <SmallPlaceCardDescriptionContainer>
                                 <SmallPlaceCardDescription>
-                                    {place && place.latestRecommendation && place.latestRecommendation.content
+                                    {place?.latestRecommendation?.content
                                         ? `"${chopStringSmallPlaceDescription(place.latestRecommendation.content)}"`
                                         : null}
                                 </SmallPlaceCardDescription>
