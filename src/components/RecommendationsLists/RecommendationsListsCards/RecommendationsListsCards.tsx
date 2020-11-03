@@ -29,8 +29,8 @@ const RecommendationsListsCards: React.FC<IRecommendationsListsCardsProps> = ({
     const [currentPageSize, setCurrentPageSize] = React.useState(3)
 
     React.useEffect(() => {
-        if (currentRecommendationsLists && currentRecommendationsLists.length > 0) {
-            setCurrentRecommendationsLists(currentRecommendationsLists)
+        if (initialRecommendationsLists && initialRecommendationsLists.length > 0) {
+            setCurrentRecommendationsLists(initialRecommendationsLists)
         } else {
             setCurrentRecommendationsLists([])
         }
@@ -65,7 +65,7 @@ const RecommendationsListsCards: React.FC<IRecommendationsListsCardsProps> = ({
     }
     return (
         <RecommendationsListsCardsContainer>
-            {initialRecommendationsLists.map((recommendationsList: IRecommendationListMetaDetail) => {
+            {currentRecommendationsLists.map((recommendationsList: IRecommendationListMetaDetail) => {
                 return (
                     <RecommendationsListsCardsRowContainer key={recommendationsList.id}>
                         <RecommendationsListsCard recommendationsList={recommendationsList} />
