@@ -1,7 +1,9 @@
 export interface IAdminCity {
     city: string
     state: string
-    imageCDNUrl: string | null
+    imageUrlDesktop: string | null
+    imageUrlTablet: string | null
+    imageUrlMobile: string | null
     venuesCount: number
     recommendationsCount: number
 }
