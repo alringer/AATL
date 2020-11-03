@@ -219,6 +219,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                                 {place &&
                                                     place.id !== undefined &&
                                                     place.id !== null &&
+                                                    venuesRecommended !== undefined &&
                                                     venuesRecommended.includes(Number(place.id)) && (
                                                         <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                                             <img src={AuthoredSVG} />
@@ -227,6 +228,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                                 {place &&
                                                     place.id !== undefined &&
                                                     place.id !== null &&
+                                                    venuesInLists !== undefined &&
                                                     venuesInLists.includes(Number(place.id)) && (
                                                         <Tooltip title={S.TOOL_TIPS.Added} placement="top">
                                                             <img src={AddedSVG} alt="added-icon" />
