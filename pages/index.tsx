@@ -50,22 +50,30 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
             <HomeBanner />
             <HomeNewRecommendations
                 initialRecommendations={
-                    homeData && homeData.newRecommendations ? homeData.newRecommendations.content : []
+                    homeData?.newRecommendations?.content ? homeData?.newRecommendations?.content : []
                 }
-                initialTotalPages={homeData && homeData.newRecommendations ? homeData.newRecommendations.totalPages : 1}
+                initialTotalPages={
+                    homeData?.newRecommendations?.totalPages ? homeData?.newRecommendations?.totalPages : 1
+                }
                 initialPage={
-                    homeData && homeData.newRecommendations && homeData.newRecommendations.pageable
-                        ? homeData.newRecommendations.pageable.pageNumber
+                    homeData?.newRecommendations?.pageable?.pageNumber !== undefined &&
+                    homeData?.newRecommendations?.pageable?.pageNumber !== null
+                        ? homeData.newRecommendations?.pageable?.pageNumber
                         : 0
                 }
                 initialPageSize={
-                    homeData && homeData.newRecommendations && homeData.newRecommendations.pageable
-                        ? homeData.newRecommendations.pageable.pageSize
+                    homeData?.newRecommendations?.pageable?.pageSize !== undefined &&
+                    homeData?.newRecommendations?.pageable?.pageSize !== null
+                        ? homeData?.newRecommendations?.pageable?.pageSize
                         : 3
                 }
             />
-            <HomeCarousel featuredRecommendationsLists={homeData ? homeData.featuredRecommendationsLists : null} />
-            <MostRecommended venues={homeData && homeData.recommendedNearby ? homeData.recommendedNearby : []} />
+            <HomeCarousel
+                featuredRecommendationsLists={
+                    homeData?.featuredRecommendationsLists ? homeData?.featuredRecommendationsLists : null
+                }
+            />
+            <MostRecommended venues={homeData?.recommendedNearby ? homeData.recommendedNearby : []} />
             <EmailSubscription />
         </>
     )
