@@ -25,6 +25,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
     const [searchResults, setSearchResults] = React.useState<IVenue[]>([])
     const [topCategories, setTopCategories] = React.useState<ICategory[]>([])
     const [place, setPlace] = React.useState<string | null>(null)
+    const [categoryID, setCategoryID] = React.useState<string | null>(null)
     const [address, setAddress] = React.useState<string | null>(null)
     const [lat, setLat] = React.useState<string | null>(null)
     const [lng, setLng] = React.useState<string | null>(null)
@@ -34,6 +35,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
 
     React.useEffect(() => {
         const queryPlace = router.query.place ? String(router.query.place) : null
+        const queryCategoryID = router.query.categoryID ? String(router.query.categoryID) : null
         let queryAddress = null
         let queryLat = null
         let queryLng = null
@@ -56,19 +58,28 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         }
         const querySort = router.query.sort ? String(router.query.sort) : null
         setPlace(queryPlace)
+        setCategoryID(queryCategoryID)
         setAddress(queryAddress)
         setLat(queryLat)
         setLng(queryLng)
         setSort(querySort)
+        const payload =
+            queryCategoryID !== null && queryCategoryID !== undefined
+                ? {
+                      categoryId: queryCategoryID ? queryCategoryID : '',
+                      longitude: queryLng ? queryLng : Math.round(-117.161087),
+                      latitude: queryLat ? queryLat : Math.round(32.715736),
+                      sort: querySort ? querySort : SortEnum.MostRecommended,
+                  }
+                : {
+                      keyword: queryPlace ? queryPlace : '',
+                      longitude: queryLng ? queryLng : Math.round(-117.161087),
+                      latitude: queryLat ? queryLat : Math.round(32.715736),
+                      sort: querySort ? querySort : SortEnum.MostRecommended,
+                  }
         axios
-            .post(SEARCH_AATL_RESTAURANTS, {
-                keyword: queryPlace ? queryPlace : '',
-                longitude: queryLng ? queryLng : Math.round(-117.161087),
-                latitude: queryLat ? queryLat : Math.round(32.715736),
-                sort: querySort ? querySort : SortEnum.MostRecommended,
-            })
+            .post(SEARCH_AATL_RESTAURANTS, payload)
             .then((res) => {
-                console.log('Search result: ', res)
                 setSearchResults(res.data)
             })
             .catch((err) => console.log(err))
@@ -87,13 +98,21 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             .catch((err) => console.log(err))
     }, [router])
 
-    const handleSearch = (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => {
+    const handleSearch = (
+        place?: string,
+        categoryID?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        sort?: SortEnum
+    ) => {
         const paramsArray: ParamType[] = [
             { label: 'place', value: place ? encodeURIComponent(place) : place },
             { label: 'address', value: address ? encodeURIComponent(address) : address },
             { label: 'lat', value: lat },
             { label: 'lng', value: lng },
             { label: 'sort', value: sort },
+            { label: 'categoryID', value: categoryID },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
@@ -104,6 +123,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         <div>
             <SearchWorkBench
                 inputPlace={place}
+                inputCategoryID={categoryID}
                 inputAddress={address}
                 inputLat={lat}
                 inputLng={lng}

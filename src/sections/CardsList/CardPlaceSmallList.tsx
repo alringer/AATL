@@ -6,6 +6,7 @@ import * as S from 'constants/StringConstants'
 import { useRouter } from 'next/router'
 import React from 'react'
 import withCallToAction, { IWithCallToActionInjectedProps } from 'utilities/hocs/withCallToAction'
+import { ICategory } from 'utilities/types/category'
 import { IVenue } from 'utilities/types/venue'
 import { ListContainer, ListSubTitle, ListTitle, PlaceCardContainer, PlaceCardsGrid } from './List.style'
 
@@ -13,7 +14,7 @@ interface IPlaceCardsList extends IWithCallToActionInjectedProps {
     title: string
     subTitle: string
     places: IVenue[] | null
-    category: string
+    category: ICategory
 }
 
 const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places, category, placeToShowID }) => {
@@ -27,7 +28,13 @@ const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places, ca
     }, [placeToShowID])
 
     const handleViewMore = () => {
-        router.push(`${R.ROUTE_ITEMS.search}/?place=${category}`)
+        router.push(
+            `${R.ROUTE_ITEMS.search}${
+                category !== undefined && category !== null
+                    ? `?place=${category.longName}&categoryID=${category.id}`
+                    : ''
+            }`
+        )
     }
 
     return (

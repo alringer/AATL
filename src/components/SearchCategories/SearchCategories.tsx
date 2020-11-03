@@ -10,7 +10,14 @@ import { ICategory } from 'utilities/types/category'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 
 interface ISearchCategoriesProps {
-    handleSearch: (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => void
+    handleSearch: (
+        place?: string,
+        categoryID?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        sort?: SortEnum
+    ) => void
     topCategories: ICategory[]
 }
 
@@ -22,7 +29,10 @@ const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleSearch, topC
             </Link>
             {topCategories.map((category: ICategory, index: number) => {
                 return (
-                    <SearchWorkBenchCategoriesText onClick={() => handleSearch(category.longName)} key={index}>
+                    <SearchWorkBenchCategoriesText
+                        onClick={() => handleSearch(category.longName, String(category.id))}
+                        key={index}
+                    >
                         {category.longName}
                     </SearchWorkBenchCategoriesText>
                 )

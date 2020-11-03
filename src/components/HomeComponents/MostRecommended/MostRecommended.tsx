@@ -8,6 +8,7 @@ interface IMostRecommendedProps {
 }
 
 const MostRecommended: React.FC<IMostRecommendedProps> = ({ venues }) => {
+    console.log('Venues::: ', venues)
     return (
         <>
             {venues && venues.length > 0 ? (
@@ -16,13 +17,9 @@ const MostRecommended: React.FC<IMostRecommendedProps> = ({ venues }) => {
                     subTitle={S.HOME_PAGE.MostRecommendedSubTitle}
                     places={venues ? venues : null}
                     category={
-                        venues &&
-                        venues[0] &&
-                        venues[0].categories &&
-                        venues[0].categories[0] &&
-                        venues[0].categories[0].longName
-                            ? venues[0].categories[0].longName
-                            : ''
+                        venues && venues[0] && venues[0].categories && venues[0].categories[0]
+                            ? venues[0].categories[0]
+                            : null
                     }
                 />
             ) : null}

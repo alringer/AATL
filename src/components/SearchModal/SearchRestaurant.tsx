@@ -2,6 +2,7 @@ import Image from 'components/Image/Image'
 import SearchFull from 'components/SearchFull/SearchFull'
 import axios, { SEARCH_YELP_RESTAURANTS } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -69,38 +70,92 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     const [searchResults, setSearchResults] = React.useState<IYelpRestaurant[] | null>(null)
     const [offset, setOffset] = React.useState(0)
     const [total, setTotal] = React.useState(0)
+    const [initialPlace, setInitialPlace] = React.useState('')
+    const [isLoading, setLoading] = React.useState(false)
 
-    const handleInfiniteScroll = () => {
-        // if (!(offset > total)) {
-        //     axios
-        //         .get(SEARCH_YELP_RESTAURANTS, {
-        //             params: {
-        //                 searchTerm: place ? place : '',
-        //                 lat: lat ? lat : '40.7128',
-        //                 lng: lng ? lng : '-74.0060',
-        //                 radiusInMeter: 40000,
-        //             },
-        //         })
-        //         .then((res) => {
-        //             console.log('Yelp Search Results: ', res)
-        //             const newSearchResults =
-        //                 res.data.restaurants && res.data.restaurants.length > 0
-        //                     ? [...searchResults, ...res.data.restaurants]
-        //                     : searchResults
-        //             const newTotal = res.data.total ? res.data.total : total
-        //             const newOffset =
-        //                 res.data.restaurants && res.data.restaurants.length > 0
-        //                     ? offset + res.data.restaurants.length
-        //                     : offset
-        //             setSearchResults(newSearchResults)
-        //             setTotal(newTotal)
-        //             setOffset(newOffset)
-        //         })
-        //         .catch((err) => console.log(err))
-        // }
+    const scrollRef = React.useRef(null)
+    const router = useRouter()
+
+    React.useEffect(() => {
+        const queryPlace = router.query.place ? String(router.query.place) : null
+        setInitialPlace(queryPlace)
+    }, [router])
+
+    React.useEffect(() => {
+        console.log('Search Results In Infinite: ', searchResults)
+        console.log('Search Results: ', searchResults)
+        console.log('Search Results In Infinite: ', searchResults)
+    }, [searchResults])
+
+    React.useEffect(() => {
+        document.addEventListener('scroll', handleScroll, true)
+        return () => {
+            document.removeEventListener('scroll', handleScroll, true)
+        }
+    }, [])
+
+    const handleScroll = (e) => {
+        if (e) {
+            const node = e.target
+            if (node) {
+                const bottom = node.scrollHeight - node.scrollTop === node.clientHeight
+                if (bottom) {
+                    // TODO: Call the pagination api
+                    handleInfiniteScroll()
+                }
+            }
+        }
     }
 
-    const handleSearch = (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => {
+    const handleInfiniteScroll = () => {
+        if (!(offset > total)) {
+            setLoading(true)
+            axios
+                .get(SEARCH_YELP_RESTAURANTS, {
+                    params: {
+                        // searchTerm: place ? place : '',
+                        // lat: lat ? lat : '40.7128',
+                        // lng: lng ? lng : '-74.0060',
+                        searchTerm: 'Ramen',
+                        lat: '40.7128',
+                        lng: '-74.0060',
+                        radiusInMeter: 40000,
+                    },
+                })
+                .then((res) => {
+                    console.log('Yelp Search Results: ', res)
+                    console.log('Search Results In Infinite: ', searchResults)
+                    if (searchResults !== null) {
+                        console.log('In it!')
+                        const newSearchResults =
+                            res.data.restaurants && res.data.restaurants.length > 0
+                                ? [...searchResults, ...res.data.restaurants]
+                                : searchResults
+                        const newTotal = res.data.total ? res.data.total : total
+                        const newOffset =
+                            res.data.restaurants && res.data.restaurants.length > 0
+                                ? offset + res.data.restaurants.length
+                                : offset
+                        setSearchResults(newSearchResults)
+                        setTotal(newTotal)
+                        setOffset(newOffset)
+                    }
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
+    }
+
+    const handleSearch = (
+        place?: string,
+        categoryID?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        sort?: SortEnum
+    ) => {
         const params = `?searchTerm=${place ? encodeURIComponent(place) : ''}&lat=${lat ? lat : '40.7128'}&lng=${
             lng ? lng : '-72.0060'
         }&radiusInMeter=40000`
@@ -115,7 +170,6 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         axios
             .get(SEARCH_YELP_RESTAURANTS + params)
             .then((res) => {
-                console.log('Yelp Search Results: ', res)
                 const newSearchResults =
                     res.data.restaurants && res.data.restaurants.length > 0 ? res.data.restaurants : []
                 const newTotal = res.data.total ? res.data.total : 0
@@ -128,8 +182,6 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     }
 
     const handleRecommend = (id: string, name: string) => {
-        console.log('ID: ', id)
-        console.log('Name: ', name)
         authenticatedAction(() =>
             openRecommendationModal({
                 placeID: id,
@@ -137,11 +189,6 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                 isAATL: false,
             })
         )
-        console.log(`Recommend-restaurant button is clicked for place with ID of ${id}`)
-    }
-
-    const handleAddPlace = () => {
-        switchViewToAddPlace()
     }
 
     const renderSearchModalRestaurantCard = (restaurant: IYelpRestaurant, key: number) => {
@@ -193,7 +240,8 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                 <SearchModalInputFieldsContainer>
                     <SearchFull
                         handleSearch={handleSearch}
-                        inputPlace={null}
+                        inputPlace={initialPlace}
+                        inputCategoryID={null}
                         inputAddress={null}
                         inputLat={null}
                         inputLng={null}
@@ -210,7 +258,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                                     ? `${searchResults.length} ${S.RESTAURANT_SEARCH.Matches}`
                                     : 'Try a different location, alternative spelling or a more generalized search.'}
                             </SearchModalMatchesFound>
-                            <SearchModalRestaurantCardsContainer>
+                            <SearchModalRestaurantCardsContainer ref={scrollRef}>
                                 {searchResults.map((result: IYelpRestaurant, index: number) => {
                                     return renderSearchModalRestaurantCard(result, index)
                                 })}
