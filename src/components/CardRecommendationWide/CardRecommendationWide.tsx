@@ -315,7 +315,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                         currentRecommendation.venue &&
                                         currentRecommendation.venue.id !== undefined &&
                                         currentRecommendation.venue.id !== null &&
-                                        venuesRecommended !== undefined &&
+                                        venuesRecommended &&
                                         venuesRecommended.includes(currentRecommendation.venue.id) && (
                                             <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                                 <img src={AuthoredSVG} />
@@ -325,7 +325,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                         currentRecommendation.venue &&
                                         currentRecommendation.venue.id !== undefined &&
                                         currentRecommendation.venue.id !== null &&
-                                        venuesInLists !== undefined &&
+                                        venuesInLists &&
                                         venuesInLists.includes(currentRecommendation.venue.id) && (
                                             <Tooltip title={S.TOOL_TIPS.Added} placement="top">
                                                 <img src={AddedSVG} alt="added-icon" />
