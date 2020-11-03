@@ -11,5 +11,5 @@ export const ROUTE_ITEMS = {
     adminCities: 'cities',
     adminFlaggedContent: 'flagged-content',
     adminRecommendationLists: 'recommendation-lists',
-    termsAndConditions: '/terms-and-conditions',
+    termsAndConditions: '/terms-of-use',
 }
