@@ -48,7 +48,7 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                             <WideHeaderTooltipIconsContainer>
                                 {place?.id !== undefined &&
                                     place?.id !== null &&
-                                    venuesRecommended !== undefined &&
+                                    venuesRecommended &&
                                     venuesRecommended.includes(Number(place.id)) && (
                                         <Tooltip title={S.TOOL_TIPS.Recommended} placement="top">
                                             <img src={AuthoredSVG} />
@@ -56,7 +56,7 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                                     )}
                                 {place?.id !== undefined &&
                                     place?.id !== null &&
-                                    venuesInList !== undefined &&
+                                    venuesInList &&
                                     venuesInList.includes(Number(place.id)) && (
                                         <Tooltip title={S.TOOL_TIPS.Added} placement="top">
                                             <img src={AddedSVG} alt="added-icon" />
