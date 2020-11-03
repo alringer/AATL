@@ -102,7 +102,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
 
     const handleChangeFilter = (event: React.ChangeEvent<{ value: SortEnum }>) => {
         setFilter(event.target.value)
-        handleSearch(inputPlace, inputAddress, inputLat, inputLng, event.target.value)
+        handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, event.target.value)
     }
 
     return (
