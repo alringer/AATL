@@ -26,7 +26,7 @@ const withCallToAction = <P extends IWithCallToActionInjectedProps>(Component: R
             const { venuesInLists, venuesRecommended, venuesPrompted, ...passProps } = props
 
             React.useEffect(() => {
-                if (venuesInLists !== undefined && venuesRecommended !== undefined && venuesPrompted !== undefined) {
+                if (venuesInLists && venuesRecommended && venuesPrompted) {
                     const newCandidates = venuesInLists
                         .filter((venueID: number) => !venuesRecommended.includes(venueID))
                         .filter((venueID: number) => !venuesPrompted.includes(venueID))
