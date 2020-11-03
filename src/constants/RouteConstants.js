@@ -10,5 +10,6 @@ export const ROUTE_ITEMS = {
     admin: '/admin',
     adminCities: 'cities',
     adminFlaggedContent: 'flagged-content',
-    adminRecommendationLists: 'recommendation-lists'
+    adminRecommendationLists: 'recommendation-lists',
+    termsAndConditions: '/terms-and-conditions',
 }

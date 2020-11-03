@@ -181,10 +181,12 @@ export const FOOTER_ITEMS = {
     FoodAndDrinks: 'Food & Drink',
     Cities: 'Cities',
     WithLove: '♥ With love from Lake Tahoe',
+    SeeOur: 'See our',
+    TermsOfUse: 'Terms of Use',
     CopyRightText: 'AskaTravelLocal ©',
     CompanyName: 'About Ask a Travel Local',
     FooterMessage:
-        'We are dedicated to creating a space for the foodie in you. We feature places that are recommended by the community. Everything else is moot.',
+        'We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.  We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!',
 }
 
 export const CALL_TO_ACTION = {
@@ -406,4 +408,88 @@ export const RECOMMENDATIONS_LISTS = {
 export const FLAG_MODAL = {
     Header: 'Flag as inappropriate',
     Title: 'Tell us the reason for flagging this post.',
+}
+
+export const TERMS_AND_CONDITIONS = {
+    Title: 'Terms of Use',
+    Sections: [
+        {
+            Title: '',
+            Body: `AskaTravelLocal.com (also referred to as AskaTravelLocal or the website) is made available to the user for gathering or posting dining advice.  No other use is permitted.  We give you permission to access our website, but you must agree to the terms and conditions.  By using our website, you are agreeing to the terms and conditions.  You use the site at your own risk, but it is possible you may disagree with posted material, find it inaccurate, offensive, false or objectionable.
+
+The AskaTravelLocal website may be altered or canceled at any time without prior notice.
+
+The website may make changes to the terms of use, and by continuing to use the website, you are agreeing to the changes.  We will provide a date that changes were last made to this document in this section.
+
+By providing content to this website, you agree to or attest that you:
+
+* Are at least 18 years of age.
+* Have an AskaTravelLocal account.
+* Only post true and accurate information.
+* Agree not to publish any information that is false, obscene, lewd, pornographic, harassing, threatening, illegal or fraudulent.
+* Will not post any information that could encourage someone to commit any violation of local, state, provincial or federal law.
+* Will not submit any material in which you represent yourself as another person.
+* Will not violate any terms of use.
+* Will not use any spider, crawler, scraper, robot or any other electrical / mechanical / automated device to scrape, mine, retrieve, gather or retain such information.
+* Not use this site to retrieve or gather personal information on any guide, user or viewer.
+* Will not cause this website to be used for any unauthorized commercial purpose.
+* May expose yourself to liability should you post information that is false, misleading or defamatory.
+* Agree not to use any device or upload large amounts of information which could place excessive demands on our technology.
+* Will not duplicate this website for the purposes of exporting or removing data to another website without written permission.
+* Have no conflicts of interest and are not being compensated in any way by a business you are recommending.  If you have potential conflicts of interest, you must disclose this in both your bio field and in each recommendation you are making where the conflict may exist.  This disclosure is required in the U.S. by the Federal Trade Commission.
+* Understand that you are not or compensated in any way for the material you post on the website.
+* Understand that once posted, the material becomes the property of AskaTravelLocal.
+* Will not gain unauthorized access to the site by posing as another person, posing as a fictitious person or by making false representations.
+* Not to hack or intentionally disrupt the website’s security systems.
+* That in order to be a local guide or a registered user, you must submit a minimal amount of personal information (including your name and email address.)  I understand that the purpose of retaining this information is to help AskaTravelLocal ensure that the guides and registered users are legitimate with no undisclosed or unclaimed potential conflicts of interest.
+* No personal information is required of people who want to review material posted on the site.
+* AskaTravelLocal assumes no responsibility or liability for the accuracy of your posted information.
+* Because I am appointed as a local guide, I do not have any right or expectation to maintain that position.
+* If my material is deemed inadequate, substandard, poor in quality or uninteresting, the material may be removed from the site and I may be replaced as a local guide.
+* AskaTravelLocal may remove all of my postings, modify my material or remove me as a local guide for any reason whatsoever.
+* All of the material you provide, both written and photographic, were obtained legally and does not violate or infringe upon any copyright, trademark, trade secret, privacy right or intellectual property provisions.  If any such material is provided, you must have the permission of the lawful owner of such material.
+* Will not introduce viruses, malware or other harmful or disruptive material or program.
+* AskaTravelLocal may display advertisement content adjacent to or near your posted material.  You are not entitled to any compensation from any revenue generated from these ads.`,
+        },
+        {
+            Title: 'PRIVACY POLICY',
+            Body: `AskaTravelLocal collects local guide and registered user personal information for the following reasons only:
+To contact the local guides and registered users if necessary.
+As a way to help to ensure that the guides and registered users are actually who they are representing themselves to be.
+
+Your private information is important to us.  Your contact information will never be shared with a third party absent a court order, subpoena or other legally compelling document.
+
+You may contact us with any Privacy Policy questions at:
+
+P.O. Box 4089, Incline Village, NV  89450`,
+        },
+        {
+            Title: 'LIABILITY DISCLAIMER',
+            Body:
+                'The information included in this website may contain information or material that is inaccurate or false.  AskaTravelLocal assumes no liability.',
+        },
+        {
+            Title: 'INDEMNIFICATION',
+            Body:
+                'You agree to defend and indemnify AskaTravelLocal, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
+        },
+        {
+            Title: 'COPYRIGHT AND TRADEMARK NOTICES',
+            Body:
+                'All contents of this website is the property of AskaTravelLocal including the name AskaTravelLocal, AskaTravelLocal.com and the logo.  Use of any of the trademarked material is not permitted without written permission.',
+        },
+        {
+            Title: 'JURISDICTION',
+            Body:
+                'This website is operated by a United States entity in the state of Nevada.  By using this website, you consent to the jurisdiction of the court system in the state of Nevada.',
+        },
+        {
+            Title: 'CONTACT ADDRESS',
+            Body: 'P.O. BOX 4089, Incline Village, NV  89450',
+        },
+        {
+            Title: 'DATE TERMS AND CONDITIONS LAST MODIFIED',
+            Body: 'January 7, 2018',
+        },
+    ],
 }
