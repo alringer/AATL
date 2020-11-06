@@ -11,6 +11,13 @@ export default class Document extends NextDocument {
                         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
                         rel="stylesheet"
                     />
+                    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_package/apple-touch-icon.png" />
+                    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_package/favicon-32x32.png" />
+                    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_package/favicon-16x16.png" />
+                    <link rel="manifest" href="/favicon_package/site.webmanifest" />
+                    <link rel="mask-icon" href="/favicon_package/safari-pinned-tab.svg" color="#5bbad5" />
+                    <meta name="msapplication-TileColor" content="#da532c"></meta>
+                    <meta name="theme-color" content="#ffffff"></meta>
                     <script
                         type="text/javascript"
                         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_KEY}&libraries=places`}
@@ -26,7 +33,7 @@ export default class Document extends NextDocument {
     }
 }
 
-Document.getInitialProps = async ctx => {
+Document.getInitialProps = async (ctx) => {
     // Resolution order
     //
     // On the server:
@@ -55,26 +62,24 @@ Document.getInitialProps = async ctx => {
     const originalRenderPage = ctx.renderPage
     try {
         ctx.renderPage = () =>
-        originalRenderPage({
-            enhanceApp: App => props =>
-            styledComponentSheet.collectStyles(
-                materialUiSheets.collect(<App {...props} />),
-            ),
-        })
-    const initialProps = await NextDocument.getInitialProps(ctx)
-    return {
-        ...initialProps,
-        styles: [
+            originalRenderPage({
+                enhanceApp: (App) => (props) =>
+                    styledComponentSheet.collectStyles(materialUiSheets.collect(<App {...props} />)),
+            })
+        const initialProps = await NextDocument.getInitialProps(ctx)
+        return {
+            ...initialProps,
+            styles: [
                 ...React.Children.toArray(initialProps.styles),
                 styledComponentSheet.getStyleElement(),
-                materialUiSheets.getStyleElement()
-              //   <React.Fragment key="styles">
-              //     {initialProps.styles}
-              //     {materialUiSheets.getStyleElement()}
-              //     {styledComponentSheet.getStyleElement()}
-              //   </React.Fragment>,
-        ]
-    }
+                materialUiSheets.getStyleElement(),
+                //   <React.Fragment key="styles">
+                //     {initialProps.styles}
+                //     {materialUiSheets.getStyleElement()}
+                //     {styledComponentSheet.getStyleElement()}
+                //   </React.Fragment>,
+            ],
+        }
     } finally {
         styledComponentSheet.seal()
     }
@@ -83,7 +88,6 @@ Document.getInitialProps = async ctx => {
     // const materialUiSheets = new MaterialUiServerStyleSheets()
     // const originalRenderPage = ctx.renderPage
 
-    
     // ctx.renderPage = () =>
     //     originalRenderPage({
     //         enhanceApp: App => props => styledComponentSheet.collectStyles(materialUiSheets.collect(<App {...props} />))
