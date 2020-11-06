@@ -1,6 +1,7 @@
 import PlaceImage from 'assets/mock-images/restaurant-banner.jpg'
 import Image from 'components/Image/Image'
 import SearchFull from 'components/SearchFull/SearchFull'
+import * as S from 'constants/StringConstants'
 import { useRouter } from 'next/router'
 import React from 'react'
 import Media from 'react-media'
@@ -52,11 +53,9 @@ const HomeBanner = () => {
                     </HomeBannerImageContainer>
                     <HomeBannerCenterContentContainer>
                         {(matches.laptop || matches.tablet) && (
-                            <HomeBannerTitleText>ASK A TRAVEL LOCAL</HomeBannerTitleText>
+                            <HomeBannerTitleText>{S.HOME_PAGE.BannerTitle}</HomeBannerTitleText>
                         )}
-                        <HomeBannerSubTitleText>
-                            Find the best local food when you're traveling. Recommended by locals for the foodie in you.{' '}
-                        </HomeBannerSubTitleText>
+                        <HomeBannerSubTitleText>{S.HOME_PAGE.BannerSubTitle}</HomeBannerSubTitleText>
                         <SearchFull
                             inputPlace={null}
                             inputCategoryID={null}
@@ -68,8 +67,8 @@ const HomeBanner = () => {
                     </HomeBannerCenterContentContainer>
                     {matches.laptop && (
                         <HomeBannerBottomContentContainer>
-                            <HomeBannerFooterText>Bud and Rob’s New Orleans Bistro</HomeBannerFooterText>
-                            <HomeBannerFooterText>Photo by Sean Kepri</HomeBannerFooterText>
+                            <HomeBannerFooterText>{S.HOME_PAGE.BannerPhotoRestaurantName}</HomeBannerFooterText>
+                            <HomeBannerFooterText>{S.HOME_PAGE.BannerPhotoPhotographer}</HomeBannerFooterText>
                         </HomeBannerBottomContentContainer>
                     )}
                 </HomeBannerContainer>

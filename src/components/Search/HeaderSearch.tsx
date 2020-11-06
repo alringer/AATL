@@ -27,12 +27,10 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({ handleCloseSearch }) => {
     const [value, setValue] = React.useState<string>('')
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // TODO: Wire up Debounced Search API
         setValue(e.target.value)
     }
 
     const handleSearch = (keyword: string) => {
-        // TODO: Push the user to the city page with the search query parameter in the URL
         const urlParam = keyword ? `?place=${keyword}` : ''
         router.push(`/search` + urlParam)
     }

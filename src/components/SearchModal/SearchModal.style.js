@@ -13,6 +13,13 @@ export const CustomDialog = styled(Dialog)`
     }
 `
 
+export const SearchModalScrollContainer = styled.div`
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+`
+
 export const SearchModalContentContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -37,10 +44,10 @@ export const SearchModalHeaderContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    
+
     width: 100%;
     padding: 20px 30px;
-    background-color: ${props => props.theme.darkSlateBlue};
+    background-color: ${(props) => props.theme.darkSlateBlue};
 `
 
 export const SearchModalHeaderText = styled.p`
@@ -50,7 +57,7 @@ export const SearchModalHeaderText = styled.p`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `
 
 // Search Parameters
@@ -99,7 +106,7 @@ export const SearchModalMatchesFound = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `
 
 export const SearchModalNoResultsHeader = styled.p`
@@ -109,11 +116,11 @@ export const SearchModalNoResultsHeader = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `
 
 export const SearchModalRestaurantCardsContainer = styled.div`
-    overflow-y: auto;
+    /* overflow-y: auto; */
     padding: 20px 0;
 
     @media ${device.mobile} {
@@ -177,7 +184,7 @@ export const SearchModalRestaurantCardRestaurantName = styled.p`
     font-style: normal;
     line-height: 1.22;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
     overflow-wrap: wrap;
 `
 export const SearchModalRestaurantCardCategories = styled.p`
@@ -187,7 +194,7 @@ export const SearchModalRestaurantCardCategories = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     overflow-wrap: wrap;
 `
 export const SearchModalRestaurantCardSpecials = styled.p`
@@ -197,7 +204,7 @@ export const SearchModalRestaurantCardSpecials = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 `
 export const SearchModalRestaurantCardAddress = styled.p`
     font-size: 12px;
@@ -206,7 +213,15 @@ export const SearchModalRestaurantCardAddress = styled.p`
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
+`
+export const SearchModalLoadingIconContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
 `
 
 export const RecommendButton = styled(CustomButton)`
@@ -250,7 +265,7 @@ export const SearchModalSearchFooterText = styled.div`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `
 export const AddANewPlaceButton = styled(CustomButton)`
     color: ${(props) => props.theme.white};
@@ -272,7 +287,7 @@ export const AddPlaceContentContainer = styled.div`
 
 export const AddPlaceContentRow = styled.div`
     display: flex;
-    
+
     margin-bottom: 20px;
     width: 100%;
 `
@@ -284,7 +299,7 @@ export const AddPlaceIntroText = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `
 
 export const AddPlaceInput = styled(CustomTextField)``
