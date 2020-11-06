@@ -82,6 +82,8 @@ export const INPUT_PLACEHOLDERS = {
     SubTitle: 'Subtitle',
     Optional: '(Optional)',
     Reason: 'Reason',
+    UserProfileBio:
+        'Tell the world about yourself! Foodies everywhere will be able to review your public profile, the restaurants you recommend and the lists you maintain. If you offer services in your community, feel free to include your contact info.',
 }
 
 // Pages

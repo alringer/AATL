@@ -31,7 +31,7 @@ import {
     UserProfileNameContainer,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
-    UserProfileTitleContainer
+    UserProfileTitleContainer,
 } from './UserProfileBanner.style'
 
 interface IReduxProps {
@@ -97,7 +97,13 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     <UserProfileName id="userName">{userInformation.userName}</UserProfileName>
                 </UserProfileNameContainer>
                 <UserProfileTitleContainer>
-                    <UserProfileTitle id="userTitle">{userInformation.userTitle ? userInformation.userTitle : S.USER_PROFILE_BANNER.EmptyMessageByLine}</UserProfileTitle>
+                    <UserProfileTitle id="userTitle">
+                        {userInformation.userTitle
+                            ? userInformation.userTitle
+                            : isOwner
+                            ? S.USER_PROFILE_BANNER.EmptyMessageByLine
+                            : null}
+                    </UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
         )
@@ -133,7 +139,11 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                             <UserProfileContentBodyContainer>
                                 <UserProfileDescriptionContainer>
                                     <UserProfileDescription id="userDescription">
-                                        {userInformation.userDescription ? userInformation.userDescription : S.USER_PROFILE_BANNER.EmptyMessageDescription}
+                                        {userInformation.userDescription
+                                            ? userInformation.userDescription
+                                            : isOwner
+                                            ? S.USER_PROFILE_BANNER.EmptyMessageDescription
+                                            : null}
                                     </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
@@ -143,7 +153,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
-                                {(
+                                {
                                     <UserProfileInstagramContainer
                                         href={instagramLink}
                                         target="_blank"
@@ -153,9 +163,13 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                             src={UserProfileInstagramIcon}
                                             alt="user-profile-instagram-icon"
                                         />
-                                        <UserProfileInstagram>{viewedUser.instagramId ? `@${viewedUser.instagramId}`: S.USER_PROFILE_BANNER.EmptyInstagram}</UserProfileInstagram>
+                                        <UserProfileInstagram>
+                                            {viewedUser.instagramId
+                                                ? `@${viewedUser.instagramId}`
+                                                : S.USER_PROFILE_BANNER.EmptyInstagram}
+                                        </UserProfileInstagram>
                                     </UserProfileInstagramContainer>
-                                )}
+                                }
                             </UserProfileContentBodyContainer>
                         </UserProfileContentContainer>
                     </>

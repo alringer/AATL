@@ -36,7 +36,7 @@ import {
     UserProfileEditModalHeaderContainer,
     UserProfileEditModalHeaderText,
     UserProfileEditModalMainAreaContainer,
-    UserProfileEditModalMainContentContainer
+    UserProfileEditModalMainContentContainer,
 } from './UserProfileEditModal.style'
 
 interface IReduxProps {
@@ -74,7 +74,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
 
     const handleChangeFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (errors.isFullNameValid === false) {
-            setErrors({...errors, isFullNameValid: true})
+            setErrors({ ...errors, isFullNameValid: true })
         }
         if (e.target.value) {
             setCurrentFullName(e.target.value)
@@ -189,7 +189,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
             const splitName = currentFullName.trim().split(' ')
             const firstName = splitName.length > 1 ? splitName.slice(0, splitName.length - 1).join(' ') : splitName[0]
             const lastName = splitName.length > 1 ? splitName[splitName.length - 1] : ''
-    
+
             const token = getTokenConfig()
             const updateUserProfileConfig = {
                 headers: {
@@ -251,7 +251,9 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                 <CustomDialog open={isOpen} fullScreen={matches.laptop || matches.tablet ? false : true} maxWidth="lg">
                     <UserProfileEditModalContentContainer ref={userProfileEditModalRef}>
                         <UserProfileEditModalHeaderContainer>
-            <UserProfileEditModalHeaderText>{S.USER_PROFILE_BANNER.EditProfile}</UserProfileEditModalHeaderText>
+                            <UserProfileEditModalHeaderText>
+                                {S.USER_PROFILE_BANNER.EditProfile}
+                            </UserProfileEditModalHeaderText>
                         </UserProfileEditModalHeaderContainer>
                         <UserProfileEditModalMainAreaContainer>
                             <UserProfileEditModalMainContentContainer>
@@ -281,7 +283,10 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                                     ? {
                                                           endAdornment: (
                                                               <InputAdornment position="end">
-                                                                  <Tooltip title={S.ERROR_MESSAGES.ErrorFullName} placement="top">
+                                                                  <Tooltip
+                                                                      title={S.ERROR_MESSAGES.ErrorFullName}
+                                                                      placement="top"
+                                                                  >
                                                                       <ErrorIcon />
                                                                   </Tooltip>
                                                               </InputAdornment>
@@ -302,8 +307,10 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             label={`Bio`}
                                             onChange={handleChangeBio}
                                             variant="outlined"
+                                            InputLabelProps={{ shrink: true }}
                                             multiline
                                             disabled={isSaving}
+                                            placeholder={S.INPUT_PLACEHOLDERS.UserProfileBio}
                                         />
                                     </UserProfileBannerRightContainer>
                                 </UserProfileBannerInputsContainer>
