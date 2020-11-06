@@ -75,11 +75,9 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     const [total, setTotal] = React.useState(0)
     const [initialPlace, setInitialPlace] = React.useState('')
     const [isLoading, setLoading] = React.useState(false)
-    // Search States
     const [inputPlace, setInputPlace] = React.useState('')
     const [inputLat, setInputLat] = React.useState('')
     const [inputLng, setInputLng] = React.useState('')
-    // const [additionalResults, setAdditionalResults] = React.useState<IYelpRestaurant[]>([])
 
     const scrollRef = React.useRef(null)
     const router = useRouter()
@@ -88,17 +86,6 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         const queryPlace = router.query.place ? String(router.query.place) : null
         setInitialPlace(queryPlace)
     }, [router])
-
-    React.useEffect(() => {
-        // console.log('Adding event listner')
-        // document.addEventListener('scroll', handleScroll, true)
-        // return () => {
-        //     document.removeEventListener('scroll', handleScroll, true)
-        // }
-        console.log('Current results: ', results)
-        console.log('Current offset: ', offset)
-        console.log('Current total: ', total)
-    }, [results, offset, total, isLoading])
 
     const handleScroll = (e) => {
         if (e) {
@@ -163,7 +150,6 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         axios
             .get(SEARCH_YELP_RESTAURANTS + params)
             .then((res) => {
-                console.log('Res: ', res)
                 const newSearchResults =
                     res.data.restaurants && res.data.restaurants.length > 0 ? res.data.restaurants : []
                 const newTotal = res.data.total ? res.data.total : 0
