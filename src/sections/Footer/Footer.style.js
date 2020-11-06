@@ -133,6 +133,7 @@ export const FooterInformationBody = styled.p`
     line-height: 1.38;
     letter-spacing: normal;
     color: ${(props) => props.theme.darkGrey};
+    white-space: break-spaces;
 
     @media ${device.mobile} {
         text-align: center;
