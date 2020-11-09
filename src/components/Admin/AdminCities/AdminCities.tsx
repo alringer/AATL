@@ -1,7 +1,9 @@
 import { CircularProgress } from '@material-ui/core'
 import Image from 'components/Image/Image'
 import axios, { ADMIN_CITIES } from 'config/AxiosConfig'
+import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
+import Link from 'next/link'
 import React from 'react'
 // import { CustomTextField } from 'style/TextField/TextField.style'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -22,6 +24,7 @@ import {
     AdminCitiesTableContainer,
     AdminCitiesTableHeaderRow,
     AdminCitiesTableRow,
+    AdminCityAnchor,
     AdminCityText,
 } from './AdminCities.style'
 
@@ -127,7 +130,15 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
                                     <Image src={cityItem.imageUrlMobile} alt="city-image" />
                                 </AdminCitiesImageColumn>
                                 <AdminCitiesCityColumn>
-                                    <AdminCityText>{cityItem.city}</AdminCityText>
+                                    <Link
+                                        href={`${R.ROUTE_ITEMS.city}/${cityItem.id}`}
+                                        passHref={true}
+                                        prefetch={false}
+                                    >
+                                        <AdminCityAnchor>
+                                            <AdminCityText>{cityItem.city}</AdminCityText>
+                                        </AdminCityAnchor>
+                                    </Link>
                                 </AdminCitiesCityColumn>
                                 <AdminCitiesStateColumn>{cityItem.state}</AdminCitiesStateColumn>
                                 <AdminCitiesPlacesColumn>{cityItem.venuesCount}</AdminCitiesPlacesColumn>
