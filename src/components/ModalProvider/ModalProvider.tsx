@@ -5,6 +5,7 @@ import ListModal from 'components/ListModal/ListModal'
 import RecommendationModal from 'components/RecommendationModal/RecommendationModal'
 import SearchModal from 'components/SearchModal/SearchModal'
 import UserProfileEditModal from 'components/UserProfile/UserProfileEditModal/UserProfileEditModal'
+import * as S from 'constants/StringConstants'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
@@ -34,7 +35,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
     isDeleteRecommendationModalOpen,
 }) => {
     return (
-        <>
+        <div data-tut={S.PRELAUNCH_TOUR.StepTwo.Observer}>
             {isAuthenticationOpen && <AuthenticationModal />}
             {isRecommendationModalOpen && <RecommendationModal />}
             {isSearchModalOpen && <SearchModal />}
@@ -43,7 +44,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
             {isFlagModalOpen && <FlagModal />}
             {isDeleteRecommendationModalOpen && <DeleteRecommendationModal />}
             {children}
-        </>
+        </div>
     )
 }
 

@@ -17,7 +17,7 @@ const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch, isL
     React.useEffect(() => {
         if (!isPrelaunch) {
             router.push('/')
-        } else if (isLoggedIn && userID !== undefined && userID !== null) {
+        } else if (isLoggedIn && userID) {
             router.push(`/user-profile/${userID}`)
         }
     }, [isPrelaunch, isLoggedIn])

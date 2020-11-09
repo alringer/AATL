@@ -100,6 +100,14 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${(props) => props.theme.pinkishTan};
     }
 
+    .influencer-tour {
+        padding: 40px !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.16), 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.12) !important;
+        background-color: rgba(0, 0, 0, 0.7) !important;
+    }
+
     /* Code below to put more padding within the input fields */
     /* .MuiOutlinedInput-input {
         padding: 12px;

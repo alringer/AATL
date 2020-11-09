@@ -414,7 +414,14 @@ export const USER_PROFILE_INFLUENCER_GUIDE = {
         RecommendationWritten: 'Recommendation Written',
         First: '1st',
         Second: '2nd',
-        Third: '3rd'
+        Third: '3rd',
+    },
+    CompleteUnlocked: {
+        Title: 'Thank You!',
+        Message: `Your restaurant recommendations will be featured once we go live. In the meantime, feel free to recommend some of your other favorite restaurants.
+
+Congratulations! You are now part of the Founders Club. We will be in touch soon.`,
+        Unlocked: 'Founder Foodie Badge Unlocked',
     },
 }
 
@@ -555,5 +562,36 @@ export const PRELAUNCH = {
         Title: 'Hey there Foodie!',
         Message:
             'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an inflencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
+    },
+}
+
+export const PRELAUNCH_TOUR = {
+    NextStep: 'NEXT STEP',
+    StepOne: {
+        Title: 'Step 1',
+        PreOrangeMessage: 'Update your profile by clicking the',
+        OrangeMessage: 'EDIT PROFILE',
+        PostOrangeMessage: 'button to the right.',
+        Selector: 'tour_one',
+    },
+    StepTwo: {
+        Title: 'Step 2',
+        PreOrangeMessage: 'You can update your',
+        Name: 'Name',
+        Occupation: 'Occupation',
+        Bio: 'Bio',
+        PostOrangeMessage: 'in this menu.',
+        Selector: 'tour_two',
+        Observer: 'tour_two--observe',
+    },
+    StepThree: {
+        Title: 'Step 3',
+        Message: '',
+        Selector: 'tour_three',
+    },
+    StepFour: {
+        Title: 'Step 4',
+        Message: '',
+        Selector: 'tour_four',
     },
 }

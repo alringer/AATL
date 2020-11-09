@@ -115,7 +115,11 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
     }, [user])
 
     const handleClickOutsideUserProfileEditModal = (event) => {
-        if (userProfileEditModalRef.current && !userProfileEditModalRef.current.contains(event.target)) {
+        console.log('Event: ', event)
+        if (
+            (userProfileEditModalRef.current && !userProfileEditModalRef.current.contains(event.target)) ||
+            event.target.className.includes('influencer-tour')
+        ) {
             closeModal()
         }
     }
@@ -268,7 +272,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             />
                                         </UserProfileEditModalDropzoneContainer>
                                     </UserProfileBannerLeftContainer>
-                                    <UserProfileBannerRightContainer>
+                                    <UserProfileBannerRightContainer data-tut={S.PRELAUNCH_TOUR.StepTwo.Selector}>
                                         <NameInput
                                             value={currentFullName}
                                             label={`Full Name`}

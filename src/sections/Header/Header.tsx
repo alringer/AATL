@@ -258,7 +258,7 @@ const Header: React.FC<IHeaderProps> = ({
             <LogoText />
             <LogoLady />
             <MobileIconsContainer>
-                {isSearchEnabled && (
+                {!isPrelaunch && isSearchEnabled && (
                     <MobileIconContainer>
                         {!isSearchToggled || !searchReference.isComponentVisible ? (
                             <IconButton onClick={handleOpenSearch}>
