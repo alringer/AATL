@@ -1,5 +1,5 @@
 import RecommendationListCard from 'components/Admin/AdminRecommendationLists/RecommendationListCard'
-import axios, { FEATURED_LISTS, FEATURE_LIST } from 'config/AxiosConfig'
+import axios, { FEATURED_LISTS, FEATURED_LISTS_WITH_ID } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import { ReactSortable } from 'react-sortablejs'
@@ -63,11 +63,11 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
             const targetFeaturedListID = targetList && targetList.featuredList ? targetList.featuredList.id : null
             if (targetFeaturedListID !== null) {
                 const payload = {
-                    id: targetFeaturedListID,
+                    recommendationListMetaId: targetFeaturedListID,
                     sortOrder: e.newIndex,
                 }
                 axios
-                    .put(FEATURED_LISTS, payload, config)
+                    .put(FEATURED_LISTS_WITH_ID(targetFeaturedListID), payload, config)
                     .then((res) => {
                         console.log('Result from updating sort order: ', res)
                         fetchRecommendationLists()
@@ -87,11 +87,12 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
         const payload =
             newIndex !== undefined
                 ? {
+                      recommendationListMetaId: listID,
                       sortOrder: newIndex,
                   }
                 : {}
         axios
-            .post(FEATURE_LIST(listID), payload, config)
+            .post(FEATURED_LISTS, payload, config)
             .then((res) => {
                 fetchRecommendationLists()
             })
@@ -105,12 +106,18 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
                 Authorization: token,
             },
         }
-        axios
-            .delete(FEATURE_LIST(listID), config)
-            .then((res) => {
-                fetchRecommendationLists()
-            })
-            .catch((err) => console.log(err))
+        const targetList = lists.find(
+            (recommendationListMeta: IRecommendationListMeta) => String(recommendationListMeta.id) === String(listID)
+        )
+        const targetFeaturedListID = targetList && targetList.featuredList ? targetList.featuredList.id : null
+        if (targetFeaturedListID !== null) {
+            axios
+                .delete(FEATURED_LISTS_WITH_ID(targetFeaturedListID), config)
+                .then((res) => {
+                    fetchRecommendationLists()
+                })
+                .catch((err) => console.log(err))
+        }
     }
 
     return (

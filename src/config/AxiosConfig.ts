@@ -123,6 +123,9 @@ export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number
 
 // Featured List
 export const FEATURED_LISTS = `/featured-lists`
+export const FEATURED_LISTS_WITH_ID = (featuredListID: number) => {
+    return `/featured-lists/${featuredListID}`
+}
 
 // User Profile
 export const USER_PROFILE = `/user-profiles`
