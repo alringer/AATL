@@ -1,46 +1,44 @@
 import RecommendationsListsBanner from 'components/RecommendationsLists/RecommendationListsBanner/RecommendationsListsBanner'
 import RecommendationsListsCards from 'components/RecommendationsLists/RecommendationsListsCards/RecommendationsListsCards'
-import axios, { RECOMMENDATION_LIST_METAS } from 'config/AxiosConfig'
+import axios, { RECOMMENDATION_LIST_METAS_DETAILS } from 'config/AxiosConfig'
 import { GetStaticProps, NextPage } from 'next'
 import React from 'react'
-import { IRecommendationListMeta, mockRecommendationListMeta } from 'utilities/types/recommendationListMeta'
+import { IPageable } from 'utilities/types/pageable'
 
 interface IServerSideProps {
-    // TODO: Replace the interface with the updated DTO for RecommendationListMeta for this page
-    recommendationsLists: IRecommendationListMeta[]
+    pageable: IPageable
 }
 
 interface IRecommendationsListsProps extends IServerSideProps {}
 
-const RecommendationsLists: NextPage<IRecommendationsListsProps> = ({ recommendationsLists }) => {
+const RecommendationsLists: NextPage<IRecommendationsListsProps> = ({ pageable }) => {
     return (
         <>
             <RecommendationsListsBanner />
-            <RecommendationsListsCards recommendationsLists={recommendationsLists} />
+            <RecommendationsListsCards
+                initialRecommendationsLists={pageable && pageable.content ? pageable.content : []}
+                initialTotalPages={pageable ? pageable.totalPages : 1}
+                initialPage={pageable && pageable.pageable ? pageable.pageable.pageNumber : 0}
+                initialPageSize={pageable && pageable.pageable ? pageable.pageable.pageSize : 3}
+            />
         </>
     )
 }
 
 export const getServerSideProps: GetStaticProps = async () => {
-    let recommendationsLists: IRecommendationListMeta[] = []
-    // TODO: Replace the endpoint with the new endpoint for this page
+    let pageable: IPageable | null = null
     await axios
-        .get(RECOMMENDATION_LIST_METAS)
+        .get(RECOMMENDATION_LIST_METAS_DETAILS(0, 7))
         .then((res) => {
             if (res && res.data) {
-                recommendationsLists = res.data
+                pageable = res.data
             }
         })
         .catch((err) => {
             console.log('Fetch failed in recommendations-lists: ', err)
         })
-    recommendationsLists = [
-        { ...mockRecommendationListMeta },
-        { ...mockRecommendationListMeta },
-        { ...mockRecommendationListMeta },
-    ]
     return {
-        props: { recommendationsLists: recommendationsLists ? recommendationsLists : [] },
+        props: { pageable: pageable ? pageable : null },
     }
 }
 

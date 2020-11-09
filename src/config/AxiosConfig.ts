@@ -98,14 +98,27 @@ export const RECOMMENDATION_LIST_METAS = `/recommendation-list-metas`
 export const RECOMMENDATION_LIST_META_WITH_ID = (recommendationListMetaID: number) => {
     return `/recommendation-list-metas/${recommendationListMetaID}`
 }
+export const RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATIONS = (
+    recommendationListMetaID: number,
+    page: number,
+    pageSize: number
+) => {
+    return `/recommendation-list-metas/${recommendationListMetaID}/recommendations?page=${page}&size=${pageSize}&sort=updatedAt,DESC`
+}
+
 export const RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION = (
     recommendationListMetaID: number,
     recommendationID: number
 ) => {
     return `/recommendation-list-metas/${recommendationListMetaID}/recommendations/${recommendationID}`
 }
+
 export const FEATURE_LIST = (recommendationListMetaId: number) => {
     return `/recommendation-list-metas/${recommendationListMetaId}/featured-list`
+}
+
+export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) =>  {
+    return `/recommendation-list-metas/details?page=${page}&size=${pageSize}&sort=updatedAt,DESC`
 }
 
 // Featured List

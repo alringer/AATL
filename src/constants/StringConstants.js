@@ -6,6 +6,7 @@ export const LOREM_IPSUM_LONG =
 export const TOOL_TIPS = {
     Added: 'Added to your list',
     Recommended: 'Recommended by you',
+    Featured: 'Featured',
     AddToList: 'Add to list',
     DeleteList: 'Delete list',
     EditList: 'Edit list',

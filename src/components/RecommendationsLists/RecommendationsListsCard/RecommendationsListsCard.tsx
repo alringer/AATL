@@ -9,10 +9,10 @@ import {
     chopStringRecommendationsListsCardContent,
     chopStringRecommendationsListsCardNumber,
     chopStringRecommendationsListsCardSubTitle,
-    chopStringRecommendationsListsCardTitle
+    chopStringRecommendationsListsCardTitle,
 } from 'utilities/helpers/chopString'
 import useWindowSize from 'utilities/hooks/useWindowSize'
-import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
+import { IRecommendationListMetaDetail } from 'utilities/types/recommendationListDetail'
 import {
     RecommendationsListsCardAnchor,
     RecommendationsListsCardBottomContainer,
@@ -24,12 +24,11 @@ import {
     RecommendationsListsCardIconContainer,
     RecommendationsListsCardImageContainer,
     RecommendationsListsCardSubTitle,
-    RecommendationsListsCardTitle
+    RecommendationsListsCardTitle,
 } from './RecommendationsListsCard.style'
 
 interface IRecommendationsListsCardProps {
-    // TODO: Replace the interface with the updated DTO for RecommendationListMeta for this page
-    recommendationsList: IRecommendationListMeta
+    recommendationsList: IRecommendationListMetaDetail
 }
 
 const RecommendationsListsCard: React.FC<IRecommendationsListsCardProps> = ({ recommendationsList }) => {
@@ -59,9 +58,11 @@ const RecommendationsListsCard: React.FC<IRecommendationsListsCardProps> = ({ re
                                     : null}
                             </RecommendationsListsCardTitle>
                             <RecommendationsListsCardIconContainer>
-                                <Tooltip title={S.TOOL_TIPS.Added} placement="top">
-                                    <img src={FeaturedSVG} alt="featured-icon" />
-                                </Tooltip>
+                                {recommendationsList.isFeatured && (
+                                    <Tooltip title={S.TOOL_TIPS.Featured} placement="top">
+                                        <img src={FeaturedSVG} alt="featured-icon" />
+                                    </Tooltip>
+                                )}
                             </RecommendationsListsCardIconContainer>
                         </RecommendationsListsCardHeaderContainer>
                         <RecommendationsListsCardSubTitle>
@@ -76,14 +77,12 @@ const RecommendationsListsCard: React.FC<IRecommendationsListsCardProps> = ({ re
                         </RecommendationsListsCardContent>
                         <RecommendationsListsCardBottomContainer>
                             <RecommendationsListsCardExtraInfo>
-                                {/* TODO: Wire up data from the props */}
-                                {`${chopStringRecommendationsListsCardNumber(24)} ${
-                                    S.RECOMMENDATIONS_LISTS.Card.Recommendations
-                                }`}
+                                {`${chopStringRecommendationsListsCardNumber(
+                                    recommendationsList.recommendationsCount
+                                )} ${S.RECOMMENDATIONS_LISTS.Card.Recommendations}`}
                             </RecommendationsListsCardExtraInfo>
                             <RecommendationsListsCardExtraInfo>
-                                {/* TODO: Wire up data from the props */}
-                                {`${chopStringRecommendationsListsCardNumber(1200)} ${
+                                {`${chopStringRecommendationsListsCardNumber(recommendationsList.venuesCount)} ${
                                     S.RECOMMENDATIONS_LISTS.Card.Venues
                                 }`}
                             </RecommendationsListsCardExtraInfo>
