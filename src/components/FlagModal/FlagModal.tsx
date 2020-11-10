@@ -8,6 +8,7 @@ import {
     ListModalMainContentContainer,
     SubmitButton,
 } from 'components/ListModal/ListModal.style'
+import axios, { FLAG_RECOMMENDATION } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
@@ -16,16 +17,18 @@ import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import { closeFlagModal } from 'store/flagModal/flagModal_actions'
 import { query } from 'style/device'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { FlagModalContainer, FlagModalCustomDialog, FlagModalInput, FlagModalTitle } from './FlagModal.style'
 
 interface IReduxProps {
     isOpen: boolean
+    recommendationID: number | null
     closeFlagModal: () => void
 }
 
-interface IFlagModalProps extends IReduxProps {}
+interface IFlagModalProps extends IReduxProps, IWithAuthInjectedProps {}
 
-const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal }) => {
+const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommendationID, getTokenConfig }) => {
     const [inputReason, setInputReason] = React.useState('')
     const [isSubmitting, setSubmitting] = React.useState(false)
 
@@ -57,7 +60,26 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal }) => {
         closeModal()
     }
     const handleFlag = () => {
-        // TODO: Call Flag API
+        if (recommendationID) {
+            const payload = inputReason
+
+            const config = {
+                headers: {
+                    Authorization: getTokenConfig(),
+                },
+            }
+            setSubmitting(true)
+            axios
+                .post(FLAG_RECOMMENDATION(recommendationID), payload, config)
+                .then((res) => {
+                    console.log('Result from flagging recommendation: ', res)
+                    closeModal()
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {
+                    setSubmitting(false)
+                })
+        }
         // TODO: Handle submitting states
         // TODO: Close the modal on success and toast
     }
@@ -103,8 +125,9 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal }) => {
 
 const mapStateToProps = (state: StoreState) => ({
     isOpen: state.flagModalReducer.isOpen,
+    recommendationID: state.flagModalReducer.recommendationID,
 })
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ closeFlagModal }, dispatch)
 
-export default reduxConnect(mapStateToProps, mapDispatchToProps)(FlagModal)
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(FlagModal))

@@ -149,6 +149,10 @@ export const ADMIN_CITIES = `/parent-regions/summary`
 // Venue Recommendation Prompt
 export const VENUE_RECOMMENDATION_PROMPT = `/venue-recommendation-prompts`
 
+// Flag Recommendations
+export const FLAGGED_RECOMMENDATIONS = (page: number) => `/flagged-recommendations?page=${page}&size=10&sort=date,DESC`
+export const FLAG_RECOMMENDATION = (recommendationID: number) => `/recommendations/${recommendationID}/flag`
+
 
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,

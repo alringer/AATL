@@ -138,6 +138,14 @@ export const ADMIN_PAGE = {
         Places: 'Places',
         Recommendations: 'Recommendations',
     },
+    AdminFlaggedContent: {
+        Title: 'Flagged Content',
+        SubTitle: 'This page contains content that has been flagged by users.',
+        Place: 'Place',
+        Reporter: 'Reporter',
+        Author: 'Author',
+        DateFlagged: 'Date Flagged',
+    },
 }
 
 export const RESTAURANT_PAGE = {
