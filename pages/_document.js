@@ -15,6 +15,7 @@ export default class Document extends NextDocument {
                         type="text/javascript"
                         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_PLACES_KEY}&libraries=places`}
                     ></script>
+                    <script data-ad-client="ca-pub-5175396979081578" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                 </Head>
                 <body>
                     <Main />
