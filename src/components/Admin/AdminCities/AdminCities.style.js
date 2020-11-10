@@ -67,6 +67,14 @@ export const AdminCitiesRecommendationsColumn = styled.div`
     width: 146px;
 `
 
+export const AdminCityAnchor = styled.a`
+    color: ${(props) => props.theme.darkGrey};
+    text-decoration-color: ${(props) => props.theme.darkSlateBlue};
+    &:hover {
+        text-decoration-color: ${(props) => props.theme.darkSlateBlue};
+    }
+`
+
 export const AdminCityText = styled.p`
     font-size: 14px;
     font-weight: 500;
@@ -74,8 +82,6 @@ export const AdminCityText = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    text-decoration: underline;
-    cursor: pointer;
     color: ${(props) => props.theme.darkSlateBlue};
 `
 
