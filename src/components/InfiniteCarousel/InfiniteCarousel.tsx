@@ -70,8 +70,9 @@ const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
     return (
         <InfiniteCarouselContainer>
             <Carousel
-                // width="100%"
-                width={places.length > 1 ? '100%' : '80%'}
+                width={
+                    places.length > 1 ? '100%' : `${windowSize.width < Number(size.laptop) ? Number(95) : Number(80)}%`
+                }
                 infiniteLoop={places.length > 1 ? true : false}
                 showArrows={true}
                 showIndicators={false}

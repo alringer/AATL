@@ -36,7 +36,6 @@ const AdminRecommendationLists: React.FC<IAdminRecommendationListsProps> = ({ ge
             .then((res) => {
                 const tempFeaturedLists = []
                 const tempOtherLists = []
-                console.log('Fetched Recommendation List Metas: ', res)
                 res.data.map((recommendationList: IRecommendationListMeta) => {
                     if (recommendationList.featuredList) {
                         tempFeaturedLists.push(recommendationList)

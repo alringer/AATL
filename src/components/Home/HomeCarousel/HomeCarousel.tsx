@@ -20,6 +20,7 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                 a.featuredList.sortOrder > b.featuredList.sortOrder ? 1 : -1
             )
             setCurrentFeaturedRecommendationsLists(sortedFeaturedLists)
+            console.log(sortedFeaturedLists)
         }
     }, [featuredRecommendationsLists])
 
@@ -51,14 +52,19 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
     return featuredRecommendationsLists ? (
         <HomeCarouselContainer>
             <Carousel
-                width="100%"
-                infiniteLoop
+                width={
+                    featuredRecommendationsLists.length > 1
+                        ? '100%'
+                        : `${windowSize.width < Number(size.laptop) ? Number(90) : Number(100)}%`
+                }
+                infiniteLoop={featuredRecommendationsLists.length > 1 ? true : false}
                 showArrows={false}
                 showIndicators={false}
                 showThumbs={false}
                 showStatus={false}
-                centerMode={true}
-                // emulateTouch={true} TODO: Determine whether we are going to emulate touch for smaller screens on browser or just allow touch-devices to access touch
+                centerMode={featuredRecommendationsLists.length > 1 ? true : false}
+                //TODO: Determine whether we are going to emulate touch for smaller screens on browser or just allow touch-devices to access touch
+                emulateTouch={true}
                 centerSlidePercentage={centerWidth}
                 selectedItem={currentSlideIndex}
                 onChange={updateCurrentSlide}
