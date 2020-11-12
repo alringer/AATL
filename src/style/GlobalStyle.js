@@ -72,11 +72,17 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .carousel-root {
-        width: 100%
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     .carousel .slide {
         background: white;
+    }
+
+    .carousel .slider-wrapper.axis-horizontal .slider {
+        /* justify-content: center; */
     }
 
     .MuiPaginationItem-root {

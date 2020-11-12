@@ -1,20 +1,24 @@
-import CityImage from 'assets/mock-images/chicago.jpg'
-import Image from 'components/Image/Image'
 import React from 'react'
-import { CityBannerContainer, CityBannerImageContainer, CityName } from './CityBanner.style'
+import { IParentRegion } from 'utilities/types/parentRegion'
+import { CityBannerContainer, CityBannerImage, CityBannerImageContainer, CityName } from './CityBanner.style'
 
 interface ICityBannerProps {
-    // cityName: string
-    // imgSrc: string
+    cityInformation: IParentRegion | null
 }
 
-const CityBanner: React.FC<ICityBannerProps> = () => {
+const CityBanner: React.FC<ICityBannerProps> = ({ cityInformation }) => {
     return (
         <CityBannerContainer>
             <CityBannerImageContainer>
-                <Image src={CityImage} alt="city-image" />
+                <CityBannerImage
+                    srcSet={`${cityInformation.imageUrlMobile} 768w,
+                            ${cityInformation.imageUrlTablet} 1440w,
+                            ${cityInformation.imageUrlDesktop} 2560w`}
+                    src={cityInformation.imageUrlDesktop}
+                    alt="city-image"
+                />
             </CityBannerImageContainer>
-            <CityName>Chicago</CityName>
+            <CityName>{cityInformation ? cityInformation.city : null}</CityName>
         </CityBannerContainer>
     )
 }

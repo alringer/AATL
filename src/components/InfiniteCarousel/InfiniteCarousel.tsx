@@ -3,7 +3,7 @@ import React from 'react'
 import { Carousel } from 'react-responsive-carousel'
 import { size } from 'style/device'
 import useWindowSize from 'utilities/hooks/useWindowSize'
-import { IInfiniteCarouselCard } from 'utilities/types/infiniteCarousel'
+import { IVenue } from 'utilities/types/venue'
 import {
     InfiniteCarouselContainer,
     InfiniteCarouselDotButton,
@@ -13,17 +13,13 @@ import {
 } from './InfiniteCarousel.style'
 
 interface IInfiniteCarouselProps {
-    places: IInfiniteCarouselCard[]
+    places: IVenue[]
 }
 
 const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
     const [currentSlide, setCurrentSlide] = React.useState(0)
     const windowSize = useWindowSize()
     const centerWidth: number = windowSize.width < Number(size.laptop) ? Number(95) : Number(80)
-
-    React.useEffect(() => {
-        console.log('Size: ', size, centerWidth)
-    }, [size])
 
     const next = (index: number) => {
         if (currentSlide !== index) {
@@ -63,7 +59,7 @@ const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
         dynamicHeight: true,
         emulateTouch: true,
         thumbWidth: 100,
-        selectedItem: 0,
+        selectedItem: 1,
         interval: 3000,
         transitionTime: 150,
         swipeScrollTolerance: 5,
@@ -74,28 +70,29 @@ const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
     return (
         <InfiniteCarouselContainer>
             <Carousel
-                width="100%"
-                infiniteLoop
+                // width="100%"
+                width={places.length > 1 ? '100%' : '80%'}
+                infiniteLoop={places.length > 1 ? true : false}
                 showArrows={true}
                 showIndicators={false}
                 showThumbs={false}
                 showStatus={false}
-                centerMode={true}
+                centerMode={places.length > 1 ? true : false}
                 centerSlidePercentage={centerWidth}
                 selectedItem={currentSlide}
                 onChange={updateCurrentSlide}
                 onClickItem={updateCurrentSlide}
             >
-                {places.map((place: IInfiniteCarouselCard) => {
+                {places.map((place: IVenue) => {
                     return (
-                        <InfiniteCarouselSlideContainer key={place.placeID}>
-                            <InfiniteCarouselCard {...place} />
+                        <InfiniteCarouselSlideContainer key={place.id}>
+                            <InfiniteCarouselCard place={place} />
                         </InfiniteCarouselSlideContainer>
                     )
                 })}
             </Carousel>
             <InfiniteCarouselDotButtonsContainer>
-                {places.map((place: IInfiniteCarouselCard, index: number) => {
+                {places.map((place: IVenue, index: number) => {
                     return (
                         <InfiniteCarouselDotButton id={String(index)} onClick={handleDotNavigation} key={index}>
                             <InfiniteCarouselDotSpan className={index === currentSlide ? 'active' : 'inactive'} />

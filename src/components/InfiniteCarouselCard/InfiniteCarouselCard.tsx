@@ -5,51 +5,38 @@ import {
     InfiniteCarouselCardCheckItOutButton,
     InfiniteCarouselCardContainer,
     InfiniteCarouselCardContentContainer,
-    InfiniteCarouselCardDescriptionContainer,
-    InfiniteCarouselCardDescriptionText,
     InfiniteCarouselCardImageContainer,
     InfiniteCarouselCardPlaceName,
 } from 'components/InfiniteCarouselCard/InfiniteCarouselCard.style'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import React from 'react'
-import { chopStringInfiniteCarouselCardDescription } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
-import { IInfiniteCarouselCard } from 'utilities/types/infiniteCarousel'
+import { ICategory } from 'utilities/types/category'
+import { IVenue } from 'utilities/types/venue'
 
-interface IInfiniteCarouselCardProps extends IInfiniteCarouselCard {}
+interface IInfiniteCarouselCardProps {
+    place: IVenue
+}
 
-const InfiniteCarouselCard: React.FC<IInfiniteCarouselCardProps> = ({
-    imgSrc,
-    placeName,
-    placeCategories,
-    placeDescription,
-    placeID,
-}) => {
-    const router = useRouter()
-
-    const handleCheckItOut = () => {
-        router.push(`${R.ROUTE_ITEMS.restaurant}/${placeID}`)
-    }
-
+const InfiniteCarouselCard: React.FC<IInfiniteCarouselCardProps> = ({ place }) => {
     return (
-        <InfiniteCarouselCardContainer key={placeID}>
+        <InfiniteCarouselCardContainer key={place.id}>
             <InfiniteCarouselCardImageContainer>
-                <Image src={imgSrc} alt="place-image" />
-                <InfiniteCarouselCardPlaceName>{placeName}</InfiniteCarouselCardPlaceName>
+                <Image src={place.imageCDNUrl} alt="place-image" />
+                <InfiniteCarouselCardPlaceName>{place.name}</InfiniteCarouselCardPlaceName>
             </InfiniteCarouselCardImageContainer>
             <InfiniteCarouselCardContentContainer>
-                <InfiniteCarouselCardCategoryText>{concatCategories(placeCategories)}</InfiniteCarouselCardCategoryText>
                 <InfiniteCarouselCardBodyContainer>
-                    <InfiniteCarouselCardDescriptionContainer>
-                        <InfiniteCarouselCardDescriptionText>
-                            {chopStringInfiniteCarouselCardDescription(placeDescription)}
-                        </InfiniteCarouselCardDescriptionText>
-                    </InfiniteCarouselCardDescriptionContainer>
-                    <InfiniteCarouselCardCheckItOutButton onClick={handleCheckItOut}>
-                        {S.BUTTON_LABELS.CheckItOut}
-                    </InfiniteCarouselCardCheckItOutButton>
+                    <InfiniteCarouselCardCategoryText>
+                        {concatCategories(place.categories.map((category: ICategory) => category.longName))}
+                    </InfiniteCarouselCardCategoryText>
+                    <Link href={`${R.ROUTE_ITEMS.restaurant}/${place.id}`} passHref={true} prefetch={false}>
+                        <InfiniteCarouselCardCheckItOutButton>
+                            {S.BUTTON_LABELS.CheckItOut}
+                        </InfiniteCarouselCardCheckItOutButton>
+                    </Link>
                 </InfiniteCarouselCardBodyContainer>
             </InfiniteCarouselCardContentContainer>
         </InfiniteCarouselCardContainer>

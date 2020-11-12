@@ -8,7 +8,6 @@ export const InfiniteCarouselCardContainer = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
 
-
     background-color: white;
     width: 100%;
     height: 100%;
@@ -49,7 +48,7 @@ export const InfiniteCarouselCardPlaceName = styled.p`
     font-style: normal;
     line-height: 1.08;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
     font-size: 30px;
     text-shadow: 0 2px 0 rgba(54, 57, 64, 0.12);
 `
@@ -80,7 +79,7 @@ export const InfiniteCarouselCardCategoryText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     text-align: left;
 `
 
@@ -88,8 +87,11 @@ export const InfiniteCarouselCardBodyContainer = styled.div`
     display: flex;
     width: 100%;
     margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
-    @media ${device.mobile} {
+    /* @media ${device.mobile} {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-end;
@@ -103,7 +105,7 @@ export const InfiniteCarouselCardBodyContainer = styled.div`
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-    }
+    } */
 `
 
 export const InfiniteCarouselCardDescriptionContainer = styled.div`
@@ -126,7 +128,7 @@ export const InfiniteCarouselCardDescriptionText = styled.p`
     font-style: normal;
     line-height: 1.57;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     text-align: left;
 
     @media ${device.mobile} {
@@ -143,11 +145,10 @@ export const InfiniteCarouselCardDescriptionText = styled.p`
 export const InfiniteCarouselCardCheckItOutButton = styled(CustomButton)`
     color: ${(props) => props.theme.pinkishTan};
     background-color: ${(props) => props.theme.white};
+    min-width: 119px;
+    white-space: nowrap;
 
     :hover {
         background-color: ${(props) => props.theme.white};
     }
 `
-
-
-
