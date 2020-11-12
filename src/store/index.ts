@@ -9,6 +9,8 @@ import authModalReducer from './authModal/authModal_reducer'
 import { AuthModalReducerState } from './authModal/authModal_types'
 import categoriesReducer from './categories/categories_reducer'
 import { CategoriesReducerState } from './categories/categories_types'
+import deleteRecommendationModalReducer from './deleteRecommendationModal/deleteRecommendationModal_reducer'
+import { DeleteRecommendationModalReducerState } from './deleteRecommendationModal/deleteRecommendationModal_types'
 import flagModalReducer from './flagModal/flagModal_reducer'
 import { FlagModalReducerState } from './flagModal/flagModal_types'
 import locationReducer from './location/location_reducer'
@@ -31,7 +33,8 @@ const reducer = combineReducers({
     locationReducer,
     listModalReducer,
     userProfileEditModalReducer,
-    flagModalReducer
+    flagModalReducer,
+    deleteRecommendationModalReducer
 })
 
 const middleware = applyMiddleware(thunk)
@@ -48,6 +51,7 @@ export interface StoreState {
     searchModalReducer: SearchModalReducerState
     userProfileEditModalReducer: UserProfileEditModalReducerState
     flagModalReducer: FlagModalReducerState
+    deleteRecommendationModalReducer: DeleteRecommendationModalReducerState
 }
 
 export default store

@@ -8,7 +8,7 @@ export const AdminFlaggedContentContainer = styled.div`
 
 export const AdminFlaggedContentTableContainer = styled.div`
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 
     margin-top: 41px;
 `
@@ -53,11 +53,11 @@ export const AdminFlaggedContentReasonColumn = styled.div`
 export const AdminFlaggedContentDateFlaggedColumn = styled.div`
     display: flex;
     width: 140px;
-    
+
     margin-right: 40px;
 `
 
-export const AdminFlaggedContentClickableText = styled.p`
+export const AdminFlaggedContentClickableText = styled.a`
     font-size: 14px;
     font-weight: 500;
     font-stretch: normal;

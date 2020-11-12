@@ -60,6 +60,7 @@ export const BUTTON_LABELS = {
     ReadMore: 'READ MORE',
     Save: 'SAVE',
     Flag: 'FLAG',
+    MarkAppropriate: 'MARK APPROPRIATE',
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -424,6 +425,12 @@ export const RECOMMENDATIONS_LISTS = {
 export const FLAG_MODAL = {
     Header: 'Flag as inappropriate',
     Title: 'Tell us the reason for flagging this post.',
+}
+
+export const DELETE_RECOMMENDATION_MODAL = {
+    Header: 'Delete recommendation',
+    Title:
+        'Deleting this recommendation cannot be undone. Please make sure this recommendation is indeed inappropriate before permanently deleting.',
 }
 
 export const TERMS_AND_CONDITIONS = {

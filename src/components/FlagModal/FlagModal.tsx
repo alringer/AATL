@@ -8,8 +8,12 @@ import {
     ListModalMainContentContainer,
     SubmitButton,
 } from 'components/ListModal/ListModal.style'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
 import axios, { FLAG_RECOMMENDATION } from 'config/AxiosConfig'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -33,6 +37,7 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommen
     const [isSubmitting, setSubmitting] = React.useState(false)
 
     const flagModalRef = React.useRef(null)
+    const { enqueueSnackbar } = useSnackbar()
 
     React.useEffect(() => {
         document.addEventListener('click', handleClickOutsideFlagModal, true)
@@ -62,17 +67,34 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommen
     const handleFlag = () => {
         if (recommendationID) {
             const payload = inputReason
-
             const config = {
                 headers: {
                     Authorization: getTokenConfig(),
+                    'Content-Type': 'application/json',
                 },
             }
             setSubmitting(true)
             axios
                 .post(FLAG_RECOMMENDATION(recommendationID), payload, config)
                 .then((res) => {
-                    console.log('Result from flagging recommendation: ', res)
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.FLAG_RECOMMENDATION.Type}
+                                    title={B.FLAG_RECOMMENDATION.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            {B.FLAG_RECOMMENDATION.Body}&nbsp;
+                                            <SnackbarOrangeMessage>
+                                                {res.data?.recommendation?.venue?.name}
+                                            </SnackbarOrangeMessage>
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
+                    })
                     closeModal()
                 })
                 .catch((err) => console.log(err))
@@ -80,8 +102,6 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommen
                     setSubmitting(false)
                 })
         }
-        // TODO: Handle submitting states
-        // TODO: Close the modal on success and toast
     }
 
     return (
@@ -111,7 +131,7 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommen
                         <ListModalFooterContainer>
                             <ListModalFooterRightContainer>
                                 <CancelButton onClick={handleCancel}>{S.BUTTON_LABELS.Cancel}</CancelButton>
-                                <SubmitButton onClick={handleFlag} disabled={!inputReason}>
+                                <SubmitButton onClick={handleFlag} disabled={!inputReason || isSubmitting}>
                                     {S.BUTTON_LABELS.Flag}
                                 </SubmitButton>
                             </ListModalFooterRightContainer>

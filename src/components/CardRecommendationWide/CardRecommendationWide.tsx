@@ -80,6 +80,7 @@ export enum CardRecommendationWideEnum {
     Profile,
     Home,
     City,
+    AdminFlagged,
 }
 
 interface IReduxProps {
@@ -117,7 +118,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
 
     const [currentRecommendation, setCurrentRecommendation] = React.useState<IRecommendation | null>(null)
     const [isLoading, setLoading] = React.useState(false)
-    const [isMoreVisible, setMoreVisible] = React.useState(false)
+    const [isMoreVisible, setMoreVisible] = React.useState(
+        type === CardRecommendationWideEnum.AdminFlagged ? true : false
+    )
 
     const windowSize = useWindowSize()
     const viewport: DeviceNameEnum =
@@ -144,7 +147,6 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     }, [recommendation])
 
     const handleFlag = (e: React.MouseEvent<HTMLElement>) => {
-        // TODO: Call API to flag the recommendation
         if (currentRecommendation && currentRecommendation.id !== undefined && currentRecommendation.id !== null) {
             authenticatedAction(() =>
                 openFlagModal({
@@ -311,7 +313,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     ''
                                 )}
                                 <WideHeaderTooltipIconsContainer>
-                                    {currentRecommendation &&
+                                    {type !== CardRecommendationWideEnum.AdminFlagged &&
+                                        currentRecommendation &&
                                         currentRecommendation.venue &&
                                         currentRecommendation.venue.id !== undefined &&
                                         currentRecommendation.venue.id !== null &&
@@ -321,7 +324,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                 <img src={AuthoredSVG} />
                                             </Tooltip>
                                         )}
-                                    {currentRecommendation &&
+                                    {type !== CardRecommendationWideEnum.AdminFlagged &&
+                                        currentRecommendation &&
                                         currentRecommendation.venue &&
                                         currentRecommendation.venue.id !== undefined &&
                                         currentRecommendation.venue.id !== null &&
@@ -336,38 +340,42 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                             <Media queries={query} defaultMatches={{ mobile: true }}>
                                 {(matches) => (
                                     <>
-                                        {(matches.laptop || matches.tablet) && (
-                                            <RecommendationButtonsContainer>
-                                                {isMoreVisible ? (
-                                                    <MoreHorizontalContainer>
-                                                        <FlagButton handleClick={handleFlag} />
-                                                        {type === CardRecommendationWideEnum.RecommendationList &&
-                                                        userRole === UserRoleEnum.Admin ? (
-                                                            <RemoveFromListButton
-                                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                                    authenticatedAction(() => handleDelete(e))
-                                                                }
+                                        {type !== CardRecommendationWideEnum.AdminFlagged &&
+                                            (matches.laptop || matches.tablet) && (
+                                                <RecommendationButtonsContainer>
+                                                    {isMoreVisible ? (
+                                                        <MoreHorizontalContainer>
+                                                            <FlagButton handleClick={handleFlag} />
+                                                            {type === CardRecommendationWideEnum.RecommendationList &&
+                                                            userRole === UserRoleEnum.Admin ? (
+                                                                <RemoveFromListButton
+                                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                        authenticatedAction(() => handleDelete(e))
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                <AddToListButton
+                                                                    handleClick={(e: React.MouseEvent<HTMLElement>) =>
+                                                                        authenticatedAction(() => handleAddToList(e))
+                                                                    }
+                                                                />
+                                                            )}
+                                                            <WriteRecommendationButton
+                                                                handleClick={handleWriteRecommendation}
                                                             />
-                                                        ) : (
-                                                            <AddToListButton
-                                                                handleClick={(e: React.MouseEvent<HTMLElement>) =>
-                                                                    authenticatedAction(() => handleAddToList(e))
-                                                                }
+                                                        </MoreHorizontalContainer>
+                                                    ) : null}
+                                                    {isMoreVisible ? (
+                                                        <MoreVerticalContainer>
+                                                            <ShareButton
+                                                                handleClick={handleShare}
+                                                                isRestaurant={false}
                                                             />
-                                                        )}
-                                                        <WriteRecommendationButton
-                                                            handleClick={handleWriteRecommendation}
-                                                        />
-                                                    </MoreHorizontalContainer>
-                                                ) : null}
-                                                {isMoreVisible ? (
-                                                    <MoreVerticalContainer>
-                                                        <ShareButton handleClick={handleShare} isRestaurant={false} />
-                                                    </MoreVerticalContainer>
-                                                ) : null}
-                                                <ViewMore />
-                                            </RecommendationButtonsContainer>
-                                        )}
+                                                        </MoreVerticalContainer>
+                                                    ) : null}
+                                                    <ViewMore />
+                                                </RecommendationButtonsContainer>
+                                            )}
                                     </>
                                 )}
                             </Media>

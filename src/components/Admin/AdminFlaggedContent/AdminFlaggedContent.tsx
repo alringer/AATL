@@ -1,14 +1,12 @@
-import DropdownIconSrc from 'assets/dropDownIcon.svg'
+import AdminFlaggedCard from 'components/Admin/AdminFlaggedContent/AdminFlaggedCard'
 import axios, { FLAGGED_RECOMMENDATIONS } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import { formatMonth } from 'utilities/helpers/formatMonth'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IFlaggedRecommendation } from 'utilities/types/flaggedRecommendation'
 import { AdminMenuPageSubTitle, AdminMenuPageTitle } from '../AdminShared.style'
 import {
     AdminFlaggedContentAuthorColumn,
-    AdminFlaggedContentClickableText,
     AdminFlaggedContentContainer,
     AdminFlaggedContentDateFlaggedColumn,
     AdminFlaggedContentPlaceColumn,
@@ -17,7 +15,6 @@ import {
     AdminFlaggedContentSortIcon,
     AdminFlaggedContentTableContainer,
     AdminFlaggedContentTableHeaderRow,
-    AdminFlaggedContentTableRow,
 } from './AdminFlaggedContent.style'
 
 const mockData = [
@@ -59,6 +56,10 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({ getTokenConf
     const [currentRecommendations, setCurrentRecommendations] = React.useState<IFlaggedRecommendation[]>([])
 
     React.useEffect(() => {
+        fetchFlaggedRecommendations()
+    }, [])
+
+    const fetchFlaggedRecommendations = () => {
         const token = getTokenConfig()
         const config = {
             headers: {
@@ -80,7 +81,7 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({ getTokenConf
                 setCurrentRecommendations(newRecommendations)
             })
             .catch((err) => console.log(err))
-    }, [])
+    }
 
     return (
         <AdminFlaggedContentContainer>
@@ -102,34 +103,16 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({ getTokenConf
                         {S.ADMIN_PAGE.AdminFlaggedContent.DateFlagged} <AdminFlaggedContentSortIcon />
                     </AdminFlaggedContentDateFlaggedColumn>
                 </AdminFlaggedContentTableHeaderRow>
-                {currentRecommendations.map((flaggedRecommendation: IFlaggedRecommendation) => {
-                    return (
-                        <AdminFlaggedContentTableRow>
-                            <AdminFlaggedContentPlaceColumn>
-                                {flaggedRecommendation?.recommendation?.venue?.name}
-                            </AdminFlaggedContentPlaceColumn>
-                            <AdminFlaggedContentReporterColumn>
-                                <AdminFlaggedContentClickableText>
-                                    {`${flaggedRecommendation.flaggedBy.firstName} ${flaggedRecommendation.flaggedBy.lastName}`}
-                                </AdminFlaggedContentClickableText>
-                            </AdminFlaggedContentReporterColumn>
-                            <AdminFlaggedContentAuthorColumn>
-                                <AdminFlaggedContentClickableText>
-                                    {`${flaggedRecommendation.recommendation.createdBy.firstName} ${flaggedRecommendation.recommendation.createdBy.lastName}`}
-                                </AdminFlaggedContentClickableText>
-                            </AdminFlaggedContentAuthorColumn>
-                            <AdminFlaggedContentReasonColumn>
-                                {flaggedRecommendation.reason}
-                            </AdminFlaggedContentReasonColumn>
-                            <AdminFlaggedContentDateFlaggedColumn>
-                                {`${formatMonth(
-                                    flaggedRecommendation.date.getMonth()
-                                )} ${flaggedRecommendation.date.getUTCDate()}, ${flaggedRecommendation.date.getFullYear()}`}
-                            </AdminFlaggedContentDateFlaggedColumn>
-                            <img src={DropdownIconSrc} alt="dropdown-icon" />
-                        </AdminFlaggedContentTableRow>
-                    )
-                })}
+                {currentRecommendations
+                    ? currentRecommendations.map((flaggedRecommendation: IFlaggedRecommendation) => {
+                          return (
+                              <AdminFlaggedCard
+                                  flaggedRecommendation={flaggedRecommendation}
+                                  fetchFlaggedRecommendations={fetchFlaggedRecommendations}
+                              />
+                          )
+                      })
+                    : 'Empty'}
             </AdminFlaggedContentTableContainer>
         </AdminFlaggedContentContainer>
     )
