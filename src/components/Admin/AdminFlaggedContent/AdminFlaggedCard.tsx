@@ -45,7 +45,7 @@ interface IReduxProps {
 
 interface IAdminFlaggedCardProps extends IReduxProps, IWithAuthInjectedProps {
     flaggedRecommendation: IFlaggedRecommendation
-    fetchFlaggedRecommendations: () => void
+    fetchFlaggedRecommendations: (page: number) => void
 }
 
 const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
@@ -67,7 +67,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
     const handleDelete = () => {
         const payload: OpenDeleteRecommendationModalPayload = {
             flaggedRecommendationID: flaggedRecommendation.id,
-            onSuccess: fetchFlaggedRecommendations,
+            onSuccess: () => fetchFlaggedRecommendations(0),
         }
         openDeleteRecommendationModal(payload)
     }
@@ -88,7 +88,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
                 axios
                     .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendation.id), payload, config)
                     .then((res) => {
-                        fetchFlaggedRecommendations()
+                        fetchFlaggedRecommendations(0)
                         enqueueSnackbar('', {
                             content: (
                                 <div>

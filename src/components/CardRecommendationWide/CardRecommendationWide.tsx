@@ -486,6 +486,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                         </RecommendationAuthorTitleText>
                         <Media queries={query} defaultMatches={{ mobile: true }}>
                             {(matches) =>
+                                type !== CardRecommendationWideEnum.AdminFlagged &&
                                 matches.mobile && (
                                     <MobileButtonsContainer>
                                         {isMoreVisible ? (

@@ -116,6 +116,12 @@ export const HOME_PAGE = {
 }
 
 export const ADMIN_PAGE = {
+    AdminMenu: {
+        Cities: 'CITIES',
+        FlaggedContent: 'FLAGGED CONTENT',
+        RecommendationLists: 'RECOMMENDATION LISTS',
+        AdminMenu: 'Admin Menu',
+    },
     AdminRecommendationLists: {
         Title: 'Recommendation Lists',
         SubTitle:
@@ -145,6 +151,7 @@ export const ADMIN_PAGE = {
         Place: 'Place',
         Reporter: 'Reporter',
         Author: 'Author',
+        Reason: 'Reason',
         DateFlagged: 'Date Flagged',
     },
 }

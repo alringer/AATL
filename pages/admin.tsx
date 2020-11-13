@@ -26,6 +26,10 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading }) => {
     const { enqueueSnackbar } = useSnackbar()
     const { isMounted } = useAuth()
 
+    const [countCities, setCountCities] = React.useState(null)
+    const [countFlagged, setCountFlagged] = React.useState(null)
+    const [countRecommendationLists, setCountRecommendationLists] = React.useState(null)
+
     React.useEffect(() => {
         if (isMounted === true && isLoading === false && userRole !== UserRoleEnum.Admin) {
             router.push('/')
@@ -57,7 +61,11 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading }) => {
 
     return isMounted === true && isLoading === false && userRole === UserRoleEnum.Admin ? (
         <AdminContainer>
-            <AdminMenu />
+            <AdminMenu
+                countCities={countCities}
+                countFlagged={countFlagged}
+                countRecommendationLists={countRecommendationLists}
+            />
             <AdminContentContainer>
                 {router.query.menu === R.ROUTE_ITEMS.adminCities ? (
                     <AdminCities />
