@@ -11,10 +11,6 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import { IParentRegion } from 'utilities/types/parentRegion'
-// import Snackbar from 'components/Snackbar/Snackbar'
-// import * as B from 'constants/SnackbarConstants'
-// import { useSnackbar } from 'notistack'
-// import { useRouter } from 'next/router'
 
 interface IServerSideProps {
     cityInformation: IParentRegion | null
@@ -23,7 +19,6 @@ interface IServerSideProps {
 interface ICityProps extends IServerSideProps {}
 
 const City: React.FC<ICityProps> = ({ cityInformation }) => {
-    // TODO: Toast the user if the city does not exist
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
 

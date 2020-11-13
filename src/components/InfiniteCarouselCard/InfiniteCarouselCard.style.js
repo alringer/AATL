@@ -90,22 +90,6 @@ export const InfiniteCarouselCardBodyContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-    /* @media ${device.mobile} {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-end;
-    }
-    @media ${device.tablet} {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-    @media ${device.laptop} {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    } */
 `
 
 export const InfiniteCarouselCardDescriptionContainer = styled.div`

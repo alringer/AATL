@@ -81,10 +81,6 @@ export const GlobalStyle = createGlobalStyle`
         background: white;
     }
 
-    .carousel .slider-wrapper.axis-horizontal .slider {
-        /* justify-content: center; */
-    }
-
     .MuiPaginationItem-root {
         font-size: 12px;
         font-weight: 500;
