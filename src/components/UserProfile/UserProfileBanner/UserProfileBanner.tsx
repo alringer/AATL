@@ -1,6 +1,7 @@
 import DefaultUserProfileImage from 'assets/user-profile-icon.svg'
 import UserProfileInstagramIcon from 'assets/user-profile-instagram-icon.svg'
 import Image from 'components/Image/Image'
+import { INSTAGRAM_CLIENT_ID, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
@@ -31,7 +32,7 @@ import {
     UserProfileNameContainer,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
-    UserProfileTitleContainer,
+    UserProfileTitleContainer
 } from './UserProfileBanner.style'
 
 interface IReduxProps {
@@ -57,10 +58,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
             user.firstName && user.lastName
                 ? user.firstName + ' ' + user.lastName
                 : user.firstName
-                ? user.firstName
-                : user.lastName
-                ? user.lastName
-                : '',
+                    ? user.firstName
+                    : user.lastName
+                        ? user.lastName
+                        : '',
         userTitle: user.userByLine ? user.userByLine : '',
         userDescription: user.content ? user.content : '',
     })
@@ -72,16 +73,16 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                 user.firstName && user.lastName
                     ? user.firstName + ' ' + user.lastName
                     : user.firstName
-                    ? user.firstName
-                    : user.lastName
-                    ? user.lastName
-                    : '',
+                        ? user.firstName
+                        : user.lastName
+                            ? user.lastName
+                            : '',
             userTitle: user.userByLine ? user.userByLine : '',
             userDescription: user.content ? user.content : '',
         })
         setViewedUser(user)
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
-        setInstagramLink(user.instagramId ? `https://instagram.com/${viewedUser.instagramId}` : null)
+        setInstagramLink(user.instagramId ? `https://instagram.com/${viewedUser.instagramId}` : `https://api.instagram.com/oauth/authorize?client_id=${INSTAGRAM_CLIENT_ID}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`)
     }, [user])
 
     const handleEditProfile = () => {
@@ -101,8 +102,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                         {userInformation.userTitle
                             ? userInformation.userTitle
                             : isOwner
-                            ? S.USER_PROFILE_BANNER.EmptyMessageByLine
-                            : null}
+                                ? S.USER_PROFILE_BANNER.EmptyMessageByLine
+                                : null}
                     </UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
@@ -142,8 +143,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         {userInformation.userDescription
                                             ? userInformation.userDescription
                                             : isOwner
-                                            ? S.USER_PROFILE_BANNER.EmptyMessageDescription
-                                            : null}
+                                                ? S.USER_PROFILE_BANNER.EmptyMessageDescription
+                                                : null}
                                     </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>

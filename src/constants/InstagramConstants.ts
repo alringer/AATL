@@ -1,0 +1,2 @@
+export const INSTAGRAM_CLIENT_ID = process.env.INSTAGRAM_CLIENT_ID
+export const INSTAGRAM_REDIRECT_URI = process.env.INSTAGRAM_REDIRECT_URI
