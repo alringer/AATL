@@ -6,6 +6,7 @@ import axios, { FETCH_HOME } from 'config/AxiosConfig'
 import { INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import { KeycloakTokenParsed } from 'keycloak-js'
 import { useRouter } from 'next/router'
+import qs from 'querystring'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -34,28 +35,31 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
     const [homeData, setHomeData] = React.useState<IHomepage | null>(null)
 
     const router = useRouter()
-    console.log(router)
+    if (router?.asPath) {
+        const parseAsPath = qs.parse(router.asPath)
+        if (parseAsPath['/?code']) {
+            const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
 
-    if (router?.query['code']) {
-        const authorizationCode: string = router?.query['code'][0]
-        console.log(authorizationCode)
-        const formData = new FormData()
-        formData.append('client_id', INSTAGRAM_CLIENT_ID)
-        formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
-        formData.append('grant_type', 'authorization_code')
-        formData.append('code', authorizationCode)
-        formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
+            const formData = new FormData()
+            formData.append('client_id', INSTAGRAM_CLIENT_ID)
+            formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
+            formData.append('grant_type', 'authorization_code')
+            formData.append('code', authorizationCode)
+            formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
 
-        const instagramToken = axios.post(
-            'https://api.instagram.com/oauth/access_token',
-            formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(res => {
-            console.log(res['access_token'])
-            return res['access_token']
-        })
+            axios.post(
+                'https://api.instagram.com/oauth/access_token',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(res => {
+                console.log(res['access_token'])
+                return res['access_token']
+            })
+        }
     }
 
     React.useEffect(() => {
