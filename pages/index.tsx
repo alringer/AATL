@@ -29,27 +29,28 @@ type ParsedToken = KeycloakTokenParsed & {
 interface IReduxProps {
     fetchedUser: IUserProfile | null
     preferredLocation: ILocationInformation | null
-    instagramUserData: any | null
 }
 
 interface IIndexProps extends IReduxProps, IWithAuthInjectedProps { }
 
-const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fetchedUser }) => {
+const Index: React.FC<IIndexProps> = ({ preferredLocation, fetchedUser }) => {
     const router = useRouter()
 
     const [homeData, setHomeData] = React.useState<IHomepage | null>(null)
     const [user, setUser] = React.useState(null)
 
     React.useEffect(() => {
-        if (user) {
+        if (fetchedUser) {
             axios
                 .get(FETCH_USER_PROFILE(user.id))
                 .then((res) => {
+                    console.log('here', res)
                     const user: IUserProfile = res.data
                     if (router?.asPath && !(user.instagramId && user.instagramToken)) {
                         const parseAsPath = qs.parse(router.asPath)
                         if (parseAsPath['/?code']) {
                             const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
+                            console.log(authorizationCode)
 
                             const formData = new FormData()
                             formData.append('client_id', INSTAGRAM_CLIENT_ID)
@@ -67,8 +68,10 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fe
                                     }
                                 }
                             ).then(res => {
+                                console.log(res)
                                 user.instagramId = res?.data?.user_id
                                 user.instagramToken = res?.data?.access_token
+                                console.log(user)
                                 return user
                             })
                         }
@@ -76,10 +79,14 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fe
                     return user
                 })
                 .then(user => {
+                    console.log('second', user)
                     setUser(user)
                 })
                 .catch((err) => console.log(err))
         }
+    }, [fetchedUser])
+
+    React.useEffect(() => {
         if (preferredLocation) {
             axios
                 .post(FETCH_HOME, {
