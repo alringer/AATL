@@ -58,7 +58,7 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fe
                             formData.append('code', authorizationCode)
                             formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
 
-                            axios.post(
+                            return axios.post(
                                 'https://api.instagram.com/oauth/access_token',
                                 formData,
                                 {
@@ -69,10 +69,13 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fe
                             ).then(res => {
                                 user.instagramId = res?.data?.instagramId
                                 user.instagramToken = res?.data?.instagramToken
+                                return user
                             })
                         }
                     }
-                    console.log(user)
+                    return user
+                })
+                .then(user => {
                     setUser(user)
                 })
                 .catch((err) => console.log(err))
