@@ -39,6 +39,8 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, fetchedUser }) => {
     const [homeData, setHomeData] = React.useState<IHomepage | null>(null)
     const [user, setUser] = React.useState(null)
 
+    console.log(fetchedUser, user)
+
     React.useEffect(() => {
         if (fetchedUser) {
             axios
