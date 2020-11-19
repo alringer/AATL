@@ -27,40 +27,15 @@ type ParsedToken = KeycloakTokenParsed & {
 
 interface IReduxProps {
     preferredLocation: ILocationInformation | null
+    instagramUserData: any | null
 }
 
 interface IIndexProps extends IReduxProps, IWithAuthInjectedProps { }
 
-const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
+const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData }) => {
     const [homeData, setHomeData] = React.useState<IHomepage | null>(null)
 
     const router = useRouter()
-    if (router?.asPath) {
-        const parseAsPath = qs.parse(router.asPath)
-        if (parseAsPath['/?code']) {
-            const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
-
-            const formData = new FormData()
-            formData.append('client_id', INSTAGRAM_CLIENT_ID)
-            formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
-            formData.append('grant_type', 'authorization_code')
-            formData.append('code', authorizationCode)
-            formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
-
-            axios.post(
-                'https://api.instagram.com/oauth/access_token',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            ).then(res => {
-                console.log(res['access_token'])
-                return res['access_token']
-            })
-        }
-    }
 
     React.useEffect(() => {
         if (preferredLocation) {
@@ -73,6 +48,32 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
                     setHomeData(res.data)
                 })
                 .catch((err) => console.log(err))
+        }
+        if (!instagramUserData && router?.asPath) {
+            const parseAsPath = qs.parse(router.asPath)
+            if (parseAsPath['/?code']) {
+                const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
+
+                const formData = new FormData()
+                formData.append('client_id', INSTAGRAM_CLIENT_ID)
+                formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
+                formData.append('grant_type', 'authorization_code')
+                formData.append('code', authorizationCode)
+                formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
+
+                axios.post(
+                    'https://api.instagram.com/oauth/access_token',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                ).then(res => {
+                    instagramUserData = res?.data
+                    console.log(instagramUserData)
+                })
+            }
         }
     }, [preferredLocation])
 
