@@ -67,8 +67,8 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, instagramUserData, fe
                                     }
                                 }
                             ).then(res => {
-                                user.instagramId = res?.data?.instagramId
-                                user.instagramToken = res?.data?.instagramToken
+                                user.instagramId = res?.data?.user_id
+                                user.instagramToken = res?.data?.access_token
                                 return user
                             })
                         }
