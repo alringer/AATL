@@ -2,11 +2,8 @@ import HomeCarousel from 'components/Home/HomeCarousel/HomeCarousel'
 import HomeNewRecommendations from 'components/Home/HomeNewRecommendations/HomeNewRecommendations'
 import HomeBanner from 'components/HomeComponents/HomeBanner/HomeBanner'
 import MostRecommended from 'components/HomeComponents/MostRecommended/MostRecommended'
-import axios, { FETCH_HOME, FETCH_USER_PROFILE } from 'config/AxiosConfig'
-import { INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
+import axios, { FETCH_HOME } from 'config/AxiosConfig'
 import { KeycloakTokenParsed } from 'keycloak-js'
-import { useRouter } from 'next/router'
-import qs from 'querystring'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -15,7 +12,6 @@ import { ILocationInformation } from 'store/location/location_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IHomepage } from 'utilities/types/homepage'
-import { IUserProfile } from 'utilities/types/userProfile'
 import EmailSubscription from '../src/components/EmailSubscription/EmailSubscription'
 
 type ParsedToken = KeycloakTokenParsed & {
@@ -27,66 +23,13 @@ type ParsedToken = KeycloakTokenParsed & {
 }
 
 interface IReduxProps {
-    fetchedUser: IUserProfile | null
     preferredLocation: ILocationInformation | null
 }
 
-interface IIndexProps extends IReduxProps, IWithAuthInjectedProps { }
+interface IIndexProps extends IReduxProps, IWithAuthInjectedProps {}
 
-const Index: React.FC<IIndexProps> = ({ preferredLocation, fetchedUser }) => {
-    const router = useRouter()
-
+const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
     const [homeData, setHomeData] = React.useState<IHomepage | null>(null)
-    const [user, setUser] = React.useState(null)
-
-    console.log(fetchedUser, user)
-
-    React.useEffect(() => {
-        if (fetchedUser) {
-            axios
-                .get(FETCH_USER_PROFILE(user.id))
-                .then((res) => {
-                    console.log('here', res)
-                    const user: IUserProfile = res.data
-                    if (router?.asPath && !(user.instagramId && user.instagramToken)) {
-                        const parseAsPath = qs.parse(router.asPath)
-                        if (parseAsPath['/?code']) {
-                            const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
-                            console.log(authorizationCode)
-
-                            const formData = new FormData()
-                            formData.append('client_id', INSTAGRAM_CLIENT_ID)
-                            formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
-                            formData.append('grant_type', 'authorization_code')
-                            formData.append('code', authorizationCode)
-                            formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
-
-                            return axios.post(
-                                'https://api.instagram.com/oauth/access_token',
-                                formData,
-                                {
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data'
-                                    }
-                                }
-                            ).then(res => {
-                                console.log(res)
-                                user.instagramId = res?.data?.user_id
-                                user.instagramToken = res?.data?.access_token
-                                console.log(user)
-                                return user
-                            })
-                        }
-                    }
-                    return user
-                })
-                .then(user => {
-                    console.log('second', user)
-                    setUser(user)
-                })
-                .catch((err) => console.log(err))
-        }
-    }, [fetchedUser])
 
     React.useEffect(() => {
         if (preferredLocation) {
@@ -114,13 +57,13 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation, fetchedUser }) => {
                 }
                 initialPage={
                     homeData?.newRecommendations?.pageable?.pageNumber !== undefined &&
-                        homeData?.newRecommendations?.pageable?.pageNumber !== null
+                    homeData?.newRecommendations?.pageable?.pageNumber !== null
                         ? homeData.newRecommendations?.pageable?.pageNumber
                         : 0
                 }
                 initialPageSize={
                     homeData?.newRecommendations?.pageable?.pageSize !== undefined &&
-                        homeData?.newRecommendations?.pageable?.pageSize !== null
+                    homeData?.newRecommendations?.pageable?.pageSize !== null
                         ? homeData?.newRecommendations?.pageable?.pageSize
                         : 3
                 }

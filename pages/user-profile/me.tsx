@@ -10,14 +10,14 @@ interface IServerSideProps {
 }
 interface IUserProfileProps extends IServerSideProps { }
 
-const UserProfileIdPage: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
+const UserProfileMePage: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
     return (
         <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const userID = context && context.params ? context.params.id : null
+    const userID = 1354
     const venueListMetaId = context.query.v
     const inputUserID = Number(userID)
     let user = null
@@ -37,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 }
 
-export default UserProfileIdPage
+export default UserProfileMePage
