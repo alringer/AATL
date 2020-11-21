@@ -21,6 +21,7 @@ interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps { }
 
 const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
     const router = useRouter()
+    console.log(router)
 
     React.useEffect(() => {
         if (router?.asPath && !(user.instagramId && user.instagramToken)) {
