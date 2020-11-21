@@ -160,7 +160,6 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                 {
                                     <UserProfileInstagramContainer
                                         href={instagramLink}
-                                        target="_blank"
                                         disabled={instagramLink ? false : true}
                                     >
                                         <UserProfileInstagramIconImg
