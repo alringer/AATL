@@ -42,7 +42,6 @@ const UserProfile: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId
     }, [])
 
     const fetchUser = () => {
-        console.log('user', user)
         if (user) {
             axios
                 .get(FETCH_USER_PROFILE(user.id))
@@ -55,7 +54,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId
 
     return (
         <>
-            {user !== null ? (
+            {user ? (
                 <>
                     <UserProfileBanner user={user} fetchUser={fetchUser} />
                     <UserProfileLists user={user} venueListMetaId={venueListMetaId} />

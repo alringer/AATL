@@ -53,7 +53,7 @@ import {
     SearchToggleButton,
     SignedInMenuItemsContainer,
     SignUpButton,
-    UserIconContainer,
+    UserIconContainer
 } from './Header.style'
 
 interface IReduxProps {
@@ -61,7 +61,7 @@ interface IReduxProps {
     userRole: string | null
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
 }
-interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps {}
+interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps { }
 
 const Header: React.FC<IHeaderProps> = ({
     user,
@@ -247,8 +247,8 @@ const Header: React.FC<IHeaderProps> = ({
                             <Image src={SearchSVG} alt="logo" />
                         </SearchToggleButton>
                     ) : (
-                        <HeaderSearch handleCloseSearch={handleCloseSearch} />
-                    )}
+                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                        )}
                 </MenuItemContainer>
             )}
         </MenuItemsContainer>
@@ -278,8 +278,8 @@ const Header: React.FC<IHeaderProps> = ({
                                 <Image src={MobileSearchSvg} alt="" />
                             </IconButton>
                         ) : (
-                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
-                        )}
+                                <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                            )}
                     </MobileIconContainer>
                 )}
                 <MobileIconContainer>
@@ -317,7 +317,7 @@ const Header: React.FC<IHeaderProps> = ({
                             <Link
                                 href={
                                     user && user.id !== undefined && user.id !== null
-                                        ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                                        ? `${R.ROUTE_ITEMS.userProfile}/me`
                                         : ``
                                 }
                                 passHref
@@ -334,16 +334,16 @@ const Header: React.FC<IHeaderProps> = ({
                         </MenuItemRow>
                     </>
                 ) : (
-                    <>
-                        {/* TODO: Add sign up modal  */}
-                        <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
-                            <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
-                        </MenuItemRow>
-                        <MenuItemRow onClick={handleOpenLogin}>
-                            <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
-                        </MenuItemRow>
-                    </>
-                )}
+                        <>
+                            {/* TODO: Add sign up modal  */}
+                            <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
+                                <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
+                            </MenuItemRow>
+                            <MenuItemRow onClick={handleOpenLogin}>
+                                <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
+                            </MenuItemRow>
+                        </>
+                    )}
             </MenuItemsSectionRow>
             {userRole === UserRoleEnum.Admin ? (
                 <MenuItemsSectionRow>

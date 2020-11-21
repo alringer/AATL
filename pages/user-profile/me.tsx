@@ -1,40 +1,47 @@
 import UserProfile from 'components/UserProfile/UserProfile'
-import axios, { FETCH_USER_PROFILE } from 'config/AxiosConfig'
+import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import React from 'react'
+import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { StoreState } from 'store'
+import { fetchUser } from 'store/user/user_actions'
+import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IServerSideProps {
-    fetchedUser: IUserProfile | null
+    fetchUser: (keycloak: KeycloakInstance) => void
+    user: IUserProfile
     venueListMetaId: number | null
 }
-interface IUserProfileProps extends IServerSideProps { }
+interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps { }
 
-const UserProfileMePage: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
+const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
     return (
-        <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
+        <>
+            {user ? (<UserProfile fetchedUser={user} venueListMetaId={venueListMetaId}></UserProfile>) : null}
+        </>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const userID = 1354
     const venueListMetaId = context.query.v
-    const inputUserID = Number(userID)
-    let user = null
-    if (userID !== undefined) {
-        await axios
-            .get(FETCH_USER_PROFILE(inputUserID))
-            .then((res) => {
-                user = res.data
-            })
-            .catch((err) => console.log(err))
-    }
+    console.log('there', venueListMetaId)
     return {
         props: {
-            fetchedUser: user ? user : null,
             venueListMetaId: venueListMetaId !== undefined && venueListMetaId !== null ? Number(venueListMetaId) : null,
         },
     }
 }
 
-export default UserProfileMePage
+const mapStateToProps = (state: StoreState) => ({
+    user: state.userReducer.user
+})
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            fetchUser,
+        },
+        dispatch
+    )
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(UserProfileMePage))
