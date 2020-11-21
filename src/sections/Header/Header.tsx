@@ -191,7 +191,7 @@ const Header: React.FC<IHeaderProps> = ({
                 <Link
                     href={
                         user && user.id !== undefined && user.id !== null
-                            ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
+                            ? `${R.ROUTE_ITEMS.userProfile}/me`
                             : ``
                     }
                     passHref
