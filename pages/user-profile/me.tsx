@@ -1,5 +1,4 @@
 import UserProfile from 'components/UserProfile/UserProfile'
-import { INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -21,24 +20,15 @@ interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps { }
 
 const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
     const router = useRouter()
-    console.log(router)
 
-    React.useEffect(() => {
-        if (router?.asPath && !(user?.instagramId && user?.instagramToken)) {
-            const parseAsPath = qs.parse(router.asPath)
-            if (parseAsPath['/?code']) {
-                const authorizationCode: string = (parseAsPath['/?code'] as string).replace('#_', '')
-                console.log(authorizationCode)
-
-                const formData = new FormData()
-                formData.append('client_id', INSTAGRAM_CLIENT_ID)
-                formData.append('client_secret', INSTAGRAM_CLIENT_SECRET)
-                formData.append('grant_type', 'authorization_code')
-                formData.append('code', authorizationCode)
-                formData.append('redirect_uri', INSTAGRAM_REDIRECT_URI)
-            }
+    if (router?.asPath && !(user?.instagramId && user?.instagramToken)) {
+        const parseAsPath = qs.parse(router.asPath.replace(`${router.pathname}?`, ''))
+        console.log(parseAsPath)
+        if (parseAsPath['code'][0]) {
+            const authorizationCode: string = (parseAsPath['code'][0] as string).replace('#_', '')
+            console.log(authorizationCode)
         }
-    }, [user])
+    }
 
     return (
         <>
