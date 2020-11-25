@@ -1,4 +1,5 @@
 import UserProfile from 'components/UserProfile/UserProfile'
+import axios, { FETCH_USER_PROFILE_INSTAGRAM_DATA } from 'config/AxiosConfig'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -20,13 +21,18 @@ interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps { }
 
 const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
     const router = useRouter()
+    const [setUser] = React.useState(null)
 
     if (router?.asPath && !(user?.instagramId && user?.instagramToken)) {
         const parseAsPath = qs.parse(router.asPath.replace(`${router.pathname}?`, ''))
-        console.log(parseAsPath)
         if (parseAsPath['code'][0]) {
             const authorizationCode: string = (parseAsPath['code'][0] as string).replace('#_', '')
-            console.log(authorizationCode)
+            axios
+                .put(FETCH_USER_PROFILE_INSTAGRAM_DATA(user.id), authorizationCode)
+                .then((res) => {
+                    setUser(res.data)
+                })
+                .catch((err) => console.log(err))
         }
     }
 

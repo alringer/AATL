@@ -28,9 +28,8 @@ export const REGISTER_VIEW = (id: number) => {
     return `/venues/${id}/register-view`
 }
 export const FETCH_RESTAURANT = (restaurantID: number, recommendationID?: number) => {
-    return `/venues/${restaurantID}${
-        recommendationID !== null && recommendationID !== undefined ? `?recommendationId=${recommendationID}` : ''
-    }`
+    return `/venues/${restaurantID}${recommendationID !== null && recommendationID !== undefined ? `?recommendationId=${recommendationID}` : ''
+        }`
 }
 export const PAGINATE_RECOMMENDATIONS = (restaurantID: number, page: number) => {
     return `/venues/${restaurantID}/recommendations?page=${page}&size=3&sort=createdAt,DESC`
@@ -120,7 +119,7 @@ export const FEATURE_LIST = (recommendationListMetaId: number) => {
     return `/recommendation-list-metas/${recommendationListMetaId}/featured-list`
 }
 
-export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) =>  {
+export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) => {
     return `/recommendation-list-metas/details?page=${page}&size=${pageSize}&sort=updatedAt,DESC`
 }
 
@@ -138,6 +137,9 @@ export const FETCH_USER_PROFILE = (userID: number) => {
 }
 export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
     return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
+}
+export const FETCH_USER_PROFILE_INSTAGRAM_DATA = (userID: number) => {
+    return `/user-profiles/${userID}/integrate-instagram`
 }
 
 // Image Upload
