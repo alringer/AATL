@@ -82,7 +82,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         })
         setViewedUser(user)
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
-        setInstagramLink(user.instagramId ?
+        setInstagramLink(user.instagramId && user.instagramToken ?
             `https://instagram.com/${viewedUser.instagramId}` :
             `https://api.instagram.com/oauth/authorize?client_id=${INSTAGRAM_CLIENT_ID}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
         )
