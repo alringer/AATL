@@ -24,7 +24,7 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId,
     const router = useRouter()
     const [setUser] = React.useState(null)
 
-    if (router?.asPath && user && !(user?.instagramId && user?.instagramToken)) {
+    if (router?.asPath && user && !user?.instagramToken) {
         const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
         if (parseAsPath['?code']) {
             const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
