@@ -37,7 +37,7 @@ import {
     ListModalMainContentContainer,
     ListModalNavigationButton,
     ListModalTitleText,
-    SubmitButton,
+    SubmitButton
 } from './ListModal.style'
 
 interface IReduxProps {
@@ -102,6 +102,7 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
         switchView(ListModalViewEnum.AddToNewRestaurantList)
     }
     const handleAddPlace = () => {
+        console.log(getTokenConfig())
         if (placeID !== null) {
             const targetList: IVenueListMeta = restaurantLists.find(
                 (restaurantList: IVenueListMeta) => restaurantList.id === selectedListID
@@ -205,8 +206,8 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
                             </ListModalCardButton>
                         ))
                     ) : (
-                        <p>{S.LIST_MODAL.AddToRestaurant.EmptyMessage}</p>
-                    )}
+                                <p>{S.LIST_MODAL.AddToRestaurant.EmptyMessage}</p>
+                            )}
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) => (
                             <>

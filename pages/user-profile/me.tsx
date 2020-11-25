@@ -14,21 +14,28 @@ import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IServerSideProps {
     fetchUser: (keycloak: KeycloakInstance) => void
+    getTokenConfig: () => string
     user: IUserProfile
     venueListMetaId: number | null
 }
 interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps { }
 
-const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId }) => {
+const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId, getTokenConfig }) => {
     const router = useRouter()
     const [setUser] = React.useState(null)
 
-    if (router?.asPath && !(user?.instagramId && user?.instagramToken)) {
-        const parseAsPath = qs.parse(router.asPath.replace(`${router.pathname}?`, ''))
-        if (parseAsPath['code'][0]) {
-            const authorizationCode: string = (parseAsPath['code'][0] as string).replace('#_', '')
+    if (router?.asPath && user && !(user?.instagramId && user?.instagramToken)) {
+        const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
+        if (parseAsPath['?code']) {
+            const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
+            const config = {
+                headers: {
+                    Authorization: getTokenConfig(),
+                    'Content-Type': 'text/plain'
+                },
+            }
             axios
-                .put(FETCH_USER_PROFILE_INSTAGRAM_DATA(user.id), authorizationCode)
+                .put(FETCH_USER_PROFILE_INSTAGRAM_DATA(user?.id), authorizationCode, config)
                 .then((res) => {
                     setUser(res.data)
                 })
@@ -47,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const venueListMetaId = context.query.v
     return {
         props: {
-            venueListMetaId: venueListMetaId !== undefined && venueListMetaId !== null ? Number(venueListMetaId) : null,
+            venueListMetaId: venueListMetaId ? Number(venueListMetaId) : null,
         },
     }
 }

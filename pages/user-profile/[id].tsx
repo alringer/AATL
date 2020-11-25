@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             fetchedUser: user ? user : null,
-            venueListMetaId: venueListMetaId !== undefined && venueListMetaId !== null ? Number(venueListMetaId) : null,
+            venueListMetaId: venueListMetaId ? Number(venueListMetaId) : null,
         },
     }
 }
