@@ -1,5 +1,5 @@
 import UserProfile from 'components/UserProfile/UserProfile'
-import axios, { FETCH_USER_PROFILE_INSTAGRAM_DATA } from 'config/AxiosConfig'
+import axios, { FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -35,7 +35,7 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({ user, venueListMetaId,
                 },
             }
             axios
-                .put(FETCH_USER_PROFILE_INSTAGRAM_DATA(user?.id), authorizationCode, config)
+                .post(FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(user?.id), authorizationCode, config)
                 .then((res) => {
                     setUser(res.data)
                 })

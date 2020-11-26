@@ -138,8 +138,8 @@ export const FETCH_USER_PROFILE = (userID: number) => {
 export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
     return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
 }
-export const FETCH_USER_PROFILE_INSTAGRAM_DATA = (userID: number) => {
-    return `/user-profiles/${userID}/integrate-instagram`
+export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
+    return `/user-profiles/${userID}/instagram/authorize`
 }
 
 // Image Upload
