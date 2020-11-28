@@ -38,20 +38,19 @@ phases:
       # - command
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password | docker login --username AWS --password-stdin 911122545055.dkr.ecr.us-east-2.amazonaws.com
-      - AWS_CONFIG_FILE=$(readlink -e aws-containers/config) && aws ecr describe-images  --repository-name aatl-web
+      - aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
       #- exit 1
-      
   build:
     commands:
       - echo $(date)
-      - docker build -f Dockerfile -t aatl-web:latest .
-      # - command
+      - docker build -t ${ECR_REPO_NAME}:${VERSION_TAG} --build-arg AWS_REGION --build-arg AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY .
+      - docker tag ${ECR_REPO_NAME}:${VERSION_TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
+      - docker tag ${ECR_REPO_NAME}:${VERSION_TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:latest
   post_build:
     commands:
-      - docker tag aatl-web:latest 911122545055.dkr.ecr.us-east-2.amazonaws.com/aatl-web:latest
-      - docker push 911122545055.dkr.ecr.us-east-2.amazonaws.com/aatl-web:latest
-      - AWS_CONFIG_FILE=$(readlink -e aws-containers/config) && aws ecr describe-images  --repository-name aatl-web
+      - echo Pushing the Docker image...
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:latest
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
 #reports:
   #report-name-or-arn:
     #files:
