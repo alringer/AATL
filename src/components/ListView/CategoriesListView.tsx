@@ -42,9 +42,8 @@ const CategoriesListView: NextPage<ICategoriesListViewProps> = ({ categoryList }
                     {slicedList.map((category: ICategory) => {
                         return (
                             <ListViewRegionContainer key={category.id}>
-                                {/* TODO: Send the user to the search page with the proper query parameters in the url */}
                                 <Link
-                                    href={`${R.ROUTE_ITEMS.search}?place=${category.longName}`}
+                                    href={`${R.ROUTE_ITEMS.search}?place=${category.longName}&categoryID=${category.id}`}
                                     passHref={true}
                                     prefetch={false}
                                 >

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import SearchIcon from 'assets/lightSearch.svg'
 import Image from 'components/Image/Image'
 import { PlaceholderContainer, PlaceholderTextBold, PlaceholderTextNormal } from 'components/Search/Search.style'
@@ -33,14 +34,23 @@ interface IReduxProps {
 }
 interface ISearchFullProps extends IReduxProps {
     inputPlace: string | null
+    inputCategoryID: string | null
     inputAddress: string | null
     inputLat: string | null
     inputLng: string | null
-    handleSearch: (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => void
+    handleSearch: (
+        place?: string,
+        categoryID?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        sort?: SortEnum
+    ) => void
 }
 
 const SearchFull: React.FC<ISearchFullProps> = ({
     inputPlace,
+    inputCategoryID,
     inputAddress,
     inputLat,
     inputLng,
@@ -51,9 +61,13 @@ const SearchFull: React.FC<ISearchFullProps> = ({
     setPreferredLocation,
 }) => {
     const [place, setPlace] = React.useState(inputPlace ? inputPlace : '')
+    const [categoryID, setCategoryID] = React.useState(inputCategoryID ? inputCategoryID : '')
     const [address, setAddress] = React.useState(inputAddress ? inputAddress : '')
     const [selectedAddress, setSelectedAddress] = React.useState(null)
     const predictions = useAddressPredictions(address)
+    const filterOptions = createFilterOptions({
+        matchFrom: 'start',
+    })
 
     const isClient = typeof window === 'object'
     const geocoder = React.useRef()
@@ -63,6 +77,11 @@ const SearchFull: React.FC<ISearchFullProps> = ({
             setPlace(inputPlace)
         }
     }, [inputPlace])
+    React.useEffect(() => {
+        if (inputCategoryID) {
+            setCategoryID(inputCategoryID)
+        }
+    }, [inputCategoryID])
     React.useEffect(() => {
         if (inputAddress) {
             setAddress(inputAddress)
@@ -136,8 +155,10 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         if (e && e.target) {
             if (e.target.value) {
                 setPlace(String(e.target.value))
+                setCategoryID(null)
             } else if (e.target.value === '') {
                 setPlace('')
+                setCategoryID(null)
             }
         }
         e.stopPropagation()
@@ -206,18 +227,18 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                                 lat: geocodeLat,
                                 lng: geocodeLng,
                             })
-                            handleSearch(place, geocode[0].formatted_address, geocodeLat, geocodeLng)
+                            handleSearch(place, categoryID, geocode[0].formatted_address, geocodeLat, geocodeLng)
                         }
                     })
                 } else {
-                    handleSearch(place, address, preferredLocation?.lat, preferredLocation?.lng)
+                    handleSearch(place, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
                 }
             } else {
-                handleSearch(place, address, preferredLocation?.lat, preferredLocation?.lng)
+                handleSearch(place, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
             }
         } else {
             // Selected address exists
-            handleSearch(place, address, selectedAddress?.lat, selectedAddress?.lng)
+            handleSearch(place, categoryID, address, selectedAddress?.lat, selectedAddress?.lng)
         }
     }
 
@@ -241,12 +262,15 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                         ? categories
                         : []
                 }
+                filterOptions={filterOptions}
                 getOptionLabel={(option) => (typeof option === 'string' ? option : option.longName)}
                 onChange={(event, value) => {
                     if (value.longName) {
                         setPlace(value.longName)
+                        setCategoryID(value.id)
                     } else {
                         setPlace(value)
+                        setCategoryID(null)
                     }
                 }}
                 onInputChange={handlePlaceChange}
@@ -255,7 +279,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                     if (option.longName) {
                         return <SuggestionOption id="suggestion">{option.longName}</SuggestionOption>
                     } else {
-                        return <SuggestionOption id="suggestion">{option}</SuggestionOption>
+                        return <SuggestionOption id="suggestion">Search '{option}'</SuggestionOption>
                     }
                 }}
                 renderInput={(params) => (

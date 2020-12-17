@@ -26,18 +26,26 @@ import {
     SearchWorkBenchPaginationFilterText,
     SearchWorkBenchPlaceCardContainer,
     SearchWorkBenchSubTitle,
-    SearchWorkBenchTitle
+    SearchWorkBenchTitle,
 } from './SearchWorkBench.style'
 
 interface ISearchWorkBenchProps {
     inputPlace: string | null
+    inputCategoryID: string | null
     inputAddress: string | null
     inputLat: string | null
     inputLng: string | null
     inputSort: string | null
     searchResults: IVenue[]
     topCategories: ICategory[]
-    handleSearch: (place?: string, address?: string, lat?: string, lng?: string, sort?: SortEnum) => void
+    handleSearch: (
+        place?: string,
+        categoryID?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        sort?: SortEnum
+    ) => void
     openSearchModal: () => void
 }
 
@@ -64,6 +72,7 @@ const useStyles = makeStyles(() =>
 
 const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     inputPlace,
+    inputCategoryID,
     inputAddress,
     inputLat,
     inputLng,
@@ -93,7 +102,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
 
     const handleChangeFilter = (event: React.ChangeEvent<{ value: SortEnum }>) => {
         setFilter(event.target.value)
-        handleSearch(inputPlace, inputAddress, inputLat, inputLng, event.target.value)
+        handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, event.target.value)
     }
 
     return (
@@ -115,6 +124,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <SearchWorkBenchInputsContainer>
                         <SearchFull
                             inputPlace={inputPlace}
+                            inputCategoryID={inputCategoryID}
                             inputAddress={inputAddress}
                             inputLat={inputLat}
                             inputLng={inputLng}
@@ -122,26 +132,28 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                         />
                     </SearchWorkBenchInputsContainer>
 
-                    {searchResults && searchResults.length > 0 && <SearchWorkBenchPaginationFilterContainer id={searchResults.length > 0 ? 'active' : 'inactive'}>
-                        <SearchWorkBenchPaginationFilterText>SORT BY </SearchWorkBenchPaginationFilterText>
-                        <FormControl className={classes.formControl}>
-                            <Select
-                                className={classes.select}
-                                value={filter}
-                                onChange={handleChangeFilter}
-                                disabled={!(searchResults.length > 0)}
-                                disableUnderline
-                            >
-                                {sortOptions.map((option: SortOption) => {
-                                    return (
-                                        <MenuItem value={option.value} key={option.label}>
-                                            {option.label}
-                                        </MenuItem>
-                                    )
-                                })}
-                            </Select>
-                        </FormControl>
-                    </SearchWorkBenchPaginationFilterContainer>}
+                    {searchResults && searchResults.length > 0 && (
+                        <SearchWorkBenchPaginationFilterContainer id={searchResults.length > 0 ? 'active' : 'inactive'}>
+                            <SearchWorkBenchPaginationFilterText>SORT BY </SearchWorkBenchPaginationFilterText>
+                            <FormControl className={classes.formControl}>
+                                <Select
+                                    className={classes.select}
+                                    value={filter}
+                                    onChange={handleChangeFilter}
+                                    disabled={!(searchResults.length > 0)}
+                                    disableUnderline
+                                >
+                                    {sortOptions.map((option: SortOption) => {
+                                        return (
+                                            <MenuItem value={option.value} key={option.label}>
+                                                {option.label}
+                                            </MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </SearchWorkBenchPaginationFilterContainer>
+                    )}
                     {searchResults && searchResults.length > 0 ? (
                         <>
                             {searchResults.map((searchResult: IVenue, index: number) => {
@@ -187,7 +199,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <Media queries={query}>
                         {(matches) => (
                             <>
-                                { searchResults && searchResults.length > 0 && (
+                                {searchResults && searchResults.length > 0 && (
                                     <SearchCouldNotFind openSearchModal={openSearchModal} />
                                 )}
                             </>
