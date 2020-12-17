@@ -1,19 +1,21 @@
+import { CircularProgress } from '@material-ui/core'
+import Pagination from '@material-ui/lab/Pagination'
 import AdminFlaggedCard from 'components/Admin/AdminFlaggedContent/AdminFlaggedCard'
-import axios, { FLAGGED_RECOMMENDATIONS } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
-import parse from 'parse-link-header'
 import React from 'react'
-import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IFlaggedRecommendation } from 'utilities/types/flaggedRecommendation'
 import { AdminMenuPageSubTitle, AdminMenuPageTitle } from '../AdminShared.style'
 import {
+    AdminFlaggedContentAscendingSortIcon,
     AdminFlaggedContentAuthorColumn,
     AdminFlaggedContentContainer,
     AdminFlaggedContentDateFlaggedColumn,
+    AdminFlaggedContentDescendingSortIcon,
+    AdminFlaggedContentPaginationContainer,
     AdminFlaggedContentPlaceColumn,
     AdminFlaggedContentReasonColumn,
     AdminFlaggedContentReporterColumn,
-    AdminFlaggedContentSortIcon,
+    AdminFlaggedContentSortButton,
     AdminFlaggedContentTableContainer,
     AdminFlaggedContentTableHeaderRow,
 } from './AdminFlaggedContent.style'
@@ -51,47 +53,73 @@ const mockData = [
     },
 ]
 
-interface IAdminFlaggedContentProps extends IWithAuthInjectedProps {}
+interface IAdminFlaggedContentProps {
+    fetchFlaggedRecommendations: (page: number) => void
+    listFlaggedRecommendations: IFlaggedRecommendation[]
+    isLoadingFlaggedRecommendations: boolean
+    currentPage: number
+    currentPageCount: number
+}
 
-const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({ getTokenConfig }) => {
+const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
+    fetchFlaggedRecommendations,
+    listFlaggedRecommendations,
+    isLoadingFlaggedRecommendations,
+    currentPage,
+    currentPageCount,
+}) => {
     const [currentRecommendations, setCurrentRecommendations] = React.useState<IFlaggedRecommendation[]>([])
-    const [currentPage, setCurrentPage] = React.useState(0)
-    const [currentPageCount, setCurrentPageCount] = React.useState(0)
+    const [isDescendingReporter, setDescendingReporter] = React.useState(false)
+    const [isDescendingAuthor, setDescendingAuthor] = React.useState(false)
+    const [isDescendingDate, setDescendingDate] = React.useState(false)
+
+    enum ColumnEnum {
+        Reporter = 'Reporter',
+        Author = 'Author',
+        Date = 'Date',
+    }
+
+    // React.useEffect(() => {
+    //     fetchFlaggedRecommendations(0)
+    // }, [])
 
     React.useEffect(() => {
-        fetchFlaggedRecommendations(0)
-    }, [])
-
-    const fetchFlaggedRecommendations = (page: number) => {
-        const token = getTokenConfig()
-        const config = {
-            headers: {
-                Authorization: token,
-            },
-        }
-        axios
-            .get(FLAGGED_RECOMMENDATIONS(page), config)
-            .then((res) => {
-                let newRecommendations = []
-                if (res.data) {
-                    res.data.map((flaggedRecommendation: IFlaggedRecommendation) => {
-                        newRecommendations = [
-                            ...newRecommendations,
-                            { ...flaggedRecommendation, date: new Date(flaggedRecommendation.date) },
-                        ]
-                    })
-                }
-                setCurrentRecommendations(newRecommendations)
-                setCurrentPage(page + 1)
-                const parsedLinkHeader = parse(res.headers['link'])
-                const pageCount = Number(parsedLinkHeader.last.page) + 1
-                setCurrentPageCount(pageCount)
-            })
-            .catch((err) => console.log(err))
-    }
+        setCurrentRecommendations(listFlaggedRecommendations)
+    }, [listFlaggedRecommendations])
 
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
         fetchFlaggedRecommendations(value - 1)
+    }
+
+    const handleSort = (event: React.MouseEvent<HTMLElement>) => {
+        const targetEnum = event.currentTarget.id
+        switch (targetEnum) {
+            case ColumnEnum.Reporter:
+                const sortedByReporterRecommendations = sortByReporter(currentRecommendations, isDescendingReporter)
+                setDescendingReporter(!isDescendingReporter)
+                // setCurrentRecommendations(sortedByReporterRecommendations)
+                break
+            case ColumnEnum.Author:
+                const sortedByAuthorRecommendations = sortByAuthor(currentRecommendations, isDescendingAuthor)
+                setDescendingAuthor(!isDescendingAuthor)
+                // setCurrentRecommendations(sortedByAuthorRecommendations)
+                break
+            case ColumnEnum.Date:
+                const sortedByDateRecommendations = sortByDate(currentRecommendations, isDescendingDate)
+                setDescendingDate(!isDescendingDate)
+                // setCurrentRecommendations(sortedByDateRecommendations)
+                break
+        }
+    }
+
+    const sortByReporter = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
+        return []
+    }
+    const sortByAuthor = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
+        return []
+    }
+    const sortByDate = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
+        return []
     }
 
     return (
@@ -100,35 +128,78 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({ getTokenConf
             <AdminMenuPageSubTitle>{S.ADMIN_PAGE.AdminFlaggedContent.SubTitle}</AdminMenuPageSubTitle>
             <AdminFlaggedContentTableContainer>
                 <AdminFlaggedContentTableHeaderRow>
-                    <AdminFlaggedContentPlaceColumn>
+                    <AdminFlaggedContentPlaceColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminFlaggedContent.Place}
                     </AdminFlaggedContentPlaceColumn>
-                    <AdminFlaggedContentReporterColumn>
-                        {S.ADMIN_PAGE.AdminFlaggedContent.Reporter} <AdminFlaggedContentSortIcon />
+                    <AdminFlaggedContentReporterColumn isHeader={true}>
+                        {S.ADMIN_PAGE.AdminFlaggedContent.Reporter}{' '}
+                        {isDescendingReporter ? (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Reporter}>
+                                <AdminFlaggedContentAscendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        ) : (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Reporter}>
+                                <AdminFlaggedContentDescendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        )}
                     </AdminFlaggedContentReporterColumn>
-                    <AdminFlaggedContentAuthorColumn>
-                        {S.ADMIN_PAGE.AdminFlaggedContent.Author} <AdminFlaggedContentSortIcon />
+                    <AdminFlaggedContentAuthorColumn isHeader={true}>
+                        {S.ADMIN_PAGE.AdminFlaggedContent.Author}{' '}
+                        {isDescendingAuthor ? (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Author}>
+                                <AdminFlaggedContentAscendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        ) : (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Author}>
+                                <AdminFlaggedContentDescendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        )}
                     </AdminFlaggedContentAuthorColumn>
-                    <AdminFlaggedContentReasonColumn>
+                    <AdminFlaggedContentReasonColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminFlaggedContent.Reason}
                     </AdminFlaggedContentReasonColumn>
-                    <AdminFlaggedContentDateFlaggedColumn>
-                        {S.ADMIN_PAGE.AdminFlaggedContent.DateFlagged} <AdminFlaggedContentSortIcon />
+                    <AdminFlaggedContentDateFlaggedColumn isHeader={true}>
+                        {S.ADMIN_PAGE.AdminFlaggedContent.DateFlagged}{' '}
+                        {isDescendingDate ? (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Date}>
+                                <AdminFlaggedContentAscendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        ) : (
+                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Date}>
+                                <AdminFlaggedContentDescendingSortIcon />
+                            </AdminFlaggedContentSortButton>
+                        )}
                     </AdminFlaggedContentDateFlaggedColumn>
                 </AdminFlaggedContentTableHeaderRow>
-                {currentRecommendations
-                    ? currentRecommendations.map((flaggedRecommendation: IFlaggedRecommendation) => {
-                          return (
-                              <AdminFlaggedCard
-                                  flaggedRecommendation={flaggedRecommendation}
-                                  fetchFlaggedRecommendations={fetchFlaggedRecommendations}
-                              />
-                          )
-                      })
-                    : 'Empty'}
+                {isLoadingFlaggedRecommendations ? (
+                    <CircularProgress />
+                ) : currentRecommendations ? (
+                    currentRecommendations.map((flaggedRecommendation: IFlaggedRecommendation) => {
+                        return (
+                            <AdminFlaggedCard
+                                flaggedRecommendation={flaggedRecommendation}
+                                fetchFlaggedRecommendations={fetchFlaggedRecommendations}
+                                currentPage={currentPage}
+                            />
+                        )
+                    })
+                ) : (
+                    'Empty'
+                )}
             </AdminFlaggedContentTableContainer>
+            {isLoadingFlaggedRecommendations ? null : (
+                <AdminFlaggedContentPaginationContainer>
+                    <Pagination
+                        page={currentPage ? currentPage : 0}
+                        count={currentPageCount ? currentPageCount : 0}
+                        variant="outlined"
+                        shape="rounded"
+                        onChange={handlePagination}
+                    />
+                </AdminFlaggedContentPaginationContainer>
+            )}
         </AdminFlaggedContentContainer>
     )
 }
 
-export default withAuth(AdminFlaggedContent)
+export default AdminFlaggedContent

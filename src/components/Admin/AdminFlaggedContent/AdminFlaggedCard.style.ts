@@ -17,6 +17,8 @@ export const AdminFlaggedCardRecommendationContentContainer = styled.div`
     background-color: #fbf9f7;
 `
 export const AdminFlaggedCardRecommendationContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
     margin-bottom: 20px;
 `
 export const AdminFlaggedCardRecommendationButtonsContainer = styled.div`

@@ -1,7 +1,8 @@
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { CustomButton } from 'style/Button/Button.style'
-import styled from 'styled-components'
+import { CustomIconButton } from 'style/Button/IconButton.style'
+import styled, { css } from 'styled-components'
 
 export const AdminCitiesContainer = styled.div`
     display: flex;
@@ -42,28 +43,42 @@ export const AdminCitiesTableHeaderRow = styled.div`
     padding: 0 20px 14px 20px;
 `
 
-export const AdminCitiesImageColumn = styled.div`
+type HeaderProp = {
+    isHeader?: boolean,
+}
+
+export const AdminCitiesColumn = styled.div<HeaderProp>`
+    display: flex;
+    ${props => {
+        if (props.isHeader === true) {
+            return css`
+                align-items: center;
+            `
+        }
+    }}
+`
+
+export const AdminCitiesImageColumn = styled(AdminCitiesColumn)`
     width: 140px;
 
     margin-right: 40px;
 `
-export const AdminCitiesCityColumn = styled.div`
+export const AdminCitiesCityColumn = styled(AdminCitiesColumn)`
     width: 130px;
 
     margin-right: 40px;
 `
-export const AdminCitiesStateColumn = styled.div`
+export const AdminCitiesStateColumn = styled(AdminCitiesColumn)`
     width: 130px;
 
     margin-right: 50px;
 `
-export const AdminCitiesPlacesColumn = styled.div`
+export const AdminCitiesPlacesColumn = styled(AdminCitiesColumn)`
     width: 130px;
 
     margin-right: 30px;
 `
-export const AdminCitiesRecommendationsColumn = styled.div`
-    display: flex;
+export const AdminCitiesRecommendationsColumn = styled(AdminCitiesColumn)`
     width: 146px;
 `
 
@@ -96,14 +111,14 @@ export const AdminCitiesSearchButton = styled(CustomButton)`
     margin-left: 10px;
 `
 
-export const AdminCitiesRecommendationsAscendingSortIcon = styled(ArrowUpwardIcon)`
+export const AdminCitiesRecommendationsSortButton = styled(CustomIconButton)`
     margin-left: 5px;
+`
+
+export const AdminCitiesRecommendationsAscendingSortIcon = styled(ArrowUpwardIcon)`
     color: ${(props) => props.theme.mushroom};
-    cursor: pointer;
 `
 
 export const AdminCitiesRecommendationsDescendingSortIcon = styled(ArrowDownwardIcon)`
-    margin-left: 5px;
     color: ${(props) => props.theme.mushroom};
-    cursor: pointer;
 `
