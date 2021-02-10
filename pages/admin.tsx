@@ -27,7 +27,7 @@ interface IReduxProps {
 }
 interface IAdminProps extends IReduxProps, IWithAuthInjectedProps {}
 
-const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) => {
+const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, keycloak }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
     const { isMounted } = useAuth()
@@ -47,7 +47,11 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) =
     const [isLoadingRecommendationLists, setLoadingRecommendationLists] = React.useState(false)
 
     React.useEffect(() => {
-        if (isMounted === true && isLoading === false && userRole !== UserRoleEnum.Admin) {
+        if (
+            isMounted === true &&
+            isLoading === false &&
+            (userRole !== UserRoleEnum.Admin || keycloak.authenticated === false)
+        ) {
             router.push('/')
             enqueueSnackbar('', {
                 content: (
@@ -61,7 +65,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) =
                 ),
             })
         }
-    }, [userRole, isMounted, isLoading])
+    }, [userRole, isMounted, isLoading, keycloak])
 
     React.useEffect(() => {
         if (
