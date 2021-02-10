@@ -1,6 +1,6 @@
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import SortIcon from '@material-ui/icons/Sort'
+import Icon from '@mdi/react'
 import { CustomIconButton } from 'style/Button/IconButton.style'
 import styled, { css } from 'styled-components'
 
@@ -84,12 +84,6 @@ export const AdminFlaggedContentClickableText = styled.a`
     color: ${(props) => props.theme.darkSlateBlue};
 `
 
-export const AdminFlaggedContentSortIcon = styled(SortIcon)`
-    margin-left: 5px;
-    color: ${(props) => props.theme.mushroom};
-    cursor: pointer;
-`
-
 export const AdminFlaggedContentPaginationContainer = styled.div`
     display: flex;
     width: 100%;
@@ -109,4 +103,10 @@ export const AdminFlaggedContentAscendingSortIcon = styled(ArrowUpwardIcon)`
 
 export const AdminFlaggedContentDescendingSortIcon = styled(ArrowDownwardIcon)`
     color: ${(props) => props.theme.mushroom};
+`
+
+export const AdminFlaggedContentSortIcon = styled(Icon)`
+    /* margin-left: 5px; */
+    color: ${(props) => props.theme.mushroom};
+    /* cursor: pointer; */
 `

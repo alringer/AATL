@@ -69,7 +69,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
     const handleDelete = () => {
         const payload: OpenDeleteRecommendationModalPayload = {
             flaggedRecommendationID: flaggedRecommendation.id,
-            onSuccess: () => fetchFlaggedRecommendations(currentPage),
+            onSuccess: () => fetchFlaggedRecommendations(currentPage - 1),
         }
         openDeleteRecommendationModal(payload)
     }
@@ -90,7 +90,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
                 axios
                     .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendation.id), payload, config)
                     .then((res) => {
-                        fetchFlaggedRecommendations(currentPage)
+                        fetchFlaggedRecommendations(currentPage - 1)
                         enqueueSnackbar('', {
                             content: (
                                 <div>

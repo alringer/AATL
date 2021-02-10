@@ -1,9 +1,10 @@
 import { CircularProgress } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
+import { mdiSort } from '@mdi/js'
 import AdminFlaggedCard from 'components/Admin/AdminFlaggedContent/AdminFlaggedCard'
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import { IFlaggedRecommendation } from 'utilities/types/flaggedRecommendation'
+import { IFlaggedRecommendation, IFlaggedRecommendationSort } from 'utilities/types/flaggedRecommendation'
 import { AdminMenuPageSubTitle, AdminMenuPageTitle } from '../AdminShared.style'
 import {
     AdminFlaggedContentAscendingSortIcon,
@@ -16,45 +17,13 @@ import {
     AdminFlaggedContentReasonColumn,
     AdminFlaggedContentReporterColumn,
     AdminFlaggedContentSortButton,
+    AdminFlaggedContentSortIcon,
     AdminFlaggedContentTableContainer,
     AdminFlaggedContentTableHeaderRow,
 } from './AdminFlaggedContent.style'
 
-const mockData = [
-    {
-        place: 'Phuong Trang',
-        reporter: 'Josh Brogah',
-        author: 'Yoon',
-        reason: 'Inappropriate language in the description',
-        dateFlagged: 'April 10, 2020',
-    },
-    {
-        place: 'Phuong Trang',
-        reporter: 'Josh Brogah',
-        author: 'Yoon',
-        reason: 'Inappropriate language in the description',
-        dateFlagged: 'April 10, 2020',
-    },
-
-    {
-        place: 'Phuong Trang',
-        reporter: 'Josh Brogah',
-        author: 'Yoon',
-        reason: 'Inappropriate language in the description',
-        dateFlagged: 'April 10, 2020',
-    },
-
-    {
-        place: 'Phuong Trang',
-        reporter: 'Josh Brogah',
-        author: 'Yoon',
-        reason: 'Inappropriate language in the description',
-        dateFlagged: 'April 10, 2020',
-    },
-]
-
 interface IAdminFlaggedContentProps {
-    fetchFlaggedRecommendations: (page: number) => void
+    fetchFlaggedRecommendations: (page: number, sort: IFlaggedRecommendationSort) => void
     listFlaggedRecommendations: IFlaggedRecommendation[]
     isLoadingFlaggedRecommendations: boolean
     currentPage: number
@@ -69,9 +38,12 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
     currentPageCount,
 }) => {
     const [currentRecommendations, setCurrentRecommendations] = React.useState<IFlaggedRecommendation[]>([])
-    const [isDescendingReporter, setDescendingReporter] = React.useState(false)
-    const [isDescendingAuthor, setDescendingAuthor] = React.useState(false)
-    const [isDescendingDate, setDescendingDate] = React.useState(false)
+    const [currentSortEnum, setCurrentSortEnum] = React.useState<IFlaggedRecommendationSort>(
+        IFlaggedRecommendationSort.authorDesc
+    )
+    const [isHoveredReporter, setHoveredReporter] = React.useState(false)
+    const [isHoveredAuthor, setHoveredAuthor] = React.useState(false)
+    const [isHoveredDate, setHoveredDate] = React.useState(false)
 
     enum ColumnEnum {
         Reporter = 'Reporter',
@@ -79,47 +51,79 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
         Date = 'Date',
     }
 
-    // React.useEffect(() => {
-    //     fetchFlaggedRecommendations(0)
-    // }, [])
-
     React.useEffect(() => {
         setCurrentRecommendations(listFlaggedRecommendations)
     }, [listFlaggedRecommendations])
 
+    const handleMouseEnterSort = (e: React.MouseEvent<HTMLInputElement>) => {
+        const targetEnum = e.currentTarget.id
+        switch (targetEnum) {
+            case ColumnEnum.Reporter:
+                setHoveredReporter(true)
+                break
+            case ColumnEnum.Author:
+                setHoveredAuthor(true)
+                break
+            case ColumnEnum.Date:
+                setHoveredDate(true)
+                break
+        }
+    }
+
+    const handleMouseLeaveSort = (e: React.MouseEvent<HTMLInputElement>) => {
+        const targetEnum = e.currentTarget.id
+        switch (targetEnum) {
+            case ColumnEnum.Reporter:
+                setHoveredReporter(false)
+                break
+            case ColumnEnum.Author:
+                setHoveredAuthor(false)
+                break
+            case ColumnEnum.Date:
+                setHoveredDate(false)
+                break
+        }
+    }
+
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-        fetchFlaggedRecommendations(value - 1)
+        fetchFlaggedRecommendations(value - 1, currentSortEnum)
     }
 
     const handleSort = (event: React.MouseEvent<HTMLElement>) => {
         const targetEnum = event.currentTarget.id
         switch (targetEnum) {
             case ColumnEnum.Reporter:
-                const sortedByReporterRecommendations = sortByReporter(currentRecommendations, isDescendingReporter)
-                setDescendingReporter(!isDescendingReporter)
-                // setCurrentRecommendations(sortedByReporterRecommendations)
+                if (currentSortEnum === IFlaggedRecommendationSort.reporterDesc) {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.reporterAsc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.reporterAsc)
+                } else {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.reporterDesc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.reporterDesc)
+                }
                 break
             case ColumnEnum.Author:
-                const sortedByAuthorRecommendations = sortByAuthor(currentRecommendations, isDescendingAuthor)
-                setDescendingAuthor(!isDescendingAuthor)
-                // setCurrentRecommendations(sortedByAuthorRecommendations)
+                if (currentSortEnum === IFlaggedRecommendationSort.authorDesc) {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.authorAsc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.authorAsc)
+                } else {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.authorDesc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.authorDesc)
+                }
                 break
             case ColumnEnum.Date:
-                const sortedByDateRecommendations = sortByDate(currentRecommendations, isDescendingDate)
-                setDescendingDate(!isDescendingDate)
-                // setCurrentRecommendations(sortedByDateRecommendations)
+                if (currentSortEnum === IFlaggedRecommendationSort.dateDesc) {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.dateAsc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.dateAsc)
+                } else {
+                    setCurrentSortEnum(IFlaggedRecommendationSort.dateDesc)
+                    sortFlaggedRecommendations(IFlaggedRecommendationSort.dateDesc)
+                }
                 break
         }
     }
 
-    const sortByReporter = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
-        return []
-    }
-    const sortByAuthor = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
-        return []
-    }
-    const sortByDate = (inputRecommendations: IFlaggedRecommendation[], isDescending: boolean) => {
-        return []
+    const sortFlaggedRecommendations = (sort: IFlaggedRecommendationSort) => {
+        fetchFlaggedRecommendations(currentPage - 1, sort)
     }
 
     return (
@@ -132,43 +136,82 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
                         {S.ADMIN_PAGE.AdminFlaggedContent.Place}
                     </AdminFlaggedContentPlaceColumn>
                     <AdminFlaggedContentReporterColumn isHeader={true}>
-                        {S.ADMIN_PAGE.AdminFlaggedContent.Reporter}{' '}
-                        {isDescendingReporter ? (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Reporter}>
-                                <AdminFlaggedContentAscendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        ) : (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Reporter}>
+                        {S.ADMIN_PAGE.AdminFlaggedContent.Reporter}
+                        <AdminFlaggedContentSortButton
+                            onClick={handleSort}
+                            onMouseEnter={handleMouseEnterSort}
+                            onMouseLeave={handleMouseLeaveSort}
+                            id={ColumnEnum.Reporter}
+                        >
+                            {currentSortEnum === IFlaggedRecommendationSort.reporterDesc ? (
                                 <AdminFlaggedContentDescendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        )}
+                            ) : currentSortEnum === IFlaggedRecommendationSort.reporterAsc ? (
+                                <AdminFlaggedContentAscendingSortIcon />
+                            ) : isHoveredReporter ? (
+                                <AdminFlaggedContentDescendingSortIcon />
+                            ) : (
+                                <AdminFlaggedContentSortIcon
+                                    path={mdiSort}
+                                    title="Sort"
+                                    size={1}
+                                    vertical
+                                    rotate={360}
+                                />
+                            )}
+                        </AdminFlaggedContentSortButton>
                     </AdminFlaggedContentReporterColumn>
                     <AdminFlaggedContentAuthorColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminFlaggedContent.Author}{' '}
-                        {isDescendingAuthor ? (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Author}>
-                                <AdminFlaggedContentAscendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        ) : (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Author}>
+                        <AdminFlaggedContentSortButton
+                            onClick={handleSort}
+                            onMouseEnter={handleMouseEnterSort}
+                            onMouseLeave={handleMouseLeaveSort}
+                            id={ColumnEnum.Author}
+                        >
+                            {currentSortEnum === IFlaggedRecommendationSort.authorDesc ? (
                                 <AdminFlaggedContentDescendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        )}
+                            ) : currentSortEnum === IFlaggedRecommendationSort.authorAsc ? (
+                                <AdminFlaggedContentAscendingSortIcon />
+                            ) : isHoveredAuthor ? (
+                                <AdminFlaggedContentDescendingSortIcon />
+                            ) : (
+                                <AdminFlaggedContentSortIcon
+                                    path={mdiSort}
+                                    title="Sort"
+                                    size={1}
+                                    vertical
+                                    rotate={360}
+                                />
+                            )}
+                        </AdminFlaggedContentSortButton>
                     </AdminFlaggedContentAuthorColumn>
                     <AdminFlaggedContentReasonColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminFlaggedContent.Reason}
                     </AdminFlaggedContentReasonColumn>
                     <AdminFlaggedContentDateFlaggedColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminFlaggedContent.DateFlagged}{' '}
-                        {isDescendingDate ? (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Date}>
-                                <AdminFlaggedContentAscendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        ) : (
-                            <AdminFlaggedContentSortButton onClick={handleSort} id={ColumnEnum.Date}>
+                        <AdminFlaggedContentSortButton
+                            onClick={handleSort}
+                            onMouseEnter={handleMouseEnterSort}
+                            onMouseLeave={handleMouseLeaveSort}
+                            id={ColumnEnum.Date}
+                        >
+                            {currentSortEnum === IFlaggedRecommendationSort.dateDesc ? (
                                 <AdminFlaggedContentDescendingSortIcon />
-                            </AdminFlaggedContentSortButton>
-                        )}
+                            ) : currentSortEnum === IFlaggedRecommendationSort.dateAsc ? (
+                                <AdminFlaggedContentAscendingSortIcon />
+                            ) : isHoveredDate ? (
+                                <AdminFlaggedContentDescendingSortIcon />
+                            ) : (
+                                <AdminFlaggedContentSortIcon
+                                    path={mdiSort}
+                                    title="Sort"
+                                    size={1}
+                                    vertical
+                                    rotate={360}
+                                />
+                            )}
+                        </AdminFlaggedContentSortButton>
                     </AdminFlaggedContentDateFlaggedColumn>
                 </AdminFlaggedContentTableHeaderRow>
                 {isLoadingFlaggedRecommendations ? (
@@ -180,6 +223,7 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
                                 flaggedRecommendation={flaggedRecommendation}
                                 fetchFlaggedRecommendations={fetchFlaggedRecommendations}
                                 currentPage={currentPage}
+                                key={flaggedRecommendation.id}
                             />
                         )
                     })

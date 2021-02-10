@@ -23,7 +23,7 @@ const Provider = ({ children, cookies }) => {
             <SSRKeycloakProvider
                 keycloakConfig={keycloakCfg}
                 persistor={Persistors.Cookies(cookies)}
-                LoadingComponent={<div>Loading...</div>}
+                // LoadingComponent={<div>Loading...</div>}
                 autoRefreshToken={true}
             >
                 <StoreProvider store={store}>

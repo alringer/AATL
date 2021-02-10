@@ -18,7 +18,7 @@ import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { useAuth } from 'utilities/providers/AuthProvider'
 import { IAdminCity } from 'utilities/types/adminCity'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
-import { IFlaggedRecommendation } from 'utilities/types/flaggedRecommendation'
+import { IFlaggedRecommendation, IFlaggedRecommendationSort } from 'utilities/types/flaggedRecommendation'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IReduxProps {
@@ -77,7 +77,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) =
 
     React.useEffect(() => {
         fetchCities()
-        fetchFlaggedRecommendations(0)
+        fetchFlaggedRecommendations(0, IFlaggedRecommendationSort.dateDesc)
         fetchRecommendationLists()
     }, [])
 
@@ -100,7 +100,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) =
             })
     }
 
-    const fetchFlaggedRecommendations = (page: number) => {
+    const fetchFlaggedRecommendations = (page: number, sort: IFlaggedRecommendationSort) => {
         const token = getTokenConfig()
         const config = {
             headers: {
@@ -109,7 +109,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig }) =
         }
         setLoadingFlaggedRecommendations(true)
         axios
-            .get(FLAGGED_RECOMMENDATIONS(page), config)
+            .get(FLAGGED_RECOMMENDATIONS(page, sort), config)
             .then((res) => {
                 let newRecommendations = []
                 if (res.data) {
