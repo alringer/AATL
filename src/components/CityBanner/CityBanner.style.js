@@ -24,14 +24,19 @@ export const CityBannerImageContainer = styled.div`
         object-fit: cover;
     }
     ::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.25);
-        }
+        position: absolute;
+        content: '';
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+`
+
+export const CityBannerImage = styled.img`
+    width: 100%;
+    height: 100%;
 `
 
 export const CityName = styled.p`
@@ -41,7 +46,7 @@ export const CityName = styled.p`
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 
     position: absolute;
 

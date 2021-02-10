@@ -34,22 +34,19 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
     }, [recommendationLists])
 
     const handleRemove = (e) => {
-        console.log('Remove: ', e)
-        // fetchRecommendationLists()
+        if (featured) {
+            unfeatureList(e.item.id)
+        }
     }
 
     const handleAdd = (e) => {
         if (featured) {
             featureList(e.item.id, e.newIndex)
-        } else {
-            unfeatureList(e.item.id)
         }
     }
 
     const handleUpdate = (e) => {
-        console.log('Update: ', e)
         if (featured) {
-            console.log('Lists being sorted: ', lists)
             const token = getTokenConfig()
             const config = {
                 headers: {
@@ -69,7 +66,6 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
                 axios
                     .put(FEATURED_LISTS_WITH_ID(targetFeaturedListID), payload, config)
                     .then((res) => {
-                        console.log('Result from updating sort order: ', res)
                         fetchRecommendationLists()
                     })
                     .catch((err) => console.log(err))

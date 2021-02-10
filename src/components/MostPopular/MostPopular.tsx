@@ -1,7 +1,7 @@
 import InfiniteCarousel from 'components/InfiniteCarousel/InfiniteCarousel'
 import * as S from 'constants/StringConstants'
 import React from 'react'
-import { IInfiniteCarouselCard } from 'utilities/types/infiniteCarousel'
+import { IParentRegion } from 'utilities/types/parentRegion'
 import {
     MostPopularContainer,
     MostPopularHeaderContainer,
@@ -11,24 +11,26 @@ import {
 } from './MostPopular.style'
 
 interface IMostPopularProps {
-    places: IInfiniteCarouselCard[]
-    cityName: string
+    cityInformation: IParentRegion | null
 }
 
-const MostPopular: React.FC<IMostPopularProps> = ({ cityName, places }) => {
+const MostPopular: React.FC<IMostPopularProps> = ({ cityInformation }) => {
     return (
-        <MostPopularContainer>
-            <MostPopularHeaderContainer>
-                <MostPopularHeaderTitleText>
-                    {S.MOST_POPULAR.Title} {cityName}
-                </MostPopularHeaderTitleText>
-                <MostPopularHeaderSubTitleText>
-                    {S.MOST_POPULAR.SubTitle} {cityName}
-                </MostPopularHeaderSubTitleText>
-            </MostPopularHeaderContainer>
-            <InfiniteCarousel places={places} />
-            <ViewMoreButton>{S.BUTTON_LABELS.ViewMore}</ViewMoreButton>
-        </MostPopularContainer>
+        cityInformation?.mostPopularVenues.length > 0 && (
+            <MostPopularContainer>
+                <MostPopularHeaderContainer>
+                    <MostPopularHeaderTitleText>
+                        {S.MOST_POPULAR.Title} {cityInformation?.city}
+                    </MostPopularHeaderTitleText>
+                    <MostPopularHeaderSubTitleText>
+                        {S.MOST_POPULAR.SubTitle} {cityInformation?.city}
+                    </MostPopularHeaderSubTitleText>
+                </MostPopularHeaderContainer>
+                <InfiniteCarousel places={cityInformation?.mostPopularVenues} />
+                {/* TODO: View more button should scroll down to Local Places with Trending Places selected as the filter */}
+                <ViewMoreButton>{S.BUTTON_LABELS.ViewMore}</ViewMoreButton>
+            </MostPopularContainer>
+        )
     )
 }
 

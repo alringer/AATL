@@ -27,7 +27,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
     const { enqueueSnackbar } = useSnackbar()
     React.useEffect(() => {
         console.log('Venue Information Received: ', venueInformation)
-        if (venueInformation === null || venueInformation === undefined) {
+        if (!venueInformation) {
             enqueueSnackbar('', {
                 content: (
                     <div>
@@ -42,7 +42,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
             router.push('/')
         } else {
             axios
-                .get(REGISTER_VIEW(venueInformation.id))
+                .post(REGISTER_VIEW(venueInformation.id))
                 .then((res) => {})
                 .catch((err) => console.log(err))
         }
@@ -117,8 +117,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const recommendationID = context.query.r
     const restaurantID = context && context.params ? context.params.id : undefined
     let venueInformation = undefined
-    if (restaurantID !== undefined && restaurantID !== undefined) {
-        if (recommendationID !== undefined && recommendationID !== undefined) {
+    if (restaurantID) {
+        if (recommendationID) {
             await axios
                 .get(FETCH_RESTAURANT(Number(restaurantID), Number(recommendationID)))
                 .then((res) => {
@@ -138,9 +138,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     return {
         props: {
-            recommendationID: recommendationID !== undefined ? recommendationID : null,
-            restaurantID: restaurantID !== undefined ? restaurantID : null,
-            venueInformation: venueInformation !== undefined ? venueInformation : null,
+            recommendationID: recommendationID ? recommendationID : null,
+            restaurantID: restaurantID ? restaurantID : null,
+            venueInformation: venueInformation ? venueInformation : null,
         },
     }
 }

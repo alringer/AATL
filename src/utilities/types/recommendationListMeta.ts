@@ -1,3 +1,4 @@
+import { ICategory } from 'utilities/types/category'
 import { publishedStateEnum } from './enumerations'
 import { IFeaturedList } from './featuredList'
 import { ISpotlightedRecommendation } from './ISpotlightedRecommendation'
@@ -15,6 +16,7 @@ export interface IRecommendationListMeta {
     summary?: string
     title?: string
     updatedAt?: string
+    categories: ICategory[]
 }
 
 export const mockRecommendationListMeta: IRecommendationListMeta = {
@@ -38,4 +40,5 @@ export const mockRecommendationListMeta: IRecommendationListMeta = {
         'Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description! Tasty Description!',
     title: 'Tasty Places! Tasty Places! Tasty Places! Tasty Places! Tasty Places! Tasty Places!',
     updatedAt: '2020-09-28T23:07:11.398415Z',
+    categories: []
 }

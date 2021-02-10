@@ -1,3 +1,5 @@
+import { IVenue } from "utilities/types/venue"
+
 export interface IParentRegion {
     alternateName?: string
     city: string
@@ -14,6 +16,10 @@ export interface IParentRegion {
     state: string
     updatedAt: string
     stateAbbrevation: string | null
+    mostPopularVenues: IVenue[]
+    imageUrlMobile: string
+    imageUrlTablet: string
+    imageUrlDesktop: string
 }
 export const mockParentRegion: IParentRegion = {
     id: 0,
@@ -31,6 +37,10 @@ export const mockParentRegion: IParentRegion = {
     longitude: 0,
     createdAt: '2020-05-12T16:36:30Z',
     updatedAt: '2020-05-12T16:36:30Z',
+    mostPopularVenues: [],
+    imageUrlMobile: 'https://static.askatravellocal.com/usa_ca_san-diego_768.jpg',
+    imageUrlTablet: 'https://static.askatravellocal.com/usa_ca_san-diego_1440.jpg',
+    imageUrlDesktop: 'https://static.askatravellocal.com/usa_ca_san-diego_2560.jpg'
 }
 
 export const mockStateList = []

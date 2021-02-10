@@ -16,6 +16,8 @@ import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
+import { concatCategories } from 'utilities/helpers/concatStrings'
+import { ICategory } from 'utilities/types/category'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
 interface IHomeCarouselCardProps {
@@ -46,8 +48,11 @@ const HomeCarouselCard: React.FC<IHomeCarouselCardProps> = ({
                     {featuredRecommendationList.title ? featuredRecommendationList.title : ''}
                 </HomeCarouselTitleText>
                 <HomeCarouselCategoryText>
-                    Category Category Category Category Category Category Category Category Category Category Category
-                    Category Category Category Category Category
+                    {featuredRecommendationList.categories
+                        ? concatCategories(
+                              featuredRecommendationList.categories.map((category: ICategory) => category.longName)
+                          )
+                        : ''}
                 </HomeCarouselCategoryText>
                 <HomeCarouselSubTitleText>
                     {featuredRecommendationList.subtitle ? featuredRecommendationList.subtitle : ''}
