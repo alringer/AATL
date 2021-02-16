@@ -31,9 +31,9 @@ const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaun
         // console.log('basePath: ', router.basePath)
         // console.log('query: ', router.query)
         if (
+            isPrelaunch === true &&
             !router.route.includes('/user-profile') &&
-            !router.route.includes('/influencer-welcome') &&
-            isPrelaunch === true
+            !router.route.includes('/influencer-welcome')
         ) {
             router.push('/influencer-welcome')
         }
