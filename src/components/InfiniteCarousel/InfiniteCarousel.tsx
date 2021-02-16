@@ -13,13 +13,18 @@ import {
 } from './InfiniteCarousel.style'
 
 interface IInfiniteCarouselProps {
-    places: IVenue[]
+    places: IVenue[] | null
 }
 
 const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
+    const [currentPlaces, setCurrentPlaces] = React.useState([])
     const [currentSlide, setCurrentSlide] = React.useState(0)
     const windowSize = useWindowSize()
     const centerWidth: number = windowSize.width < Number(size.laptop) ? Number(95) : Number(80)
+
+    React.useEffect(() => {
+        setCurrentPlaces(places)
+    }, [places])
 
     const next = (index: number) => {
         if (currentSlide !== index) {
@@ -68,40 +73,45 @@ const InfiniteCarousel: React.FC<IInfiniteCarouselProps> = ({ places }) => {
     })
 
     return (
-        <InfiniteCarouselContainer>
-            <Carousel
-                width={
-                    places.length > 1 ? '100%' : `${windowSize.width < Number(size.laptop) ? Number(95) : Number(80)}%`
-                }
-                infiniteLoop={places.length > 1 ? true : false}
-                showArrows={true}
-                showIndicators={false}
-                showThumbs={false}
-                showStatus={false}
-                centerMode={places.length > 1 ? true : false}
-                centerSlidePercentage={centerWidth}
-                selectedItem={currentSlide}
-                onChange={updateCurrentSlide}
-                onClickItem={updateCurrentSlide}
-            >
-                {places.map((place: IVenue) => {
-                    return (
-                        <InfiniteCarouselSlideContainer key={place.id}>
-                            <InfiniteCarouselCard place={place} />
-                        </InfiniteCarouselSlideContainer>
-                    )
-                })}
-            </Carousel>
-            <InfiniteCarouselDotButtonsContainer>
-                {places.map((place: IVenue, index: number) => {
-                    return (
-                        <InfiniteCarouselDotButton id={String(index)} onClick={handleDotNavigation} key={index}>
-                            <InfiniteCarouselDotSpan className={index === currentSlide ? 'active' : 'inactive'} />
-                        </InfiniteCarouselDotButton>
-                    )
-                })}
-            </InfiniteCarouselDotButtonsContainer>
-        </InfiniteCarouselContainer>
+        currentPlaces &&
+        currentPlaces.length > 0 && (
+            <InfiniteCarouselContainer>
+                <Carousel
+                    width={
+                        currentPlaces?.length > 1
+                            ? '100%'
+                            : `${windowSize.width < Number(size.laptop) ? Number(95) : Number(80)}%`
+                    }
+                    infiniteLoop={currentPlaces?.length > 1 ? true : false}
+                    showArrows={true}
+                    showIndicators={false}
+                    showThumbs={false}
+                    showStatus={false}
+                    centerMode={currentPlaces?.length > 1 ? true : false}
+                    centerSlidePercentage={centerWidth}
+                    selectedItem={currentSlide}
+                    onChange={updateCurrentSlide}
+                    onClickItem={updateCurrentSlide}
+                >
+                    {currentPlaces?.map((place: IVenue) => {
+                        return (
+                            <InfiniteCarouselSlideContainer key={place.id}>
+                                <InfiniteCarouselCard place={place} />
+                            </InfiniteCarouselSlideContainer>
+                        )
+                    })}
+                </Carousel>
+                <InfiniteCarouselDotButtonsContainer>
+                    {currentPlaces?.map((place: IVenue, index: number) => {
+                        return (
+                            <InfiniteCarouselDotButton id={String(index)} onClick={handleDotNavigation} key={index}>
+                                <InfiniteCarouselDotSpan className={index === currentSlide ? 'active' : 'inactive'} />
+                            </InfiniteCarouselDotButton>
+                        )
+                    })}
+                </InfiniteCarouselDotButtonsContainer>
+            </InfiniteCarouselContainer>
+        )
     )
 }
 

@@ -23,6 +23,7 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             topCategories={[]}
             handleSearch={() => {}}
             openSearchModal={() => {}}
+            inputCategoryID={null}
         />
     )
 })

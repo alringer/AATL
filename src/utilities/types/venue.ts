@@ -152,6 +152,10 @@ export const mockVenue: IVenue = {
         createdAt: '2020-05-13T21:19:23.669794Z',
         updatedAt: '2020-05-13T21:19:23.669794Z',
         stateAbbrevation: 'AB',
+        mostPopularVenues: [],
+        imageUrlDesktop: '',
+        imageUrlTablet: '',
+        imageUrlMobile: '',
     },
     firstRecommendedBy: {
         id: 1,

@@ -8,7 +8,6 @@ interface IMostRecommendedProps {
 }
 
 const MostRecommended: React.FC<IMostRecommendedProps> = ({ venues }) => {
-    console.log('Venues::: ', venues)
     return (
         <>
             {venues && venues.length > 0 ? (

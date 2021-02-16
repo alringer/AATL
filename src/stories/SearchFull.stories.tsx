@@ -14,7 +14,14 @@ const handleSearch = (place: string, address: string) => {}
 storiesOf('Full Search', module)
     .add('Default', () => {
         return (
-            <SearchFull inputPlace={null} inputAddress={null} inputLat={null} inputLng={null} handleSearch={() => {}} />
+            <SearchFull
+                inputPlace={null}
+                inputAddress={null}
+                inputLat={null}
+                inputLng={null}
+                handleSearch={() => {}}
+                inputCategoryID={null}
+            />
         )
     })
     .add('With Inputs', () => {
@@ -25,6 +32,7 @@ storiesOf('Full Search', module)
                 inputLat={'32.7157'}
                 inputLng={'-117.161'}
                 handleSearch={() => {}}
+                inputCategoryID={null}
             />
         )
     })

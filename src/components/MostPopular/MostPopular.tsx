@@ -16,7 +16,7 @@ interface IMostPopularProps {
 
 const MostPopular: React.FC<IMostPopularProps> = ({ cityInformation }) => {
     return (
-        cityInformation?.mostPopularVenues.length > 0 && (
+        cityInformation?.mostPopularVenues?.length > 0 && (
             <MostPopularContainer>
                 <MostPopularHeaderContainer>
                     <MostPopularHeaderTitleText>
