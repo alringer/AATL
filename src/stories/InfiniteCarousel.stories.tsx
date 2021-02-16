@@ -4,15 +4,16 @@ import InfiniteCarouselCard from 'components/InfiniteCarouselCard/InfiniteCarous
 import MostPopular from 'components/MostPopular/MostPopular'
 import React from 'react'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import { InfiniteCarouselMockData } from 'utilities/types/infiniteCarousel'
+import { mockParentRegion } from 'utilities/types/parentRegion'
+import { mockVenue } from 'utilities/types/venue'
 
 storiesOf('Infinite Carousel', module)
     .add('Card: Default', () => {
-        return <InfiniteCarouselCard {...InfiniteCarouselMockData[0]} />
+        return <InfiniteCarouselCard place={mockVenue} />
     })
     .add('Carousel: Default', () => {
-        return <InfiniteCarousel places={InfiniteCarouselMockData} />
+        return <InfiniteCarousel places={[mockVenue, mockVenue]} />
     })
     .add('Most Popular: Default', () => {
-        return <MostPopular cityName={'Chicago'} places={InfiniteCarouselMockData} />
+        return <MostPopular cityInformation={mockParentRegion} />
     })

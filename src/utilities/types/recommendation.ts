@@ -98,6 +98,10 @@ export const mockRecommendation: IRecommendation = {
             createdAt: '2020-05-13T21:17:55.073902Z',
             updatedAt: '2020-05-13T21:17:55.073902Z',
             stateAbbrevation: 'CA',
+            mostPopularVenues: [],
+            imageUrlDesktop: '',
+            imageUrlTablet: '',
+            imageUrlMobile: '',
         },
         firstRecommendedBy: {
             id: 1051,

@@ -20,7 +20,6 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                 a.featuredList.sortOrder > b.featuredList.sortOrder ? 1 : -1
             )
             setCurrentFeaturedRecommendationsLists(sortedFeaturedLists)
-            console.log(sortedFeaturedLists)
         }
     }, [featuredRecommendationsLists])
 
@@ -43,26 +42,26 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
 
     const handleMoveBackward = () => {
         if (currentSlideIndex <= 0) {
-            setCurrentSlideIndex(featuredRecommendationsLists.length - 1)
+            setCurrentSlideIndex(currentFeaturedRecommendationsLists.length - 1)
         } else {
             setCurrentSlideIndex(currentSlideIndex - 1)
         }
     }
 
-    return featuredRecommendationsLists ? (
+    return currentFeaturedRecommendationsLists ? (
         <HomeCarouselContainer>
             <Carousel
                 width={
-                    featuredRecommendationsLists.length > 1
+                    currentFeaturedRecommendationsLists.length > 1
                         ? '100%'
                         : `${windowSize.width < Number(size.laptop) ? Number(90) : Number(100)}%`
                 }
-                infiniteLoop={featuredRecommendationsLists.length > 1 ? true : false}
+                infiniteLoop={currentFeaturedRecommendationsLists.length > 1 ? true : false}
                 showArrows={false}
                 showIndicators={false}
                 showThumbs={false}
                 showStatus={false}
-                centerMode={featuredRecommendationsLists.length > 1 ? true : false}
+                centerMode={currentFeaturedRecommendationsLists.length > 1 ? true : false}
                 //TODO: Determine whether we are going to emulate touch for smaller screens on browser or just allow touch-devices to access touch
                 emulateTouch={true}
                 centerSlidePercentage={centerWidth}
@@ -76,7 +75,7 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                         handleMoveForward={handleMoveForward}
                         handleMoveBackward={handleMoveBackward}
                         isCurrent={currentSlideIndex === index}
-                        length={featuredRecommendationsLists.length}
+                        length={currentFeaturedRecommendationsLists.length}
                     />
                 ))}
             </Carousel>

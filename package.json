@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "next",
+        "watch": "tsc --watch",
         "build-dev": "env-cmd -f .env next build",
         "build-prod": "env-cmd -f .env-prod next build",
         "clean": "rm -rf build && rm -rf build-storybook",
