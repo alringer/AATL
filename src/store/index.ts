@@ -2,6 +2,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
+import { InfluencerTourModalReducerState } from 'store/influencerTourModal/influencerTourModal_types'
 import listModalReducer from 'store/listModal/listModal_reducer'
 import { ListModalReducerState } from 'store/listModal/listModal_types'
 import { RecommendationModalReducerState } from 'store/recommendationModal/recommendationModal_types'
@@ -13,6 +14,7 @@ import deleteRecommendationModalReducer from './deleteRecommendationModal/delete
 import { DeleteRecommendationModalReducerState } from './deleteRecommendationModal/deleteRecommendationModal_types'
 import flagModalReducer from './flagModal/flagModal_reducer'
 import { FlagModalReducerState } from './flagModal/flagModal_types'
+import influencerTourModalReducer from './influencerTourModal/influencerTourModal_reducer'
 import locationReducer from './location/location_reducer'
 import { LocationReducerState } from './location/location_types'
 import prelaunchReducer from './prelaunch/prelaunch_reducer'
@@ -37,6 +39,7 @@ const reducer = combineReducers({
     flagModalReducer,
     deleteRecommendationModalReducer,
     prelaunchReducer,
+    influencerTourModalReducer,
 })
 
 const middleware = applyMiddleware(thunk)
@@ -55,6 +58,7 @@ export interface StoreState {
     flagModalReducer: FlagModalReducerState
     deleteRecommendationModalReducer: DeleteRecommendationModalReducerState
     prelaunchReducer: PrelaunchReducerState
+    influencerTourModalReducer: InfluencerTourModalReducerState
 }
 
 export default store

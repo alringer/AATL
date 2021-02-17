@@ -1,11 +1,11 @@
 import AuthenticationModal from 'components/AuthenticationModal/AuthenticationModal'
 import DeleteRecommendationModal from 'components/DeleteRecommendationModal/DeleteRecommendationModal'
 import FlagModal from 'components/FlagModal/FlagModal'
+import InfluencerTourModal from 'components/InfluencerTourModal/InfluencerTourModal'
 import ListModal from 'components/ListModal/ListModal'
 import RecommendationModal from 'components/RecommendationModal/RecommendationModal'
 import SearchModal from 'components/SearchModal/SearchModal'
 import UserProfileEditModal from 'components/UserProfile/UserProfileEditModal/UserProfileEditModal'
-import * as S from 'constants/StringConstants'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { StoreState } from 'store'
@@ -18,6 +18,7 @@ interface IReduxProps {
     isUserProfileEditModalOpen: boolean
     isFlagModalOpen: boolean
     isDeleteRecommendationModalOpen: boolean
+    isInfluencerTourModalOpen: boolean
 }
 
 interface IModalProviderProps extends IReduxProps {
@@ -33,9 +34,10 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
     isUserProfileEditModalOpen,
     isFlagModalOpen,
     isDeleteRecommendationModalOpen,
+    isInfluencerTourModalOpen,
 }) => {
     return (
-        <div data-tut={S.PRELAUNCH_TOUR.StepTwo.Observer}>
+        <div>
             {isAuthenticationOpen && <AuthenticationModal />}
             {isRecommendationModalOpen && <RecommendationModal />}
             {isSearchModalOpen && <SearchModal />}
@@ -43,6 +45,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
             {isUserProfileEditModalOpen && <UserProfileEditModal />}
             {isFlagModalOpen && <FlagModal />}
             {isDeleteRecommendationModalOpen && <DeleteRecommendationModal />}
+            {isInfluencerTourModalOpen && <InfluencerTourModal />}
             {children}
         </div>
     )
@@ -56,6 +59,7 @@ const mapStateToProps = (state: StoreState) => ({
     isUserProfileEditModalOpen: state.userProfileEditModalReducer.isOpen,
     isFlagModalOpen: state.flagModalReducer.isOpen,
     isDeleteRecommendationModalOpen: state.deleteRecommendationModalReducer.isOpen,
+    isInfluencerTourModalOpen: state.influencerTourModalReducer.isOpen,
 })
 
 export default reduxConnect(mapStateToProps)(ModalProvider)

@@ -92,7 +92,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
 
     const renderIncompleteComponent = () => {
         return (
-            <UserProfileInfluencerGuideTextsContainer>
+            <UserProfileInfluencerGuideTextsContainer data-tut={S.PRELAUNCH_TOUR.StepFour.Selector}>
                 <UserProfileInfluencerGuideHeader>
                     {S.USER_PROFILE_INFLUENCER_GUIDE.Incomplete.Title}
                 </UserProfileInfluencerGuideHeader>
@@ -108,7 +108,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     const renderCompleteComponent = () => {
         return (
             <>
-                <UserProfileInfluencerGuideTextsContainer>
+                <UserProfileInfluencerGuideTextsContainer data-tut={S.PRELAUNCH_TOUR.StepFour.Selector}>
                     <UserProfileInfluencerGuideHeader>
                         {isLocked
                             ? S.USER_PROFILE_INFLUENCER_GUIDE.Complete.Title

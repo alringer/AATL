@@ -572,7 +572,7 @@ export const PRELAUNCH_TOUR = {
         PreOrangeMessage: 'Update your profile by clicking the',
         OrangeMessage: 'EDIT PROFILE',
         PostOrangeMessage: 'button to the right.',
-        Selector: 'tour_one',
+        Selector: 'tour__one',
     },
     StepTwo: {
         Title: 'Step 2',
@@ -581,17 +581,19 @@ export const PRELAUNCH_TOUR = {
         Occupation: 'Occupation',
         Bio: 'Bio',
         PostOrangeMessage: 'in this menu.',
-        Selector: 'tour_two',
-        Observer: 'tour_two--observe',
+        Selector: 'tour__two',
+        Observer: 'tour__two--observe',
     },
     StepThree: {
         Title: 'Step 3',
-        Message: '',
-        Selector: 'tour_three',
+        Message: 'Upload a photo by clicking on the image or dragging an image file.',
+        Selector: 'tour__three',
     },
     StepFour: {
         Title: 'Step 4',
-        Message: '',
+        PreOrangeMessage: 'The recommendations you write will be shown here. Writing three will unlock the',
+        OrangeMessage: 'Founder Foodie',
+        PostOrangeMessage: 'badge.',
         Selector: 'tour_four',
     },
 }

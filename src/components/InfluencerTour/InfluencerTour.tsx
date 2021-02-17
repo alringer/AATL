@@ -6,8 +6,12 @@ import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
-import { openUserProfileEditModal } from 'store/userProfileEditModal/userProfileEditModal_actions'
-import { OpenUserProfileEditModalPayload } from 'store/userProfileEditModal/userProfileEditModal_types'
+import {
+    closeInfluencerTour,
+    closeInfluencerTourModal,
+    openInfluencerTour,
+    openInfluencerTourModal,
+} from 'store/influencerTourModal/influencerTourModal_actions'
 import { IUserProfile } from 'utilities/types/userProfile'
 import { InfluencerCardMessage, InfluencerCardOrangeMessage } from './InfluencerTour.style'
 
@@ -16,7 +20,10 @@ interface IReduxProps {
     currentUser: IUserProfile | null
     isLoggedIn: boolean
     isLoading: boolean
-    openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
+    openInfluencerTourModal: () => void
+    closeInfluencerTourModal: () => void
+    openInfluencerTour: () => void
+    closeInfluencerTour: () => void
 }
 
 interface IInfluencerTourProps extends IReduxProps {}
@@ -26,19 +33,34 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
     isLoggedIn,
     isLoading,
     currentUser,
-    openUserProfileEditModal,
+    openInfluencerTourModal,
+    closeInfluencerTourModal,
+    openInfluencerTour,
+    closeInfluencerTour,
 }) => {
     const Tour = dynamic(() => import('reactour'), { ssr: false })
     const [isTourOpen, setIsTourOpen] = React.useState(false)
+    const [isOverlayOpen, setOverlayOpen] = React.useState(false)
 
     React.useEffect(() => {
         if (isPrelaunch && !isLoading && isLoggedIn && (!currentUser?.content || !currentUser?.userByLine)) {
-            setIsTourOpen(true)
+            handleOpenTour()
         }
     }, [isLoggedIn, isPrelaunch, isLoading])
 
     const disableBody = (target) => disableBodyScroll(target)
     const enableBody = (target) => enableBodyScroll(target)
+
+    const handleOpenTour = () => {
+        setIsTourOpen(true)
+        openInfluencerTour()
+    }
+
+    const handleRequestClose = () => {
+        setIsTourOpen(false)
+        closeInfluencerTourModal()
+        closeInfluencerTour()
+    }
 
     const steps = [
         {
@@ -57,9 +79,12 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
                             </InfluencerCardMessage>
                         }
                         handleNextStep={() => {
-                            openUserProfileEditModal({})
-                            goTo(1)
+                            openInfluencerTourModal()
+                            setTimeout(() => {
+                                goTo(1)
+                            }, 100)
                         }}
+                        step={1}
                     />
                 </div>
             ),
@@ -91,27 +116,68 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
                         handleNextStep={() => {
                             goTo(2)
                         }}
+                        step={2}
                     />
                 </div>
             ),
-            // observe: `[data-tut="${S.PRELAUNCH_TOUR.StepTwo.Selector}"]`,
-            observe: `[data-tut="${S.PRELAUNCH_TOUR.StepTwo.Observer}"]`,
+            position: 'left',
+            // observe: `[data-tut="${S.PRELAUNCH_TOUR.StepTwo.Observer}"]`,
         },
         {
             selector: `[data-tut="${S.PRELAUNCH_TOUR.StepThree.Selector}"]`,
-            content: '',
+            content: ({ goTo, inDOM }) => (
+                <div>
+                    <InfluencerTourCard
+                        title={S.PRELAUNCH_TOUR.StepThree.Title}
+                        message={<InfluencerCardMessage>{S.PRELAUNCH_TOUR.StepThree.Message}</InfluencerCardMessage>}
+                        handleNextStep={() => {
+                            closeInfluencerTourModal()
+                            goTo(3)
+                        }}
+                        step={3}
+                    />
+                </div>
+            ),
+            position: 'right',
+        },
+        {
+            selector: `[data-tut="${S.PRELAUNCH_TOUR.StepFour.Selector}"]`,
+            content: ({ goTo, inDOM }) => (
+                <div>
+                    <InfluencerTourCard
+                        title={S.PRELAUNCH_TOUR.StepFour.Title}
+                        message={
+                            <InfluencerCardMessage>
+                                {S.PRELAUNCH_TOUR.StepFour.PreOrangeMessage}&nbsp;
+                                <InfluencerCardOrangeMessage>
+                                    {S.PRELAUNCH_TOUR.StepFour.OrangeMessage}&nbsp;
+                                </InfluencerCardOrangeMessage>
+                                {S.PRELAUNCH_TOUR.StepFour.PostOrangeMessage}
+                            </InfluencerCardMessage>
+                        }
+                        handleNextStep={() => {
+                            handleRequestClose()
+                        }}
+                        step={4}
+                    />
+                </div>
+            ),
+            position: 'right',
         },
     ]
+    // data-tut={S.PRELAUNCH_TOUR.StepTwo.Observer}
+    // data-tut={S.PRELAUNCH_TOUR.StepThree.Selector}
+    // data-tut={S.PRELAUNCH_TOUR.StepTwo.Selector}
 
     return (
         <Tour
             steps={steps}
             isOpen={isTourOpen}
             rounded={5}
-            onRequestClose={() => setIsTourOpen(false)}
             getCurrentStep={(curr) => console.log(`The current step is ${curr + 1}`)}
-            onAfterOpen={disableBody}
-            onBeforeClose={enableBody}
+            onRequestClose={handleRequestClose}
+            // onAfterOpen={disableBody}
+            // onBeforeClose={enableBody}
             prevButton={<div></div>}
             showNavigation={false}
             showNumber={false}
@@ -133,7 +199,10 @@ const mapStateToProps = (state: StoreState) => ({
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
         {
-            openUserProfileEditModal,
+            openInfluencerTourModal,
+            closeInfluencerTourModal,
+            openInfluencerTour,
+            closeInfluencerTour,
         },
         dispatch
     )

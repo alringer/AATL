@@ -272,7 +272,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             />
                                         </UserProfileEditModalDropzoneContainer>
                                     </UserProfileBannerLeftContainer>
-                                    <UserProfileBannerRightContainer data-tut={S.PRELAUNCH_TOUR.StepTwo.Selector}>
+                                    <UserProfileBannerRightContainer>
                                         <NameInput
                                             value={currentFullName}
                                             label={`Full Name`}
