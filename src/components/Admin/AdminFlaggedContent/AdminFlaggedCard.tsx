@@ -37,7 +37,7 @@ import { CustomIconButton } from 'style/Button/IconButton.style'
 import { formatMonth } from 'utilities/helpers/formatMonth'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { flaggedEnum } from 'utilities/types/enumerations'
-import { IFlaggedRecommendation } from 'utilities/types/flaggedRecommendation'
+import { IFlaggedRecommendation, IFlaggedRecommendationSort } from 'utilities/types/flaggedRecommendation'
 
 interface IReduxProps {
     openDeleteRecommendationModal: (payload: OpenDeleteRecommendationModalPayload) => void
@@ -45,8 +45,9 @@ interface IReduxProps {
 
 interface IAdminFlaggedCardProps extends IReduxProps, IWithAuthInjectedProps {
     flaggedRecommendation: IFlaggedRecommendation
-    fetchFlaggedRecommendations: (page: number) => void
+    fetchFlaggedRecommendations: (page: number, sort: IFlaggedRecommendationSort) => void
     currentPage: number
+    currentSort: IFlaggedRecommendationSort
 }
 
 const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
@@ -56,6 +57,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
     authenticatedAction,
     getTokenConfig,
     currentPage,
+    currentSort,
 }) => {
     const [isExpanded, setExpanded] = React.useState(false)
     const [isSubmitting, setSubmitting] = React.useState(false)
@@ -69,7 +71,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
     const handleDelete = () => {
         const payload: OpenDeleteRecommendationModalPayload = {
             flaggedRecommendationID: flaggedRecommendation.id,
-            onSuccess: () => fetchFlaggedRecommendations(currentPage - 1),
+            onSuccess: () => fetchFlaggedRecommendations(currentPage - 1, currentSort),
         }
         openDeleteRecommendationModal(payload)
     }
@@ -90,7 +92,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
                 axios
                     .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendation.id), payload, config)
                     .then((res) => {
-                        fetchFlaggedRecommendations(currentPage - 1)
+                        fetchFlaggedRecommendations(currentPage - 1, currentSort)
                         enqueueSnackbar('', {
                             content: (
                                 <div>

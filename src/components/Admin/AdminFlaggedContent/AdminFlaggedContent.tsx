@@ -55,6 +55,10 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
         setCurrentRecommendations(listFlaggedRecommendations)
     }, [listFlaggedRecommendations])
 
+    React.useEffect(() => {
+        console.log('Current sort enum: ', currentSortEnum)
+    }, [currentSortEnum])
+
     const handleMouseEnterSort = (e: React.MouseEvent<HTMLInputElement>) => {
         const targetEnum = e.currentTarget.id
         switch (targetEnum) {
@@ -223,6 +227,7 @@ const AdminFlaggedContent: React.FC<IAdminFlaggedContentProps> = ({
                                 flaggedRecommendation={flaggedRecommendation}
                                 fetchFlaggedRecommendations={fetchFlaggedRecommendations}
                                 currentPage={currentPage}
+                                currentSort={currentSortEnum}
                                 key={flaggedRecommendation.id}
                             />
                         )
