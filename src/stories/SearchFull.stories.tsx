@@ -4,8 +4,8 @@ import React from 'react'
 
 export const SearchFullData = {
     default: {
-      place: 'Sushi',
-      address: '1234 Where St., San Diego, CA',
+        place: 'Sushi',
+        address: '1234 Where St., San Diego, CA',
     },
 }
 
