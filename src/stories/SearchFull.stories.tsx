@@ -36,4 +36,3 @@ storiesOf('Full Search', module)
             />
         )
     })
-

@@ -27,4 +27,3 @@ storiesOf('Search Page', module).add('Search Panel', () => {
         />
     )
 })
-
