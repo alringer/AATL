@@ -120,7 +120,7 @@ export const FEATURE_LIST = (recommendationListMetaId: number) => {
     return `/recommendation-list-metas/${recommendationListMetaId}/featured-list`
 }
 
-export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) =>  {
+export const RECOMMENDATION_LIST_METAS_DETAILS = (page: number, pageSize: number) => {
     return `/recommendation-list-metas/details?page=${page}&size=${pageSize}&sort=updatedAt,DESC`
 }
 
@@ -149,6 +149,12 @@ export const ADMIN_CITIES = `/parent-regions/summary`
 // Venue Recommendation Prompt
 export const VENUE_RECOMMENDATION_PROMPT = `/venue-recommendation-prompts`
 
+// Flag Recommendations
+export const FLAGGED_RECOMMENDATIONS = (page: number, sort: string) =>
+    `/flagged-recommendations?page=${page}&size=10&sort=${sort}`
+export const FLAG_RECOMMENDATION = (recommendationID: number) => `/recommendations/${recommendationID}/flag`
+export const UPDATE_FLAGGED_RECOMMENDATION = (flaggedRecommendationID: number) =>
+    `/flagged-recommendations/${flaggedRecommendationID}`
 
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,

@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components'
 
 export const AdminMenuContainer = styled.div`
-    min-width: 310px;
-    width: 310px;
+    min-width: 320px;
+    width: 320px;
     height: auto;
 
     display: flex;

@@ -52,16 +52,16 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
         <HomeCarouselContainer>
             <Carousel
                 width={
-                    currentFeaturedRecommendationsLists.length > 1
+                    currentFeaturedRecommendationsLists?.length > 1
                         ? '100%'
                         : `${windowSize.width < Number(size.laptop) ? Number(90) : Number(100)}%`
                 }
-                infiniteLoop={currentFeaturedRecommendationsLists.length > 1 ? true : false}
+                infiniteLoop={currentFeaturedRecommendationsLists?.length > 1 ? true : false}
                 showArrows={false}
                 showIndicators={false}
                 showThumbs={false}
                 showStatus={false}
-                centerMode={currentFeaturedRecommendationsLists.length > 1 ? true : false}
+                centerMode={currentFeaturedRecommendationsLists?.length > 1 ? true : false}
                 //TODO: Determine whether we are going to emulate touch for smaller screens on browser or just allow touch-devices to access touch
                 emulateTouch={true}
                 centerSlidePercentage={centerWidth}
@@ -69,13 +69,14 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                 onChange={updateCurrentSlide}
                 onClickItem={updateCurrentSlide}
             >
-                {currentFeaturedRecommendationsLists.map((featuredRecommendationList, index) => (
+                {currentFeaturedRecommendationsLists?.map((featuredRecommendationList, index) => (
                     <HomeCarouselCard
                         featuredRecommendationList={featuredRecommendationList}
                         handleMoveForward={handleMoveForward}
                         handleMoveBackward={handleMoveBackward}
                         isCurrent={currentSlideIndex === index}
-                        length={currentFeaturedRecommendationsLists.length}
+                        length={currentFeaturedRecommendationsLists?.length}
+                        key={featuredRecommendationList.id}
                     />
                 ))}
             </Carousel>

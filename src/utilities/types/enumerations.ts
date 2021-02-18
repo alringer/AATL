@@ -1,7 +1,6 @@
 export enum flaggedEnum {
     None,
     Pending,
-    Offline,
     Deleted,
 }
 

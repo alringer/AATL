@@ -1,12 +1,9 @@
 import { CircularProgress } from '@material-ui/core'
 import Image from 'components/Image/Image'
-import axios, { ADMIN_CITIES } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
-// import { CustomTextField } from 'style/TextField/TextField.style'
-import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { IAdminCity } from 'utilities/types/adminCity'
 import { AdminMenuPageSubTitle, AdminMenuPageTitle } from '../AdminShared.style'
 import {
@@ -18,6 +15,7 @@ import {
     AdminCitiesRecommendationsAscendingSortIcon,
     AdminCitiesRecommendationsColumn,
     AdminCitiesRecommendationsDescendingSortIcon,
+    AdminCitiesRecommendationsSortButton,
     // AdminCitiesSearchButton,
     // AdminCitiesSearchContainer,
     AdminCitiesStateColumn,
@@ -28,34 +26,21 @@ import {
     AdminCityText,
 } from './AdminCities.style'
 
-interface IAdminCitiesProps extends IWithAuthInjectedProps {}
+interface IAdminCitiesProps {
+    listCities: IAdminCity[]
+    isLoadingCities: boolean
+}
 
-const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
+const AdminCities: React.FC<IAdminCitiesProps> = ({ listCities, isLoadingCities }) => {
     // TBD: Search
     // const [searchInput, setSearchInput] = React.useState('')
     const [cities, setCities] = React.useState<IAdminCity[]>([])
     const [isDescending, setDescending] = React.useState(true)
-    const [isLoading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
-        setLoading(true)
-        const token = getTokenConfig()
-        const config = {
-            headers: {
-                Authorization: token,
-            },
-        }
-        axios
-            .get(ADMIN_CITIES, config)
-            .then((res) => {
-                const sortedCities = sortCities(res.data, isDescending)
-                setCities(sortedCities)
-            })
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setLoading(false)
-            })
-    }, [])
+        const sortedCities = sortCities(listCities, isDescending)
+        setCities(sortedCities)
+    }, [listCities])
 
     const sortCities = (inputCities: IAdminCity[], isDescending: boolean) => {
         const sortedCities = inputCities.sort((a, b) =>
@@ -105,20 +90,24 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
             </AdminCitiesSearchContainer> */}
             <AdminCitiesTableContainer>
                 <AdminCitiesTableHeaderRow>
-                    <AdminCitiesImageColumn>{S.ADMIN_PAGE.AdminCities.Image}</AdminCitiesImageColumn>
-                    <AdminCitiesCityColumn>{S.ADMIN_PAGE.AdminCities.City}</AdminCitiesCityColumn>
-                    <AdminCitiesStateColumn>{S.ADMIN_PAGE.AdminCities.State}</AdminCitiesStateColumn>
-                    <AdminCitiesPlacesColumn>{S.ADMIN_PAGE.AdminCities.Places}</AdminCitiesPlacesColumn>
-                    <AdminCitiesRecommendationsColumn>
+                    <AdminCitiesImageColumn isHeader={true}>{S.ADMIN_PAGE.AdminCities.Image}</AdminCitiesImageColumn>
+                    <AdminCitiesCityColumn isHeader={true}>{S.ADMIN_PAGE.AdminCities.City}</AdminCitiesCityColumn>
+                    <AdminCitiesStateColumn isHeader={true}>{S.ADMIN_PAGE.AdminCities.State}</AdminCitiesStateColumn>
+                    <AdminCitiesPlacesColumn isHeader={true}>{S.ADMIN_PAGE.AdminCities.Places}</AdminCitiesPlacesColumn>
+                    <AdminCitiesRecommendationsColumn isHeader={true}>
                         {S.ADMIN_PAGE.AdminCities.Recommendations}{' '}
                         {isDescending ? (
-                            <AdminCitiesRecommendationsAscendingSortIcon onClick={handleSort} />
+                            <AdminCitiesRecommendationsSortButton onClick={handleSort}>
+                                <AdminCitiesRecommendationsAscendingSortIcon />
+                            </AdminCitiesRecommendationsSortButton>
                         ) : (
-                            <AdminCitiesRecommendationsDescendingSortIcon onClick={handleSort} />
+                            <AdminCitiesRecommendationsSortButton onClick={handleSort}>
+                                <AdminCitiesRecommendationsDescendingSortIcon />
+                            </AdminCitiesRecommendationsSortButton>
                         )}
                     </AdminCitiesRecommendationsColumn>
                 </AdminCitiesTableHeaderRow>
-                {isLoading ? (
+                {isLoadingCities ? (
                     <AdminCitiesLoadingContainer>
                         <CircularProgress />
                     </AdminCitiesLoadingContainer>
@@ -154,4 +143,4 @@ const AdminCities: React.FC<IAdminCitiesProps> = ({ getTokenConfig }) => {
     )
 }
 
-export default withAuth(AdminCities)
+export default AdminCities

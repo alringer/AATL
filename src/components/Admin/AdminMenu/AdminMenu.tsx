@@ -1,11 +1,16 @@
 import * as R from 'constants/RouteConstants'
+import * as S from 'constants/StringConstants'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { AdminMenuContainer, AdminMenuItem, AdminMenuTitle } from './AdminMenu.style'
 
-interface IAdminMenu {}
+interface IAdminMenu {
+    countCities: number | null
+    countFlagged: number | null
+    countRecommendationLists: number | null
+}
 
-const AdminMenu: React.FC<IAdminMenu> = () => {
+const AdminMenu: React.FC<IAdminMenu> = ({ countCities, countFlagged, countRecommendationLists }) => {
     const router = useRouter()
 
     const handleCities = () => {
@@ -26,22 +31,23 @@ const AdminMenu: React.FC<IAdminMenu> = () => {
 
     return (
         <AdminMenuContainer>
-            <AdminMenuTitle>Admin Menu</AdminMenuTitle>
+            <AdminMenuTitle>{S.ADMIN_PAGE.AdminMenu.AdminMenu}</AdminMenuTitle>
             <AdminMenuItem id={router.query.menu === R.ROUTE_ITEMS.adminCities ? 'active' : ''} onClick={handleCities}>
-                CITIES
+                {S.ADMIN_PAGE.AdminMenu.Cities} {countCities ? `(${countCities})` : ''}
             </AdminMenuItem>
 
             <AdminMenuItem
                 id={router.query.menu === R.ROUTE_ITEMS.adminFlaggedContent ? 'active' : ''}
                 onClick={handleFlaggedContent}
             >
-                FLAGGED CONTENT (3)
+                {S.ADMIN_PAGE.AdminMenu.FlaggedContent} {countFlagged ? `(${countFlagged})` : ''}
             </AdminMenuItem>
             <AdminMenuItem
                 id={router.query.menu === R.ROUTE_ITEMS.adminRecommendationLists ? 'active' : ''}
                 onClick={handleRecommendationLists}
             >
-                RECOMMENDATION LISTS
+                {S.ADMIN_PAGE.AdminMenu.RecommendationLists}{' '}
+                {countRecommendationLists ? `(${countRecommendationLists})` : ''}
             </AdminMenuItem>
         </AdminMenuContainer>
     )

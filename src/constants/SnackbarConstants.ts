@@ -161,3 +161,21 @@ export const USER_PROFILE_UPDATED_DESCRIPTION: ISnackbarConstants = {
     Title: 'Updated!',
     Body: 'Your bio was updated',
 }
+
+export const FLAG_RECOMMENDATION: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Recommendation flagged',
+    Body: 'You have flagged a recommendation for',
+}
+
+export const DELETE_RECOMMENDATION: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Recommendation Deleted',
+    Body: 'A recommendation has been permanently removed from AATL records.',
+}
+
+export const UNFLAG_RECOMMENDATION: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Recommendation unflagged',
+    Body: 'A flagged recommendation has been marked as appropriate.',
+}

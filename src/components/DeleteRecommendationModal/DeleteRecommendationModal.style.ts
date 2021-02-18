@@ -1,9 +1,8 @@
 import Dialog from '@material-ui/core/Dialog'
 import { device } from 'style/device'
-import { CustomTextField } from 'style/TextField/TextField.style'
 import styled from 'styled-components'
 
-export const FlagModalCustomDialog = styled(Dialog)`
+export const DeleteRecommendationModalCustomDialog = styled(Dialog)`
     @media ${device.tablet} {
         margin: 0;
         .MuiDialog-paper {
@@ -12,7 +11,7 @@ export const FlagModalCustomDialog = styled(Dialog)`
     }
 `
 
-export const FlagModalContainer = styled.div`
+export const DeleteRecommendationModalContainer = styled.div`
     display: flex;
     flex-direction: column;
     max-height: 100vh;
@@ -29,16 +28,3 @@ export const FlagModalContainer = styled.div`
         width: 780px;
     }
 `
-
-export const FlagModalTitle = styled.p`
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.38;
-    letter-spacing: normal;
-    text-align: left;
-    color: ${(props) => props.theme.charcoalGrey};
-`
-
-export const FlagModalInput = styled(CustomTextField)``
