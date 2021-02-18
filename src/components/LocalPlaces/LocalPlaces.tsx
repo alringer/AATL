@@ -1,9 +1,11 @@
 import { createStyles, makeStyles } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
 import { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
+import axios, { FETCH_LOCAL_PLACES } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import CardPlaceWideList from 'sections/CardsList/CardPlaceWideList'
+import { IParentRegion } from 'utilities/types/parentRegion'
 import { IVenue, mockVenue } from 'utilities/types/venue'
 import {
     LocalPlacesContainer,
@@ -11,11 +13,11 @@ import {
     LocalPlacesHeaderSubTitleText,
     LocalPlacesHeaderTitleText,
     LocalPlacesTab,
-    LocalPlacesTabsContainer
+    LocalPlacesTabsContainer,
 } from './LocalPlaces.style'
 
 interface ILocalPlacesProps {
-    cityName: string
+    cityInformation: IParentRegion | undefined
 }
 
 enum LocalPlaceTabEnum {
@@ -47,7 +49,7 @@ const useStyles = makeStyles(() =>
         },
     })
 )
-const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
+const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityInformation }) => {
     const classes = useStyles()
     const [currentTab, setCurrentTab] = React.useState<LocalPlaceTabEnum>(LocalPlaceTabEnum.MostRecommended)
     const [currentPlaces, setCurrentPlaces] = React.useState<IVenue[]>([])
@@ -65,6 +67,12 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
             setTimeout(() => {
                 setCurrentPlaces([mockVenue, mockVenue])
             }, 1000)
+            axios
+                .get(FETCH_LOCAL_PLACES(cityInformation?.id))
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => console.log(err))
         }
     }
 
@@ -73,7 +81,7 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityName }) => {
             <LocalPlacesHeaderContainer>
                 <LocalPlacesHeaderTitleText>{S.LOCAL_PLACES.Title}</LocalPlacesHeaderTitleText>
                 <LocalPlacesHeaderSubTitleText>
-                    {S.LOCAL_PLACES.SubTitle} {cityName}
+                    {S.LOCAL_PLACES.SubTitle} {cityInformation?.city}
                 </LocalPlacesHeaderSubTitleText>
             </LocalPlacesHeaderContainer>
             <LocalPlacesTabsContainer>

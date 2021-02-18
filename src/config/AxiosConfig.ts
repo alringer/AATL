@@ -22,6 +22,7 @@ export const FETCH_CATEGORIES = '/categories-all'
 
 // City Page
 export const FETCH_CITY = (cityID: number) => `/parent-regions/${cityID}`
+export const FETCH_LOCAL_PLACES = (cityID: number) => `/parent-regions/${cityID}/local-recommendations`
 
 // Venue Page
 export const REGISTER_VIEW = (id: number) => {
