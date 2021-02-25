@@ -5,8 +5,9 @@ import axios, { FETCH_LOCAL_PLACES } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import CardPlaceWideList from 'sections/CardsList/CardPlaceWideList'
+import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 import { IParentRegion } from 'utilities/types/parentRegion'
-import { IVenue, mockVenue } from 'utilities/types/venue'
+import { IVenue } from 'utilities/types/venue'
 import {
     LocalPlacesContainer,
     LocalPlacesHeaderContainer,
@@ -18,13 +19,6 @@ import {
 
 interface ILocalPlacesProps {
     cityInformation: IParentRegion | undefined
-}
-
-enum LocalPlaceTabEnum {
-    MostRecommended,
-    LatestRecommendations,
-    NewPlaces,
-    TrendingPlaces,
 }
 
 const useStyles = makeStyles(() =>
@@ -51,26 +45,34 @@ const useStyles = makeStyles(() =>
 )
 const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityInformation }) => {
     const classes = useStyles()
-    const [currentTab, setCurrentTab] = React.useState<LocalPlaceTabEnum>(LocalPlaceTabEnum.MostRecommended)
+    const [currentTab, setCurrentTab] = React.useState<ILocalPlacesTab>(ILocalPlacesTab.MOST_RECOMMENDED)
     const [currentPlaces, setCurrentPlaces] = React.useState<IVenue[]>([])
 
     React.useEffect(() => {
         // TODO: Wire up initial API call to fetch the initial list
-        setTimeout(() => {
-            setCurrentPlaces([mockVenue, mockVenue])
-        }, 1000)
+        // setTimeout(() => {
+        //     setCurrentPlaces([mockVenue, mockVenue])
+        // }, 1000)
+        axios
+            .get(FETCH_LOCAL_PLACES(cityInformation?.id, 0, currentTab))
+            .then((res) => {
+                console.log(res)
+                // setCurrentPlaces([mockVenue, mockVenue])
+                setCurrentPlaces(res.data)
+                // TODO: Set the current cards to recommendations if tabs are meant to return recs
+            })
+            .catch((err) => console.log(err))
     }, [])
 
-    const handleTabChange = (targetTab: LocalPlaceTabEnum) => {
+    const handleTabChange = (targetTab: ILocalPlacesTab) => {
         if (currentTab !== targetTab) {
             setCurrentTab(targetTab)
-            setTimeout(() => {
-                setCurrentPlaces([mockVenue, mockVenue])
-            }, 1000)
             axios
-                .get(FETCH_LOCAL_PLACES(cityInformation?.id))
+                .get(FETCH_LOCAL_PLACES(cityInformation?.id, 0, targetTab))
                 .then((res) => {
                     console.log(res)
+                    setCurrentPlaces(res.data)
+                    // TODO: Set the current cards to recommendations if tabs are meant to return recs
                 })
                 .catch((err) => console.log(err))
         }
@@ -86,26 +88,26 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityInformation }) => {
             </LocalPlacesHeaderContainer>
             <LocalPlacesTabsContainer>
                 <LocalPlacesTab
-                    id={currentTab === LocalPlaceTabEnum.MostRecommended ? 'active' : ''}
-                    onClick={() => handleTabChange(LocalPlaceTabEnum.MostRecommended)}
+                    id={currentTab === ILocalPlacesTab.MOST_RECOMMENDED ? 'active' : ''}
+                    onClick={() => handleTabChange(ILocalPlacesTab.MOST_RECOMMENDED)}
                 >
                     MOST RECOMMENDED
                 </LocalPlacesTab>
                 <LocalPlacesTab
-                    id={currentTab === LocalPlaceTabEnum.LatestRecommendations ? 'active' : ''}
-                    onClick={() => handleTabChange(LocalPlaceTabEnum.LatestRecommendations)}
+                    id={currentTab === ILocalPlacesTab.LATEST_RECOMMENDATIONS ? 'active' : ''}
+                    onClick={() => handleTabChange(ILocalPlacesTab.LATEST_RECOMMENDATIONS)}
                 >
                     LATEST RECOMMENDATIONS
                 </LocalPlacesTab>
                 <LocalPlacesTab
-                    id={currentTab === LocalPlaceTabEnum.NewPlaces ? 'active' : ''}
-                    onClick={() => handleTabChange(LocalPlaceTabEnum.NewPlaces)}
+                    id={currentTab === ILocalPlacesTab.NEW_PLACES ? 'active' : ''}
+                    onClick={() => handleTabChange(ILocalPlacesTab.NEW_PLACES)}
                 >
                     NEW PLACES
                 </LocalPlacesTab>
                 <LocalPlacesTab
-                    id={currentTab === LocalPlaceTabEnum.TrendingPlaces ? 'active' : ''}
-                    onClick={() => handleTabChange(LocalPlaceTabEnum.TrendingPlaces)}
+                    id={currentTab === ILocalPlacesTab.TRENDING_PLACES ? 'active' : ''}
+                    onClick={() => handleTabChange(ILocalPlacesTab.TRENDING_PLACES)}
                 >
                     TRENDING PLACES
                 </LocalPlacesTab>
