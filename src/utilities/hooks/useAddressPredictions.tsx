@@ -9,22 +9,21 @@ export default function useAddressPredictions(input) {
     const autocomplete = useRef()
 
     if (isClient && window && !autocomplete.current) {
-        autocomplete.current = new window.google.maps.places.AutocompleteService({
-            types: ['(cities)'],
-            componentRestrictions: { country: ['us', 'ca'] },
-            // fields: ['address_components', 'formatted_address'],
-        })
+        autocomplete.current = new window.google.maps.places.AutocompleteService()
     }
 
     function getPlacePredictions(input) {
         if (!input) {
             setPredictions([])
         } else if (autocomplete && autocomplete.current) {
-            autocomplete.current.getPlacePredictions({ input }, (predictions) => {
-                if (predictions && predictions.length > 0) {
-                    setPredictions(predictions)
+            autocomplete.current.getPlacePredictions(
+                { input: input, componentRestrictions: { country: ['us', 'ca'] } },
+                (predictions) => {
+                    if (predictions && predictions.length > 0) {
+                        setPredictions(predictions)
+                    }
                 }
-            })
+            )
         }
     }
 

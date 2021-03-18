@@ -59,7 +59,7 @@ const HomeBanner = () => {
                         <SearchFull
                             inputPlace={null}
                             inputCategoryID={null}
-                            inputAddress={null}
+                            inputAddress={''}
                             inputLat={null}
                             inputLng={null}
                             handleSearch={handleSearch}
