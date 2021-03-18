@@ -125,7 +125,7 @@ const Header: React.FC<IHeaderProps> = ({
     }
 
     const Logo = () => (
-        <LogoContainer>
+        <LogoContainer prefetch={false}>
             <Link href="/">
                 <a>
                     <Image src={FullLogoSVG} alt="logo" />
@@ -136,8 +136,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const LogoText = () => (
         <LogoContainer>
-            {/* Possible add prefetch={false} */}
-            <Link href="/">
+            <Link href="/" prefetch={false}>
                 <a>
                     <Image src={LogoTextSVG} alt="logo" />
                 </a>
