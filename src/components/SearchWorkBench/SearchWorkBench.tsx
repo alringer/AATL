@@ -36,6 +36,9 @@ interface ISearchWorkBenchProps {
     inputLat: string | null
     inputLng: string | null
     inputSort: string | null
+    inputPageCount: number
+    inputPage: number | null
+    inputTotal: number
     searchResults: IVenue[]
     topCategories: ICategory[]
     handleSearch: (
@@ -44,7 +47,8 @@ interface ISearchWorkBenchProps {
         address?: string,
         lat?: string,
         lng?: string,
-        sort?: SortEnum
+        sort?: SortEnum,
+        page?: string
     ) => void
     openSearchModal: () => void
 }
@@ -81,6 +85,9 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     searchResults,
     topCategories,
     openSearchModal,
+    inputPageCount,
+    inputPage,
+    inputTotal,
 }) => {
     const classes = useStyles()
     const [filter, setFilter] = React.useState<SortEnum>(SortEnum.MostRecommended)
@@ -105,13 +112,17 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
         handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, event.target.value)
     }
 
+    const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, filter, String(value - 1))
+    }
+
     return (
         <SearchWorkBenchContainer>
             <SearchWorkBenchTitle>{`${inputPlace ? inputPlace : 'Places'} ${
                 inputAddress ? `${S.SEARCH_PAGE.NearBy} ${inputAddress}` : ''
             }`}</SearchWorkBenchTitle>
             <SearchWorkBenchSubTitle>
-                {S.SEARCH_PAGE.WeHave} <b>{searchResults.length}</b>{' '}
+                {S.SEARCH_PAGE.WeHave} <b>{inputTotal}</b>{' '}
                 {inputPlace
                     ? searchResults.length > 1
                         ? S.SEARCH_PAGE.RecordsFor
@@ -154,7 +165,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             </FormControl>
                         </SearchWorkBenchPaginationFilterContainer>
                     )}
-                    {searchResults && searchResults.length > 0 ? (
+                    {searchResults && searchResults.length > 0 && inputPageCount >= 1 ? (
                         <>
                             {searchResults.map((searchResult: IVenue, index: number) => {
                                 return (
@@ -164,7 +175,14 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                 )
                             })}
                             <PaginationContainer>
-                                <Pagination className={classes.root} count={1} variant="outlined" shape="rounded" />
+                                <Pagination
+                                    className={classes.root}
+                                    count={inputPageCount}
+                                    page={inputPage}
+                                    variant="outlined"
+                                    shape="rounded"
+                                    onChange={handlePagination}
+                                />
                             </PaginationContainer>
                         </>
                     ) : (

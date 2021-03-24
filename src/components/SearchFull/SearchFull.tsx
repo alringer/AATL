@@ -44,7 +44,8 @@ interface ISearchFullProps extends IReduxProps {
         address?: string,
         lat?: string,
         lng?: string,
-        sort?: SortEnum
+        sort?: SortEnum,
+        page?: string
     ) => void
 }
 
@@ -227,7 +228,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                                 lat: geocodeLat,
                                 lng: geocodeLng,
                             })
-                            handleSearch(place, categoryID, geocode[0].formatted_address, geocodeLat, geocodeLng)
+                            handleSearch(place, categoryID, geocode[0].formatted_address, geocodeLat, geocodeLng, 0)
                         }
                     })
                 } else {
