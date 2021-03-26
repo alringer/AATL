@@ -32,6 +32,12 @@ export const ERROR_NOT_ADMIN: ISnackbarConstants = {
     Body: '',
 }
 
+export const ERROR_NOT_ME: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'You need to be logged in to view your own profile!',
+    Body: '',
+}
+
 export const ERROR_RESTAURANT: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Error,
     Title: 'We cannot load this restaurant at the moment',

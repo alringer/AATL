@@ -45,7 +45,7 @@ export const UserProfileListsNavigationTitle = styled.p`
     font-style: normal;
     line-height: 1.17;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 22px;
@@ -80,7 +80,7 @@ export const UserProfileListsNavigationParentListTitle = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 10px;
@@ -98,7 +98,7 @@ export const UserProfileListsNavigationParentListTitle = styled.p`
         letter-spacing: 2px;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'active') {
             return css`
                 color: ${(props) => props.theme.mushroom};
@@ -111,7 +111,7 @@ export const UserProfileListsNavigationChildListTitle = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 10px;
@@ -126,7 +126,7 @@ export const UserProfileListsNavigationChildListTitle = styled.p`
         font-weight: normal;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'active') {
             return css`
                 color: ${(props) => props.theme.mushroom};
@@ -202,7 +202,7 @@ export const UserProfileListsMainViewListTitle = styled.p`
     font-style: normal;
     line-height: 1.19;
     letter-spacing: normal;
-    color: ${props => props.theme.darkSlateBlue};
+    color: ${(props) => props.theme.darkSlateBlue};
 
     @media ${device.mobile} {
         font-size: 22px;
@@ -210,6 +210,7 @@ export const UserProfileListsMainViewListTitle = styled.p`
     }
     @media ${device.tablet} {
         font-size: 36px;
+        text-align: left;
     }
     @media ${device.laptop} {
         font-size: 36px;
@@ -223,7 +224,7 @@ export const UserProfileListsMainViewListDescription = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         font-size: 14px;
@@ -231,6 +232,7 @@ export const UserProfileListsMainViewListDescription = styled.p`
     }
     @media ${device.tablet} {
         font-size: 16px;
+        text-align: left;
     }
     @media ${device.laptop} {
         font-size: 16px;

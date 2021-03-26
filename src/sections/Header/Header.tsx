@@ -1,8 +1,8 @@
 import { IconButton } from '@material-ui/core'
 import SearchSVG from 'assets/lightSearch.svg'
-import FullLogoSVG from 'assets/logo.svg'
+import LogoLadySVG from 'assets/logo_svg/AATL_logo-mark.svg'
+import FullLogoSVG from 'assets/logo_svg/AATL_logo.svg'
 import CloseIconSVG from 'assets/mobileHeaderCloseIcon.svg'
-import LogoLadySVG from 'assets/mobileHeaderLogoLady.svg'
 import LogoTextSVG from 'assets/mobileHeaderLogoText.svg'
 import MobileMenuSVG from 'assets/mobileHeaderMenuIcon.svg'
 import MobileSearchSvg from 'assets/mobileHeaderSearchIcon.svg'
@@ -116,20 +116,17 @@ const Header: React.FC<IHeaderProps> = ({
     }
 
     const handleOpenLogin = () => {
-        // openAuthenticationModal(AuthenticationViewEnum.Login)
         keycloakLogin()
         setMobileMenuVisible(false)
     }
     const handleOpenSignUp = () => {
-        // openAuthenticationModal(AuthenticationViewEnum.SignUp)
         keycloakSignUp()
         setMobileMenuVisible(false)
     }
 
     const Logo = () => (
         <LogoContainer>
-            {/* Possible add prefetch={false} */}
-            <Link href="/">
+            <Link href="/" prefetch={false}>
                 <a>
                     <Image src={FullLogoSVG} alt="logo" />
                 </a>
@@ -139,8 +136,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const LogoText = () => (
         <LogoContainer>
-            {/* Possible add prefetch={false} */}
-            <Link href="/">
+            <Link href="/" prefetch={false}>
                 <a>
                     <Image src={LogoTextSVG} alt="logo" />
                 </a>
@@ -187,13 +183,8 @@ const Header: React.FC<IHeaderProps> = ({
                 <PopoverEmailText>{user ? user.email : ''}</PopoverEmailText>
             </PopoverRowProfileInfo>
             <PopoverRowOption>
-                {/* TODO: Replace with the unique username once DTO is updated */}
                 <Link
-                    href={
-                        user && user.id !== undefined && user.id !== null
-                            ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
-                            : ``
-                    }
+                    href={user && user.id !== undefined && user.id !== null ? `${R.ROUTE_ITEMS.userProfile}/me` : ``}
                     passHref
                 >
                     <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
@@ -312,23 +303,12 @@ const Header: React.FC<IHeaderProps> = ({
             <MenuItemsSectionRow>
                 {authenticated ? (
                     <>
-                        {/* TODO: Add profile route  */}
-                        <MenuItemRow id="marginBottom">
-                            <Link
-                                href={
-                                    user && user.id !== undefined && user.id !== null
-                                        ? `${R.ROUTE_ITEMS.userProfile}/${user.id}`
-                                        : ``
-                                }
-                                passHref
-                            >
-                                <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
-                            </Link>
+                        <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.me)}>
+                            <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
                         </MenuItemRow>
-                        {/* TODO: Add settings route  */}
-                        <MenuItemRow id="marginBottom">
+                        {/* <MenuItemRow id="marginBottom">
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Settings}</MenuItemAnchorText>
-                        </MenuItemRow>
+                        </MenuItemRow> */}
                         <MenuItemRow onClick={handleLogout}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.SignOut}</MenuItemAnchorText>
                         </MenuItemRow>

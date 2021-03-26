@@ -43,7 +43,7 @@ const City: React.FC<ICityProps> = ({ cityInformation }) => {
         <>
             <CityBanner cityInformation={cityInformation} />
             <MostPopular cityInformation={cityInformation} />
-            <LocalPlaces cityName={cityInformation?.city} />
+            <LocalPlaces cityInformation={cityInformation} />
             <EmailSubscription />
         </>
     )

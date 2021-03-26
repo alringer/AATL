@@ -23,13 +23,15 @@ interface IHomeBannerProps {}
 
 const HomeBanner = () => {
     const router = useRouter()
+
     const handleSearch = (
         place?: string,
         categoryID?: string,
         address?: string,
         lat?: string,
         lng?: string,
-        sort?: SortEnum
+        sort?: SortEnum,
+        page?: string
     ) => {
         const paramsArray: ParamType[] = [
             { label: 'place', value: place },
@@ -38,6 +40,7 @@ const HomeBanner = () => {
             { label: 'lat', value: lat },
             { label: 'lng', value: lng },
             { label: 'sort', value: sort },
+            { label: 'page', value: page },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
@@ -59,7 +62,7 @@ const HomeBanner = () => {
                         <SearchFull
                             inputPlace={null}
                             inputCategoryID={null}
-                            inputAddress={null}
+                            inputAddress={''}
                             inputLat={null}
                             inputLng={null}
                             handleSearch={handleSearch}

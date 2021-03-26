@@ -31,6 +31,10 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
     const [lng, setLng] = React.useState<string | null>(null)
     const [sort, setSort] = React.useState<string | null>(null)
 
+    const [currentTotal, setCurrentTotal] = React.useState(0)
+    const [currentPageCount, setCurrentPageCount] = React.useState(0)
+    const [currentPage, setCurrentPage] = React.useState(1)
+
     const router = useRouter()
 
     React.useEffect(() => {
@@ -57,12 +61,14 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             queryLng = ipLocation.lng
         }
         const querySort = router.query.sort ? String(router.query.sort) : null
+        const queryPage = router.query.page ? Number(router.query.page) : null
         setPlace(queryPlace)
         setCategoryID(queryCategoryID)
         setAddress(queryAddress)
         setLat(queryLat)
         setLng(queryLng)
         setSort(querySort)
+        setCurrentPage(queryPage)
         const payload =
             queryCategoryID !== null && queryCategoryID !== undefined
                 ? {
@@ -70,17 +76,22 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                       longitude: queryLng ? queryLng : Math.round(-117.161087),
                       latitude: queryLat ? queryLat : Math.round(32.715736),
                       sort: querySort ? querySort : SortEnum.MostRecommended,
+                      page: queryPage ? queryPage : 0,
                   }
                 : {
                       keyword: queryPlace ? queryPlace : '',
                       longitude: queryLng ? queryLng : Math.round(-117.161087),
                       latitude: queryLat ? queryLat : Math.round(32.715736),
                       sort: querySort ? querySort : SortEnum.MostRecommended,
+                      page: queryPage ? queryPage : 0,
                   }
         axios
             .post(SEARCH_AATL_RESTAURANTS, payload)
             .then((res) => {
-                setSearchResults(res.data)
+                setSearchResults(res.data.content)
+                setCurrentPage(res.data.number + 1)
+                setCurrentPageCount(res.data.totalPages)
+                setCurrentTotal(res.data.totalElements)
             })
             .catch((err) => console.log(err))
         const topCategoriesConfig = {
@@ -104,7 +115,8 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         address?: string,
         lat?: string,
         lng?: string,
-        sort?: SortEnum
+        sort?: SortEnum,
+        page?: string
     ) => {
         const paramsArray: ParamType[] = [
             { label: 'place', value: place ? encodeURIComponent(place) : place },
@@ -113,6 +125,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             { label: 'lng', value: lng },
             { label: 'sort', value: sort },
             { label: 'categoryID', value: categoryID },
+            { label: 'page', value: page },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
@@ -128,6 +141,9 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                 inputLat={lat}
                 inputLng={lng}
                 inputSort={sort}
+                inputPageCount={currentPageCount}
+                inputPage={currentPage}
+                inputTotal={currentTotal}
                 searchResults={searchResults}
                 topCategories={topCategories}
                 handleSearch={handleSearch}

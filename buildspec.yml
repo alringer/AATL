@@ -44,13 +44,13 @@ phases:
   build:
     commands:
       - echo $(date)
+      - VERSION_TAG=$(date +%Y%m%d)_$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | cut -c1-7)
+      - echo Building with tag ${ECR_REPO_NAME}:${VERSION_TAG}
       - docker build -t ${ECR_REPO_NAME}:${VERSION_TAG} --build-arg AWS_REGION --build-arg AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY .
       - docker tag ${ECR_REPO_NAME}:${VERSION_TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
-      - docker tag ${ECR_REPO_NAME}:${VERSION_TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:latest
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:latest
       - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
 #reports:
   #report-name-or-arn:

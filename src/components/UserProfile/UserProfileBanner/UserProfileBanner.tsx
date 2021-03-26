@@ -1,6 +1,7 @@
 import DefaultUserProfileImage from 'assets/user-profile-icon.svg'
 import UserProfileInstagramIcon from 'assets/user-profile-instagram-icon.svg'
 import Image from 'components/Image/Image'
+import { INSTAGRAM_CLIENT_ID, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
@@ -81,7 +82,14 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         })
         setViewedUser(user)
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
-        setInstagramLink(user.instagramId ? `https://instagram.com/${viewedUser.instagramId}` : null)
+        const encoded = encodeURI(INSTAGRAM_CLIENT_ID)
+        setInstagramLink(
+            user.instagramId && user.instagramToken
+                ? `https://instagram.com/${viewedUser.instagramId}`
+                : isOwner
+                ? `https://api.instagram.com/oauth/authorize?client_id=${encoded}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
+                : ''
+        )
     }, [user])
 
     const handleEditProfile = () => {
@@ -156,17 +164,20 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                 {
                                     <UserProfileInstagramContainer
                                         href={instagramLink}
-                                        target="_blank"
                                         disabled={instagramLink ? false : true}
                                     >
-                                        <UserProfileInstagramIconImg
-                                            src={UserProfileInstagramIcon}
-                                            alt="user-profile-instagram-icon"
-                                        />
+                                        {(viewedUser.instagramId || isOwner) && (
+                                            <UserProfileInstagramIconImg
+                                                src={UserProfileInstagramIcon}
+                                                alt="user-profile-instagram-icon"
+                                            />
+                                        )}
                                         <UserProfileInstagram>
                                             {viewedUser.instagramId
                                                 ? `@${viewedUser.instagramId}`
-                                                : S.USER_PROFILE_BANNER.EmptyInstagram}
+                                                : isOwner
+                                                ? S.USER_PROFILE_BANNER.EmptyInstagram
+                                                : ''}
                                         </UserProfileInstagram>
                                     </UserProfileInstagramContainer>
                                 }

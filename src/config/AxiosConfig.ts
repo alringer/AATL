@@ -3,6 +3,7 @@ import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
+import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 
 const API_URL = '/api'
 export const BASE_URL = process.env.HOSTNAME + API_URL
@@ -22,6 +23,8 @@ export const FETCH_CATEGORIES = '/categories-all'
 
 // City Page
 export const FETCH_CITY = (cityID: number) => `/parent-regions/${cityID}`
+export const FETCH_LOCAL_PLACES = (cityID: number, page: number, tab: ILocalPlacesTab) =>
+    `/parent-regions/${cityID}/local-recommendations?page=${page}&recommendation=${tab}`
 
 // Venue Page
 export const REGISTER_VIEW = (id: number) => {
@@ -139,6 +142,10 @@ export const FETCH_USER_PROFILE = (userID: number) => {
 export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
     return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
 }
+export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
+    return `/user-profiles/${userID}/instagram/authorize`
+}
+export const FETCH_USER_PROFILE_INSTAGRAM_MEDIA = (userID: number) => `/user-profiles/${userID}/food-and-travel`
 
 // Image Upload
 export const UPLOAD_BLOB = '/blob'
