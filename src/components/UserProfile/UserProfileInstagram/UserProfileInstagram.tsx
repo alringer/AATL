@@ -69,12 +69,14 @@ const UserProfileInstagram: React.FC<IUserProfileInstagramProps> = ({ user, curr
 
     React.useEffect(() => {
         if (user && user.instagramId) {
-            axios
-                .get(FETCH_USER_PROFILE_INSTAGRAM_MEDIA(user.id))
-                .then((res) => {
-                    setMedia(res.data)
-                })
-                .catch((err) => console.log(err))
+            setTimeout(() => {
+                axios
+                    .get(FETCH_USER_PROFILE_INSTAGRAM_MEDIA(user.id))
+                    .then((res) => {
+                        setMedia(res.data)
+                    })
+                    .catch((err) => console.log(err))
+            }, 3000)
         }
     }, [user])
 
