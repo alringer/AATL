@@ -38,13 +38,12 @@ export const UserProfileInfluencerGuideHeader = styled.p`
 
     @media ${device.mobile} {
         font-size: 20px;
-        color: ${props => props.theme.charcoalGrey};
+        color: ${(props) => props.theme.charcoalGrey};
     }
     @media ${device.tablet} {
         font-size: 36px;
-        color: ${props => props.theme.darkSlateBlue};
+        color: ${(props) => props.theme.darkSlateBlue};
     }
-
 `
 
 export const UserProfileInfluencerGuideMessage = styled.p`
@@ -54,17 +53,17 @@ export const UserProfileInfluencerGuideMessage = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     margin-bottom: 20px;
 `
 
 export const UserProfileInfluencerGuideButton = styled(CustomButton)`
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.dustyOrange};
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.dustyOrange};
 
     :hover {
-        background-color: ${props => props.theme.dustyOrange};
+        background-color: ${(props) => props.theme.dustyOrange};
     }
 
     @media ${device.mobile} {
@@ -86,7 +85,7 @@ export const UserProfileInfluencerGuideIconsContainer = styled.div<isLockedProp>
     justify-content: flex-start;
     align-items: center;
 
-    ${props => {
+    ${(props) => {
         if (props.isLocked === false) {
             return css`
                 justify-content: center;
@@ -95,7 +94,7 @@ export const UserProfileInfluencerGuideIconsContainer = styled.div<isLockedProp>
     }}
 `
 
-type fadeOutProp  = {
+type fadeOutProp = {
     fadeOut?: boolean
 }
 
@@ -113,7 +112,7 @@ const fadeOutSlide = keyframes`
     opacity: 0;
     transform: translateX(20px);
   }
-`;
+`
 
 const fadeOut = keyframes`
   from {
@@ -123,7 +122,7 @@ const fadeOut = keyframes`
   to {
     opacity: 0;
   }
-`;
+`
 
 const fadeIn = keyframes`
   from {
@@ -133,7 +132,7 @@ const fadeIn = keyframes`
   to {
     opacity: 1;
   }
-`;
+`
 
 export const UserProfileInfluencerGuideRecommendationIconsContainer = styled.div<fadeOutProp>`
     width: 100%;
@@ -143,7 +142,7 @@ export const UserProfileInfluencerGuideRecommendationIconsContainer = styled.div
     align-items: center;
 
     margin-bottom: 14px;
-    ${props => {
+    ${(props) => {
         if (props.fadeOut === true) {
             return css`
                 animation: ${fadeOutSlide} 1s linear 1;
@@ -160,7 +159,7 @@ type UserProfileInfluencerGuideIconSpanType = {
 export const UserProfileInfluencerGuideIconSpan = styled.span<UserProfileInfluencerGuideIconSpanType>`
     width: 56px;
     height: 56px;
-    border: dashed 2px ${props => props.theme.mushroom};
+    border: dashed 2px ${(props) => props.theme.mushroom};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,25 +167,25 @@ export const UserProfileInfluencerGuideIconSpan = styled.span<UserProfileInfluen
 
     opacity: 0.5;
 
-    ${props => {
-        if (props.recommendationsCount === props.target) {
+    ${(props) => {
+        if (String(props.recommendationsCount) === String(props.target)) {
             return css`
                 opacity: 1;
-                background-color: ${props => props.theme.mushroom};
+                background-color: ${(props) => props.theme.mushroom};
                 border: transparent;
 
                 ${UserProfileInfluencerGuideIconText} {
-                    color: ${props => props.theme.white};
+                    color: ${(props) => props.theme.white};
                 }
             `
-        } else if (props.recommendationsCount > props.target) {
+        } else if (String(props.recommendationsCount) > String(props.target)) {
             return css`
                 opacity: 0.5;
-                background-color: ${props => props.theme.mushroom};
+                background-color: ${(props) => props.theme.mushroom};
                 border: transparent;
 
                 ${UserProfileInfluencerGuideIconText} {
-                    color: ${props => props.theme.white};
+                    color: ${(props) => props.theme.white};
                 }
             `
         }
@@ -200,7 +199,7 @@ export const UserProfileInfluencerGuideUnlockedIcon = styled.img<isLockedProp>`
 
     margin-bottom: 24px;
 
-    ${props => {
+    ${(props) => {
         if (props.isLocked === false) {
             return css`
                 animation: ${fadeIn} 1s linear 1;
@@ -225,10 +224,10 @@ export const UserProfileInfluencerGuideLockedIcon = styled.img<isLockedProp>`
         right: 0;
         content: '';
         backdrop-filter: blur(50px);
-        background-color: rgba(0,0,0,0.3);
+        background-color: rgba(0, 0, 0, 0.3);
     }
 
-        ${props => {
+    ${(props) => {
         if (props.isLocked === false) {
             return css`
                 animation: ${fadeOut} 1s linear 1;
@@ -244,7 +243,7 @@ export const UserProfileInfluencerGuideIconText = styled.p`
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 `
 
 export const UserProfileInfluencerGuideRecommendationWritten = styled.p<fadeOutProp & fadeInProp>`
@@ -255,9 +254,9 @@ export const UserProfileInfluencerGuideRecommendationWritten = styled.p<fadeOutP
     line-height: 1.33;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 
-    ${props => {
+    ${(props) => {
         if (props.fadeOut === true) {
             return css`
                 animation: ${fadeOut} 1s linear 1;

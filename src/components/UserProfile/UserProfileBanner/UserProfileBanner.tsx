@@ -97,6 +97,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     const handleEditProfile = () => {
         openUserProfileEditModal({
             onSuccess: refreshUser,
+            user: user,
         })
     }
 

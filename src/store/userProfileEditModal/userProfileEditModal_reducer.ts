@@ -8,6 +8,7 @@ import {
 const initialState: UserProfileEditModalReducerState = {
     isOpen: false,
     onSuccess: () => {},
+    user: null,
 }
 
 const userProfileEditModalReducer = (

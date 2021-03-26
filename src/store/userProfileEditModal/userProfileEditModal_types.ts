@@ -1,9 +1,13 @@
+import { IUserProfile } from 'utilities/types/userProfile'
+
 export interface UserProfileEditModalReducerState {
     isOpen: boolean
     onSuccess: () => void
+    user: IUserProfile | null
 }
 export type OpenUserProfileEditModalPayload = {
     onSuccess?: () => void
+    user: IUserProfile
 }
 
 // Action Types

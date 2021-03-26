@@ -26,17 +26,19 @@ import {
 } from './UserProfileInfluencerGuide.style'
 
 interface IReduxProps {
-    user: IUserProfile | null
+    userMe: IUserProfile | null
     openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
     openSearchModal: () => void
 }
 
 interface IUserProfileInfluencerGuideProps extends IReduxProps {
+    user: IUserProfile | null
     refreshUser: () => void
 }
 
 const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = ({
     user,
+    userMe,
     openUserProfileEditModal,
     refreshUser,
     openSearchModal,
@@ -47,12 +49,14 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     const [isLockedComponentsVisible, setLockedComponentsVisible] = React.useState(true)
 
     React.useEffect(() => {
+        console.log('Recommendation Count: ', recommendationsCount)
         if (recommendationsCount >= 3) {
             setLocked(false)
         }
     }, [recommendationsCount])
 
     React.useEffect(() => {
+        console.log('User:', user)
         if (user && (user.firstName || user.lastName) && user.imageCDNUrl && user.content && user.userByLine) {
             setComplete(true)
             fetchRecommendations(user.id, 0)
@@ -71,6 +75,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
         e.preventDefault()
         openUserProfileEditModal({
             onSuccess: refreshUser,
+            user: user,
         })
     }
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
@@ -182,7 +187,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
 }
 
 const mapStateToProps = (state: StoreState) => ({
-    user: state.userReducer.user,
+    userMe: state.userReducer.user,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

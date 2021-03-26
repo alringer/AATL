@@ -335,7 +335,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     isOpen: state.userProfileEditModalReducer.isOpen,
-    user: state.userReducer.user,
+    user: state.userProfileEditModalReducer.user,
     onSuccess: state.userProfileEditModalReducer.onSuccess,
 })
 const mapDispatchToProps = (dispatch: any) =>
