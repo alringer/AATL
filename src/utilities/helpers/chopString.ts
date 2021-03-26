@@ -464,3 +464,20 @@ export const chopStringRecommendationsListsCardNumber = (input: number) => {
         return input
     }
 }
+
+export const chopStringInstagramCaption = (input: string, viewport: DeviceNameEnum) => {
+    if (input) {
+        switch (viewport) {
+            case DeviceNameEnum.laptop:
+                return input.length > 40 ? `${input.slice(0, 40)}...` : input
+
+            case DeviceNameEnum.tablet:
+                return input.length > 35 ? `${input.slice(0, 35)}...` : input
+            case DeviceNameEnum.mobile:
+            default:
+                ''
+        }
+    } else {
+        return ''
+    }
+}

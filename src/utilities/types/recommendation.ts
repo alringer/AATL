@@ -129,6 +129,7 @@ export const mockRecommendation: IRecommendation = {
         email: 'admin@localhost',
         userByLine: null,
         instagramId: null,
+        instagramToken: null,
         imageCDNUrl: null,
         activated: true,
         createdAt: null,

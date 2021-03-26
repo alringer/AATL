@@ -139,6 +139,10 @@ export const FETCH_USER_PROFILE = (userID: number) => {
 export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
     return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
 }
+export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
+    return `/user-profiles/${userID}/instagram/authorize`
+}
+export const FETCH_USER_PROFILE_INSTAGRAM_MEDIA = (userID: number) => `/user-profiles/${userID}/food-and-travel`
 
 // Image Upload
 export const UPLOAD_BLOB = '/blob'

@@ -409,6 +409,13 @@ export const USER_PROFILE_LISTS = {
         'This is where all your lists of places will be saved. To build your list find restaurants you would like to save and select the “Heart” symbol. We will automatically build lists for you by category, location, and your very own recommendations as well.',
 }
 
+export const USER_PROFILE_INSTAGRAM = {
+    Title: 'Food and Travel Photos',
+    SubTitle: 'A visual history of your favorite food establishements and places you’ve been.',
+    Connect:
+        'Connect your Instagram account to see a visual history of your favorite food establishements and places you’ve been.',
+}
+
 export const RECOMMENDATION_LIST = {
     Banner: {
         EditButtonText: 'EDIT',

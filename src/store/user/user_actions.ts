@@ -40,7 +40,7 @@ export const fetchUser = (keycloak: KeycloakInstance) => {
                             isLoading: false,
                             venuesListsVenueIDs: venuesInLists,
                             venuesRecommendedVenueIDs: venuesRecommended,
-                            venuesRecommendationPromptsVenueIDs: venuesRecommendationPromptsVenueIds
+                            venuesRecommendationPromptsVenueIDs: venuesRecommendationPromptsVenueIds,
                         })
                     )
                     console.log('User Profile Results: ', res.data)

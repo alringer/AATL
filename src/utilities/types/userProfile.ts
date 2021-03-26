@@ -32,6 +32,7 @@ export interface IUserProfile {
     id: number | null
     imageCDNUrl: string | null
     instagramId: string | null
+    instagramToken: string | null
     lastName: string | null
     updatedAt: string | null
     userByLine: string | null
@@ -54,6 +55,7 @@ export const mockUser: IUserProfile = {
     id: 1051,
     imageCDNUrl: null,
     instagramId: null,
+    instagramToken: null,
     lastName: 'Administrator Administrator Administrator Administrator Administrator',
     updatedAt: null,
     userByLine:
