@@ -32,7 +32,7 @@ import {
     UserProfileNameContainer,
     UserProfileNumberOfRecommendations,
     UserProfileTitle,
-    UserProfileTitleContainer
+    UserProfileTitleContainer,
 } from './UserProfileBanner.style'
 
 interface IReduxProps {
@@ -58,10 +58,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
             user.firstName && user.lastName
                 ? user.firstName + ' ' + user.lastName
                 : user.firstName
-                    ? user.firstName
-                    : user.lastName
-                        ? user.lastName
-                        : '',
+                ? user.firstName
+                : user.lastName
+                ? user.lastName
+                : '',
         userTitle: user.userByLine ? user.userByLine : '',
         userDescription: user.content ? user.content : '',
     })
@@ -73,18 +73,22 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                 user.firstName && user.lastName
                     ? user.firstName + ' ' + user.lastName
                     : user.firstName
-                        ? user.firstName
-                        : user.lastName
-                            ? user.lastName
-                            : '',
+                    ? user.firstName
+                    : user.lastName
+                    ? user.lastName
+                    : '',
             userTitle: user.userByLine ? user.userByLine : '',
             userDescription: user.content ? user.content : '',
         })
         setViewedUser(user)
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
-        setInstagramLink(user.instagramId && user.instagramToken ?
-            `https://instagram.com/${viewedUser.instagramId}` :
-            `https://api.instagram.com/oauth/authorize?client_id=${INSTAGRAM_CLIENT_ID}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
+        const encoded = encodeURI(INSTAGRAM_CLIENT_ID)
+        setInstagramLink(
+            user.instagramId && user.instagramToken
+                ? `https://instagram.com/${viewedUser.instagramId}`
+                : isOwner
+                ? `https://api.instagram.com/oauth/authorize?client_id=${encoded}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
+                : ''
         )
     }, [user])
 
@@ -105,8 +109,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                         {userInformation.userTitle
                             ? userInformation.userTitle
                             : isOwner
-                                ? S.USER_PROFILE_BANNER.EmptyMessageByLine
-                                : null}
+                            ? S.USER_PROFILE_BANNER.EmptyMessageByLine
+                            : null}
                     </UserProfileTitle>
                 </UserProfileTitleContainer>
             </UserProfileContentHeaderContainer>
@@ -146,8 +150,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         {userInformation.userDescription
                                             ? userInformation.userDescription
                                             : isOwner
-                                                ? S.USER_PROFILE_BANNER.EmptyMessageDescription
-                                                : null}
+                                            ? S.USER_PROFILE_BANNER.EmptyMessageDescription
+                                            : null}
                                     </UserProfileDescription>
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
@@ -162,14 +166,18 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         href={instagramLink}
                                         disabled={instagramLink ? false : true}
                                     >
-                                        <UserProfileInstagramIconImg
-                                            src={UserProfileInstagramIcon}
-                                            alt="user-profile-instagram-icon"
-                                        />
+                                        {(viewedUser.instagramId || isOwner) && (
+                                            <UserProfileInstagramIconImg
+                                                src={UserProfileInstagramIcon}
+                                                alt="user-profile-instagram-icon"
+                                            />
+                                        )}
                                         <UserProfileInstagram>
                                             {viewedUser.instagramId
                                                 ? `@${viewedUser.instagramId}`
-                                                : S.USER_PROFILE_BANNER.EmptyInstagram}
+                                                : isOwner
+                                                ? S.USER_PROFILE_BANNER.EmptyInstagram
+                                                : ''}
                                         </UserProfileInstagram>
                                     </UserProfileInstagramContainer>
                                 }

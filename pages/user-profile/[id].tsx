@@ -8,12 +8,10 @@ interface IServerSideProps {
     fetchedUser: IUserProfile | null
     venueListMetaId: number | null
 }
-interface IUserProfileProps extends IServerSideProps { }
+interface IUserProfileProps extends IServerSideProps {}
 
 const UserProfileIdPage: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
-    return (
-        <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
-    )
+    return <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -25,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         await axios
             .get(FETCH_USER_PROFILE(inputUserID))
             .then((res) => {
+                console.log('Viewing user: ', res)
                 user = res.data
             })
             .catch((err) => console.log(err))

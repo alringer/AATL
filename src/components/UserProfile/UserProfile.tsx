@@ -2,6 +2,7 @@ import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import UserProfileBanner from 'components/UserProfile/UserProfileBanner/UserProfileBanner'
+import UserProfileInstagram from 'components/UserProfile/UserProfileInstagram/UserProfileInstagram'
 import UserProfileLists from 'components/UserProfile/UserProfileLists/UserProfileLists'
 import axios, { FETCH_USER_PROFILE } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
@@ -14,7 +15,7 @@ interface IServerSideProps {
     fetchedUser: IUserProfile | null
     venueListMetaId: number | null
 }
-interface IUserProfileProps extends IServerSideProps { }
+interface IUserProfileProps extends IServerSideProps {}
 
 const UserProfile: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
     const router = useRouter()
@@ -58,6 +59,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId
                 <>
                     <UserProfileBanner user={user} fetchUser={fetchUser} />
                     <UserProfileLists user={user} venueListMetaId={venueListMetaId} />
+                    <UserProfileInstagram user={user} />
                     <EmailSubscription />
                 </>
             ) : null}

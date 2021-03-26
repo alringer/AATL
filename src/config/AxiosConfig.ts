@@ -28,8 +28,9 @@ export const REGISTER_VIEW = (id: number) => {
     return `/venues/${id}/register-view`
 }
 export const FETCH_RESTAURANT = (restaurantID: number, recommendationID?: number) => {
-    return `/venues/${restaurantID}${recommendationID !== null && recommendationID !== undefined ? `?recommendationId=${recommendationID}` : ''
-        }`
+    return `/venues/${restaurantID}${
+        recommendationID !== null && recommendationID !== undefined ? `?recommendationId=${recommendationID}` : ''
+    }`
 }
 export const PAGINATE_RECOMMENDATIONS = (restaurantID: number, page: number) => {
     return `/venues/${restaurantID}/recommendations?page=${page}&size=3&sort=createdAt,DESC`
@@ -141,6 +142,7 @@ export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
 export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
     return `/user-profiles/${userID}/instagram/authorize`
 }
+export const FETCH_USER_PROFILE_INSTAGRAM_MEDIA = (userID: number) => `/user-profiles/${userID}/food-and-travel`
 
 // Image Upload
 export const UPLOAD_BLOB = '/blob'
