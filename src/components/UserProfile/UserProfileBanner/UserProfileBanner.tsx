@@ -42,14 +42,14 @@ interface IReduxProps {
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
     user: IUserProfile | null
-    refreshUser: () => void
+    fetchUser: () => void
 }
 
 const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     user,
     currentUser,
     openUserProfileEditModal,
-    refreshUser,
+    fetchUser,
     numberOfPlacesRecommended,
 }) => {
     const isOwner = currentUser && user && currentUser.id === user.id
@@ -96,7 +96,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
-            onSuccess: refreshUser,
+            onSuccess: fetchUser,
             user: user,
         })
     }
