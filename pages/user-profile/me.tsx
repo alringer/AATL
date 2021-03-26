@@ -42,19 +42,33 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
             if (router?.asPath && currentUser) {
                 const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
                 if (parseAsPath['?code']) {
-                    const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
-                    const config = {
-                        headers: {
-                            Authorization: getTokenConfig(),
-                            'Content-Type': 'text/plain',
-                        },
+                    if (user) {
+                        axios
+                            .get(FETCH_USER_PROFILE(user.id))
+                            .then((res) => {
+                                const user = res.data
+                                if (user && user.instagramId) {
+                                    const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
+                                    const config = {
+                                        headers: {
+                                            Authorization: getTokenConfig(),
+                                            'Content-Type': 'text/plain',
+                                        },
+                                    }
+                                    axios
+                                        .post(
+                                            FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id),
+                                            authorizationCode,
+                                            config
+                                        )
+                                        .then((res) => {
+                                            setUser(res.data)
+                                        })
+                                        .catch((err) => console.log(err))
+                                }
+                            })
+                            .catch((err) => console.log(err))
                     }
-                    axios
-                        .post(FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id), authorizationCode, config)
-                        .then((res) => {
-                            setUser(res.data)
-                        })
-                        .catch((err) => console.log(err))
                 } else {
                     if (currentUser) {
                         axios
