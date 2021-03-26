@@ -1,8 +1,8 @@
 import { IconButton } from '@material-ui/core'
 import SearchSVG from 'assets/lightSearch.svg'
-import FullLogoSVG from 'assets/logo.svg'
+import LogoLadySVG from 'assets/logo_svg/AATL_logo-mark.svg'
+import FullLogoSVG from 'assets/logo_svg/AATL_logo.svg'
 import CloseIconSVG from 'assets/mobileHeaderCloseIcon.svg'
-import LogoLadySVG from 'assets/mobileHeaderLogoLady.svg'
 import LogoTextSVG from 'assets/mobileHeaderLogoText.svg'
 import MobileMenuSVG from 'assets/mobileHeaderMenuIcon.svg'
 import MobileSearchSvg from 'assets/mobileHeaderSearchIcon.svg'
@@ -126,7 +126,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const Logo = () => (
         <LogoContainer>
-            <Link href="/">
+            <Link href="/" prefetch={false}>
                 <a>
                     <Image src={FullLogoSVG} alt="logo" />
                 </a>
@@ -136,8 +136,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const LogoText = () => (
         <LogoContainer>
-            {/* Possible add prefetch={false} */}
-            <Link href="/">
+            <Link href="/" prefetch={false}>
                 <a>
                     <Image src={LogoTextSVG} alt="logo" />
                 </a>

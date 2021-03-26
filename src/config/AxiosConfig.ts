@@ -3,6 +3,7 @@ import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
+import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 
 const API_URL = '/api'
 export const BASE_URL = process.env.HOSTNAME + API_URL
@@ -22,6 +23,8 @@ export const FETCH_CATEGORIES = '/categories-all'
 
 // City Page
 export const FETCH_CITY = (cityID: number) => `/parent-regions/${cityID}`
+export const FETCH_LOCAL_PLACES = (cityID: number, page: number, tab: ILocalPlacesTab) =>
+    `/parent-regions/${cityID}/local-recommendations?page=${page}&recommendation=${tab}`
 
 // Venue Page
 export const REGISTER_VIEW = (id: number) => {

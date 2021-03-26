@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components'
 export const HeaderHeights = {
     mobile: '80px',
     tablet: '96px',
-    laptop: '106px'
+    laptop: '106px',
 }
 
 export const HeaderContainer = styled.div`
@@ -55,8 +55,10 @@ export const LogoContainer = styled.div`
     }
 
     @media ${device.laptop} {
-        width: 260px;
-        height: 110px;
+        /* width: 260px; */
+        /* height: 110px; */
+        width: 205px;
+        height: 100px;
     }
 `
 
@@ -83,7 +85,7 @@ export const MenuItemsContainer = styled.div`
 
 export const SignedInMenuItemsContainer = styled(MenuItemsContainer)`
     padding-left: 30px;
-    border-left: 2px solid ${props => props.theme.darkGreyOpaque};
+    border-left: 2px solid ${(props) => props.theme.darkGreyOpaque};
 `
 
 export const MenuItemContainer = styled.div`
@@ -92,7 +94,7 @@ export const MenuItemContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'leftPadded') {
             return css`
                 margin-left: 50px;
@@ -107,7 +109,7 @@ export const ButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'leftPadded') {
             return css`
                 margin-left: 10px;
@@ -122,7 +124,6 @@ export const UserIconContainer = styled.div`
     height: 46px;
     border-radius: 50%;
     overflow: hidden;
-
 `
 
 export const LoginItemsContainer = styled.div``
@@ -130,25 +131,25 @@ export const AdminItemsContainer = styled.div``
 export const ProfileItemsContainer = styled.div``
 
 export const SignUpButton = styled(CustomButton)`
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.darkSlateBlue};
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.darkSlateBlue};
     :hover {
-        background-color: ${props => props.theme.darkSlateBlue};
+        background-color: ${(props) => props.theme.darkSlateBlue};
     }
 `
 export const LoginButton = styled(CustomButton)`
-    color: ${props => props.theme.mushroom};
-    background-color: ${props => props.theme.white};
-    border-color: ${props => props.theme.darkGreyOpaque};
+    color: ${(props) => props.theme.mushroom};
+    background-color: ${(props) => props.theme.white};
+    border-color: ${(props) => props.theme.darkGreyOpaque};
     :hover {
-        border-color: ${props => props.theme.darkGreyOpaque};
+        border-color: ${(props) => props.theme.darkGreyOpaque};
     }
 `
 
 export const SearchToggleButton = styled(CustomIconButton)`
-    background-color: ${props => props.theme.darkSlateBlue};
+    background-color: ${(props) => props.theme.darkSlateBlue};
     :hover {
-        background-color: ${props => props.theme.darkSlateBlue};
+        background-color: ${(props) => props.theme.darkSlateBlue};
     }
 `
 // Popover
@@ -176,12 +177,12 @@ export const PopoverArrow = styled.div`
     position: absolute;
     top: -8px;
     left: 210px;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-bottom: 8px solid rgba(0, 0, 0, 0.7);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 8px solid rgba(0, 0, 0, 0.7);
     width: 0;
     height: 0;
-    -webkit-filter: drop-shadow(0 -2px 2px #AAA);
+    -webkit-filter: drop-shadow(0 -2px 2px #aaa);
 `
 
 export const PopoverRow = styled.div``
@@ -219,7 +220,7 @@ export const PopoverUserNameText = styled(PopoverOptionText)`
     font-weight: 500;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `
 export const PopoverEmailText = styled(PopoverOptionText)`
     font-size: 12.1px;
@@ -242,7 +243,7 @@ export const MenuContainerMobile = styled.div`
     flex-direction: column;
     width: 100vw;
     min-height: 100vh;
-    background-color: ${props => props.theme.darkSlateBlue};
+    background-color: ${(props) => props.theme.darkSlateBlue};
     overflow-y: auto;
     z-index: ${zIndices.mobileMenu};
 `
@@ -254,14 +255,13 @@ export const MenuItemsSectionRow = styled.div`
     padding: 16px;
     border-bottom: 2px solid ${(props) => props.theme.darkGreyOpaque};
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'mainMenu') {
             return css`
                 margin-bottom: 24px;
             `
         }
-        }
-    }
+    }}
 `
 
 export const MenuItemRow = styled.div`
@@ -269,14 +269,13 @@ export const MenuItemRow = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    ${props => {
-        if(props.id === 'marginBottom') {
+    ${(props) => {
+        if (props.id === 'marginBottom') {
             return css`
                 margin-bottom: 12px;
             `
         }
-        }
-    }
+    }}
 `
 export const MenuItemText = styled.p`
     opacity: 0.96;
@@ -286,7 +285,7 @@ export const MenuItemText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `
 
 export const MenuItemAnchorText = styled(MenuItemText)`

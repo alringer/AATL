@@ -1,10 +1,30 @@
 import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
-import { SectionContainer, SectionHeaderContainer, SectionHeaderSubTitleText, SectionHeaderTitleText } from 'style/Section/Section.style'
+import {
+    SectionContainer,
+    SectionHeaderContainer,
+    SectionHeaderSubTitleText,
+    SectionHeaderTitleText,
+} from 'style/Section/Section.style'
 import styled, { css } from 'styled-components'
 
 // General
-export const LocalPlacesContainer = styled(SectionContainer)``
+export const LocalPlacesContainer = styled(SectionContainer)`
+    margin-top: 0;
+    margin-bottom: 0;
+    @media ${device.mobile} {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    @media ${device.tablet} {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    @media ${device.laptop} {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+`
 
 // Header
 export const LocalPlacesHeaderContainer = styled(SectionHeaderContainer)``
@@ -23,11 +43,13 @@ export const LocalPlacesTabsContainer = styled(ContentWrapper)`
     padding: 0px 5px;
 
     @media ${device.mobile} {
-        margin-bottom: 52px;
+        border-bottom: solid 2px rgba(54, 57, 64, 0.06);
+        padding-bottom: 22px;
         overflow-x: auto;
     }
-
     @media ${device.tablet} {
+        border-bottom: none;
+        padding-bottom: 0;
         margin-bottom: 0;
     }
 `
@@ -53,14 +75,34 @@ export const LocalPlacesTab = styled.a`
     opacity: 0.4;
     :hover {
         cursor: pointer;
-        opacity: 1.0;
+        opacity: 1;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'active') {
             return css`
                 opacity: 1;
             `
         }
     }}
+`
+
+export const LocalPlacesContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @media ${device.mobile} {
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+    @media ${device.tablet} {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+    @media ${device.laptop} {
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
 `

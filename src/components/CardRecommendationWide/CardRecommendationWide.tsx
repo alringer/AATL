@@ -252,7 +252,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
 
     return currentRecommendation ? (
         <Grow in={true}>
-            <RecommendationCardContainer id={isMoreVisible ? 'toggled' : 'not-toggled'}>
+            <RecommendationCardContainer id={isMoreVisible ? 'toggled' : 'not-toggled'} key={recommendation?.id}>
                 <RecommendationCardImageContainer
                     src={recommendation ? recommendation.imageCDNUrl : ''}
                     isToggled={isMoreVisible}

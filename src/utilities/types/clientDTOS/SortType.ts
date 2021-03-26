@@ -22,4 +22,3 @@ export const sortOptionsMapper = {
     [SortEnum.Trending]: SortEnum[SortEnum.Trending],
     [SortEnum.Newest]: SortEnum[SortEnum.Newest],
 }
-console.log(sortOptionsMapper['MOST_RECOMMENDED'])
