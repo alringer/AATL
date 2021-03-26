@@ -24,6 +24,9 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             handleSearch={() => {}}
             openSearchModal={() => {}}
             inputCategoryID={null}
+            inputPage={0}
+            inputPageCount={0}
+            inputTotal={0}
         />
     )
 })
