@@ -14,7 +14,7 @@ export const UserProfileInstagramContainer = styled(ContentWrapper)`
     }
 
     @media ${device.laptop} {
-        margin-top: 200px;
+        margin-top: 100px;
     }
 `
 
@@ -32,7 +32,7 @@ export const UserProfileInstagramTitlesContainer = styled.div`
     @media ${device.laptop} {
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
     }
 
     margin-bottom: 40px;
