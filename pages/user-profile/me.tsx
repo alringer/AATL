@@ -42,9 +42,9 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
             if (router?.asPath && currentUser) {
                 const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
                 if (parseAsPath['?code']) {
-                    if (user) {
+                    if (currentUser) {
                         axios
-                            .get(FETCH_USER_PROFILE(user.id))
+                            .get(FETCH_USER_PROFILE(currentUser?.id))
                             .then((res) => {
                                 const user = res.data
                                 if (user && user.instagramId) {
