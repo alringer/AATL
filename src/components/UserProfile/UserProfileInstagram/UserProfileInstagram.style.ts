@@ -67,19 +67,6 @@ export const UserProfileInstagramSubTitle = styled.p`
     }
 `
 
-export const UserProfileInstagramPhotosContainer = styled.div`
-    display: flex;
-    width: 100%;
-
-    @media ${device.tablet} {
-        height: 460px;
-    }
-
-    @media ${device.laptop} {
-        height: 460px;
-    }
-`
-
 export const UserProfileInstagramEmptyContainer = styled.div`
     display: flex;
     width: 100%;
