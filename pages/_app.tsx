@@ -8,10 +8,8 @@ import { IncomingMessage } from 'http'
 import { AppContext, AppProps } from 'next/app'
 import React from 'react'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import Footer from '../src/sections/Footer/Footer'
-import Header from '../src/sections/Header/Header'
-import { AppContainer, PageContainer } from '../src/style/App.style'
-import { GlobalStyle } from '../src/style/GlobalStyle'
+import { AppContainer } from 'style/App.style'
+import { GlobalStyle } from 'style/GlobalStyle'
 
 interface InitialProps {
     cookies: KeycloakCookies
@@ -33,13 +31,9 @@ const App = ({ Component, pageProps, cookies }: AppProps & InitialProps) => {
                 {/* <CssBaseline /> */}
                 <GlobalStyle />
                 <AppContainer>
-                    <Header />
-                    <PageContainer>
-                        <RootApp>
-                            <Component {...pageProps} />
-                        </RootApp>
-                    </PageContainer>
-                    <Footer />
+                    <RootApp>
+                        <Component {...pageProps} />
+                    </RootApp>
                 </AppContainer>
             </Provider>
         </>

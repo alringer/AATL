@@ -61,6 +61,7 @@ export const BUTTON_LABELS = {
     Save: 'SAVE',
     Flag: 'FLAG',
     MarkAppropriate: 'MARK APPROPRIATE',
+    YesSignMeUp: 'YES, SIGN ME UP!',
 }
 
 export const INPUT_PLACEHOLDERS = {
@@ -398,6 +399,32 @@ export const USER_PROFILE_BANNER = {
     EditProfile: 'Edit Profile',
 }
 
+export const USER_PROFILE_INFLUENCER_GUIDE = {
+    Incomplete: {
+        Title: 'Complete Your Profile.',
+        Message:
+            'Complete your profile by updating your Name, Occupation, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
+        ButtonLabel: 'EDIT PROFILE',
+    },
+    Complete: {
+        Title: 'Start building your lists!',
+        Message:
+            'Be one of the first people to write recommendations. Write three to become an insider and unlock an exclusive badge to showcase on the website.',
+        ButtonLabel: 'WRITE A RECOMMENDATION',
+        RecommendationWritten: 'Recommendation Written',
+        First: '1st',
+        Second: '2nd',
+        Third: '3rd',
+    },
+    CompleteUnlocked: {
+        Title: 'Thank You!',
+        Message: `Your restaurant recommendations will be featured once we go live. In the meantime, feel free to recommend some of your other favorite restaurants.
+
+Congratulations! You are now part of the Founders Club. We will be in touch soon.`,
+        Unlocked: 'Founder Foodie Badge Unlocked',
+    },
+}
+
 export const USER_PROFILE_LISTS = {
     FoodAndTravelJournal: 'Food & Travel Journal',
     MyLists: 'LISTS',
@@ -529,4 +556,44 @@ P.O. Box 4089, Incline Village, NV  89450`,
             Body: 'January 7, 2018',
         },
     ],
+}
+export const PRELAUNCH = {
+    Welcome: {
+        Title: 'Hey there Foodie!',
+        Message:
+            'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an inflencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
+    },
+}
+
+export const PRELAUNCH_TOUR = {
+    NextStep: 'NEXT STEP',
+    StepOne: {
+        Title: 'Step 1',
+        PreOrangeMessage: 'Update your profile by clicking the',
+        OrangeMessage: 'EDIT PROFILE',
+        PostOrangeMessage: 'button to the right.',
+        Selector: 'tour__one',
+    },
+    StepTwo: {
+        Title: 'Step 2',
+        PreOrangeMessage: 'You can update your',
+        Name: 'Name',
+        Occupation: 'Occupation',
+        Bio: 'Bio',
+        PostOrangeMessage: 'in this menu.',
+        Selector: 'tour__two',
+        Observer: 'tour__two--observe',
+    },
+    StepThree: {
+        Title: 'Step 3',
+        Message: 'Upload a photo by clicking on the image or dragging an image file.',
+        Selector: 'tour__three',
+    },
+    StepFour: {
+        Title: 'Step 4',
+        PreOrangeMessage: 'The recommendations you write will be shown here. Writing three will unlock the',
+        OrangeMessage: 'Founder Foodie',
+        PostOrangeMessage: 'badge.',
+        Selector: 'tour_four',
+    },
 }

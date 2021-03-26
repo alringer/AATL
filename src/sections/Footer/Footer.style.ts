@@ -1,7 +1,12 @@
+import FooterBackgroundImage from 'assets/pre-launch-footer.svg'
 import { device, sidePaddings } from 'style/device'
 import styled, { css } from 'styled-components'
 
-export const FooterContainer = styled.div`
+type FooterContainerProps = {
+    isPrelaunch: boolean
+}
+
+export const FooterContainer = styled.div<FooterContainerProps>`
     /* position: absolute; */
     /* bottom: 0; */
     width: 100%;
@@ -9,7 +14,9 @@ export const FooterContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding: 75px 250px;
-    background-color: rgba(62, 136, 169, 0.2);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 
     @media ${device.mobile} {
         padding: 40px ${sidePaddings.mobile};
@@ -25,6 +32,23 @@ export const FooterContainer = styled.div`
         padding: 75px ${sidePaddings.laptop};
         text-align: left;
     }
+
+    ${props => {
+        if (props.isPrelaunch) {
+            return css`
+                background-image: url(${FooterBackgroundImage});
+            `
+        } else {
+            return css`
+                background-color: rgba(62, 136, 169, 0.2);
+            `
+        }
+    }}
+`
+
+export const FooterPrelaunchContainer = styled.div`
+    width: 100%;
+    height: 100%;
 `
 
 export const FooterFirstRow = styled.div`

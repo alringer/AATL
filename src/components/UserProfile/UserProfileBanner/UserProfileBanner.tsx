@@ -37,18 +37,20 @@ import {
 
 interface IReduxProps {
     currentUser: IUserProfile | null
+    numberOfPlacesRecommended: number[] | null
     openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
     user: IUserProfile | null
-    fetchUser: () => void
+    refreshUser: () => void
 }
 
 const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     user,
     currentUser,
     openUserProfileEditModal,
-    fetchUser,
+    refreshUser,
+    numberOfPlacesRecommended,
 }) => {
     const isOwner = currentUser && user && currentUser.id === user.id
     // Input States
@@ -94,7 +96,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
-            onSuccess: fetchUser,
+            onSuccess: refreshUser,
+            user: user,
         })
     }
 
@@ -124,7 +127,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     <>
                         <UserProfileMainInformationContainer>
                             {isOwner && (matches.laptop || matches.tablet) && (
-                                <UserProfileBannerEditButton onClick={handleEditProfile}>
+                                <UserProfileBannerEditButton
+                                    onClick={handleEditProfile}
+                                    data-tut={S.PRELAUNCH_TOUR.StepOne.Selector}
+                                >
                                     <UserProfileBannerEditIcon />
                                     &nbsp; EDIT PROFILE
                                 </UserProfileBannerEditButton>
@@ -137,7 +143,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                             </UserProfileImageContainer>
                             {matches.mobile && renderHeaderAndDescription()}
                             {matches.mobile && (
-                                <UserProfileBannerPencilButton onClick={handleEditProfile}>
+                                <UserProfileBannerPencilButton
+                                    onClick={handleEditProfile}
+                                    data-tut={S.PRELAUNCH_TOUR.StepOne.Selector}
+                                >
                                     <UserProfileBannerEditIcon />
                                 </UserProfileBannerPencilButton>
                             )}
@@ -156,9 +165,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
                                     {S.USER_PROFILE_BANNER.Recommends}:{' '}
-                                    {viewedUser.recommendations && viewedUser.recommendations.length
-                                        ? viewedUser.recommendations.length
-                                        : 0}{' '}
+                                    {numberOfPlacesRecommended ? numberOfPlacesRecommended.length : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
                                 {
@@ -192,6 +199,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     currentUser: state.userReducer.user,
+    numberOfPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

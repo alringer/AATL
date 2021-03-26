@@ -100,8 +100,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
     let uniqueID = 0
 
     React.useEffect(() => {
-        console.log('isOwner: ', isOwner)
-        console.log('isAdmin: ', isAdmin)
         fetchVenueLists()
         fetchVenueListsByCity()
         fetchVenueListsByCategory()
@@ -179,7 +177,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
     }
 
     const handleViewMyList = (list: IVenueListMetaWithUniqueID) => {
-        console.log('In handle view my list: ', list)
         setCurrentListInViewUniqueID(list.uniqueListID)
         setCurrentListInView(list)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyList)

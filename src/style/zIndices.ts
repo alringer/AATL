@@ -18,6 +18,8 @@ enum zIndices {
     recommendationsListsContent = '2',
     recommendationCardImageBackground = '1',
     recommendationCardImage = '2',
+    footerBackgroundColor = '50',
+    footerBackgroundImage = '51'
 }
 
 export default zIndices

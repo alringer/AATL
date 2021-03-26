@@ -37,7 +37,7 @@ export interface IUserProfile {
     updatedAt: string | null
     userByLine: string | null
     userId: string | null
-    username: string | null
+    username: string
     venues: IVenue[] | null
     recommendations: IRecommendation[] | null
     recommendationListMetas: null

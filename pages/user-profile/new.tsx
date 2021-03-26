@@ -1,45 +1,12 @@
-import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
-import InfluencerTour from 'components/InfluencerTour/InfluencerTour'
-import Snackbar from 'components/Snackbar/Snackbar'
-import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
-import UserProfileBanner from 'components/UserProfile/UserProfileBanner/UserProfileBanner'
-import UserProfileInfluencerGuide from 'components/UserProfile/UserProfileInfluencerGuide/UserProfileInfluencerGuide'
-import UserProfileInstagram from 'components/UserProfile/UserProfileInstagram/UserProfileInstagram'
-import UserProfileLists from 'components/UserProfile/UserProfileLists/UserProfileLists'
-import axios, { FETCH_USER_PROFILE } from 'config/AxiosConfig'
-import * as R from 'constants/RouteConstants'
-import * as B from 'constants/SnackbarConstants'
-import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
-import React from 'react'
-import { connect as reduxConnect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { StoreState } from 'store'
-import { fetchUser } from 'store/user/user_actions'
-import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
-import { IUserProfile } from 'utilities/types/userProfile'
-
-interface IReduxProps {
-    isPrelaunch: boolean
-    currentUser: IUserProfile | null
-    isLoggedIn: boolean
-    isLoading: boolean
-}
-
-interface IServerSideProps {
-    fetchedUser: IUserProfile | null
-    venueListMetaId: number | null
-}
-interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps, IReduxProps {}
-
 const UserProfile: React.FC<IUserProfileProps> = ({
     fetchedUser,
     venueListMetaId,
-    keycloak,
     isPrelaunch,
     currentUser,
     isLoggedIn,
     isLoading,
+    keycloak,
+    fetchUser,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()
@@ -61,6 +28,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({
             })
             router.push('/')
         } else {
+            console.log('Fetched User:: ', fetchedUser)
             setUser(fetchedUser)
         }
     }, [])
@@ -72,10 +40,10 @@ const UserProfile: React.FC<IUserProfileProps> = ({
     }, [isLoggedIn, isPrelaunch, isLoading])
 
     React.useEffect(() => {
-        if (isPrelaunch && currentUser && fetchedUser && currentUser.id !== fetchedUser.id) {
+        if (currentUser && fetchedUser && currentUser.id !== fetchedUser.id) {
             router.push(R.ROUTE_ITEMS.influencerWelcome)
         }
-    }, [isPrelaunch, currentUser, fetchedUser])
+    }, [currentUser, fetchedUser])
 
     const refreshUser = () => {
         if (user) {
@@ -91,12 +59,11 @@ const UserProfile: React.FC<IUserProfileProps> = ({
 
     return (
         <>
-            {user ? (
+            {user !== null ? (
                 <>
-                    <UserProfileBanner user={user} fetchUser={refreshUser} />
-                    {isPrelaunch && <UserProfileInfluencerGuide user={user} refreshUser={refreshUser} />}
+                    <UserProfileBanner user={user} refreshUser={refreshUser} />
+                    {isPrelaunch && <UserProfileInfluencerGuide refreshUser={refreshUser} />}
                     <UserProfileLists user={user} venueListMetaId={venueListMetaId} />
-                    <UserProfileInstagram user={user} />
                     <EmailSubscription />
                     {isPrelaunch && <InfluencerTour />}
                 </>
