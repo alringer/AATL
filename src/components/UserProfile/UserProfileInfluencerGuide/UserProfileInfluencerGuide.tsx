@@ -49,14 +49,12 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     const [isLockedComponentsVisible, setLockedComponentsVisible] = React.useState(true)
 
     React.useEffect(() => {
-        console.log('Recommendation Count: ', recommendationsCount)
         if (recommendationsCount >= 3) {
             setLocked(false)
         }
     }, [recommendationsCount])
 
     React.useEffect(() => {
-        console.log('User:', user)
         if (user && (user.firstName || user.lastName) && user.imageCDNUrl && user.content && user.userByLine) {
             setComplete(true)
             fetchRecommendations(user.id, 0)
