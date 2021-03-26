@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import InfluencerTourCard from 'components/InfluencerTour/InfluencerTourCard'
 import * as S from 'constants/StringConstants'
