@@ -57,6 +57,14 @@ export const UserProfileInstagramSubTitle = styled.p`
     font-size: 16px;
     line-height: 22px;
     color: ${(props) => props.theme.charcoalGrey};
+
+    @media ${device.tablet} {
+        text-align: center;
+    }
+
+    @media ${device.laptop} {
+        text-align: right;
+    }
 `
 
 export const UserProfileInstagramPhotosContainer = styled.div`
@@ -69,6 +77,19 @@ export const UserProfileInstagramPhotosContainer = styled.div`
 
     @media ${device.laptop} {
         height: 460px;
+    }
+`
+
+export const UserProfileInstagramEmptyContainer = styled.div`
+    display: flex;
+    width: 100%;
+
+    @media ${device.tablet} {
+        height: 220px;
+    }
+
+    @media ${device.laptop} {
+        height: 220px;
     }
 `
 
@@ -224,4 +245,19 @@ export const ViewMoreButton = styled(CustomButton)`
         background-color: ${(props) => props.theme.white};
         border-color: ${(props) => props.theme.darkGreyOpaque};
     }
+`
+
+export const UserProfileInstagramEmpty = styled(UserProfileInstagramPhotosColumn)`
+    height: 220px;
+    background-color: ${(props) => props.theme.darkSlateBlue};
+`
+
+export const UserProfileInstagramEmptyTwo = styled(UserProfileInstagramEmpty)`
+    flex: 2;
+    background-color: #d9e8ee;
+`
+
+export const UserProfileInstagramEmptyThree = styled(UserProfileInstagramEmpty)`
+    flex: 1;
+    background-color: #e8e8e8;
 `

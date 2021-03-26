@@ -412,6 +412,8 @@ export const USER_PROFILE_LISTS = {
 export const USER_PROFILE_INSTAGRAM = {
     Title: 'Food and Travel Photos',
     SubTitle: 'A visual history of your favorite food establishements and places you’ve been.',
+    Connect:
+        'Connect your Instagram account to see a visual history of your favorite food establishements and places you’ve been.',
 }
 
 export const RECOMMENDATION_LIST = {

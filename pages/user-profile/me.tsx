@@ -1,8 +1,5 @@
-import Snackbar from 'components/Snackbar/Snackbar'
-import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import UserProfile from 'components/UserProfile/UserProfile'
 import axios, { FETCH_USER_PROFILE, FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
-import * as B from 'constants/SnackbarConstants'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -77,17 +74,6 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                         })
                         .catch((err) => console.log(err))
                 } else {
-                    enqueueSnackbar('', {
-                        content: (
-                            <div>
-                                <Snackbar
-                                    type={B.ERROR_NOT_ME.Type}
-                                    title={B.ERROR_NOT_ME.Title}
-                                    message={<SnackbarMessageBody>{B.ERROR_NOT_ME.Body}</SnackbarMessageBody>}
-                                />
-                            </div>
-                        ),
-                    })
                     router.push('/')
                 }
             }

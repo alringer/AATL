@@ -53,7 +53,7 @@ import {
     SearchToggleButton,
     SignedInMenuItemsContainer,
     SignUpButton,
-    UserIconContainer
+    UserIconContainer,
 } from './Header.style'
 
 interface IReduxProps {
@@ -61,7 +61,7 @@ interface IReduxProps {
     userRole: string | null
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
 }
-interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps { }
+interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps {}
 
 const Header: React.FC<IHeaderProps> = ({
     user,
@@ -116,19 +116,16 @@ const Header: React.FC<IHeaderProps> = ({
     }
 
     const handleOpenLogin = () => {
-        // openAuthenticationModal(AuthenticationViewEnum.Login)
         keycloakLogin()
         setMobileMenuVisible(false)
     }
     const handleOpenSignUp = () => {
-        // openAuthenticationModal(AuthenticationViewEnum.SignUp)
         keycloakSignUp()
         setMobileMenuVisible(false)
     }
 
     const Logo = () => (
         <LogoContainer>
-            {/* Possible add prefetch={false} */}
             <Link href="/">
                 <a>
                     <Image src={FullLogoSVG} alt="logo" />
@@ -187,13 +184,8 @@ const Header: React.FC<IHeaderProps> = ({
                 <PopoverEmailText>{user ? user.email : ''}</PopoverEmailText>
             </PopoverRowProfileInfo>
             <PopoverRowOption>
-                {/* TODO: Replace with the unique username once DTO is updated */}
                 <Link
-                    href={
-                        user && user.id !== undefined && user.id !== null
-                            ? `${R.ROUTE_ITEMS.userProfile}/me`
-                            : ``
-                    }
+                    href={user && user.id !== undefined && user.id !== null ? `${R.ROUTE_ITEMS.userProfile}/me` : ``}
                     passHref
                 >
                     <PopoverOptionLinkText onClick={() => handlePopoverNavigation(R.ROUTE_ITEMS.home)}>
@@ -247,8 +239,8 @@ const Header: React.FC<IHeaderProps> = ({
                             <Image src={SearchSVG} alt="logo" />
                         </SearchToggleButton>
                     ) : (
-                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
-                        )}
+                        <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                    )}
                 </MenuItemContainer>
             )}
         </MenuItemsContainer>
@@ -278,8 +270,8 @@ const Header: React.FC<IHeaderProps> = ({
                                 <Image src={MobileSearchSvg} alt="" />
                             </IconButton>
                         ) : (
-                                <HeaderSearch handleCloseSearch={handleCloseSearch} />
-                            )}
+                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                        )}
                     </MobileIconContainer>
                 )}
                 <MobileIconContainer>
@@ -312,38 +304,27 @@ const Header: React.FC<IHeaderProps> = ({
             <MenuItemsSectionRow>
                 {authenticated ? (
                     <>
-                        {/* TODO: Add profile route  */}
-                        <MenuItemRow id="marginBottom">
-                            <Link
-                                href={
-                                    user && user.id !== undefined && user.id !== null
-                                        ? `${R.ROUTE_ITEMS.userProfile}/me`
-                                        : ``
-                                }
-                                passHref
-                            >
-                                <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
-                            </Link>
+                        <MenuItemRow id="marginBottom" onClick={() => handleMobileNavigation(R.ROUTE_ITEMS.me)}>
+                            <MenuItemAnchorText>{S.HEADER_ITEMS.Profile}</MenuItemAnchorText>
                         </MenuItemRow>
-                        {/* TODO: Add settings route  */}
-                        <MenuItemRow id="marginBottom">
+                        {/* <MenuItemRow id="marginBottom">
                             <MenuItemAnchorText>{S.HEADER_ITEMS.Settings}</MenuItemAnchorText>
-                        </MenuItemRow>
+                        </MenuItemRow> */}
                         <MenuItemRow onClick={handleLogout}>
                             <MenuItemAnchorText>{S.HEADER_ITEMS.SignOut}</MenuItemAnchorText>
                         </MenuItemRow>
                     </>
                 ) : (
-                        <>
-                            {/* TODO: Add sign up modal  */}
-                            <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
-                                <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
-                            </MenuItemRow>
-                            <MenuItemRow onClick={handleOpenLogin}>
-                                <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
-                            </MenuItemRow>
-                        </>
-                    )}
+                    <>
+                        {/* TODO: Add sign up modal  */}
+                        <MenuItemRow id="marginBottom" onClick={handleOpenSignUp}>
+                            <MenuItemAnchorText>{S.HEADER_ITEMS.SignUp}</MenuItemAnchorText>
+                        </MenuItemRow>
+                        <MenuItemRow onClick={handleOpenLogin}>
+                            <MenuItemAnchorText>{S.HEADER_ITEMS.Login}</MenuItemAnchorText>
+                        </MenuItemRow>
+                    </>
+                )}
             </MenuItemsSectionRow>
             {userRole === UserRoleEnum.Admin ? (
                 <MenuItemsSectionRow>
