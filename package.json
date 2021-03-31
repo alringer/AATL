@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "next",
         "watch": "tsc --watch",
+        "build-aws": "next build",
         "build-dev": "env-cmd -f .env next build",
         "build-prod": "env-cmd -f .env-prod next build",
         "build-staging": "env-cmd -f .env-staging next build",
