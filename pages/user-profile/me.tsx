@@ -39,16 +39,23 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
 
     React.useEffect(() => {
         if (isMounted && !isLoading) {
+            console.log('Mounted and Not Loading')
             if (router?.asPath && currentUser) {
+                console.log('Path and current user detected')
                 const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
                 if (parseAsPath['?code']) {
+                    console.log('Code detected in the path')
                     if (currentUser) {
+                        console.log('Code detected and current user detected')
                         axios
                             .get(FETCH_USER_PROFILE(currentUser?.id))
                             .then((res) => {
-                                const user = res.data
+                                const user: IUserProfile = res.data
+                                console.log('Call succeeded with User: ', user)
                                 if (user) {
-                                    if (!user.instagramId) {
+                                    console.log('Fetched User: ', user)
+                                    if (!user.instagramProfile) {
+                                        console.log('Fetched User with no InstagramID')
                                         const authorizationCode: string = (parseAsPath['?code'] as string).replace(
                                             '#_',
                                             ''
@@ -70,6 +77,7 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                                             })
                                             .catch((err) => console.log(err))
                                     } else {
+                                        console.log('Fetched User with InstagramID')
                                         setUser(user)
                                     }
                                 }
@@ -77,23 +85,16 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                             .catch((err) => console.log(err))
                     }
                 } else {
+                    console.log('Code is not detected in the path. Setting the user to: ', currentUser)
                     if (currentUser) {
-                        axios
-                            .get(FETCH_USER_PROFILE(currentUser?.id))
-                            .then((res) => {
-                                setUser(res.data)
-                            })
-                            .catch((err) => console.log(err))
+                        setUser(currentUser)
                     }
                 }
             } else {
+                console.log('asPath or currentUser not detected')
                 if (currentUser) {
-                    axios
-                        .get(FETCH_USER_PROFILE(currentUser?.id))
-                        .then((res) => {
-                            setUser(res.data)
-                        })
-                        .catch((err) => console.log(err))
+                    console.log('asPath or currentUser not detected. Setting the user to: ', currentUser)
+                    setUser(currentUser)
                 } else {
                     router.push('/')
                 }
