@@ -18,31 +18,32 @@ import AuthProvider from 'utilities/providers/AuthProvider'
 // }
 
 const Provider = ({ children, cookies }) => {
-    return (
-        <>
-            <SSRKeycloakProvider
-                keycloakConfig={keycloakCfg}
-                persistor={Persistors.Cookies(cookies)}
-                LoadingComponent={<div>Loading...</div>}
-                autoRefreshToken={true}
-            >
-                <StoreProvider store={store}>
-                    <AuthProvider>
-                        <StylesProvider injectFirst>
-                            <ThemeProvider theme={theme}>
-                                <SnackbarProvider maxSnack={3}>
-                                    <SnackbarUtilsConfigurator />
-                                    <DndProvider backend={HTML5Backend}>
-                                        <ModalProvider>{children}</ModalProvider>
-                                    </DndProvider>
-                                </SnackbarProvider>
-                            </ThemeProvider>
-                        </StylesProvider>
-                    </AuthProvider>
-                </StoreProvider>
-            </SSRKeycloakProvider>
-        </>
-    )
+  console.log(`BERB ${JSON.stringify(keycloakCfg)}`);
+  return (
+    <>
+      <SSRKeycloakProvider
+        keycloakConfig={keycloakCfg}
+        persistor={Persistors.Cookies(cookies)}
+        LoadingComponent={<div>Loading...</div>}
+        autoRefreshToken={true}
+      >
+        <StoreProvider store={store}>
+          <AuthProvider>
+            <StylesProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <SnackbarProvider maxSnack={3}>
+                  <SnackbarUtilsConfigurator />
+                  <DndProvider backend={HTML5Backend}>
+                    <ModalProvider>{children}</ModalProvider>
+                  </DndProvider>
+                </SnackbarProvider>
+              </ThemeProvider>
+            </StylesProvider>
+          </AuthProvider>
+        </StoreProvider>
+      </SSRKeycloakProvider>
+    </>
+  )
 }
 
 export default Provider
