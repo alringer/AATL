@@ -84,11 +84,10 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                     : {}
             )
             .then((res) => {
-                fetchUser(keycloak)
                 setPublished(true)
                 setPublishedTitle(title)
                 setRecommendation(res.data)
-                fetchUser(authStore.getState().keycloak)
+                fetchUser(keycloak)
             })
             .catch((err) => console.log(err))
             .finally(() => {
