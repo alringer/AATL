@@ -1,5 +1,5 @@
 import UserProfile from 'components/UserProfile/UserProfile'
-import axios, { FETCH_USER_PROFILE, FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
+import axios, { FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -47,42 +47,32 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                     console.log('Code detected in the path')
                     if (currentUser) {
                         console.log('Code detected and current user detected')
-                        axios
-                            .get(FETCH_USER_PROFILE(currentUser?.id))
-                            .then((res) => {
-                                const user: IUserProfile = res.data
-                                console.log('Call succeeded with User: ', user)
-                                if (user) {
-                                    console.log('Fetched User: ', user)
-                                    if (!user.instagramProfile) {
-                                        console.log('Fetched User with no InstagramID')
-                                        const authorizationCode: string = (parseAsPath['?code'] as string).replace(
-                                            '#_',
-                                            ''
-                                        )
-                                        const config = {
-                                            headers: {
-                                                Authorization: getTokenConfig(),
-                                                'Content-Type': 'text/plain',
-                                            },
-                                        }
-                                        axios
-                                            .post(
-                                                FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id),
-                                                authorizationCode,
-                                                config
-                                            )
-                                            .then((res) => {
-                                                setUser(res.data)
-                                            })
-                                            .catch((err) => console.log(err))
-                                    } else {
-                                        console.log('Fetched User with InstagramID')
-                                        setUser(user)
-                                    }
-                                }
-                            })
-                            .catch((err) => console.log(err))
+                        if (!currentUser.instagramProfile) {
+                            console.log('Fetched User with no InstagramID')
+                            const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
+                            const config = {
+                                headers: {
+                                    Authorization: getTokenConfig(),
+                                    'Content-Type': 'text/plain',
+                                },
+                            }
+                            axios
+                                .post(
+                                    FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id),
+                                    authorizationCode,
+                                    config
+                                )
+                                .then((res) => {
+                                    setUser(res.data)
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                    setUser(currentUser)
+                                })
+                        } else {
+                            console.log('Fetched User with InstagramID')
+                            setUser(currentUser)
+                        }
                     }
                 } else {
                     console.log('Code is not detected in the path. Setting the user to: ', currentUser)
