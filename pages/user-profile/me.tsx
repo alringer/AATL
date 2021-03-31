@@ -21,7 +21,6 @@ interface IReduxProps {
 
 interface IServerSideProps {
     fetchUser: (keycloak: KeycloakInstance) => void
-    getTokenConfig: () => string
     venueListMetaId: number | null
 }
 interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps, IReduxProps {}
@@ -31,6 +30,8 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
     currentUser,
     venueListMetaId,
     getTokenConfig,
+    keycloak,
+    fetchUser,
 }) => {
     const router = useRouter()
     const [user, setUser] = React.useState(null)
@@ -63,7 +64,7 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                                     config
                                 )
                                 .then((res) => {
-                                    setUser(res.data)
+                                    fetchUser(keycloak)
                                 })
                                 .catch((err) => {
                                     console.log(err)
