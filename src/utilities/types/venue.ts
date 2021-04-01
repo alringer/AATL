@@ -65,22 +65,7 @@ export interface IVenue {
     deletedAt: string | null
     content: null
     parentRegion: IParentRegion
-    firstRecommendedBy: {
-        id: number
-        userId: string
-        username: string
-        firstName: string
-        lastName: string
-        email: string
-        userByLine: string
-        instagramId: string
-        imageCDNUrl: string
-        activated: boolean
-        createdAt: string
-        updatedAt: string
-        deletedAt: string | null
-        content: string
-    }
+    firstRecommendedBy: IUserProfile
     categories: ICategory[]
     similarVenues: IVenue[]
     recommendations: {
@@ -157,22 +142,7 @@ export const mockVenue: IVenue = {
         imageUrlTablet: '',
         imageUrlMobile: '',
     },
-    firstRecommendedBy: {
-        id: 1,
-        userId: '220a4da0-c22d-11ea-ae04-0242ac120002',
-        username: 'system',
-        firstName: 'System',
-        lastName: 'System',
-        email: 'system@system.com',
-        userByLine: '',
-        instagramId: '',
-        imageCDNUrl: '',
-        activated: true,
-        createdAt: '2020-07-09T14:42:48.832389Z',
-        updatedAt: '2020-07-09T14:42:48.832389Z',
-        deletedAt: null,
-        content: '',
-    },
+    firstRecommendedBy: mockUser,
     categories: [
         { tagName: 'Albanian', longName: 'Albanian', id: 1, source: sourceEnum.Yelp, sourceId: null },
         { tagName: 'Argentine', longName: 'Argentine', id: 2, source: sourceEnum.Yelp, sourceId: null },
