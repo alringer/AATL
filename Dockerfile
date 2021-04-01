@@ -10,10 +10,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 # cruft from previous 'developer' runs.
 COPY . ./
 
+ARG AATL_BRANCH
+
 RUN npm config set color false
 RUN npm install
 # TODO Revisit - This is technically building for dev or integration at the moment
-RUN npm run build-prod
+RUN npm run build-aws --branch=$AATL_BRANCH
 
 # Expose PORT 3000 on our virtual machine so we can run our server
 EXPOSE 3000
