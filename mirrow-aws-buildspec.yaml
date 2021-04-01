@@ -1,0 +1,73 @@
+version: 0.2
+
+env:
+  variables:
+      TZ : "America/Los_Angeles"
+      AATL_MAVEN_OPTS: "--batch-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  secrets-manager:
+     AWS_ACCESS_KEY_ID: arn:aws:secretsmanager:us-east-2:911122545055:secret:aatl-ecr-access-keys-TB8sUK:aatl_ecr_aws_access_key_id
+     AWS_SECRET_ACCESS_KEY: arn:aws:secretsmanager:us-east-2:911122545055:secret:aatl-ecr-access-keys-TB8sUK:aatl_ecr_aws_secret_access_key
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      java: openjdk11
+      nodejs: 12
+      # name: version
+      # name: version
+    #commands:
+      # - command
+      # - command
+  pre_build:
+    commands:
+      - echo $(pwd)
+      #- npm install
+      - env | sort
+      - unset MAVEN_CONFIG && ./mvnw ${AATL_MAVEN_OPTS} dependency:resolve
+      - unset MAVEN_CONFIG && ./mvnw ${AATL_MAVEN_OPTS} generate-resources
+      - cat src/constants/GitProperties.json
+      # - command
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password | docker login --username AWS --password-stdin 911122545055.dkr.ecr.us-east-2.amazonaws.com
+      - AWS_CONFIG_FILE=$(readlink -e aws-containers/config) && aws ecr describe-images  --repository-name aatl-web
+      #- exit 1
+      
+  build:
+    commands:
+      - echo $(date)
+      - docker build -f Dockerfile -t aatl-web:latest .
+      # - command
+  post_build:
+    commands:
+      - docker tag aatl-web:latest 911122545055.dkr.ecr.us-east-2.amazonaws.com/aatl-web:latest
+      - docker push 911122545055.dkr.ecr.us-east-2.amazonaws.com/aatl-web:latest
+      - AWS_CONFIG_FILE=$(readlink -e aws-containers/config) && aws ecr describe-images  --repository-name aatl-web
+#reports:
+  #report-name-or-arn:
+    #files:
+      # - location
+      # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+artifacts:
+  files:
+    - '**/*'
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+#  paths:
+#    - '/root/.m2/**/*'
+

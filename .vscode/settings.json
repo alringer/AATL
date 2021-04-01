@@ -1,0 +1,16 @@
+{
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "prettier.configPath": ".prettierrc",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "editor.formatOnPaste": true
+}

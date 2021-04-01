@@ -1,0 +1,73 @@
+version: 0.2
+
+env:
+  variables:
+      VERSION_TAG: 0.0.1
+      TZ : "America/Los_Angeles"
+      AATL_MAVEN_OPTS: "--batch-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  secrets-manager:
+     AWS_ACCESS_KEY_ID: arn:aws:secretsmanager:us-east-2:911122545055:secret:aatl-ecr-access-keys-TB8sUK:aatl_ecr_aws_access_key_id
+     AWS_SECRET_ACCESS_KEY: arn:aws:secretsmanager:us-east-2:911122545055:secret:aatl-ecr-access-keys-TB8sUK:aatl_ecr_aws_secret_access_key
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      java: openjdk11
+      nodejs: 12
+      # name: version
+      # name: version
+    #commands:
+      # - command
+      # - command
+  pre_build:
+    commands:
+      - echo $(pwd)
+      #- npm install
+      - env | sort
+      - unset MAVEN_CONFIG && ./mvnw ${AATL_MAVEN_OPTS} dependency:resolve
+      - unset MAVEN_CONFIG && ./mvnw ${AATL_MAVEN_OPTS} generate-resources
+      - cat src/constants/GitProperties.json
+      # - command
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+      #- exit 1
+  build:
+    commands:
+      - echo $(date)
+      - VERSION_TAG=$(date +%Y%m%d)_$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | cut -c1-7)
+      - echo Building with tag ${ECR_REPO_NAME}:${VERSION_TAG}
+      - docker build -t ${ECR_REPO_NAME}:${VERSION_TAG} --build-arg AWS_REGION --build-arg AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY --build-arg AATL_BRANCH .
+      - docker tag ${ECR_REPO_NAME}:${VERSION_TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${VERSION_TAG}
+#reports:
+  #report-name-or-arn:
+    #files:
+      # - location
+      # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+artifacts:
+  files:
+    - '**/*'
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+#  paths:
+#    - '/root/.m2/**/*'
+
