@@ -10,24 +10,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 # cruft from previous 'developer' runs.
 COPY . ./
 
-ARG HOSTNAME
-ARG AUTH_URL
-ARG GOOGLE_PLACES_KEY
-ARG INSTAGRAM_CLIENT_ID
-ARG INSTAGRAM_REDIRECT_URI
-
-ENV HOSTNAME=$HOSTNAME
-ENV AUTH_URL=$AUTH_URL
-
-ENV GOOGLE_PLACES_KEY=$GOOGLE_PLACES_KEY
-
-ENV INSTAGRAM_CLIENT_ID=$INSTAGRAM_CLIENT_ID
-ENV INSTAGRAM_REDIRECT_URI=$INSTAGRAM_REDIRECT_URI
+ARG AATL_BRANCH
 
 RUN npm config set color false
 RUN npm install
 # TODO Revisit - This is technically building for dev or integration at the moment
-RUN npm run build-aws
+RUN npm run build-aws --branch=$AATL_BRANCH
 
 # Expose PORT 3000 on our virtual machine so we can run our server
 EXPOSE 3000
