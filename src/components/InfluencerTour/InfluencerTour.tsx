@@ -29,6 +29,8 @@ interface IReduxProps {
 
 interface IInfluencerTourProps extends IReduxProps {}
 
+const Tour = dynamic(() => import('reactour'), { ssr: false })
+
 const InfluencerTour: React.FC<IInfluencerTourProps> = ({
     isPrelaunch,
     isLoggedIn,
@@ -39,7 +41,6 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
     openInfluencerTour,
     closeInfluencerTour,
 }) => {
-    const Tour = dynamic(() => import('reactour'), { ssr: false })
     const [isTourOpen, setIsTourOpen] = React.useState(false)
     const [isOverlayOpen, setOverlayOpen] = React.useState(false)
 
@@ -166,26 +167,23 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
             position: 'right',
         },
     ]
-    // data-tut={S.PRELAUNCH_TOUR.StepTwo.Observer}
-    // data-tut={S.PRELAUNCH_TOUR.StepThree.Selector}
-    // data-tut={S.PRELAUNCH_TOUR.StepTwo.Selector}
 
     return (
         <Tour
+            onRequestClose={handleRequestClose}
+            onAfterOpen={disableBody}
+            onBeforeClose={enableBody}
             steps={steps}
             isOpen={isTourOpen}
             rounded={5}
-            getCurrentStep={(curr) => console.log(`The current step is ${curr + 1}`)}
-            onRequestClose={handleRequestClose}
-            // onAfterOpen={disableBody}
-            // onBeforeClose={enableBody}
-            prevButton={<div></div>}
+            prevButton={<></>}
             showNavigation={false}
             showNumber={false}
             showButtons={false}
             disableDotsNavigation={true}
             disableInteraction={true}
             className={'influencer-tour'}
+            id="influencer-tour"
         />
     )
 }

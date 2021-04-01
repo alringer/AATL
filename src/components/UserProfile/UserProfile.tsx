@@ -6,7 +6,6 @@ import UserProfileBanner from 'components/UserProfile/UserProfileBanner/UserProf
 import UserProfileInfluencerGuide from 'components/UserProfile/UserProfileInfluencerGuide/UserProfileInfluencerGuide'
 import UserProfileInstagram from 'components/UserProfile/UserProfileInstagram/UserProfileInstagram'
 import UserProfileLists from 'components/UserProfile/UserProfileLists/UserProfileLists'
-import axios, { FETCH_USER_PROFILE } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
 import { useRouter } from 'next/router'
@@ -63,7 +62,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({
         } else {
             setUser(fetchedUser)
         }
-    }, [])
+    }, [fetchedUser])
 
     React.useEffect(() => {
         if (isPrelaunch === true && isLoading === false && isLoggedIn === false) {
@@ -78,14 +77,6 @@ const UserProfile: React.FC<IUserProfileProps> = ({
     }, [isPrelaunch, currentUser, fetchedUser])
 
     const refreshUser = () => {
-        if (user) {
-            axios
-                .get(FETCH_USER_PROFILE(user.id))
-                .then((res) => {
-                    setUser(res.data)
-                })
-                .catch((err) => console.log(err))
-        }
         fetchUser(keycloak)
     }
 

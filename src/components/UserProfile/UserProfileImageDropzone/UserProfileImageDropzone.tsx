@@ -85,7 +85,13 @@ const UserProfileImageDropzone: React.FC<IImageDropzoneProps> = ({
     }
 
     return (
-        <Dropzone onDrop={handleDrop} accept="image/png" minSize={0} maxSize={5242880} multiple={false}>
+        <Dropzone
+            onDrop={handleDrop}
+            accept={['image/jpeg', 'image/png']}
+            minSize={0}
+            maxSize={5242880}
+            multiple={false}
+        >
             {({ getRootProps, getInputProps, isDragReject, acceptedFiles }) => {
                 return imageCDNUrl || isUploadingImage ? (
                     renderUserProfileDropzoneComponent(getRootProps, getInputProps)

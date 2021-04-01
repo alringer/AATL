@@ -19,6 +19,7 @@
 //     venues?: IVenue[]
 // }
 
+import { InstagramProfileDTO } from 'utilities/types/instagramProfile'
 import { IRecommendation } from './recommendation'
 import { IVenue } from './venue'
 
@@ -31,8 +32,6 @@ export interface IUserProfile {
     firstName: string | null
     id: number | null
     imageCDNUrl: string | null
-    instagramId: string | null
-    instagramToken: string | null
     lastName: string | null
     updatedAt: string | null
     userByLine: string | null
@@ -43,6 +42,7 @@ export interface IUserProfile {
     recommendationListMetas: null
     userBadges: null
     configurationAudits: null
+    instagramProfile: InstagramProfileDTO
 }
 
 export const mockUser: IUserProfile = {

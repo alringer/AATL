@@ -86,8 +86,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
         const encoded = encodeURI(INSTAGRAM_CLIENT_ID)
         setInstagramLink(
-            user.instagramId && user.instagramToken
-                ? `https://instagram.com/${viewedUser.instagramId}`
+            user.instagramProfile
+                ? `https://instagram.com/${viewedUser?.instagramProfile?.username}`
                 : isOwner
                 ? `https://api.instagram.com/oauth/authorize?client_id=${encoded}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
                 : ''
@@ -173,15 +173,15 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         href={instagramLink}
                                         disabled={instagramLink ? false : true}
                                     >
-                                        {(viewedUser.instagramId || isOwner) && (
+                                        {(viewedUser.instagramProfile || isOwner) && (
                                             <UserProfileInstagramIconImg
                                                 src={UserProfileInstagramIcon}
                                                 alt="user-profile-instagram-icon"
                                             />
                                         )}
                                         <UserProfileInstagram>
-                                            {viewedUser.instagramId
-                                                ? `@${viewedUser.instagramId}`
+                                            {viewedUser.instagramProfile
+                                                ? `@${viewedUser.instagramProfile.username}`
                                                 : isOwner
                                                 ? S.USER_PROFILE_BANNER.EmptyInstagram
                                                 : ''}

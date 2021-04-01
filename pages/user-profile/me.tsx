@@ -1,5 +1,5 @@
 import UserProfile from 'components/UserProfile/UserProfile'
-import axios, { FETCH_USER_PROFILE, FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
+import axios, { FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE } from 'config/AxiosConfig'
 import { KeycloakInstance } from 'keycloak-js'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -21,7 +21,6 @@ interface IReduxProps {
 
 interface IServerSideProps {
     fetchUser: (keycloak: KeycloakInstance) => void
-    getTokenConfig: () => string
     venueListMetaId: number | null
 }
 interface IUserProfileProps extends IServerSideProps, IWithAuthInjectedProps, IReduxProps {}
@@ -31,6 +30,8 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
     currentUser,
     venueListMetaId,
     getTokenConfig,
+    keycloak,
+    fetchUser,
 }) => {
     const router = useRouter()
     const [user, setUser] = React.useState(null)
@@ -39,61 +40,52 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
 
     React.useEffect(() => {
         if (isMounted && !isLoading) {
+            console.log('Mounted and Not Loading')
             if (router?.asPath && currentUser) {
+                console.log('Path and current user detected')
                 const parseAsPath = qs.parse(router.asPath.replace(router.pathname, ''))
                 if (parseAsPath['?code']) {
+                    console.log('Code detected in the path')
                     if (currentUser) {
-                        axios
-                            .get(FETCH_USER_PROFILE(currentUser?.id))
-                            .then((res) => {
-                                const user = res.data
-                                if (user) {
-                                    if (!user.instagramId) {
-                                        const authorizationCode: string = (parseAsPath['?code'] as string).replace(
-                                            '#_',
-                                            ''
-                                        )
-                                        const config = {
-                                            headers: {
-                                                Authorization: getTokenConfig(),
-                                                'Content-Type': 'text/plain',
-                                            },
-                                        }
-                                        axios
-                                            .post(
-                                                FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id),
-                                                authorizationCode,
-                                                config
-                                            )
-                                            .then((res) => {
-                                                setUser(res.data)
-                                            })
-                                            .catch((err) => console.log(err))
-                                    } else {
-                                        setUser(user)
-                                    }
-                                }
-                            })
-                            .catch((err) => console.log(err))
+                        console.log('Code detected and current user detected')
+                        if (!currentUser.instagramProfile) {
+                            console.log('Fetched User with no InstagramProfile')
+                            const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
+                            const config = {
+                                headers: {
+                                    Authorization: getTokenConfig(),
+                                    'Content-Type': 'text/plain',
+                                },
+                            }
+                            axios
+                                .post(
+                                    FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE(currentUser?.id),
+                                    authorizationCode,
+                                    config
+                                )
+                                .then((res) => {
+                                    fetchUser(keycloak)
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                    setUser(currentUser)
+                                })
+                        } else {
+                            console.log('Fetched User with InstagramID')
+                            setUser(currentUser)
+                        }
                     }
                 } else {
+                    console.log('Code is not detected in the path. Setting the user to: ', currentUser)
                     if (currentUser) {
-                        axios
-                            .get(FETCH_USER_PROFILE(currentUser?.id))
-                            .then((res) => {
-                                setUser(res.data)
-                            })
-                            .catch((err) => console.log(err))
+                        setUser(currentUser)
                     }
                 }
             } else {
+                console.log('asPath or currentUser not detected')
                 if (currentUser) {
-                    axios
-                        .get(FETCH_USER_PROFILE(currentUser?.id))
-                        .then((res) => {
-                            setUser(res.data)
-                        })
-                        .catch((err) => console.log(err))
+                    console.log('asPath or currentUser not detected. Setting the user to: ', currentUser)
+                    setUser(currentUser)
                 } else {
                     router.push('/')
                 }
