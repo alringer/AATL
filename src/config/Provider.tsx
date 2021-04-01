@@ -18,7 +18,6 @@ import AuthProvider from 'utilities/providers/AuthProvider'
 // }
 
 const Provider = ({ children, cookies }) => {
-console.log(`BERB ${JSON.stringify(keycloakCfg)}`);
     return (
         <>
             <SSRKeycloakProvider
