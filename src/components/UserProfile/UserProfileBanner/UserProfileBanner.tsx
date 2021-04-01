@@ -37,6 +37,7 @@ import {
 
 interface IReduxProps {
     currentUser: IUserProfile | null
+    numberOfPlacesRecommended: number[] | null
     openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
@@ -49,6 +50,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     currentUser,
     openUserProfileEditModal,
     fetchUser,
+    numberOfPlacesRecommended,
 }) => {
     const isOwner = currentUser && user && currentUser.id === user.id
     // Input States
@@ -84,8 +86,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         // TODO: Set the link to activation link if the user has no instagram ID or disable the link
         const encoded = encodeURI(INSTAGRAM_CLIENT_ID)
         setInstagramLink(
-            user.instagramId && user.instagramToken
-                ? `https://instagram.com/${viewedUser.instagramId}`
+            user.instagramProfile
+                ? `https://instagram.com/${viewedUser?.instagramProfile?.username}`
                 : isOwner
                 ? `https://api.instagram.com/oauth/authorize?client_id=${encoded}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
                 : ''
@@ -95,6 +97,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     const handleEditProfile = () => {
         openUserProfileEditModal({
             onSuccess: fetchUser,
+            user: user,
         })
     }
 
@@ -124,7 +127,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     <>
                         <UserProfileMainInformationContainer>
                             {isOwner && (matches.laptop || matches.tablet) && (
-                                <UserProfileBannerEditButton onClick={handleEditProfile}>
+                                <UserProfileBannerEditButton
+                                    onClick={handleEditProfile}
+                                    data-tut={S.PRELAUNCH_TOUR.StepOne.Selector}
+                                >
                                     <UserProfileBannerEditIcon />
                                     &nbsp; EDIT PROFILE
                                 </UserProfileBannerEditButton>
@@ -137,7 +143,10 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                             </UserProfileImageContainer>
                             {matches.mobile && renderHeaderAndDescription()}
                             {matches.mobile && (
-                                <UserProfileBannerPencilButton onClick={handleEditProfile}>
+                                <UserProfileBannerPencilButton
+                                    onClick={handleEditProfile}
+                                    data-tut={S.PRELAUNCH_TOUR.StepOne.Selector}
+                                >
                                     <UserProfileBannerEditIcon />
                                 </UserProfileBannerPencilButton>
                             )}
@@ -156,9 +165,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
                                     {S.USER_PROFILE_BANNER.Recommends}:{' '}
-                                    {viewedUser.recommendations && viewedUser.recommendations.length
-                                        ? viewedUser.recommendations.length
-                                        : 0}{' '}
+                                    {numberOfPlacesRecommended ? numberOfPlacesRecommended.length : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
                                 {
@@ -166,15 +173,15 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                         href={instagramLink}
                                         disabled={instagramLink ? false : true}
                                     >
-                                        {(viewedUser.instagramId || isOwner) && (
+                                        {(viewedUser.instagramProfile || isOwner) && (
                                             <UserProfileInstagramIconImg
                                                 src={UserProfileInstagramIcon}
                                                 alt="user-profile-instagram-icon"
                                             />
                                         )}
                                         <UserProfileInstagram>
-                                            {viewedUser.instagramId
-                                                ? `@${viewedUser.instagramId}`
+                                            {viewedUser.instagramProfile
+                                                ? `@${viewedUser.instagramProfile.username}`
                                                 : isOwner
                                                 ? S.USER_PROFILE_BANNER.EmptyInstagram
                                                 : ''}
@@ -192,6 +199,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     currentUser: state.userReducer.user,
+    numberOfPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

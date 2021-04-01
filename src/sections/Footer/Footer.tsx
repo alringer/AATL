@@ -8,6 +8,8 @@ import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
+import { connect as reduxConnect } from 'react-redux'
+import { StoreState } from 'store'
 import { IFooter } from 'utilities/types/footer'
 import { ICategory } from '../../utilities/types/category'
 import { IParentRegion } from '../../utilities/types/parentRegion'
@@ -23,13 +25,19 @@ import {
     FooterLinksContainer,
     FooterLinkTitle,
     FooterLinkTitleAnchor,
+    FooterPrelaunchContainer,
     FooterRightColumn,
     FooterSecondRow,
     FooterTermsOfUseAnchor,
     FooterTinyText,
 } from './Footer.style'
 
-const Footer = () => {
+interface IReduxProps {
+    isPrelaunch: boolean
+}
+interface IFooterProps extends IReduxProps {}
+
+const Footer: React.FC<IFooterProps> = ({ isPrelaunch }) => {
     const [footerInformation, setFooterInformation] = React.useState<IFooter | undefined>()
     React.useEffect(() => {
         axios
@@ -39,89 +47,111 @@ const Footer = () => {
     }, [])
 
     return (
-        <FooterContainer>
-            <FooterFirstRow>
-                <FooterLeftColumn>
-                    <FooterInformationTitle>{S.FOOTER_ITEMS.CompanyName}</FooterInformationTitle>
-                    <FooterInformationBody>{S.FOOTER_ITEMS.FooterMessage}</FooterInformationBody>
-                    <FooterButtonsContainer>
-                        <Link href={'https://www.facebook.com/AskaTravelLocal/'} passHref={true} prefetch={false}>
-                            <a target={'_blank'}>
-                                <IconButton>
-                                    <Image src={FacebookSVG} alt="icon" />
-                                </IconButton>
-                            </a>
-                        </Link>
-                        <Link href={'https://www.instagram.com/askatravellocal/'} passHref={true} prefetch={false}>
-                            <a target={'_blank'}>
-                                <IconButton>
-                                    <Image src={InstagramSVG} alt="icon" />
-                                </IconButton>
-                            </a>
-                        </Link>
-                        <Link href={'https://twitter.com/askatravellocal'} passHref={true} prefetch={false}>
-                            <a target={'_blank'}>
-                                <IconButton>
-                                    <Image src={TwitterSVG} alt="icon" />
-                                </IconButton>
-                            </a>
-                        </Link>
-                    </FooterButtonsContainer>
-                </FooterLeftColumn>
-                <FooterRightColumn>
-                    <FooterLinksContainer>
-                        <Link href={R.ROUTE_ITEMS.cities} passHref>
-                            <FooterLinkTitleAnchor>
-                                <FooterLinkTitle>{S.FOOTER_ITEMS.Cities}</FooterLinkTitle>
-                            </FooterLinkTitleAnchor>
-                        </Link>
-                        {footerInformation &&
-                            footerInformation.mostRecommendedParentRegions.map((parentRegion: IParentRegion) => (
+        <FooterContainer isPrelaunch={isPrelaunch}>
+            {isPrelaunch ? (
+                <FooterPrelaunchContainer></FooterPrelaunchContainer>
+            ) : (
+                <>
+                    <FooterFirstRow>
+                        <FooterLeftColumn>
+                            <FooterInformationTitle>{S.FOOTER_ITEMS.CompanyName}</FooterInformationTitle>
+                            <FooterInformationBody>{S.FOOTER_ITEMS.FooterMessage}</FooterInformationBody>
+                            <FooterButtonsContainer>
                                 <Link
-                                    href={`${R.ROUTE_ITEMS.city}/${parentRegion.id}`}
+                                    href={'https://www.facebook.com/AskaTravelLocal/'}
                                     passHref={true}
                                     prefetch={false}
-                                    key={parentRegion.id}
                                 >
-                                    <FooterAnchor>
-                                        <FooterLinkItem key={parentRegion.id}>{parentRegion.city}</FooterLinkItem>
-                                    </FooterAnchor>
+                                    <a target={'_blank'}>
+                                        <IconButton>
+                                            <Image src={FacebookSVG} alt="icon" />
+                                        </IconButton>
+                                    </a>
                                 </Link>
-                            ))}
-                    </FooterLinksContainer>
-                    <FooterLinksContainer id="marginLeft">
-                        <Link href={R.ROUTE_ITEMS.foodAndDrink} passHref>
-                            <FooterLinkTitleAnchor>
-                                <FooterLinkTitle>{S.FOOTER_ITEMS.FoodAndDrinks}</FooterLinkTitle>
-                            </FooterLinkTitleAnchor>
-                        </Link>
-                        {footerInformation &&
-                            footerInformation.mostRecommendedCategories.map((category: ICategory) => (
                                 <Link
-                                    href={`${R.ROUTE_ITEMS.search}?place=${category.longName}`}
+                                    href={'https://www.instagram.com/askatravellocal/'}
                                     passHref={true}
                                     prefetch={false}
-                                    key={category.id}
                                 >
-                                    <FooterAnchor>
-                                        <FooterLinkItem key={category.id}>{category.longName}</FooterLinkItem>
-                                    </FooterAnchor>
+                                    <a target={'_blank'}>
+                                        <IconButton>
+                                            <Image src={InstagramSVG} alt="icon" />
+                                        </IconButton>
+                                    </a>
                                 </Link>
-                            ))}
-                    </FooterLinksContainer>
-                </FooterRightColumn>
-            </FooterFirstRow>
-            <FooterSecondRow>
-                <FooterTinyText>
-                    {S.FOOTER_ITEMS.WithLove} {S.FOOTER_ITEMS.SeeOur}{' '}
-                    <Link href={`${R.ROUTE_ITEMS.termsAndConditions}`} passHref={true} prefetch={false}>
-                        <FooterTermsOfUseAnchor>{S.FOOTER_ITEMS.TermsOfUse}</FooterTermsOfUseAnchor>
-                    </Link>
-                </FooterTinyText>
-                <FooterTinyText>{S.FOOTER_ITEMS.CopyRightText} </FooterTinyText>
-            </FooterSecondRow>
+                                <Link href={'https://twitter.com/askatravellocal'} passHref={true} prefetch={false}>
+                                    <a target={'_blank'}>
+                                        <IconButton>
+                                            <Image src={TwitterSVG} alt="icon" />
+                                        </IconButton>
+                                    </a>
+                                </Link>
+                            </FooterButtonsContainer>
+                        </FooterLeftColumn>
+                        <FooterRightColumn>
+                            <FooterLinksContainer>
+                                <Link href={R.ROUTE_ITEMS.cities} passHref>
+                                    <FooterLinkTitleAnchor>
+                                        <FooterLinkTitle>{S.FOOTER_ITEMS.Cities}</FooterLinkTitle>
+                                    </FooterLinkTitleAnchor>
+                                </Link>
+                                {footerInformation &&
+                                    footerInformation.mostRecommendedParentRegions.map(
+                                        (parentRegion: IParentRegion) => (
+                                            <Link
+                                                href={`${R.ROUTE_ITEMS.city}/${parentRegion.id}`}
+                                                passHref={true}
+                                                prefetch={false}
+                                                key={parentRegion.id}
+                                            >
+                                                <FooterAnchor>
+                                                    <FooterLinkItem key={parentRegion.id}>
+                                                        {parentRegion.city}
+                                                    </FooterLinkItem>
+                                                </FooterAnchor>
+                                            </Link>
+                                        )
+                                    )}
+                            </FooterLinksContainer>
+                            <FooterLinksContainer id="marginLeft">
+                                <Link href={R.ROUTE_ITEMS.foodAndDrink} passHref>
+                                    <FooterLinkTitleAnchor>
+                                        <FooterLinkTitle>{S.FOOTER_ITEMS.FoodAndDrinks}</FooterLinkTitle>
+                                    </FooterLinkTitleAnchor>
+                                </Link>
+                                {footerInformation &&
+                                    footerInformation.mostRecommendedCategories.map((category: ICategory) => (
+                                        <Link
+                                            href={`${R.ROUTE_ITEMS.search}?place=${category.longName}`}
+                                            passHref={true}
+                                            prefetch={false}
+                                            key={category.id}
+                                        >
+                                            <FooterAnchor>
+                                                <FooterLinkItem key={category.id}>{category.longName}</FooterLinkItem>
+                                            </FooterAnchor>
+                                        </Link>
+                                    ))}
+                            </FooterLinksContainer>
+                        </FooterRightColumn>
+                    </FooterFirstRow>
+                    <FooterSecondRow>
+                        <FooterTinyText>
+                            {S.FOOTER_ITEMS.WithLove} {S.FOOTER_ITEMS.SeeOur}{' '}
+                            <Link href={`${R.ROUTE_ITEMS.termsAndConditions}`} passHref={true} prefetch={false}>
+                                <FooterTermsOfUseAnchor>{S.FOOTER_ITEMS.TermsOfUse}</FooterTermsOfUseAnchor>
+                            </Link>
+                        </FooterTinyText>
+                        <FooterTinyText>{S.FOOTER_ITEMS.CopyRightText} </FooterTinyText>
+                    </FooterSecondRow>
+                </>
+            )}
         </FooterContainer>
     )
 }
 
-export default Footer
+const mapStateToProps = (state: StoreState) => ({
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
+})
+
+export default reduxConnect(mapStateToProps)(Footer)

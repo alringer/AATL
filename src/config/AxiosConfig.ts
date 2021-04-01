@@ -3,6 +3,7 @@ import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
+import { setPrelaunchPeriod } from 'store/prelaunch/prelaunch_actions'
 import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 
 const API_URL = '/api'
@@ -192,9 +193,12 @@ const requestInterceptor = async (config: any = {}) => {
 }
 
 const responseInterceptor = (response: AxiosResponse) => {
-    // console.log('Response in the Interceptor: ', response)
-    // console.log('City attribute in the header: ', response.headers['x-aatl-city'])
-    // console.log('Typeof City attribute in the header: ', typeof response.headers['x-aatl-city'])
+    if (
+        store.getState().prelaunchReducer.isPrelaunch === null &&
+        response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
+    ) {
+        store.dispatch(setPrelaunchPeriod(true))
+    }
     if (
         (store.getState().locationReducer.ipLocation === null &&
             response.config.headers['X-AATL-Use-IP-Address-As-Location']) === true &&

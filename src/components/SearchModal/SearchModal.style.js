@@ -1,5 +1,6 @@
 import Dialog from '@material-ui/core/Dialog'
 import { CustomButton } from 'style/Button/Button.style'
+import { CustomIconButton } from 'style/Button/IconButton.style'
 import { device } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
 import styled from 'styled-components'
@@ -42,7 +43,7 @@ export const SearchModalContentContainer = styled.div`
 export const SearchModalHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 
     width: 100%;
@@ -320,4 +321,15 @@ export const CancelButton = styled(CustomButton)`
     :hover {
         border-color: ${(props) => props.theme.darkGreyOpaque};
     }
+`
+
+export const SearchModalCloseButton = styled(CustomIconButton)`
+    color: ${(props) => props.theme.mushroom};
+    background-color: transparent;
+    svg {
+        color: white;
+    }
+    /* :hover {
+        border-color: ${(props) => props.theme.darkGreyOpaque};
+    } */
 `
