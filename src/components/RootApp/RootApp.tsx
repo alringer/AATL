@@ -10,6 +10,7 @@ import { PageContainer } from 'style/App.style'
 
 interface IReduxProps {
     isPrelaunch: boolean
+    isLoggedIn: boolean
     fetchCategories: () => void
 }
 
@@ -17,7 +18,7 @@ interface IRootAppProps extends IReduxProps {
     children: React.ReactNode
 }
 
-const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaunch }) => {
+const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaunch, isLoggedIn }) => {
     const router = useRouter()
 
     React.useEffect(() => {
@@ -30,12 +31,12 @@ const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaun
         // console.log('pathname: ', router.pathname)
         // console.log('basePath: ', router.basePath)
         // console.log('query: ', router.query)
-        if (
-            isPrelaunch === true &&
-            !router.route.includes('/user-profile') &&
-            !router.route.includes('/influencer-welcome')
-        ) {
-            router.push('/influencer-welcome')
+        if (isPrelaunch === true && !router.route.includes('/me') && !router.route.includes('/influencer-welcome')) {
+            if (isLoggedIn) {
+                router.push('/user-profile/me')
+            } else {
+                router.push('/influencer-welcome')
+            }
         }
     }, [router, isPrelaunch])
     return (
@@ -49,6 +50,7 @@ const RootApp: React.FC<IRootAppProps> = ({ children, fetchCategories, isPrelaun
 
 const mapStateToProps = (state: StoreState) => ({
     isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    isLoggedIn: state.userReducer.loggedIn,
 })
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({ fetchCategories }, dispatch)
 

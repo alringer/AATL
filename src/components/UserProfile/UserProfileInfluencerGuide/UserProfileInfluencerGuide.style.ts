@@ -5,18 +5,21 @@ import styled, { css, keyframes } from 'styled-components'
 
 export const UserProfileInfluencerGuideContainer = styled(ContentWrapper)`
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
     width: 100%;
 
     border-bottom: solid 1px #e8e8e8;
 
     @media ${device.mobile} {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
         padding: 20px 0;
     }
     @media ${device.tablet} {
         padding: 100px 0;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 `
 export const UserProfileInfluencerGuideTextsContainer = styled.div`
@@ -92,6 +95,13 @@ export const UserProfileInfluencerGuideIconsContainer = styled.div<isLockedProp>
             `
         }
     }}
+
+    @media ${device.mobile} {
+        margin-top: 40px;
+    }
+    @media ${device.tablet} {
+        margin-top: 0;
+    }
 `
 
 type fadeOutProp = {

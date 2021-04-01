@@ -1,4 +1,5 @@
 import { CircularProgress } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
 import Image from 'components/Image/Image'
 import SearchFull from 'components/SearchFull/SearchFull'
 import axios, { SEARCH_YELP_RESTAURANTS } from 'config/AxiosConfig'
@@ -15,6 +16,7 @@ import { ICategory } from 'utilities/types/category'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 import {
     RecommendButton,
+    SearchModalCloseButton,
     SearchModalContentWrapper,
     SearchModalHeaderContainer,
     SearchModalHeaderText,
@@ -216,6 +218,9 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         <SearchModalScrollContainer ref={scrollRef} onScroll={handleScroll}>
             <SearchModalHeaderContainer>
                 <SearchModalHeaderText>{S.RESTAURANT_SEARCH.Header}</SearchModalHeaderText>
+                <SearchModalCloseButton onClick={closeModal}>
+                    <CloseIcon />
+                </SearchModalCloseButton>
             </SearchModalHeaderContainer>
             <SearchModalContentWrapper>
                 <SearchModalInputFieldsContainer>
