@@ -49,7 +49,7 @@ const UserProfileMePage: React.FC<IUserProfileProps> = ({
                     if (currentUser) {
                         console.log('Code detected and current user detected')
                         if (!currentUser.instagramProfile) {
-                            console.log('Fetched User with no InstagramID')
+                            console.log('Fetched User with no InstagramProfile')
                             const authorizationCode: string = (parseAsPath['?code'] as string).replace('#_', '')
                             const config = {
                                 headers: {

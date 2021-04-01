@@ -77,14 +77,6 @@ const UserProfile: React.FC<IUserProfileProps> = ({
     }, [isPrelaunch, currentUser, fetchedUser])
 
     const refreshUser = () => {
-        // if (user) {
-        //     axios
-        //         .get(FETCH_USER_PROFILE(user.id))
-        //         .then((res) => {
-        //             setUser(res.data)
-        //         })
-        //         .catch((err) => console.log(err))
-        // }
         fetchUser(keycloak)
     }
 
