@@ -185,8 +185,7 @@ export const HEADER_ITEMS = {
 
 export const EMAIL_SUBSCRIPTION = {
     Title: 'Find best places to eat!',
-    Body:
-        'Keep informed of the best places to eat around you and in places you plan to go. Recommendations by locals who love eating! Sign up for deals and updates!',
+    Body: 'Keep informed of the best places to eat around you and in places you plan to go. Recommendations by locals who love eating! Sign up for deals and updates!',
 }
 
 export const HAVE_YOU_BEEN_TO = {
@@ -267,8 +266,7 @@ export const RECOMMENDATION_EDITOR = {
     PlaceholderTitle: 'Write a catchy title :)',
     PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
     MaxLength: '/150',
-    TipOne:
-        'It’s all about the ambiance. Speak to the decor, lighting and service. How did the restaurant make you feel? Tap into the emotional aspect of fine dining.',
+    TipOne: 'It’s all about the ambiance. Speak to the decor, lighting and service. How did the restaurant make you feel? Tap into the emotional aspect of fine dining.',
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -276,7 +274,7 @@ export const RECOMMENDATION_PUBLISHED = {
     PreviewText: 'Alaskan Salmon by Yoon',
     BodyTextOne: 'If our curators feature your recommendation for readers, we will email you and let you know.',
     BodyTextTwo:
-        'Recommendations are a large part of what we are about and we greatly appreciate your help in speading the word about the best places to eat around you. Thank you!',
+        'Recommendations are a large part of what we are about and we greatly appreciate your help in spreading the word about the best places to eat around you. Thank you!',
 }
 
 export const IMAGE_DROPZONE = {
@@ -470,8 +468,7 @@ export const FLAG_MODAL = {
 
 export const DELETE_RECOMMENDATION_MODAL = {
     Header: 'Delete recommendation',
-    Title:
-        'Deleting this recommendation cannot be undone. Please make sure this recommendation is indeed inappropriate before permanently deleting.',
+    Title: 'Deleting this recommendation cannot be undone. Please make sure this recommendation is indeed inappropriate before permanently deleting.',
 }
 
 export const TERMS_AND_CONDITIONS = {
@@ -529,23 +526,19 @@ P.O. Box 4089, Incline Village, NV  89450`,
         },
         {
             Title: 'LIABILITY DISCLAIMER',
-            Body:
-                'The information included in this website may contain information or material that is inaccurate or false.  AskaTravelLocal assumes no liability.',
+            Body: 'The information included in this website may contain information or material that is inaccurate or false.  AskaTravelLocal assumes no liability.',
         },
         {
             Title: 'INDEMNIFICATION',
-            Body:
-                'You agree to defend and indemnify AskaTravelLocal, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
+            Body: 'You agree to defend and indemnify AskaTravelLocal, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
         },
         {
             Title: 'COPYRIGHT AND TRADEMARK NOTICES',
-            Body:
-                'All contents of this website is the property of AskaTravelLocal including the name AskaTravelLocal, AskaTravelLocal.com and the logo.  Use of any of the trademarked material is not permitted without written permission.',
+            Body: 'All contents of this website is the property of AskaTravelLocal including the name AskaTravelLocal, AskaTravelLocal.com and the logo.  Use of any of the trademarked material is not permitted without written permission.',
         },
         {
             Title: 'JURISDICTION',
-            Body:
-                'This website is operated by a United States entity in the state of Nevada.  By using this website, you consent to the jurisdiction of the court system in the state of Nevada.',
+            Body: 'This website is operated by a United States entity in the state of Nevada.  By using this website, you consent to the jurisdiction of the court system in the state of Nevada.',
         },
         {
             Title: 'CONTACT ADDRESS',
