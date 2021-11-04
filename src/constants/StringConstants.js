@@ -315,7 +315,7 @@ export const PLACE_CARD = {
 }
 
 export const RESTAURANT_SEARCH = {
-    Header: 'Looking for a restaurant?',
+    Header: 'Search for a restaurant you would like to recommend.',
     Matches: 'Matches found',
     NotFind: "Didn't find what you were looking for?",
 }
