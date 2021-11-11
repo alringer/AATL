@@ -186,8 +186,12 @@ const fetchIPAddress = () => {
 const requestInterceptor = async (config: any = {}) => {
     if (store.getState().locationReducer.ipLocation === null) {
         const clientIP = await fetchIPAddress()
-        config.headers['X-AATL-Use-IP-Address-As-Location'] = true
-        config.headers['X-Forwarded-For'] = clientIP
+        if (clientIP) {
+            config.headers['X-AATL-Use-IP-Address-As-Location'] = true
+            config.headers['X-Forwarded-For'] = clientIP
+        } else {
+            config.headers['X-AATL-Use-IP-Address-As-Location'] = false
+        }
     }
     return config
 }
