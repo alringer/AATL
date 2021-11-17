@@ -90,6 +90,11 @@ const MyListPaginationView: React.FC<IMyListPaginationViewProps> = ({
         axios
             .get(FETCH_VENUES_IN_VENUE_LIST_META(id, page))
             .then((res) => {
+                res.data.map((item: IVenue) =>
+                    item.categories.sort((category1, category2) =>
+                        category1.longName.toLocaleLowerCase() > category2.longName.toLocaleLowerCase() ? 1 : -1
+                    )
+                )
                 setCurrentVenues(res.data)
                 setCurrentPage(page + 1)
                 const parsedLinkHeader = parse(res.headers['link'])
