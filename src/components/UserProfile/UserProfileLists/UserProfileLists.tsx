@@ -145,7 +145,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         axios
             .get(FETCH_VENUE_LISTS_BY_CITY(user.id))
             .then((res) => {
-                console.log('CITY DATA!!', res.data)
                 res.data.sort((item1: IByCity, item2: IByCity) =>
                     item1.city.toLocaleLowerCase() > item2.city.toLocaleLowerCase() ? 1 : -1
                 )
