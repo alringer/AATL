@@ -164,6 +164,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 const openListModalPayload: OpenListModalPayload = {
                     currentListModalView: ListModalViewEnum.AddToRecommendationList,
                     recommendationID: currentRecommendation.id,
+                    recommendationTitle: currentRecommendation.title,
                 }
                 openListModal(openListModalPayload)
             } else if (userRole === UserRoleEnum.User && currentRecommendation.venue) {
