@@ -18,14 +18,18 @@ import {
     SubmitButton,
 } from 'components/ListModal/ListModal.style'
 import { PlaceholderContainer, PlaceholderTextBold } from 'components/Search/Search.style'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
 import axios, {
     RECOMMENDATION_LIST_METAS,
     RECOMMENDATION_LIST_SPOTLIGHTED_RECOMMENDATION,
     UPLOAD_BLOB,
 } from 'config/AxiosConfig'
 import * as D from 'constants/ImageDimensionConstants'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { KeycloakInstance } from 'keycloak-js'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -43,6 +47,7 @@ interface IReduxProps {
 interface IAddToRecommendationListProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
     switchView: (newListModalView: ListModalViewEnum) => void
+    recommendationTitle: string
 }
 
 const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
@@ -52,6 +57,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     recommendationID,
     keycloak,
     fetchUser,
+    recommendationTitle,
 }) => {
     const InputEnum = {
         title: 'title',
@@ -97,6 +103,8 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
     const handleBackToLists = () => {
         switchView(ListModalViewEnum.AddToRecommendationList)
     }
+
+    const { enqueueSnackbar } = useSnackbar()
     const handleAddRecommendation = () => {
         if (
             recommendationID !== undefined &&
@@ -135,6 +143,25 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                             )
                             .then((res) => {
                                 fetchUser(keycloak)
+                                enqueueSnackbar('', {
+                                    content: (
+                                        <div>
+                                            <Snackbar
+                                                type={B.ADDED_TO_LIST.Type}
+                                                title={B.ADDED_TO_LIST.Title}
+                                                message={
+                                                    <SnackbarMessageBody>
+                                                        <SnackbarOrangeMessage>
+                                                            {recommendationTitle}
+                                                        </SnackbarOrangeMessage>
+                                                        &nbsp;{B.ADDED_TO_LIST.Body}&nbsp;
+                                                        <SnackbarOrangeMessage>{res.data.title}</SnackbarOrangeMessage>
+                                                    </SnackbarMessageBody>
+                                                }
+                                            />
+                                        </div>
+                                    ),
+                                })
                                 closeModal()
                             })
                             .catch((err) => console.log(err))
@@ -320,6 +347,7 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     recommendationID: state.listModalReducer.recommendationID,
+    recommendationTitle: state.listModalReducer.recommendationTitle,
 })
 
 const mapDispatchToProps = (dispatch: any) =>
