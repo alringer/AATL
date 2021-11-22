@@ -554,7 +554,7 @@ export const PRELAUNCH = {
     Welcome: {
         Title: 'Hey there Foodie!',
         Message:
-            'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an inflencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
+            'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an influencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
     },
 }
 
