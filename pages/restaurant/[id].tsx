@@ -102,7 +102,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
                         venueInformation.categories &&
                         venueInformation.categories[0] &&
                         venueInformation.categories[0].longName
-                            ? venueInformation.categories[0].longName
+                            ? venueInformation.categories[0]
                             : ''
                     }
                 />
