@@ -60,7 +60,7 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
         if (titleInput) {
             const createNewVenueListPayload = {
                 title: titleInput,
-                description: descriptionInput,
+                summary: descriptionInput,
             }
             const config = {
                 headers: {

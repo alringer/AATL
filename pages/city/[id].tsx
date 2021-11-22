@@ -37,16 +37,16 @@ const City: React.FC<ICityProps> = ({ cityInformation }) => {
             })
             router.push('/')
         }
-    }, [])
+    }, [cityInformation])
 
-    return (
+    return cityInformation ? (
         <>
             <CityBanner cityInformation={cityInformation} />
             <MostPopular cityInformation={cityInformation} />
             <LocalPlaces cityInformation={cityInformation} />
             <EmailSubscription />
         </>
-    )
+    ) : null
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

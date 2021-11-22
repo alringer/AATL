@@ -241,7 +241,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                             )}
                             <SearchModalMatchesFound>
                                 {results && results.length > 0
-                                    ? `${results.length} ${S.RESTAURANT_SEARCH.Matches}`
+                                    ? `${total} ${S.RESTAURANT_SEARCH.Matches}`
                                     : 'Try a different location, alternative spelling or a more generalized search.'}
                             </SearchModalMatchesFound>
                             <SearchModalRestaurantCardsContainer>
