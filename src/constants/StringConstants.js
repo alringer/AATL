@@ -431,7 +431,7 @@ export const USER_PROFILE_LISTS = {
     MyRecommendations: 'RECOMMENDATIONS',
     EmptyMessageTitle: 'Start building your lists!',
     EmptyMessageSubTitle:
-        'This is where all your lists of places will be saved. To build your list find restaurants you would like to save and select the “Heart” symbol. We will automatically build lists for you by category, location, and your very own recommendations as well.',
+        'This is where all your lists of places will be saved. To build your list, find restaurants you like and add them to a list or recommend them through the menu. We will automatically build lists for you by category, location, and your very own recommendations as well.',
 }
 
 export const USER_PROFILE_INSTAGRAM = {
