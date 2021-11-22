@@ -95,7 +95,7 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
                     title={`${S.RESTAURANT_PAGE.PlacesSimilarTitle} ${venueInformation ? venueInformation.name : null}`}
                     subTitle={`${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne} ${
                         venueInformation ? venueInformation.name : null
-                    } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne}`}
+                    } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartTwo}`}
                     places={venueInformation ? venueInformation.similarVenues : null}
                     category={
                         venueInformation &&
