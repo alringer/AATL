@@ -125,6 +125,7 @@ const FlagModal: React.FC<IFlagModalProps> = ({ isOpen, closeFlagModal, recommen
                                     onChange={handleChangeReason}
                                     variant="outlined"
                                     InputLabelProps={{ shrink: false }}
+                                    inputProps={{ maxLength: 256 }}
                                 />
                             </ListModalMainContentContainer>
                         </ListModalMainAreaContainer>
