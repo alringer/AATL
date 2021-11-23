@@ -9,6 +9,7 @@ export interface ListModalReducerState {
     placeList: IVenueListMeta | null
     recommendationList: IRecommendationListMeta | null
     onSuccess: () => void
+    recommendationTitle: string
 }
 
 export enum ListModalViewEnum {
@@ -29,6 +30,7 @@ export type OpenListModalPayload = {
     placeList?: IVenueListMeta
     recommendationList?: IRecommendationListMeta
     onSuccess?: () => void
+    recommendationTitle?: string
 }
 
 // Action Types

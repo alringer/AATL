@@ -109,6 +109,9 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         axios
             .get(FETCH_VENUE_LISTS(user.id))
             .then((res) => {
+                res.data.sort((item1: IVenueListMeta, item2: IVenueListMeta) =>
+                    item1.title.toLocaleLowerCase() > item2.title.toLocaleLowerCase() ? 1 : -1
+                )
                 const modifiedMyLists: IVenueListMetaWithUniqueID[] = res.data.map((item: IVenueListMeta) => {
                     const currentUniqueID = uniqueID
                     uniqueID = uniqueID + 1
@@ -142,6 +145,9 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         axios
             .get(FETCH_VENUE_LISTS_BY_CITY(user.id))
             .then((res) => {
+                res.data.sort((item1: IByCity, item2: IByCity) =>
+                    item1.city.toLocaleLowerCase() > item2.city.toLocaleLowerCase() ? 1 : -1
+                )
                 const modifiedMyLists = res.data.map((item: IByCity) => {
                     const currentUniqueID = uniqueID
                     uniqueID = uniqueID + 1
@@ -159,6 +165,10 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         axios
             .get(FETCH_VENUE_LISTS_BY_CATEGORY(user.id))
             .then((res) => {
+                res.data.sort((item1: IByCategory, item2: IByCategory) =>
+                    item1.longName.toLocaleLowerCase() > item2.longName.toLocaleLowerCase() ? 1 : -1
+                )
+
                 const modifiedMyLists = res.data.map((item: IByCategory) => {
                     const currentUniqueID = uniqueID
                     uniqueID = uniqueID + 1
