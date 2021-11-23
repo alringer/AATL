@@ -20,7 +20,7 @@ export const AdminFlaggedContentTableRow = styled.div`
     display: flex;
     flex-direction: row;
     box-shadow: inset 0 -1px 0 0 #e9e9e9;
-    height: 116px;
+    min-height: 116px;
 
     padding: 15px 20px;
 `
@@ -37,7 +37,7 @@ type HeaderProp = {
 
 export const AdminFlaggedContentColumn = styled.div<HeaderProp>`
     display: flex;
-    ${props => {
+    ${(props) => {
         if (props.isHeader === true) {
             return css`
                 align-items: center;
@@ -65,6 +65,8 @@ export const AdminFlaggedContentReasonColumn = styled(AdminFlaggedContentColumn)
     width: 240px;
 
     margin-right: 40px;
+
+    word-break: break-all;
 `
 export const AdminFlaggedContentDateFlaggedColumn = styled(AdminFlaggedContentColumn)`
     width: 160px;

@@ -1,9 +1,9 @@
 {
-  "git.build.time" : "2020-07-27 08:51:44AM-0700",
+  "git.build.time" : "2021-11-11 08:36:22AM-0800",
   "git.build.version" : "0.0.1-SNAPSHOT",
-  "git.commit.id.abbrev" : "e9dc961",
-  "git.commit.message.full" : "Merged in Logs-On-Interceptor (pull request #8)\n\nLogs On Interceptor",
-  "git.commit.time" : "2020-07-27 08:42:46AM-0700",
-  "git.commit.user.name" : "Yoon Chang",
-  "git.total.commit.count" : "79"
+  "git.commit.id.abbrev" : "f51a963",
+  "git.commit.message.full" : "Merged in AATL-890 (pull request #81)\n\nChanged header for restaurant search modal\n\nApproved-by: Yoon Chang",
+  "git.commit.time" : "2021-11-04 08:14:31AM-0700",
+  "git.commit.user.name" : "Lucas Bajoua",
+  "git.total.commit.count" : "327"
 }
