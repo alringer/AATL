@@ -102,7 +102,7 @@ const InfluencerTour: React.FC<IInfluencerTourProps> = ({
                             <InfluencerCardMessage>
                                 {S.PRELAUNCH_TOUR.StepTwo.PreOrangeMessage}&nbsp;
                                 <InfluencerCardOrangeMessage>
-                                    {S.PRELAUNCH_TOUR.StepTwo.Name},
+                                    {S.PRELAUNCH_TOUR.StepTwo.Name}
                                 </InfluencerCardOrangeMessage>
                                 ,&nbsp;
                                 <InfluencerCardOrangeMessage>

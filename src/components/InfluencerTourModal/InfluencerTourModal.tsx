@@ -72,7 +72,7 @@ const EditUserProfileOverlay: React.FC<IInfluencerTourModalProps> = ({ isModalOp
                                     />
                                     <TitleInput
                                         value={currentOccupation}
-                                        label={`Occupation`}
+                                        label={`By-Line`}
                                         // onChange={handleChangeOccupation}
                                         variant="outlined"
                                         // disabled={isSaving}
