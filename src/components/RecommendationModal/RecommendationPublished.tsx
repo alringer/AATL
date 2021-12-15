@@ -13,7 +13,7 @@ import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
-import { StoreState } from 'store'
+import store, { StoreState } from 'store'
 import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 
@@ -24,17 +24,29 @@ interface IReduxProps {
 interface IRecommendationPublishedProps extends IReduxProps {
     publishedTitle: string
     recommendation: IRecommendation | null
+    closeRecommendationModal: () => void
 }
 
-const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publishedTitle, user, recommendation }) => {
+const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
+    publishedTitle,
+    user,
+    recommendation,
+    closeRecommendationModal,
+}) => {
     const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
         if (recommendation && window !== undefined) {
-            const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
-            setPermaLink(newPermaLink)
+            if (!store.getState().prelaunchReducer.isPrelaunch) {
+                const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
+                setPermaLink(newPermaLink)
+            }
         }
     }, [recommendation])
+
+    const handleCheckItOut = () => {
+        if (store.getState().prelaunchReducer.isPrelaunch) closeRecommendationModal()
+    }
 
     return (
         <RecommendationPublishedContainer>
@@ -55,7 +67,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
                 <RecommendationEditorCopyRecommendationButtonContainer>
                     <Link href={permaLink} passHref={true} prefetch={false}>
                         <RecommendationPublishedButtonAnchor>
-                            <RecommendationEditorCopyRecommendationButton>
+                            <RecommendationEditorCopyRecommendationButton onClick={handleCheckItOut}>
                                 {S.BUTTON_LABELS.CheckItOut}
                             </RecommendationEditorCopyRecommendationButton>
                         </RecommendationPublishedButtonAnchor>
