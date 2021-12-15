@@ -13,12 +13,13 @@ import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
-import store, { StoreState } from 'store'
+import { StoreState } from 'store'
 import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IReduxProps {
     user: IUserProfile
+    isPrelaunch: boolean
 }
 
 interface IRecommendationPublishedProps extends IReduxProps {
@@ -32,12 +33,13 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
     user,
     recommendation,
     closeRecommendationModal,
+    isPrelaunch,
 }) => {
     const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
         if (recommendation && window !== undefined) {
-            if (!store.getState().prelaunchReducer.isPrelaunch) {
+            if (!isPrelaunch) {
                 const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
                 setPermaLink(newPermaLink)
             }
@@ -45,7 +47,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
     }, [recommendation])
 
     const handleCheckItOut = () => {
-        if (store.getState().prelaunchReducer.isPrelaunch) closeRecommendationModal()
+        if (isPrelaunch) closeRecommendationModal()
     }
 
     return (
@@ -80,6 +82,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
 })
 
 export default reduxConnect(mapStateToProps)(RecommendationPublished)
