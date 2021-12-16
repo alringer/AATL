@@ -57,7 +57,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     }, [recommendationsCount])
 
     React.useEffect(() => {
-        if (user && (user.firstName || user.lastName) && user.imageCDNUrl && user.content && user.userByLine) {
+        if (user && (user.firstName || user.lastName) && user.content && user.userByLine) {
             setComplete(true)
             fetchRecommendations(user.id, 0)
         } else {
