@@ -13,13 +13,17 @@ import * as S from 'constants/StringConstants'
 import Link from 'next/link'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
+import { openFoodieFounderUnlockedModal } from 'store/foodieFounderUnlockedModal/foodieFounderUnlocked_actions'
 import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IReduxProps {
     user: IUserProfile
     isPrelaunch: boolean
+    numPlacesRecommended: number
+    openFoodieFounderUnlockedModal: () => void
 }
 
 interface IRecommendationPublishedProps extends IReduxProps {
@@ -34,6 +38,8 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
     recommendation,
     closeRecommendationModal,
     isPrelaunch,
+    numPlacesRecommended,
+    openFoodieFounderUnlockedModal,
 }) => {
     const [permaLink, setPermaLink] = React.useState('')
 
@@ -47,7 +53,10 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
     }, [recommendation])
 
     const handleCheckItOut = () => {
-        if (isPrelaunch) closeRecommendationModal()
+        if (isPrelaunch) {
+            closeRecommendationModal()
+            if (numPlacesRecommended == 3) openFoodieFounderUnlockedModal()
+        }
     }
 
     return (
@@ -83,6 +92,14 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
 const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
     isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    numPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs.length,
 })
+const mapDispatchToProps = (dispatch: any) =>
+    bindActionCreators(
+        {
+            openFoodieFounderUnlockedModal,
+        },
+        dispatch
+    )
 
-export default reduxConnect(mapStateToProps)(RecommendationPublished)
+export default reduxConnect(mapStateToProps, mapDispatchToProps)(RecommendationPublished)

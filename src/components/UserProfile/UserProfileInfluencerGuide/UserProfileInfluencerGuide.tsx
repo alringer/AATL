@@ -29,6 +29,7 @@ interface IReduxProps {
     userMe: IUserProfile | null
     openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
     openSearchModal: () => void
+    numPlacesRecommended: number
 }
 
 interface IUserProfileInfluencerGuideProps extends IReduxProps {
@@ -42,6 +43,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     openUserProfileEditModal,
     refreshUser,
     openSearchModal,
+    numPlacesRecommended,
 }) => {
     const [isComplete, setComplete] = React.useState(false)
     const [recommendationsCount, setRecommendationsCount] = React.useState(0)
@@ -87,7 +89,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
                 .get(FETCH_USER_RECOMMENDATIONS(id, page))
                 .then((res) => {
                     console.log('Fetched recommendations: ', res)
-                    setRecommendationsCount(res.headers['x-total-count'])
+                    setRecommendationsCount(numPlacesRecommended)
                 })
                 .catch((err) => console.log(err))
         }
@@ -186,6 +188,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
 
 const mapStateToProps = (state: StoreState) => ({
     userMe: state.userReducer.user,
+    numPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs.length,
 })
 
 const mapDispatchToProps = (dispatch: any) =>
