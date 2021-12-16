@@ -64,7 +64,7 @@ const mapStateToProps = (state: StoreState) => ({
     isFlagModalOpen: state.flagModalReducer.isOpen,
     isDeleteRecommendationModalOpen: state.deleteRecommendationModalReducer.isOpen,
     isInfluencerTourModalOpen: state.influencerTourModalReducer.isOpen,
-    isFoodieFounderModalOpen: state.foodieFounderUnlockedReducer.isOpen,
+    isFoodieFounderModalOpen: state.foodieFounderUnlockedModalReducer.isOpen,
 })
 
 export default reduxConnect(mapStateToProps)(ModalProvider)

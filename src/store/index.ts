@@ -62,7 +62,7 @@ export interface StoreState {
     deleteRecommendationModalReducer: DeleteRecommendationModalReducerState
     prelaunchReducer: PrelaunchReducerState
     influencerTourModalReducer: InfluencerTourModalReducerState
-    foodieFounderUnlockedReducer: FoodieFounderUnlockedModalReducerState
+    foodieFounderUnlockedModalReducer: FoodieFounderUnlockedModalReducerState
 }
 
 export default store
