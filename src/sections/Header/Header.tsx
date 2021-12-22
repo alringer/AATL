@@ -61,6 +61,7 @@ interface IReduxProps {
     user: IUserProfile
     userRole: string | null
     openAuthenticationModal: (currentView: AuthenticationViewEnum) => void
+    loggedIn: boolean
 }
 interface IHeaderProps extends IReduxProps, IWithAuthInjectedProps {}
 
@@ -73,6 +74,7 @@ const Header: React.FC<IHeaderProps> = ({
     keycloakSignUp,
     authenticated,
     isPrelaunch,
+    loggedIn,
 }) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
@@ -213,7 +215,16 @@ const Header: React.FC<IHeaderProps> = ({
 
     const MenuItems = () => (
         <MenuItemsContainer>
-            <MenuItemContainer>
+            {loggedIn && (
+                <MenuItemContainer>
+                    <MenuItem
+                        href={R.ROUTE_ITEMS.me}
+                        title={S.HEADER_ITEMS.MyLists}
+                        active={router.pathname === R.ROUTE_ITEMS.me}
+                    />
+                </MenuItemContainer>
+            )}
+            <MenuItemContainer id={'leftPadded'}>
                 <MenuItem
                     href={R.ROUTE_ITEMS.foodAndDrink}
                     title={S.HEADER_ITEMS.FoodAndDrinks}
@@ -361,6 +372,7 @@ const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
     userRole: state.userReducer.userRole,
     isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    loggedIn: state.userReducer.loggedIn,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

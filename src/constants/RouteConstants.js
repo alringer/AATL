@@ -14,4 +14,5 @@ export const ROUTE_ITEMS = {
     termsAndConditions: '/terms-of-use',
     me: '/user-profile/me',
     influencerWelcome: '/influencer-welcome',
+    myLists: '/user-profile/me/#myLists',
 }

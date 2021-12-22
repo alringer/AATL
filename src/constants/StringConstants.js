@@ -181,6 +181,7 @@ export const HEADER_ITEMS = {
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
     SignOut: 'SIGN OUT',
+    MyLists: 'MY LISTS',
 }
 
 export const EMAIL_SUBSCRIPTION = {
