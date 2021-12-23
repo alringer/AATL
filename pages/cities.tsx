@@ -13,11 +13,13 @@ interface IServerSideProps {
 interface ICitiesProps extends IServerSideProps {}
 
 const Cities: NextPage<ICitiesProps> = ({ stateList, provinceList }) => {
-    return (
+    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
         <>
             <CitiesListView stateList={stateList ? stateList : []} provinceList={provinceList ? provinceList : []} />
             <EmailSubscription />
         </>
+    ) : (
+        <p>Redirecting...</p>
     )
 }
 

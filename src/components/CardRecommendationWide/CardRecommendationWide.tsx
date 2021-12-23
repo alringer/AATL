@@ -90,6 +90,7 @@ interface IReduxProps {
     openFlagModal: (payload: OpenFlagModalPayload) => void
     venuesInLists: number[]
     venuesRecommended: number[]
+    isPrelaunch: boolean
 }
 
 interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
@@ -113,6 +114,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     type,
     venuesInLists,
     venuesRecommended,
+    isPrelaunch,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
@@ -239,6 +241,21 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         e.stopPropagation()
     }
 
+    const handlePreLaunchClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
+        enqueueSnackbar('', {
+            content: (
+                <div>
+                    <Snackbar
+                        type={B.SNACKBAR_TYPES.Complete}
+                        title={B.PRELAUNCH_MESSAGE.Title}
+                        message={<SnackbarMessageBody>{B.PRELAUNCH_MESSAGE.Body}</SnackbarMessageBody>}
+                    />
+                </div>
+            ),
+        })
+    }
+
     const ViewMore = () => {
         return (
             <CardIcon onClick={handleMore}>
@@ -272,14 +289,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     currentRecommendation &&
                                     currentRecommendation.venue &&
                                     currentRecommendation.venue.name ? (
-                                        <Link
-                                            href={`${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}`}
-                                            passHref={true}
-                                            prefetch={false}
-                                        >
-                                            <RecommendationAnchor
-                                                onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
-                                            >
+                                        isPrelaunch ? (
+                                            <RecommendationAnchor onClick={handlePreLaunchClick}>
                                                 <RecommendationPlaceNameText>
                                                     {isMoreVisible
                                                         ? currentRecommendation.venue.name
@@ -290,7 +301,27 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                           )}
                                                 </RecommendationPlaceNameText>
                                             </RecommendationAnchor>
-                                        </Link>
+                                        ) : (
+                                            <Link
+                                                href={`${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}`}
+                                                passHref={true}
+                                                prefetch={false}
+                                            >
+                                                <RecommendationAnchor
+                                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
+                                                >
+                                                    <RecommendationPlaceNameText>
+                                                        {isMoreVisible
+                                                            ? currentRecommendation.venue.name
+                                                            : chopStringRecommendationCardPlaceName(
+                                                                  currentRecommendation.venue.name,
+                                                                  viewport,
+                                                                  isFull
+                                                              )}
+                                                    </RecommendationPlaceNameText>
+                                                </RecommendationAnchor>
+                                            </Link>
+                                        )
                                     ) : (
                                         ''
                                     )
@@ -536,6 +567,7 @@ const mapStateToProps = (state: StoreState) => ({
     userRole: state.userReducer.userRole,
     venuesInLists: state.userReducer.venuesListsVenueIDs,
     venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

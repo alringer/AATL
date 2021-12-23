@@ -185,3 +185,9 @@ export const UNFLAG_RECOMMENDATION: ISnackbarConstants = {
     Title: 'Recommendation unflagged',
     Body: 'A flagged recommendation has been marked as appropriate.',
 }
+
+export const PRELAUNCH_MESSAGE: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Hold On To Your Hat',
+    Body: 'We have not launched yet.  Come back and checkout all the features soon. In the meantime, we appreciate you writing recommendations to your favorite restaurants!',
+}
