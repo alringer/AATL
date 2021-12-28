@@ -21,10 +21,10 @@ interface IServerSideProps {
 interface IUserProfileProps extends IServerSideProps, IReduxProps, IWithAuthInjectedProps {}
 
 const UserProfileIdPage: React.FC<IUserProfileProps> = ({ fetchedUser, venueListMetaId }) => {
-    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
-        <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
-    ) : (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
         <p>Redirecting...</p>
+    ) : (
+        <UserProfile fetchedUser={fetchedUser} venueListMetaId={venueListMetaId}></UserProfile>
     )
 }
 

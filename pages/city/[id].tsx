@@ -39,18 +39,16 @@ const City: React.FC<ICityProps> = ({ cityInformation }) => {
         }
     }, [cityInformation])
 
-    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
-        cityInformation ? (
-            <>
-                <CityBanner cityInformation={cityInformation} />
-                <MostPopular cityInformation={cityInformation} />
-                <LocalPlaces cityInformation={cityInformation} />
-                <EmailSubscription />
-            </>
-        ) : null
-    ) : (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
         <p>Redirecting...</p>
-    )
+    ) : cityInformation ? (
+        <>
+            <CityBanner cityInformation={cityInformation} />
+            <MostPopular cityInformation={cityInformation} />
+            <LocalPlaces cityInformation={cityInformation} />
+            <EmailSubscription />
+        </>
+    ) : null
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

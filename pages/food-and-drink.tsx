@@ -12,13 +12,13 @@ interface IServerSideProps {
 interface IFoodAndDrinkProps extends IServerSideProps {}
 
 const FoodAndDrink: React.FC<IFoodAndDrinkProps> = ({ categoryList }) => {
-    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : (
         <>
             <CategoriesListView categoryList={categoryList ? categoryList : []} />
             <EmailSubscription />
         </>
-    ) : (
-        <p>Redirecting...</p>
     )
 }
 

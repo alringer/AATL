@@ -45,7 +45,9 @@ const Index: React.FC<IIndexProps> = ({ preferredLocation }) => {
         }
     }, [preferredLocation])
 
-    return (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : (
         <>
             <HomeBanner />
             <HomeNewRecommendations

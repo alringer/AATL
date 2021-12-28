@@ -57,71 +57,61 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
         S.RESTAURANT_PAGE.RecommendationsSectionSubTitlePartThree + ' ' + venueInformation.categories[0].longName
     }.`
 
-    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
-        venueInformation ? (
-            <>
-                <PlaceBanner venueInformation={venueInformation} />
-                <CardRecommendationWideList
-                    highlightedRecommendationID={recommendationID}
-                    isFull={true}
-                    type={CardRecommendationWideEnum.Restaurant}
-                    placeID={venueInformation ? venueInformation.id : null}
-                    title={S.RESTAURANT_PAGE.RecommendationsSectionTitle}
-                    subTitle={recommendationsSubTitle}
-                    venueRecommendationsInformation={
-                        venueInformation && venueInformation.recommendations ? venueInformation.recommendations : null
-                    }
-                    pageNumber={
-                        venueInformation &&
-                        venueInformation.recommendations &&
-                        venueInformation.recommendations.pageNumber
-                            ? venueInformation.recommendations.pageNumber
-                            : null
-                    }
-                    pageSize={
-                        venueInformation &&
-                        venueInformation.recommendations &&
-                        venueInformation.recommendations.pageSize
-                            ? venueInformation.recommendations.pageSize
-                            : null
-                    }
-                    totalCount={
-                        venueInformation &&
-                        venueInformation.recommendations &&
-                        venueInformation.recommendations.totalCount
-                            ? venueInformation.recommendations.totalCount
-                            : null
-                    }
-                />
-                <HaveYouBeenTo
-                    placeID={venueInformation ? venueInformation.id : null}
-                    placeName={venueInformation ? venueInformation.name : null}
-                />
-                {venueInformation && venueInformation.similarVenues && venueInformation.similarVenues.length > 0 ? (
-                    <CardPlaceSmallList
-                        title={`${S.RESTAURANT_PAGE.PlacesSimilarTitle} ${
-                            venueInformation ? venueInformation.name : null
-                        }`}
-                        subTitle={`${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne} ${
-                            venueInformation ? venueInformation.name : null
-                        } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartTwo}`}
-                        places={venueInformation ? venueInformation.similarVenues : null}
-                        category={
-                            venueInformation &&
-                            venueInformation.categories &&
-                            venueInformation.categories[0] &&
-                            venueInformation.categories[0].longName
-                                ? venueInformation.categories[0]
-                                : ''
-                        }
-                    />
-                ) : null}
-                <EmailSubscription />
-            </>
-        ) : null
-    ) : (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
         <p>Redirecting...</p>
-    )
+    ) : venueInformation ? (
+        <>
+            <PlaceBanner venueInformation={venueInformation} />
+            <CardRecommendationWideList
+                highlightedRecommendationID={recommendationID}
+                isFull={true}
+                type={CardRecommendationWideEnum.Restaurant}
+                placeID={venueInformation ? venueInformation.id : null}
+                title={S.RESTAURANT_PAGE.RecommendationsSectionTitle}
+                subTitle={recommendationsSubTitle}
+                venueRecommendationsInformation={
+                    venueInformation && venueInformation.recommendations ? venueInformation.recommendations : null
+                }
+                pageNumber={
+                    venueInformation && venueInformation.recommendations && venueInformation.recommendations.pageNumber
+                        ? venueInformation.recommendations.pageNumber
+                        : null
+                }
+                pageSize={
+                    venueInformation && venueInformation.recommendations && venueInformation.recommendations.pageSize
+                        ? venueInformation.recommendations.pageSize
+                        : null
+                }
+                totalCount={
+                    venueInformation && venueInformation.recommendations && venueInformation.recommendations.totalCount
+                        ? venueInformation.recommendations.totalCount
+                        : null
+                }
+            />
+            <HaveYouBeenTo
+                placeID={venueInformation ? venueInformation.id : null}
+                placeName={venueInformation ? venueInformation.name : null}
+            />
+            {venueInformation && venueInformation.similarVenues && venueInformation.similarVenues.length > 0 ? (
+                <CardPlaceSmallList
+                    title={`${S.RESTAURANT_PAGE.PlacesSimilarTitle} ${venueInformation ? venueInformation.name : null}`}
+                    subTitle={`${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartOne} ${
+                        venueInformation ? venueInformation.name : null
+                    } ${S.RESTAURANT_PAGE.PlacesSimilarSubTitlePartTwo}`}
+                    places={venueInformation ? venueInformation.similarVenues : null}
+                    category={
+                        venueInformation &&
+                        venueInformation.categories &&
+                        venueInformation.categories[0] &&
+                        venueInformation.categories[0].longName
+                            ? venueInformation.categories[0]
+                            : ''
+                    }
+                />
+            ) : null}
+            <EmailSubscription />
+        </>
+    ) : null
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
