@@ -2,6 +2,8 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
+import foodieFounderUnlockedModalReducer from 'store/foodieFounderUnlockedModal/foodieFounderUnlocked_reducer'
+import { FoodieFounderUnlockedModalReducerState } from 'store/foodieFounderUnlockedModal/foodieFounderUnlocked_types'
 import { InfluencerTourModalReducerState } from 'store/influencerTourModal/influencerTourModal_types'
 import listModalReducer from 'store/listModal/listModal_reducer'
 import { ListModalReducerState } from 'store/listModal/listModal_types'
@@ -40,6 +42,7 @@ const reducer = combineReducers({
     deleteRecommendationModalReducer,
     prelaunchReducer,
     influencerTourModalReducer,
+    foodieFounderUnlockedModalReducer,
 })
 
 const middleware = applyMiddleware(thunk)
@@ -59,6 +62,7 @@ export interface StoreState {
     deleteRecommendationModalReducer: DeleteRecommendationModalReducerState
     prelaunchReducer: PrelaunchReducerState
     influencerTourModalReducer: InfluencerTourModalReducerState
+    foodieFounderUnlockedModalReducer: FoodieFounderUnlockedModalReducerState
 }
 
 export default store

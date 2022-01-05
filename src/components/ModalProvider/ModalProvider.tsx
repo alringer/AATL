@@ -1,6 +1,7 @@
 import AuthenticationModal from 'components/AuthenticationModal/AuthenticationModal'
 import DeleteRecommendationModal from 'components/DeleteRecommendationModal/DeleteRecommendationModal'
 import FlagModal from 'components/FlagModal/FlagModal'
+import FoodieFounderUnlockedModal from 'components/FoodieFounderUnlockedModal/FoodieFounderUnlockedModal'
 import InfluencerTourModal from 'components/InfluencerTourModal/InfluencerTourModal'
 import ListModal from 'components/ListModal/ListModal'
 import RecommendationModal from 'components/RecommendationModal/RecommendationModal'
@@ -19,6 +20,7 @@ interface IReduxProps {
     isFlagModalOpen: boolean
     isDeleteRecommendationModalOpen: boolean
     isInfluencerTourModalOpen: boolean
+    isFoodieFounderModalOpen: boolean
 }
 
 interface IModalProviderProps extends IReduxProps {
@@ -35,6 +37,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
     isFlagModalOpen,
     isDeleteRecommendationModalOpen,
     isInfluencerTourModalOpen,
+    isFoodieFounderModalOpen,
 }) => {
     return (
         <div>
@@ -46,6 +49,7 @@ const ModalProvider: React.FC<IModalProviderProps> = ({
             {isFlagModalOpen && <FlagModal />}
             {isDeleteRecommendationModalOpen && <DeleteRecommendationModal />}
             {isInfluencerTourModalOpen && <InfluencerTourModal />}
+            {isFoodieFounderModalOpen && <FoodieFounderUnlockedModal />}
             {children}
         </div>
     )
@@ -60,6 +64,7 @@ const mapStateToProps = (state: StoreState) => ({
     isFlagModalOpen: state.flagModalReducer.isOpen,
     isDeleteRecommendationModalOpen: state.deleteRecommendationModalReducer.isOpen,
     isInfluencerTourModalOpen: state.influencerTourModalReducer.isOpen,
+    isFoodieFounderModalOpen: state.foodieFounderUnlockedModalReducer.isOpen,
 })
 
 export default reduxConnect(mapStateToProps)(ModalProvider)

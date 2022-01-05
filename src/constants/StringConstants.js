@@ -590,3 +590,13 @@ export const PRELAUNCH_TOUR = {
         Selector: 'tour_four',
     },
 }
+
+export const FOODIE_MODAL = {
+    Title: 'Hooray!!!',
+    Subtitle1: 'You’ve unlocked the ',
+    Subtitle2: 'Founder Foodie ',
+    Subtitle3: 'badge.',
+    Message:
+        'You’ve recommended 3 amazing restaurants. As an insider, your recommendations will be amongst the first to be featured once AATL goes live. Check your inbox within the coming weeks for exlusive content.',
+    OkCool: 'OK, COOL',
+}
