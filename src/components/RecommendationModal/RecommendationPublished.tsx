@@ -19,22 +19,36 @@ import { IUserProfile } from 'utilities/types/userProfile'
 
 interface IReduxProps {
     user: IUserProfile
+    isPrelaunch: boolean
 }
 
 interface IRecommendationPublishedProps extends IReduxProps {
     publishedTitle: string
     recommendation: IRecommendation | null
+    closeRecommendationModal: () => void
 }
 
-const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publishedTitle, user, recommendation }) => {
+const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
+    publishedTitle,
+    user,
+    recommendation,
+    closeRecommendationModal,
+    isPrelaunch,
+}) => {
     const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
         if (recommendation && window !== undefined) {
-            const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
-            setPermaLink(newPermaLink)
+            if (!isPrelaunch) {
+                const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
+                setPermaLink(newPermaLink)
+            }
         }
     }, [recommendation])
+
+    const handleCheckItOut = () => {
+        if (isPrelaunch) closeRecommendationModal()
+    }
 
     return (
         <RecommendationPublishedContainer>
@@ -55,7 +69,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
                 <RecommendationEditorCopyRecommendationButtonContainer>
                     <Link href={permaLink} passHref={true} prefetch={false}>
                         <RecommendationPublishedButtonAnchor>
-                            <RecommendationEditorCopyRecommendationButton>
+                            <RecommendationEditorCopyRecommendationButton onClick={handleCheckItOut}>
                                 {S.BUTTON_LABELS.CheckItOut}
                             </RecommendationEditorCopyRecommendationButton>
                         </RecommendationPublishedButtonAnchor>
@@ -68,6 +82,7 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({ publ
 
 const mapStateToProps = (state: StoreState) => ({
     user: state.userReducer.user,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
 })
 
 export default reduxConnect(mapStateToProps)(RecommendationPublished)

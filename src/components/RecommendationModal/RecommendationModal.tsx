@@ -105,7 +105,11 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                 <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} published={published} />
                 <RecommendationModalContentContainer>
                     {published ? (
-                        <RecommendationPublished publishedTitle={publishedTitle} recommendation={recommendation} />
+                        <RecommendationPublished
+                            publishedTitle={publishedTitle}
+                            recommendation={recommendation}
+                            closeRecommendationModal={closeRecommendationModal}
+                        />
                     ) : (
                         <RecommendationEditor
                             placeName={placeName}
