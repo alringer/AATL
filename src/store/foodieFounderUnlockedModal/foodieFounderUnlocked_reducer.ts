@@ -15,13 +15,11 @@ const foodieFounderUnlockedModalReducer = (
 ): FoodieFounderUnlockedModalReducerState => {
     switch (action.type) {
         case OPEN_FOODIE_FOUNDER_UNLOCKED_MODAL:
-            console.log('REDUCER HIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             return {
                 ...state,
                 isOpen: true,
             }
         case CLOSE_FOODIE_FOUNDER_UNLOCKED_MODAL:
-            console.log('REDUCER HIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
             return {
                 ...initialState,
             }

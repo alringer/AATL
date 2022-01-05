@@ -52,10 +52,15 @@ const RecommendationPublished: React.FC<IRecommendationPublishedProps> = ({
         }
     }, [recommendation])
 
+    React.useEffect(() => {
+        if (isPrelaunch && numPlacesRecommended === 3) {
+            openFoodieFounderUnlockedModal()
+        }
+    }, [numPlacesRecommended])
+
     const handleCheckItOut = () => {
         if (isPrelaunch) {
             closeRecommendationModal()
-            if (numPlacesRecommended == 3) openFoodieFounderUnlockedModal()
         }
     }
 
