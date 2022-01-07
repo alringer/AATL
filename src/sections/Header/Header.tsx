@@ -215,16 +215,7 @@ const Header: React.FC<IHeaderProps> = ({
 
     const MenuItems = () => (
         <MenuItemsContainer>
-            {loggedIn && (
-                <MenuItemContainer>
-                    <MenuItem
-                        href={R.ROUTE_ITEMS.me}
-                        title={S.HEADER_ITEMS.MyLists}
-                        active={router.pathname === R.ROUTE_ITEMS.me}
-                    />
-                </MenuItemContainer>
-            )}
-            <MenuItemContainer id={'leftPadded'}>
+            <MenuItemContainer>
                 <MenuItem
                     href={R.ROUTE_ITEMS.foodAndDrink}
                     title={S.HEADER_ITEMS.FoodAndDrinks}
@@ -238,6 +229,15 @@ const Header: React.FC<IHeaderProps> = ({
                     active={router.pathname === R.ROUTE_ITEMS.cities}
                 />
             </MenuItemContainer>
+            {loggedIn && (
+                <MenuItemContainer id={'leftPadded'}>
+                    <MenuItem
+                        href={R.ROUTE_ITEMS.me}
+                        title={S.HEADER_ITEMS.MyLists}
+                        active={router.pathname === R.ROUTE_ITEMS.me}
+                    />
+                </MenuItemContainer>
+            )}
             {isSearchEnabled && (
                 <MenuItemContainer id={'leftPadded'} ref={searchReference.ref}>
                     {!isSearchToggled || !searchReference.isComponentVisible ? (
