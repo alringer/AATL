@@ -213,6 +213,11 @@ const Header: React.FC<IHeaderProps> = ({
         </PopoverContainer>
     )
 
+    const handleClickMyLists = (e) => {
+        e.stopPropagation()
+        localStorage.setItem('clickedMyLists', 'true')
+    }
+
     const MenuItems = () => (
         <MenuItemsContainer>
             <MenuItemContainer>
@@ -230,7 +235,7 @@ const Header: React.FC<IHeaderProps> = ({
                 />
             </MenuItemContainer>
             {loggedIn && (
-                <MenuItemContainer id={'leftPadded'}>
+                <MenuItemContainer id={'leftPadded'} onClick={handleClickMyLists}>
                     <MenuItem
                         href={R.ROUTE_ITEMS.me}
                         title={S.HEADER_ITEMS.MyLists}
