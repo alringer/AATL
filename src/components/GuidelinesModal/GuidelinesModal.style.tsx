@@ -47,6 +47,9 @@ export const GuidelinesModalOkGotIt = styled(CustomButton)`
     margin-bottom: 40px;
     max-height: 90px;
     color: ${(props) => props.theme.pinkishTan};
+    @media ${device.mobile} {
+        width: 200px;
+    }
     @media ${device.laptop} {
         width: 180px;
         height: 46px;
