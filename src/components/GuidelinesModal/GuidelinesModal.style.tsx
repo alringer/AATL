@@ -22,7 +22,7 @@ export const GuidelinesModalMessage = styled.p`
     color: ${(props) => props.theme.charcoalGrey};
     line-height: 1.38;
     font-size: 16px;
-    font-family: RubikRoman;
+    font-family: Rubik;
     margin-left: 37px;
     margin-top: 13px;
     margin-right: 40px;
