@@ -22,7 +22,9 @@ const InfluencerWelcome: React.FC<IInfluencerWelcomeProps> = ({ isPrelaunch, isL
         }
     }, [isPrelaunch, isLoggedIn])
 
-    return (
+    return isLoggedIn && userID ? (
+        <p>Redirecting...</p>
+    ) : (
         <>
             <StaticWelcomeBanner />
             <StaticWelcomeContent />
