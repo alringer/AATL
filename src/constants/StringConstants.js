@@ -600,3 +600,10 @@ export const FOODIE_MODAL = {
         'You’ve recommended 3 amazing restaurants. As an insider, your recommendations will be amongst the first to be featured once LocalFoodBuzz goes live. Check your inbox within the coming weeks for exlusive content.',
     OkCool: 'OK, COOL',
 }
+
+export const GUIDELINES_MODAL = {
+    Title: 'RECOMMENDATION GUIDELINES',
+    Message:
+        'AATL.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
+    OkGotIt: 'OK, GOT IT',
+}
