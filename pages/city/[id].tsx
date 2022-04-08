@@ -39,7 +39,9 @@ const City: React.FC<ICityProps> = ({ cityInformation }) => {
         }
     }, [cityInformation])
 
-    return cityInformation ? (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : cityInformation ? (
         <>
             <CityBanner cityInformation={cityInformation} />
             <MostPopular cityInformation={cityInformation} />

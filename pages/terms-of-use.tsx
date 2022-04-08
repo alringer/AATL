@@ -3,7 +3,9 @@ import TermsAndConditionsContent from 'components/TermsAndConditionsContent/Term
 import React from 'react'
 
 const TermsAndConditions = () => {
-    return (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : (
         <>
             <StaticWelcomeBanner />
             <TermsAndConditionsContent />
