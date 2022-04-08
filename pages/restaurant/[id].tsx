@@ -57,7 +57,9 @@ const Restaurant: React.FC<IRestaurantProps> = ({ recommendationID, restaurantID
         S.RESTAURANT_PAGE.RecommendationsSectionSubTitlePartThree + ' ' + venueInformation.categories[0].longName
     }.`
 
-    return venueInformation ? (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : venueInformation ? (
         <>
             <PlaceBanner venueInformation={venueInformation} />
             <CardRecommendationWideList

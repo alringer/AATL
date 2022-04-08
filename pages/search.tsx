@@ -132,7 +132,9 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         router.push(url, undefined, { shallow: true })
     }
 
-    return (
+    return JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : (
         <div>
             <SearchWorkBench
                 inputPlace={place}
