@@ -90,7 +90,7 @@ export const INPUT_PLACEHOLDERS = {
 
 // Pages
 export const CITIES = {
-    Title: 'More Places to Ask a Travel Local',
+    Title: 'More Places to LocalFoodBuzz',
     US: 'United States',
     Canada: 'Canada',
     New: 'New',
@@ -99,14 +99,14 @@ export const CITIES = {
 }
 
 export const FOOD_AND_DRINK = {
-    Title: 'More Food & Drink to Ask a Travel Local',
+    Title: 'More Food & Drink to LocalFoodBuzz',
     Categories: 'Categories',
     EmptyMessage:
         'Whoops! The list looks empty. Please refresh the page or check your internet connection. If the problem persists, please contact us!',
 }
 
 export const HOME_PAGE = {
-    BannerTitle: 'ASK A TRAVEL LOCAL',
+    BannerTitle: 'LOCALFOODBUZZ',
     BannerSubTitle: "Find the best local food when you're traveling. Recommended by locals for the foodie in you.",
     BannerPhotoRestaurantName: 'Bud and Rob’s New Orleans Bistro',
     BannerPhotoPhotographer: 'Photo by Sean Kepri',
@@ -181,6 +181,7 @@ export const HEADER_ITEMS = {
     SignUp: 'SIGN UP',
     Login: 'LOG IN',
     SignOut: 'SIGN OUT',
+    MyLists: 'MY LISTS',
 }
 
 export const EMAIL_SUBSCRIPTION = {
@@ -206,8 +207,8 @@ export const FOOTER_ITEMS = {
     WithLove: '♥ With love from Lake Tahoe',
     SeeOur: 'See our',
     TermsOfUse: 'Terms of Use',
-    CopyRightText: 'AskaTravelLocal ©',
-    CompanyName: 'About Ask a Travel Local',
+    CopyRightText: 'LocalFoodBuzz ©',
+    CompanyName: 'About LocalFoodBuzz',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 
 We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!`,
@@ -401,7 +402,7 @@ export const USER_PROFILE_INFLUENCER_GUIDE = {
     Incomplete: {
         Title: 'Complete Your Profile.',
         Message:
-            'Complete your profile by updating your Name, Occupation, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
+            'Complete your profile by updating your Name, By-Line, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
         ButtonLabel: 'EDIT PROFILE',
     },
     Complete: {
@@ -476,16 +477,16 @@ export const TERMS_AND_CONDITIONS = {
     Sections: [
         {
             Title: '',
-            Body: `AskaTravelLocal.com (also referred to as AskaTravelLocal or the website) is made available to the user for gathering or posting dining advice.  No other use is permitted.  We give you permission to access our website, but you must agree to the terms and conditions.  By using our website, you are agreeing to the terms and conditions.  You use the site at your own risk, but it is possible you may disagree with posted material, find it inaccurate, offensive, false or objectionable.
+            Body: `LocalFoodBuzz.com (also referred to as LocalFoodBuzz or the website) is made available to the user for gathering or posting dining advice.  No other use is permitted.  We give you permission to access our website, but you must agree to the terms and conditions.  By using our website, you are agreeing to the terms and conditions.  You use the site at your own risk, but it is possible you may disagree with posted material, find it inaccurate, offensive, false or objectionable.
 
-The AskaTravelLocal website may be altered or canceled at any time without prior notice.
+The LocalFoodBuzz website may be altered or canceled at any time without prior notice.
 
 The website may make changes to the terms of use, and by continuing to use the website, you are agreeing to the changes.  We will provide a date that changes were last made to this document in this section.
 
 By providing content to this website, you agree to or attest that you:
 
 • Are at least 18 years of age.
-• Have an AskaTravelLocal account.
+• Have a LocalFoodBuzz account.
 • Only post true and accurate information.
 • Agree not to publish any information that is false, obscene, lewd, pornographic, harassing, threatening, illegal or fraudulent.
 • Will not post any information that could encourage someone to commit any violation of local, state, provincial or federal law.
@@ -499,22 +500,22 @@ By providing content to this website, you agree to or attest that you:
 • Will not duplicate this website for the purposes of exporting or removing data to another website without written permission.
 • Have no conflicts of interest and are not being compensated in any way by a business you are recommending.  If you have potential conflicts of interest, you must disclose this in both your bio field and in each recommendation you are making where the conflict may exist.  This disclosure is required in the U.S. by the Federal Trade Commission.
 • Understand that you are not or compensated in any way for the material you post on the website.
-• Understand that once posted, the material becomes the property of AskaTravelLocal.
+• Understand that once posted, the material becomes the property of LocalFoodBuzz.
 • Will not gain unauthorized access to the site by posing as another person, posing as a fictitious person or by making false representations.
 • Not to hack or intentionally disrupt the website’s security systems.
-• That in order to be a local guide or a registered user, you must submit a minimal amount of personal information (including your name and email address.)  I understand that the purpose of retaining this information is to help AskaTravelLocal ensure that the guides and registered users are legitimate with no undisclosed or unclaimed potential conflicts of interest.
+• That in order to be a local guide or a registered user, you must submit a minimal amount of personal information (including your name and email address.)  I understand that the purpose of retaining this information is to help LocalFoodBuzz ensure that the guides and registered users are legitimate with no undisclosed or unclaimed potential conflicts of interest.
 • No personal information is required of people who want to review material posted on the site.
-• AskaTravelLocal assumes no responsibility or liability for the accuracy of your posted information.
+• LocalFoodBuzz assumes no responsibility or liability for the accuracy of your posted information.
 • Because I am appointed as a local guide, I do not have any right or expectation to maintain that position.
 • If my material is deemed inadequate, substandard, poor in quality or uninteresting, the material may be removed from the site and I may be replaced as a local guide.
-• AskaTravelLocal may remove all of my postings, modify my material or remove me as a local guide for any reason whatsoever.
+• LocalFoodBuzz may remove all of my postings, modify my material or remove me as a local guide for any reason whatsoever.
 • All of the material you provide, both written and photographic, were obtained legally and does not violate or infringe upon any copyright, trademark, trade secret, privacy right or intellectual property provisions.  If any such material is provided, you must have the permission of the lawful owner of such material.
 • Will not introduce viruses, malware or other harmful or disruptive material or program.
-• AskaTravelLocal may display advertisement content adjacent to or near your posted material.  You are not entitled to any compensation from any revenue generated from these ads.`,
+• LocalFoodBuzz may display advertisement content adjacent to or near your posted material.  You are not entitled to any compensation from any revenue generated from these ads.`,
         },
         {
             Title: 'PRIVACY POLICY',
-            Body: `AskaTravelLocal collects local guide and registered user personal information for the following reasons only:
+            Body: `LocalFoodBuzz collects local guide and registered user personal information for the following reasons only:
 To contact the local guides and registered users if necessary.
 As a way to help to ensure that the guides and registered users are actually who they are representing themselves to be.
 
@@ -526,15 +527,15 @@ P.O. Box 4089, Incline Village, NV  89450`,
         },
         {
             Title: 'LIABILITY DISCLAIMER',
-            Body: 'The information included in this website may contain information or material that is inaccurate or false.  AskaTravelLocal assumes no liability.',
+            Body: 'The information included in this website may contain information or material that is inaccurate or false.  LocalFoodBuzz assumes no liability.',
         },
         {
             Title: 'INDEMNIFICATION',
-            Body: 'You agree to defend and indemnify AskaTravelLocal, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
+            Body: 'You agree to defend and indemnify LocalFoodBuzz, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
         },
         {
             Title: 'COPYRIGHT AND TRADEMARK NOTICES',
-            Body: 'All contents of this website is the property of AskaTravelLocal including the name AskaTravelLocal, AskaTravelLocal.com and the logo.  Use of any of the trademarked material is not permitted without written permission.',
+            Body: 'All contents of this website is the property of LocalFoodBuzz including the name LocalFoodBuzz, LocalFoodBuzz.com and the logo.  Use of any of the trademarked material is not permitted without written permission.',
         },
         {
             Title: 'JURISDICTION',
@@ -554,7 +555,7 @@ export const PRELAUNCH = {
     Welcome: {
         Title: 'Hey there Foodie!',
         Message:
-            'Welcome to Ask A Travel Local. You’ve been invited because we’ve determined that you are an influencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
+            'Welcome to LocalFoodBuzz. You’ve been invited because we’ve determined that you are an influencer in everything food. As we prepare for the full launch of our website, we’d like you to write a few recommendations for some amazing restaurants. You’ll be rewarded for your efforts by being featured as a foodie when the site launches along with other unique invite-only perks in the near future. What do you say? Wanna share your thoughts about some amazing food?',
     },
 }
 
@@ -571,7 +572,7 @@ export const PRELAUNCH_TOUR = {
         Title: 'Step 2',
         PreOrangeMessage: 'You can update your',
         Name: 'Name',
-        Occupation: 'Occupation',
+        Occupation: 'By-Line',
         Bio: 'Bio',
         PostOrangeMessage: 'in this menu.',
         Selector: 'tour__two',
@@ -589,4 +590,21 @@ export const PRELAUNCH_TOUR = {
         PostOrangeMessage: 'badge.',
         Selector: 'tour_four',
     },
+}
+
+export const FOODIE_MODAL = {
+    Title: 'Hooray!!!',
+    Subtitle1: 'You’ve unlocked the ',
+    Subtitle2: 'Founder Foodie ',
+    Subtitle3: 'badge.',
+    Message:
+        'You’ve recommended 3 amazing restaurants. As an insider, your recommendations will be amongst the first to be featured once LocalFoodBuzz goes live. Check your inbox within the coming weeks for exlusive content.',
+    OkCool: 'OK, COOL',
+}
+
+export const GUIDELINES_MODAL = {
+    Title: 'RECOMMENDATION GUIDELINES',
+    Message:
+        'AATL.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
+    OkGotIt: 'OK, GOT IT',
 }

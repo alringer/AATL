@@ -12,6 +12,7 @@ import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import authStore from 'store/authentication/authentication_reducer'
+import { openGuidelinesModal } from 'store/guidelinesModal/guidelinesModal_actions'
 import {
     clearRecommendationModal,
     closeRecommendationModal,
@@ -28,6 +29,7 @@ interface IReduxProps {
     closeRecommendationModal: () => void
     clearRecommendationModal: () => void
     fetchUser: (keycloak: KeycloakInstance) => void
+    openGuidelinesModal: () => void
 }
 
 interface IRecommendationModalProps extends IReduxProps, IWithAuthInjectedProps {}
@@ -43,6 +45,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     isAATL,
     fetchUser,
     keycloak,
+    openGuidelinesModal,
 }) => {
     const [isLoading, setLoading] = React.useState(false)
     const [publishedTitle, setPublishedTitle] = React.useState('')
@@ -96,7 +99,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     }
 
     const handleReadOurGuidelines = () => {
-        console.log('TODO: Wire up API for handleReadOurGuidelines')
+        openGuidelinesModal()
     }
 
     return (
@@ -105,7 +108,11 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                 <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} published={published} />
                 <RecommendationModalContentContainer>
                     {published ? (
-                        <RecommendationPublished publishedTitle={publishedTitle} recommendation={recommendation} />
+                        <RecommendationPublished
+                            publishedTitle={publishedTitle}
+                            recommendation={recommendation}
+                            closeRecommendationModal={closeRecommendationModal}
+                        />
                     ) : (
                         <RecommendationEditor
                             placeName={placeName}
@@ -127,6 +134,14 @@ const mapStateToProps = (state: StoreState) => ({
     isAATL: state.recommendationModalReducer.isAATL,
 })
 const mapDispatchToProps = (dispatch: any) =>
-    bindActionCreators({ closeRecommendationModal, clearRecommendationModal, fetchUser }, dispatch)
+    bindActionCreators(
+        {
+            closeRecommendationModal,
+            clearRecommendationModal,
+            fetchUser,
+            openGuidelinesModal,
+        },
+        dispatch
+    )
 
 export default reduxConnect(mapStateToProps, mapDispatchToProps)(withAuth(RecommendationModal))

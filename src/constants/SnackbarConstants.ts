@@ -177,7 +177,7 @@ export const FLAG_RECOMMENDATION: ISnackbarConstants = {
 export const DELETE_RECOMMENDATION: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Recommendation Deleted',
-    Body: 'A recommendation has been permanently removed from AATL records.',
+    Body: 'A recommendation has been permanently removed from LocalFoodBuzz records.',
 }
 
 export const UNFLAG_RECOMMENDATION: ISnackbarConstants = {

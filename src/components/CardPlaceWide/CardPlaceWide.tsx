@@ -272,8 +272,11 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                             )}
                                         </Media>
                                     </CardPlaceWideHeaderContainer>
-                                    {type === CardPlaceWideEnum.Search && (
+                                    {(type === CardPlaceWideEnum.Search ||
+                                        type === CardPlaceWideEnum.Profile ||
+                                        type === CardPlaceWideEnum.ProfileOwnerList) && (
                                         <WidePlaceAddressText>
+                                            {place && place.street ? place.street : null}
                                             {place && place.locality ? place.locality + ', ' : null}
                                             {place && place.state ? place.state : null}
                                         </WidePlaceAddressText>
