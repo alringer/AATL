@@ -8,11 +8,11 @@ import {
     ListModalHeaderText,
     ListModalMainAreaContainer,
     ListModalTitleText,
-    SubmitButton,
+    SubmitButton
 } from 'components/ListModal/ListModal.style'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody, SnackbarOrangeMessage } from 'components/Snackbar/Snackbar.style'
-import axios, { RECOMMENDATION_LIST_META_WITH_ID } from 'config/AxiosConfig'
+import axios, { DELETE_VENUE_LIST } from 'config/AxiosConfig'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
 import { KeycloakInstance } from 'keycloak-js'
@@ -53,7 +53,7 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
                 },
             }
             axios
-                .delete(RECOMMENDATION_LIST_META_WITH_ID(listID), config)
+                .delete(DELETE_VENUE_LIST(listID), config)
                 .then((res) => {
                     fetchUser(keycloak)
                     handleCancel()
@@ -74,7 +74,6 @@ const DeleteRestaurantList: React.FC<IDeleteRestaurantListProps> = ({
                             </div>
                         ),
                     })
-                    router.push('/')
                 })
                 .catch((err) => console.log(err))
         }
