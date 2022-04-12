@@ -103,7 +103,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         fetchVenueLists()
         fetchVenueListsByCity()
         fetchVenueListsByCategory()
-    }, [])
+    }, [user])
 
     const fetchVenueLists = () => {
         axios
