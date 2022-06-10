@@ -269,6 +269,9 @@ export const RECOMMENDATION_EDITOR = {
     PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
     MaxLength: '/150',
     TipOne: 'It’s all about the ambiance. Speak to the decor, lighting and service. How did the restaurant make you feel? Tap into the emotional aspect of fine dining.',
+    ThreeForks: `Good. I'd come back.`,
+    FourForks: `Great. Worth a detour.`,
+    FiveForks: `Outstanding. You MUST come here.`,
 }
 
 export const RECOMMENDATION_PUBLISHED = {
