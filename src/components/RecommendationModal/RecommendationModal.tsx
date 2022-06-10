@@ -58,7 +58,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
         }
     }, [])
 
-    const handlePublish = (title: string, description: string, temporaryImageKey: string) => {
+    const handlePublish = (title: string, description: string, temporaryImageKey: string, rating: number) => {
         setLoading(true)
         const payload =
             isAATL === true
@@ -67,12 +67,14 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                       title: title,
                       description: description,
                       temporaryImageKey: temporaryImageKey,
+                      rating: rating,
                   }
                 : {
                       sourcePlaceId: placeID,
                       title: title,
                       description: description,
                       temporaryImageKey: temporaryImageKey,
+                      rating: rating,
                   }
         axios
             .post(
