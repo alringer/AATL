@@ -264,6 +264,7 @@ export const RECOMMENDATION_EDITOR = {
     LabelImage: 'Image',
     LabelTitle: 'Title',
     LabelDescription: 'Description',
+    LabelRating: 'Rating',
     PlaceholderTitle: 'Write a catchy title :)',
     PlaceholderDescription: 'Write every delicious detail of your scrumptious recommendation here.',
     MaxLength: '/150',

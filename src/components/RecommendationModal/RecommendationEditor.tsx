@@ -1,4 +1,7 @@
+import EmptyFork from 'assets/icon-empty-ic-fork-rating.svg'
+import FilledFork from 'assets/icon-filled-ic-fork-rating.svg'
 import { AxiosResponse } from 'axios'
+import SVGImage from 'components/Image/Image'
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
 import axios, { UPLOAD_BLOB } from 'config/AxiosConfig'
 import * as D from 'constants/ImageDimensionConstants'
@@ -11,6 +14,7 @@ import {
     MaxTextLength,
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
+    RecommendationEditorForkContainer,
     RecommendationEditorInputContainer,
     RecommendationEditorInputLabelContainer,
     RecommendationEditorInputLabelText,
@@ -38,6 +42,8 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
 }) => {
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
+    const [rating, setRating] = React.useState(3)
+    const [previewRating, setPreviewRating] = React.useState(null)
     const [file, setFile] = React.useState()
     const [temporaryImageKey, setTemporaryImageKey] = React.useState()
     const [imagePreviewURL, setImagePreviewURL] = React.useState()
@@ -114,6 +120,29 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
         }
     }
 
+    const handleHoverFork = (forkID: number) => {
+        if (forkID === 5) {
+            setPreviewRating(5)
+        } else if (forkID === 4) {
+            setPreviewRating(4)
+        } else {
+            setPreviewRating(3)
+        }
+    }
+
+    const handleMouseLeave = () => {
+        setPreviewRating(null)
+    }
+    const handleClickFork = (forkID: number) => {
+        if (forkID === 5) {
+            setRating(5)
+        } else if (forkID === 4) {
+            setRating(4)
+        } else {
+            setRating(3)
+        }
+    }
+
     return (
         <RecommendationEditorContainer>
             <RecommendationEditorTitle>
@@ -171,8 +200,77 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                     />
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
+            <RecommendationEditorRowContainer id="recommendation-rating">
+                <RecommendationEditorInputLabelContainer>
+                    <RecommendationEditorInputLabelText>
+                        {S.RECOMMENDATION_EDITOR.LabelRating}
+                    </RecommendationEditorInputLabelText>
+                </RecommendationEditorInputLabelContainer>
+                <RecommendationEditorInputContainer>
+                    <RecommendationEditorForkContainer
+                        id="fork-1"
+                        onMouseEnter={() => handleHoverFork(1)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(1)}
+                    >
+                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                        )}
+                    </RecommendationEditorForkContainer>
+                    <RecommendationEditorForkContainer
+                        id="fork-2"
+                        onMouseEnter={() => handleHoverFork(2)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(2)}
+                    >
+                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                        )}
+                    </RecommendationEditorForkContainer>
+                    <RecommendationEditorForkContainer
+                        id="fork-3"
+                        onMouseEnter={() => handleHoverFork(3)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(3)}
+                    >
+                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                        )}
+                    </RecommendationEditorForkContainer>
+                    <RecommendationEditorForkContainer
+                        id="fork-4"
+                        onMouseEnter={() => handleHoverFork(4)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(4)}
+                    >
+                        {(previewRating && previewRating <= 4) || rating <= 4 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                        )}
+                    </RecommendationEditorForkContainer>
+                    <RecommendationEditorForkContainer
+                        id="fork-5"
+                        onMouseEnter={() => handleHoverFork(5)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(5)}
+                    >
+                        {(previewRating && previewRating <= 5) || rating <= 5 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                        )}
+                    </RecommendationEditorForkContainer>
+                </RecommendationEditorInputContainer>
+            </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
-                onClick={() => handlePublish(title, description, temporaryImageKey)}
+                onClick={() => handlePublish(title, description, temporaryImageKey, rating)}
                 disabled={title === '' || description === '' || !file || isLoading || !temporaryImageKey}
             >
                 {S.BUTTON_LABELS.PublishRecommendation}
