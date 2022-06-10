@@ -15,6 +15,8 @@ import {
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
     RecommendationEditorForkContainer,
+    RecommendationEditorForkMessage,
+    RecommendationEditorForkMessageContainer,
     RecommendationEditorInputContainer,
     RecommendationEditorInputLabelContainer,
     RecommendationEditorInputLabelText,
@@ -29,7 +31,7 @@ import {
 interface IRecommendationEditorProps extends IWithAuthInjectedProps {
     isLoading: boolean
     placeName: string
-    handlePublish: (title: string, description: string, temporaryImageKey: string) => void
+    handlePublish: (title: string, description: string, temporaryImageKey: string, rating: number) => void
     handleReadOurGuidelines: () => void
 }
 
@@ -49,6 +51,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     const [imagePreviewURL, setImagePreviewURL] = React.useState()
     const [isUploadingImage, setUploadingImage] = React.useState(false)
     const [isImageDimensionImproper, setImageDimensionImproper] = React.useState(false)
+    const [isForkHovered, setForkHovered] = React.useState(false)
 
     const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (e.target.value.length <= 150) {
@@ -121,6 +124,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     }
 
     const handleHoverFork = (forkID: number) => {
+        setForkHovered(true)
         if (forkID === 5) {
             setPreviewRating(5)
         } else if (forkID === 4) {
@@ -132,6 +136,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
 
     const handleMouseLeave = () => {
         setPreviewRating(null)
+        setForkHovered(false)
     }
     const handleClickFork = (forkID: number) => {
         if (forkID === 5) {
@@ -213,11 +218,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(1)}
                     >
-                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
-                            <SVGImage src={FilledFork} alt="filled-fork" />
-                        ) : (
-                            <SVGImage src={EmptyFork} alt="filled-fork" />
-                        )}
+                        <SVGImage src={FilledFork} alt="filled-fork" />
                     </RecommendationEditorForkContainer>
                     <RecommendationEditorForkContainer
                         id="fork-2"
@@ -225,11 +226,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(2)}
                     >
-                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
-                            <SVGImage src={FilledFork} alt="filled-fork" />
-                        ) : (
-                            <SVGImage src={EmptyFork} alt="filled-fork" />
-                        )}
+                        <SVGImage src={FilledFork} alt="filled-fork" />
                     </RecommendationEditorForkContainer>
                     <RecommendationEditorForkContainer
                         id="fork-3"
@@ -237,11 +234,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(3)}
                     >
-                        {(previewRating && previewRating <= 3) || rating <= 3 ? (
-                            <SVGImage src={FilledFork} alt="filled-fork" />
-                        ) : (
-                            <SVGImage src={EmptyFork} alt="filled-fork" />
-                        )}
+                        <SVGImage src={FilledFork} alt="filled-fork" />
                     </RecommendationEditorForkContainer>
                     <RecommendationEditorForkContainer
                         id="fork-4"
@@ -249,10 +242,16 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(4)}
                     >
-                        {(previewRating && previewRating <= 4) || rating <= 4 ? (
+                        {isForkHovered ? (
+                            previewRating && previewRating >= 4 ? (
+                                <SVGImage src={FilledFork} alt="filled-fork" />
+                            ) : (
+                                <SVGImage src={EmptyFork} alt="empty-fork" />
+                            )
+                        ) : rating >= 4 ? (
                             <SVGImage src={FilledFork} alt="filled-fork" />
                         ) : (
-                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                            <SVGImage src={EmptyFork} alt="empty-fork" />
                         )}
                     </RecommendationEditorForkContainer>
                     <RecommendationEditorForkContainer
@@ -261,12 +260,37 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(5)}
                     >
-                        {(previewRating && previewRating <= 5) || rating <= 5 ? (
+                        {isForkHovered ? (
+                            previewRating && previewRating === 5 ? (
+                                <SVGImage src={FilledFork} alt="filled-fork" />
+                            ) : (
+                                <SVGImage src={EmptyFork} alt="empty-fork" />
+                            )
+                        ) : rating === 5 ? (
                             <SVGImage src={FilledFork} alt="filled-fork" />
                         ) : (
-                            <SVGImage src={EmptyFork} alt="filled-fork" />
+                            <SVGImage src={EmptyFork} alt="empty-fork" />
                         )}
                     </RecommendationEditorForkContainer>
+                    <RecommendationEditorForkMessageContainer>
+                        <RecommendationEditorForkMessage>
+                            {isForkHovered
+                                ? previewRating <= 3
+                                    ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                    : previewRating === 4
+                                    ? S.RECOMMENDATION_EDITOR.FourForks
+                                    : previewRating === 5
+                                    ? S.RECOMMENDATION_EDITOR.FiveForks
+                                    : S.RECOMMENDATION_EDITOR.ThreeForks
+                                : rating <= 3
+                                ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                : rating === 4
+                                ? S.RECOMMENDATION_EDITOR.FourForks
+                                : rating === 5
+                                ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                : S.RECOMMENDATION_EDITOR.ThreeForks}
+                        </RecommendationEditorForkMessage>
+                    </RecommendationEditorForkMessageContainer>
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
