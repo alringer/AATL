@@ -529,4 +529,25 @@ export const RecommendationEditorForkContainer = styled.div`
     height: 24px;
 
     margin-right: 10px;
+
+    cursor: pointer;
+`
+
+export const RecommendationEditorForkMessageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-left: 10px;
+`
+export const RecommendationEditorForkMessage = styled.p`
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    color: #363940;
 `
