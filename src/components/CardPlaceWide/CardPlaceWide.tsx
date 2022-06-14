@@ -3,12 +3,14 @@ import Tooltip from '@material-ui/core/Tooltip'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
+import EmptyFork from 'assets/icon-empty-ic-fork-rating.svg'
+import FilledFork from 'assets/icon-filled-ic-fork-rating.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
-import Image from 'components/Image/Image'
+import { default as Image, default as SVGImage } from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import * as R from 'constants/RouteConstants'
@@ -62,6 +64,9 @@ import {
     CardPlaceWideContentBottomContainer,
     CardPlaceWideContentMiddleContainer,
     CardPlaceWideContentTopContainer,
+    CardPlaceWideForkContainer,
+    CardPlaceWideForkMessageText,
+    CardPlaceWideForksContainer,
     CardPlaceWideHeaderContainer,
     CardPlaceWidePlaceCategoryText,
     CardPlaceWidePlaceNameText,
@@ -118,6 +123,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
             const link = `${window.location.origin}${R.ROUTE_ITEMS.restaurant}/${place.id}`
             setPlaceLink(link)
         }
+        console.log('place: ', place)
         setCurrentPlace(place)
     }, [place])
 
@@ -460,6 +466,48 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                               )}
                                           </Media>
                                       </CardPlaceWideHeaderContainer>
+                                      {
+                                          <CardPlaceWideForksContainer>
+                                              <CardPlaceWideForkContainer>
+                                                  {place.averageRating >= 1 ? (
+                                                      <SVGImage src={FilledFork} alt="filled-fork" />
+                                                  ) : (
+                                                      <SVGImage src={EmptyFork} alt="empty-fork" />
+                                                  )}
+                                              </CardPlaceWideForkContainer>
+                                              <CardPlaceWideForkContainer>
+                                                  {place.averageRating >= 2 ? (
+                                                      <SVGImage src={FilledFork} alt="filled-fork" />
+                                                  ) : (
+                                                      <SVGImage src={EmptyFork} alt="empty-fork" />
+                                                  )}
+                                              </CardPlaceWideForkContainer>
+                                              <CardPlaceWideForkContainer>
+                                                  {place.averageRating >= 3 ? (
+                                                      <SVGImage src={FilledFork} alt="filled-fork" />
+                                                  ) : (
+                                                      <SVGImage src={EmptyFork} alt="empty-fork" />
+                                                  )}
+                                              </CardPlaceWideForkContainer>
+                                              <CardPlaceWideForkContainer>
+                                                  {place.averageRating >= 4 ? (
+                                                      <SVGImage src={FilledFork} alt="filled-fork" />
+                                                  ) : (
+                                                      <SVGImage src={EmptyFork} alt="empty-fork" />
+                                                  )}
+                                              </CardPlaceWideForkContainer>
+                                              <CardPlaceWideForkContainer>
+                                                  {place.averageRating >= 5 ? (
+                                                      <SVGImage src={FilledFork} alt="filled-fork" />
+                                                  ) : (
+                                                      <SVGImage src={EmptyFork} alt="empty-fork" />
+                                                  )}
+                                              </CardPlaceWideForkContainer>
+                                              <CardPlaceWideForkMessageText>
+                                                  {`(${parseFloat(String(place.averageRating)).toFixed(1)} AVG)`}
+                                              </CardPlaceWideForkMessageText>
+                                          </CardPlaceWideForksContainer>
+                                      }
                                       {(type === CardPlaceWideEnum.Search ||
                                           type === CardPlaceWideEnum.Profile ||
                                           type === CardPlaceWideEnum.ProfileOwnerList) && (
