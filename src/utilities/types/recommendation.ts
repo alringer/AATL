@@ -48,8 +48,7 @@ export const mockRecommendation: IRecommendation = {
             flagged: flaggedEnum.None,
             id: 2401,
             imageCDNUrl: 'https://s3-media2.fl.yelpcdn.com/bphoto/GAoU-rXVso7GDwSm4C1B2A/o.jpg',
-            title:
-                'Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place!',
+            title: 'Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place! Awesome Place!',
             updatedAt: '2020-07-09T14:42:48.832389Z',
             venue: null,
         },
@@ -104,6 +103,7 @@ export const mockRecommendation: IRecommendation = {
             imageUrlMobile: '',
         },
         firstRecommendedBy: mockUser,
+        averageRating: 4,
     },
     createdBy: {
         id: 1051,
