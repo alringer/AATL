@@ -287,7 +287,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                                 : rating === 4
                                 ? S.RECOMMENDATION_EDITOR.FourForks
                                 : rating === 5
-                                ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                ? S.RECOMMENDATION_EDITOR.FiveForks
                                 : S.RECOMMENDATION_EDITOR.ThreeForks}
                         </RecommendationEditorForkMessage>
                     </RecommendationEditorForkMessageContainer>
