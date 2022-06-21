@@ -1,4 +1,5 @@
 import SharePaperIcon from 'assets/restaurant-share-icon.svg'
+import CardRatings from 'components/CardRatings/CardRatings'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
@@ -138,6 +139,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         {concatCategories(venueInformation.categories.map((category: ICategory) => category.longName))}
                     </PlaceBannerPlaceCategory>
                     <PlaceBannerPlaceName>{venueInformation.name}</PlaceBannerPlaceName>
+                    <CardRatings rating={venueInformation.averageRating} color={'white'} />
                     <PlaceBannerCityState>
                         {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
                     </PlaceBannerCityState>

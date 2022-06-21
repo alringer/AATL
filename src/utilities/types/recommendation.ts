@@ -25,6 +25,7 @@ export interface IRecommendation {
     deletedAt?: string
     flagged: flaggedEnum
     updatedAt?: string
+    rating: number
 }
 
 export const mockRecommendation: IRecommendation = {
@@ -126,4 +127,5 @@ export const mockRecommendation: IRecommendation = {
         configurationAudits: null,
         instagramProfile: null,
     },
+    rating: 4,
 }
