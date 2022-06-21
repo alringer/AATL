@@ -2,6 +2,7 @@ import { Tooltip } from '@material-ui/core'
 import Grow from '@material-ui/core/Grow'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
+import CardRatings from 'components/CardRatings/CardRatings'
 import Image from 'components/Image/Image'
 import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
@@ -57,6 +58,7 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                                     </Tooltip>
                                 )}
                             </WideHeaderTooltipIconsContainer>
+                            <CardRatings rating={place.averageRating} />
                             {place?.categories && (
                                 <SmallPlaceCardCategory>
                                     {concatCategories(place.categories.map((category: ICategory) => category.longName))}

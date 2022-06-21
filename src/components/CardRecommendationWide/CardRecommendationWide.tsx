@@ -9,6 +9,7 @@ import FlagButton from 'components/CardButtons/FlagButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
+import CardRatings from 'components/CardRatings/CardRatings'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
@@ -412,6 +413,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 )}
                             </Media>
                         </RecommendationHeaderContainer>
+                        <CardRatings rating={currentRecommendation.rating} />
                         {type !== CardRecommendationWideEnum.Restaurant && (
                             <>
                                 <Media queries={query} defaultMatches={{ mobile: true }}>
