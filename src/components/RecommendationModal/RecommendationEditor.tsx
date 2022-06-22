@@ -1,6 +1,7 @@
 import EmptyFork from 'assets/icon-empty-ic-fork-rating.svg'
 import FilledFork from 'assets/icon-filled-ic-fork-rating.svg'
 import { AxiosResponse } from 'axios'
+import { CardPlaceWideForkCursorContainer } from 'components/CardRatings/CardRatings.style'
 import SVGImage from 'components/Image/Image'
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
 import axios, { UPLOAD_BLOB } from 'config/AxiosConfig'
@@ -14,7 +15,6 @@ import {
     MaxTextLength,
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
-    RecommendationEditorForkContainer,
     RecommendationEditorForkMessage,
     RecommendationEditorForkMessageContainer,
     RecommendationEditorInputContainer,
@@ -212,31 +212,31 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                     </RecommendationEditorInputLabelText>
                 </RecommendationEditorInputLabelContainer>
                 <RecommendationEditorInputContainer>
-                    <RecommendationEditorForkContainer
+                    <CardPlaceWideForkCursorContainer
                         id="fork-1"
                         onMouseEnter={() => handleHoverFork(1)}
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(1)}
                     >
                         <SVGImage src={FilledFork} alt="filled-fork" />
-                    </RecommendationEditorForkContainer>
-                    <RecommendationEditorForkContainer
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
                         id="fork-2"
                         onMouseEnter={() => handleHoverFork(2)}
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(2)}
                     >
                         <SVGImage src={FilledFork} alt="filled-fork" />
-                    </RecommendationEditorForkContainer>
-                    <RecommendationEditorForkContainer
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
                         id="fork-3"
                         onMouseEnter={() => handleHoverFork(3)}
                         onMouseLeave={handleMouseLeave}
                         onClick={() => handleClickFork(3)}
                     >
                         <SVGImage src={FilledFork} alt="filled-fork" />
-                    </RecommendationEditorForkContainer>
-                    <RecommendationEditorForkContainer
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
                         id="fork-4"
                         onMouseEnter={() => handleHoverFork(4)}
                         onMouseLeave={handleMouseLeave}
@@ -253,8 +253,8 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         ) : (
                             <SVGImage src={EmptyFork} alt="empty-fork" />
                         )}
-                    </RecommendationEditorForkContainer>
-                    <RecommendationEditorForkContainer
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
                         id="fork-5"
                         onMouseEnter={() => handleHoverFork(5)}
                         onMouseLeave={handleMouseLeave}
@@ -271,7 +271,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         ) : (
                             <SVGImage src={EmptyFork} alt="empty-fork" />
                         )}
-                    </RecommendationEditorForkContainer>
+                    </CardPlaceWideForkCursorContainer>
                     <RecommendationEditorForkMessageContainer>
                         <RecommendationEditorForkMessage>
                             {isForkHovered

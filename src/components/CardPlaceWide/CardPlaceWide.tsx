@@ -460,7 +460,10 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                               )}
                                           </Media>
                                       </CardPlaceWideHeaderContainer>
-                                      <CardRatings rating={place ? place.averageRating : 0} />
+                                      <CardRatings
+                                          rating={place ? place.averageRating : 0}
+                                          uniqueID={place ? place.id : 0}
+                                      />
                                       {(type === CardPlaceWideEnum.Search ||
                                           type === CardPlaceWideEnum.Profile ||
                                           type === CardPlaceWideEnum.ProfileOwnerList) && (

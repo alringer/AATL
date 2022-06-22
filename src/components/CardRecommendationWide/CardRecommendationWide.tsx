@@ -413,7 +413,10 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 )}
                             </Media>
                         </RecommendationHeaderContainer>
-                        <CardRatings rating={currentRecommendation.rating} />
+                        <CardRatings
+                            rating={currentRecommendation.rating}
+                            uniqueID={currentRecommendation ? currentRecommendation.id : 0}
+                        />
                         {type !== CardRecommendationWideEnum.Restaurant && (
                             <>
                                 <Media queries={query} defaultMatches={{ mobile: true }}>
