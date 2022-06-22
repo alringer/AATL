@@ -17,7 +17,9 @@ export const CardPlaceWideForkContainer = styled.div`
     height: 24px;
 
     margin-right: 10px;
+`
 
+export const CardPlaceWideForkCursorContainer = styled(CardPlaceWideForkContainer)`
     cursor: pointer;
 `
 

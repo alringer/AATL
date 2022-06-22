@@ -1,59 +1,59 @@
-import EmptyFork from 'assets/icon-empty-ic-fork-rating.svg'
-import FilledFork from 'assets/icon-filled-ic-fork-rating.svg'
+import { Tooltip } from '@material-ui/core'
 import {
     CardPlaceWideForkContainer,
     CardPlaceWideForkMessageText,
     CardPlaceWideForksContainer,
 } from 'components/CardRatings/CardRatings.style'
-import { default as SVGImage } from 'components/Image/Image'
+import RatingFork from 'components/CardRatings/RatingFork'
+import * as S from 'constants/StringConstants'
 
 interface IProps {
     rating: number
+    uniqueID: number
     color?: string
 }
 
-const CardRatings: React.FC<IProps> = ({ rating, color }) => {
+const CardRatings: React.FC<IProps> = ({ rating, color, uniqueID }) => {
     return (
-        <CardPlaceWideForksContainer>
-            <CardPlaceWideForkContainer>
-                {rating >= 1 ? (
-                    <SVGImage src={FilledFork} alt="filled-fork" />
-                ) : (
-                    <SVGImage src={EmptyFork} alt="empty-fork" />
-                )}
-            </CardPlaceWideForkContainer>
-            <CardPlaceWideForkContainer>
-                {rating >= 2 ? (
-                    <SVGImage src={FilledFork} alt="filled-fork" />
-                ) : (
-                    <SVGImage src={EmptyFork} alt="empty-fork" />
-                )}
-            </CardPlaceWideForkContainer>
-            <CardPlaceWideForkContainer>
-                {rating >= 3 ? (
-                    <SVGImage src={FilledFork} alt="filled-fork" />
-                ) : (
-                    <SVGImage src={EmptyFork} alt="empty-fork" />
-                )}
-            </CardPlaceWideForkContainer>
-            <CardPlaceWideForkContainer>
-                {rating >= 4 ? (
-                    <SVGImage src={FilledFork} alt="filled-fork" />
-                ) : (
-                    <SVGImage src={EmptyFork} alt="empty-fork" />
-                )}
-            </CardPlaceWideForkContainer>
-            <CardPlaceWideForkContainer>
-                {rating >= 5 ? (
-                    <SVGImage src={FilledFork} alt="filled-fork" />
-                ) : (
-                    <SVGImage src={EmptyFork} alt="empty-fork" />
-                )}
-            </CardPlaceWideForkContainer>
-            <CardPlaceWideForkMessageText style={color ? { color: 'white' } : {}}>
-                {`(${parseFloat(String(rating)).toFixed(1)} AVG)`}
-            </CardPlaceWideForkMessageText>
-        </CardPlaceWideForksContainer>
+        <Tooltip
+            title={
+                rating <= 3
+                    ? S.RECOMMENDATION_EDITOR.ThreeForks
+                    : rating === 4
+                    ? S.RECOMMENDATION_EDITOR.FourForks
+                    : rating >= 5
+                    ? S.RECOMMENDATION_EDITOR.FiveForks
+                    : S.RECOMMENDATION_EDITOR.ThreeForks
+            }
+            placement="top-start"
+        >
+            <CardPlaceWideForksContainer>
+                <CardPlaceWideForkContainer>
+                    <RatingFork inputOffset={1} forkID={`${1}-${uniqueID}`} />
+                </CardPlaceWideForkContainer>
+                <CardPlaceWideForkContainer>
+                    <RatingFork inputOffset={1} forkID={`${2}-${uniqueID}`} />
+                </CardPlaceWideForkContainer>
+                <CardPlaceWideForkContainer>
+                    <RatingFork inputOffset={1} forkID={`${3}-${uniqueID}`} />
+                </CardPlaceWideForkContainer>
+                <CardPlaceWideForkContainer>
+                    <RatingFork
+                        inputOffset={rating >= 4 ? 1 : rating > 3 && rating < 4 ? 4 - rating : 0}
+                        forkID={`${4}-${uniqueID}`}
+                    />
+                </CardPlaceWideForkContainer>
+                <CardPlaceWideForkContainer>
+                    <RatingFork
+                        inputOffset={rating >= 5 ? 1 : rating > 4 && rating < 5 ? 5 - rating : 0}
+                        forkID={`${5}-${uniqueID}`}
+                    />
+                </CardPlaceWideForkContainer>
+                <CardPlaceWideForkMessageText style={color ? { color: 'white' } : {}}>
+                    {`(${parseFloat(String(rating)).toFixed(1)} AVG)`}
+                </CardPlaceWideForkMessageText>
+            </CardPlaceWideForksContainer>
+        </Tooltip>
     )
 }
 
