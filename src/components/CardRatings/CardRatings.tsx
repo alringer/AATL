@@ -39,13 +39,13 @@ const CardRatings: React.FC<IProps> = ({ rating, color, uniqueID }) => {
                 </CardPlaceWideForkContainer>
                 <CardPlaceWideForkContainer>
                     <RatingFork
-                        inputOffset={rating >= 4 ? 1 : rating > 3 && rating < 4 ? 4 - rating : 0}
+                        inputOffset={rating >= 4 ? 1 : rating > 3 && rating < 4 ? rating - 3 : 0}
                         forkID={`${4}-${uniqueID}`}
                     />
                 </CardPlaceWideForkContainer>
                 <CardPlaceWideForkContainer>
                     <RatingFork
-                        inputOffset={rating >= 5 ? 1 : rating > 4 && rating < 5 ? 5 - rating : 0}
+                        inputOffset={rating >= 5 ? 1 : rating > 4 && rating < 5 ? rating - 4 : 0}
                         forkID={`${5}-${uniqueID}`}
                     />
                 </CardPlaceWideForkContainer>
