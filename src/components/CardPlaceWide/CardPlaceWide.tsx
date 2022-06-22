@@ -463,6 +463,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                       <CardRatings
                                           rating={place ? place.averageRating : 0}
                                           uniqueID={place ? place.id : 0}
+                                          isAvg={true}
                                       />
                                       {(type === CardPlaceWideEnum.Search ||
                                           type === CardPlaceWideEnum.Profile ||
