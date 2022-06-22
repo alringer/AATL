@@ -143,6 +143,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         rating={venueInformation.averageRating}
                         color={'white'}
                         uniqueID={venueInformation.id}
+                        isAvg={true}
                     />
                     <PlaceBannerCityState>
                         {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
