@@ -416,6 +416,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                         <CardRatings
                             rating={currentRecommendation.rating}
                             uniqueID={currentRecommendation ? currentRecommendation.id : 0}
+                            isAvg={false}
                         />
                         {type !== CardRecommendationWideEnum.Restaurant && (
                             <>

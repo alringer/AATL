@@ -10,10 +10,11 @@ import * as S from 'constants/StringConstants'
 interface IProps {
     rating: number
     uniqueID: number
+    isAvg: boolean
     color?: string
 }
 
-const CardRatings: React.FC<IProps> = ({ rating, color, uniqueID }) => {
+const CardRatings: React.FC<IProps> = ({ rating, uniqueID, isAvg, color }) => {
     return (
         <Tooltip
             title={
@@ -50,7 +51,7 @@ const CardRatings: React.FC<IProps> = ({ rating, color, uniqueID }) => {
                     />
                 </CardPlaceWideForkContainer>
                 <CardPlaceWideForkMessageText style={color ? { color: 'white' } : {}}>
-                    {`(${parseFloat(String(rating)).toFixed(1)} AVG)`}
+                    {`(${parseFloat(String(rating)).toFixed(1)}${isAvg ? ' AVG' : ''})`}
                 </CardPlaceWideForkMessageText>
             </CardPlaceWideForksContainer>
         </Tooltip>
