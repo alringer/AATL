@@ -139,7 +139,11 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         {concatCategories(venueInformation.categories.map((category: ICategory) => category.longName))}
                     </PlaceBannerPlaceCategory>
                     <PlaceBannerPlaceName>{venueInformation.name}</PlaceBannerPlaceName>
-                    <CardRatings rating={venueInformation.averageRating} color={'white'} />
+                    <CardRatings
+                        rating={venueInformation.averageRating}
+                        color={'white'}
+                        uniqueID={venueInformation.id}
+                    />
                     <PlaceBannerCityState>
                         {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
                     </PlaceBannerCityState>

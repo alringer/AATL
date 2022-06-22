@@ -58,7 +58,7 @@ const CardPlaceSmall: React.FC<ICardPlaceSmallProps> = ({ place, venuesInList, v
                                     </Tooltip>
                                 )}
                             </WideHeaderTooltipIconsContainer>
-                            <CardRatings rating={place.averageRating} />
+                            <CardRatings rating={place.averageRating} uniqueID={place.id} />
                             {place?.categories && (
                                 <SmallPlaceCardCategory>
                                     {concatCategories(place.categories.map((category: ICategory) => category.longName))}
