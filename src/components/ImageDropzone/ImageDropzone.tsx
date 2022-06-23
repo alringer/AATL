@@ -108,7 +108,7 @@ const ImageDropzone: React.FC<IImageDropzoneProps> = ({
                         {isUploadingImage && <p>Uploading...</p>}
                         {isImageDimensionImproper && (
                             <ImageDropzoneFileErrorText>
-                                File dimensions are improper. Please use 1600x1200.
+                                File dimensions are improper. Please use {D.WIDTH_LIMIT}x{D.HEIGHT_LIMIT}.
                             </ImageDropzoneFileErrorText>
                         )}
                         {isDragReject && (

@@ -3,6 +3,7 @@ export enum SortEnum {
     RecentlyRecommended = 'RECENTLY_RECOMMENDED',
     Trending = 'TRENDING',
     Newest = 'NEWEST',
+    BestRated = 'BEST_RATED',
 }
 
 export interface SortOption {
@@ -10,6 +11,7 @@ export interface SortOption {
     value: SortEnum
 }
 export const sortOptions: SortOption[] = [
+    { label: 'BEST RATED', value: SortEnum.BestRated },
     { label: 'MOST RECOMMENDED', value: SortEnum.MostRecommended },
     { label: 'RECENTLY RECOMMENDED', value: SortEnum.RecentlyRecommended },
     { label: 'TRENDING', value: SortEnum.Trending },
@@ -17,6 +19,7 @@ export const sortOptions: SortOption[] = [
 ]
 
 export const sortOptionsMapper = {
+    [SortEnum.BestRated]: SortEnum[SortEnum.BestRated],
     [SortEnum.MostRecommended]: SortEnum[SortEnum.MostRecommended],
     [SortEnum.RecentlyRecommended]: SortEnum[SortEnum.RecentlyRecommended],
     [SortEnum.Trending]: SortEnum[SortEnum.Trending],
