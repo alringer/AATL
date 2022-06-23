@@ -20,7 +20,7 @@ const CardRatings: React.FC<IProps> = ({ rating, uniqueID, isAvg, color }) => {
             title={
                 rating <= 3
                     ? S.RECOMMENDATION_EDITOR.ThreeForks
-                    : rating === 4
+                    : rating <= 4
                     ? S.RECOMMENDATION_EDITOR.FourForks
                     : rating >= 5
                     ? S.RECOMMENDATION_EDITOR.FiveForks
