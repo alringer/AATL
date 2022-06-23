@@ -94,7 +94,9 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
 
     React.useEffect(() => {
         const newFilter = inputSort
-            ? inputSort === SortEnum.MostRecommended
+            ? inputSort === SortEnum.BestRated
+                ? SortEnum.BestRated
+                : inputSort === SortEnum.MostRecommended
                 ? SortEnum.MostRecommended
                 : inputSort === SortEnum.RecentlyRecommended
                 ? SortEnum.RecentlyRecommended
@@ -103,7 +105,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                 : inputSort === SortEnum.Trending
                 ? SortEnum.Trending
                 : SortEnum.MostRecommended
-            : SortEnum.MostRecommended
+            : SortEnum.BestRated
         setFilter(newFilter)
     }, [inputSort])
 

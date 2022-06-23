@@ -295,7 +295,8 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
             </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
                 onClick={() => handlePublish(title, description, temporaryImageKey, rating)}
-                disabled={title === '' || description === '' || !file || isLoading || !temporaryImageKey}
+                disabled={title === '' || description === '' || isLoading}
+                // || !temporaryImageKey || !file
             >
                 {S.BUTTON_LABELS.PublishRecommendation}
             </RecommendationEditorPublishButton>
