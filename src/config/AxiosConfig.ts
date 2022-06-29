@@ -57,6 +57,7 @@ export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
 
 // Write Recommendation
 export const POST_RECOMMENDATION = '/recommendations'
+export const PUT_RECOMMENDATION = '/recommendations'
 
 // Venue List Metas
 export const VENUE_LIST = `/venue-list-metas`
@@ -198,8 +199,8 @@ const requestInterceptor = async (config: any = {}) => {
 
 const responseInterceptor = (response: AxiosResponse) => {
     if (
-        store.getState().prelaunchReducer.isPrelaunch === null
-        && response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
+        store.getState().prelaunchReducer.isPrelaunch === null &&
+        response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
     ) {
         store.dispatch(setPrelaunchPeriod(true))
     }

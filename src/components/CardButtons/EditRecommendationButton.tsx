@@ -1,5 +1,5 @@
 import Tooltip from '@material-ui/core/Tooltip'
-import AddIcon from '@material-ui/icons/Add'
+import CreateIcon from '@material-ui/icons/Create'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import {
@@ -9,28 +9,28 @@ import {
     MoreOptionButton,
 } from './CardButton.style'
 
-interface IWriteRecommendationButtonProps {
+interface IEditRecommendationButtonProps {
     handleClick: (e: React.MouseEvent<HTMLElement>) => void
     isMobile?: boolean
 }
 
-const WriteRecommendationButton: React.FC<IWriteRecommendationButtonProps> = ({ handleClick, isMobile }) => {
+const EditRecommendationButton: React.FC<IEditRecommendationButtonProps> = ({ handleClick, isMobile }) => {
     return isMobile ? (
-        <Tooltip placement="top" title={S.TOOL_TIPS.AddToList}>
+        <Tooltip placement="top" title={S.TOOL_TIPS.Edit}>
             <MobileMoreOptionButton onClick={handleClick}>
                 <MobileMoreOptionSpan>
-                    <AddIcon />
-                    <MobileMoreOptionButtonLabel>{S.TOOL_TIPS.Recommend}</MobileMoreOptionButtonLabel>
+                    <CreateIcon />
+                    <MobileMoreOptionButtonLabel>{S.TOOL_TIPS.Edit}</MobileMoreOptionButtonLabel>
                 </MobileMoreOptionSpan>
             </MobileMoreOptionButton>
         </Tooltip>
     ) : (
-        <Tooltip placement="top" title={S.TOOL_TIPS.WriteRecommendation}>
+        <Tooltip placement="top" title={S.TOOL_TIPS.EditRecommendation}>
             <MoreOptionButton onClick={handleClick}>
-                <AddIcon />
+                <CreateIcon />
             </MoreOptionButton>
         </Tooltip>
     )
 }
 
-export default WriteRecommendationButton
+export default EditRecommendationButton

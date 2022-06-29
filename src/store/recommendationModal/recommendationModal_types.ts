@@ -1,8 +1,15 @@
 // State Interfaces
+export enum RecommendationModalType {
+    AATL = 'AATL',
+    Outsource = 'OUTSOURCE',
+    Edit = 'EDIT',
+}
+
 export interface RecommendationModalPlaceInformation {
     placeID: string | null
     placeName: string | null
-    isAATL: boolean | null
+    recommendation_type: RecommendationModalType | null
+    recommendationID?: number | null
 }
 
 export interface IRecommendationPayload {

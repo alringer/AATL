@@ -15,7 +15,10 @@ import { bindActionCreators } from 'redux'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -94,7 +97,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                 openRecommendationModal({
                     placeID: String(venueInformation.id),
                     placeName: venueInformation.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             )
         }

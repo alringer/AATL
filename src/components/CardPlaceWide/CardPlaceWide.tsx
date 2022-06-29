@@ -27,7 +27,10 @@ import { StoreState } from 'store'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import {
     CardIcon,
     MobileActionButtonsContainer,
@@ -129,7 +132,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                 openRecommendationModal({
                     placeID: String(place.id),
                     placeName: place.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             })
         }

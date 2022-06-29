@@ -1,4 +1,4 @@
-import LogoLadySVG from 'assets/logo_svg/AATL_logo-mark.svg'
+import LogoLadySVG from 'assets/logo_svg/LFB_logo-mark.svg'
 import BackgroundImage from 'assets/Static-Welcome-Image.png'
 import Image from 'components/Image/Image'
 import {
