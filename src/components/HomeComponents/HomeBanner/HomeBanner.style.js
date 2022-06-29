@@ -119,10 +119,10 @@ export const HomeBannerSubTitleTwoText = styled.p`
     margin-bottom: 30.5px;
 
     @media ${device.mobile} {
-        font-size: 23px;
+        font-size: 16px;
     }
     @media ${device.tablet} {
-        font-size: 26px;
+        font-size: 20px;
     }
     @media ${device.laptop} {
         font-size: 28px;

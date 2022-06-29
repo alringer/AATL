@@ -200,7 +200,7 @@ const requestInterceptor = async (config: any = {}) => {
 const responseInterceptor = (response: AxiosResponse) => {
     if (
         store.getState().prelaunchReducer.isPrelaunch === null &&
-        response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
+        response.headers['x-aatl-prelaunch-period'] == 'true'
     ) {
         store.dispatch(setPrelaunchPeriod(true))
     }
