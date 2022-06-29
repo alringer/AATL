@@ -90,7 +90,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     inputTotal,
 }) => {
     const classes = useStyles()
-    const [filter, setFilter] = React.useState<SortEnum>(SortEnum.MostRecommended)
+    const [filter, setFilter] = React.useState<SortEnum>(SortEnum.BestRated)
 
     React.useEffect(() => {
         const newFilter = inputSort

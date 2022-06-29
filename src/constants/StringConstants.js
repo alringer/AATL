@@ -11,13 +11,15 @@ export const TOOL_TIPS = {
     DeleteList: 'Delete list',
     EditList: 'Edit list',
     RemoveFromList: 'Remove from list',
-    WriteRecommendation: 'Write a recommendation',
     Flag: 'Flag as inappropriate',
     Share: 'Share',
     ShareList: 'Share list',
     ShareRestaurant: 'Share restaurant',
     ShareRecommendation: 'Share recommendation',
+    WriteRecommendation: 'Write a recommendation',
     Recommend: 'Recommend',
+    EditRecommendation: 'Edit a recommendation',
+    Edit: 'Edit',
     RemoveProfile: 'Remove profile image',
     UploadProfile: 'Click or drop a photo to upload a profile picture',
     ProfileNameEdit: 'Click to edit your displayed name',
@@ -106,12 +108,12 @@ export const FOOD_AND_DRINK = {
 }
 
 export const HOME_PAGE = {
-    BannerTitle: 'LOCALFOODBUZZ',
+    BannerTitle: 'LocalFoodBuzz',
     BannerSubTitle: "Find the best local food when you're traveling. Recommended by locals for the foodie in you.",
     BannerPhotoRestaurantName: 'Bud and Rob’s New Orleans Bistro',
     BannerPhotoPhotographer: 'Photo by Sean Kepri',
     NewRecommendationsTitle: 'New Recommendations',
-    NewRecommendationsSubTitle: 'Our essential restaurants from around the United States and Cananda.',
+    NewRecommendationsSubTitle: 'Our essential restaurants from around the United States and Canada.',
     MostRecommendedTitle: 'Most Recommended',
     MostRecommendedSubTitle: 'Our favorite and most essential restaurants from locals near you.',
 }
@@ -609,6 +611,6 @@ export const FOODIE_MODAL = {
 export const GUIDELINES_MODAL = {
     Title: 'RECOMMENDATION GUIDELINES',
     Message:
-        'AATL.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
+        'LocalFoodBuzz.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
     OkGotIt: 'OK, GOT IT',
 }

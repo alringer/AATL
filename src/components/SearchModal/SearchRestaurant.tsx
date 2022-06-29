@@ -9,7 +9,10 @@ import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
@@ -169,7 +172,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
             openRecommendationModal({
                 placeID: id,
                 placeName: name,
-                isAATL: false,
+                recommendation_type: RecommendationModalType.Outsource,
             })
         )
     }
