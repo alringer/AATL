@@ -3,7 +3,6 @@ import Image from 'components/Image/Image'
 import SearchFull from 'components/SearchFull/SearchFull'
 import * as S from 'constants/StringConstants'
 import { useRouter } from 'next/router'
-import React from 'react'
 import Media from 'react-media'
 import { query } from 'style/device'
 import buildURLWithParams from 'utilities/helpers/buildURLWithParams'
@@ -16,6 +15,7 @@ import {
     HomeBannerFooterText,
     HomeBannerImageContainer,
     HomeBannerSubTitleText,
+    HomeBannerSubTitleTwoText,
     HomeBannerTitleText,
 } from './HomeBanner.style'
 
@@ -59,6 +59,7 @@ const HomeBanner = () => {
                             <HomeBannerTitleText>{S.HOME_PAGE.BannerTitle}</HomeBannerTitleText>
                         )}
                         <HomeBannerSubTitleText>{S.HOME_PAGE.BannerSubTitle}</HomeBannerSubTitleText>
+                        <HomeBannerSubTitleTwoText>{S.HOME_PAGE.BannerSubTitleTwo}</HomeBannerSubTitleTwoText>
                         <SearchFull
                             inputPlace={null}
                             inputCategoryID={null}

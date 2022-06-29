@@ -110,6 +110,7 @@ export const FOOD_AND_DRINK = {
 export const HOME_PAGE = {
     BannerTitle: 'Local Food Buzz',
     BannerSubTitle: "Find the best local food when you're traveling. Recommended by locals for the foodie in you.",
+    BannerSubTitleTwo: "Only sharing the good, we don't waste your time with the bad.",
     BannerPhotoRestaurantName: 'Bud and Rob’s New Orleans Bistro',
     BannerPhotoPhotographer: 'Photo by Sean Kepri',
     NewRecommendationsTitle: 'New Recommendations',
