@@ -75,14 +75,14 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                       categoryId: queryCategoryID ? queryCategoryID : '',
                       longitude: queryLng ? queryLng : Math.round(-117.161087),
                       latitude: queryLat ? queryLat : Math.round(32.715736),
-                      sort: querySort ? querySort : SortEnum.MostRecommended,
+                      sort: querySort ? querySort : SortEnum.BestRated,
                       page: queryPage ? queryPage : 0,
                   }
                 : {
                       keyword: queryPlace ? queryPlace : '',
                       longitude: queryLng ? queryLng : Math.round(-117.161087),
                       latitude: queryLat ? queryLat : Math.round(32.715736),
-                      sort: querySort ? querySort : SortEnum.MostRecommended,
+                      sort: querySort ? querySort : SortEnum.BestRated,
                       page: queryPage ? queryPage : 0,
                   }
         axios

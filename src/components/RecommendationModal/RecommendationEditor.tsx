@@ -4,12 +4,15 @@ import { AxiosResponse } from 'axios'
 import { CardPlaceWideForkCursorContainer } from 'components/CardRatings/CardRatings.style'
 import SVGImage from 'components/Image/Image'
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
-import axios, { UPLOAD_BLOB } from 'config/AxiosConfig'
+import axios, { FETCH_RECOMMENDATION, UPLOAD_BLOB } from 'config/AxiosConfig'
 import * as D from 'constants/ImageDimensionConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import authStore from 'store/authentication/authentication_reducer'
+import { RecommendationModalType } from 'store/recommendationModal/recommendationModal_types'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { flaggedEnum } from 'utilities/types/enumerations'
+import { IRecommendation } from 'utilities/types/recommendation'
 import {
     CurrentTextLength,
     MaxTextLength,
@@ -31,13 +34,26 @@ import {
 interface IRecommendationEditorProps extends IWithAuthInjectedProps {
     isLoading: boolean
     placeName: string
+    recommendationID: number | null
+    recommendation_type: RecommendationModalType
     handlePublish: (title: string, description: string, temporaryImageKey: string, rating: number) => void
+    handleEdit: (
+        inputRecommendationID: number,
+        inputTitle: string,
+        inputDescription: string,
+        temporaryImageKey: string,
+        inputRating: number,
+        inputFlagged: flaggedEnum
+    ) => void
     handleReadOurGuidelines: () => void
 }
 
 const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     placeName,
+    recommendationID,
+    recommendation_type,
     handlePublish,
+    handleEdit,
     isLoading,
     handleReadOurGuidelines,
     getTokenConfig,
@@ -48,10 +64,32 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     const [previewRating, setPreviewRating] = React.useState(null)
     const [file, setFile] = React.useState()
     const [temporaryImageKey, setTemporaryImageKey] = React.useState()
-    const [imagePreviewURL, setImagePreviewURL] = React.useState()
+    const [imagePreviewURL, setImagePreviewURL] = React.useState('')
     const [isUploadingImage, setUploadingImage] = React.useState(false)
     const [isImageDimensionImproper, setImageDimensionImproper] = React.useState(false)
     const [isForkHovered, setForkHovered] = React.useState(false)
+
+    const [fetchedRecommendation, setFetchedRecommendation] = React.useState<IRecommendation | null>(null)
+
+    React.useEffect(() => {
+        if (recommendation_type === RecommendationModalType.Edit && recommendationID) {
+            axios
+                .get(FETCH_RECOMMENDATION(recommendationID))
+                .then((res) => {
+                    if (res?.data) {
+                        const fetchedRecommendation: IRecommendation = res.data
+                        setTitle(fetchedRecommendation.title)
+                        setDescription(fetchedRecommendation.content)
+                        setImagePreviewURL(fetchedRecommendation.imageCDNUrl)
+                        setRating(fetchedRecommendation.rating)
+                        setPreviewRating(fetchedRecommendation.rating)
+                        setFetchedRecommendation(res.data)
+                    }
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {})
+        }
+    }, [recommendation_type, recommendationID])
 
     const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (e.target.value.length <= 150) {
@@ -145,6 +183,17 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
             setRating(4)
         } else {
             setRating(3)
+        }
+    }
+
+    const handleClickSubmit = () => {
+        if (
+            recommendation_type === RecommendationModalType.AATL ||
+            recommendation_type === RecommendationModalType.Outsource
+        ) {
+            handlePublish(title, description, temporaryImageKey, rating)
+        } else if (recommendation_type === RecommendationModalType.Edit) {
+            handleEdit(recommendationID, title, description, temporaryImageKey, rating, fetchedRecommendation.flagged)
         }
     }
 
@@ -294,7 +343,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
-                onClick={() => handlePublish(title, description, temporaryImageKey, rating)}
+                onClick={handleClickSubmit}
                 disabled={title === '' || description === '' || isLoading}
                 // || !temporaryImageKey || !file
             >

@@ -5,6 +5,7 @@ import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
+import EditRecommendationButton from 'components/CardButtons/EditRecommendationButton'
 import FlagButton from 'components/CardButtons/FlagButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
@@ -29,7 +30,10 @@ import { OpenFlagModalPayload } from 'store/flagModal/flagModal_types'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import {
     CardIcon,
     MobileActionButtonsContainer,
@@ -55,6 +59,7 @@ import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
+import { IUserProfile } from 'utilities/types/userProfile'
 import {
     RecommendationAnchor,
     RecommendationAuthorNameText,
@@ -85,6 +90,7 @@ export enum CardRecommendationWideEnum {
 }
 
 interface IReduxProps {
+    user: IUserProfile
     userRole: UserRoleEnum
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
@@ -107,6 +113,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     isFull,
     recommendation,
     authenticatedAction,
+    user,
     userRole,
     openRecommendationModal,
     openListModal,
@@ -181,6 +188,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         e.stopPropagation()
         setMoreVisible(false)
     }
+
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
         if (
             currentRecommendation &&
@@ -193,13 +201,35 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 openRecommendationModal({
                     placeID: String(currentRecommendation.venue.id),
                     placeName: currentRecommendation.venue.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             )
         }
         e.stopPropagation()
         setMoreVisible(false)
     }
+
+    const handleEditRecommendation = (e: React.MouseEvent<HTMLElement>) => {
+        if (
+            currentRecommendation &&
+            currentRecommendation.id !== undefined &&
+            currentRecommendation.id !== null &&
+            currentRecommendation.venue &&
+            currentRecommendation.venue.name
+        ) {
+            authenticatedAction(() =>
+                openRecommendationModal({
+                    placeID: String(currentRecommendation.venue.id),
+                    placeName: currentRecommendation.venue.name,
+                    recommendation_type: RecommendationModalType.Edit,
+                    recommendationID: currentRecommendation.id,
+                })
+            )
+        }
+        e.stopPropagation()
+        setMoreVisible(false)
+    }
+
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
         if (currentRecommendation) {
             navigator.clipboard
@@ -396,6 +426,12 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                             <WriteRecommendationButton
                                                                 handleClick={handleWriteRecommendation}
                                                             />
+                                                            {(user?.id === recommendation?.createdBy?.id ||
+                                                                userRole === UserRoleEnum.Admin) && (
+                                                                <EditRecommendationButton
+                                                                    handleClick={handleEditRecommendation}
+                                                                />
+                                                            )}
                                                         </MoreHorizontalContainer>
                                                     ) : null}
                                                     {isMoreVisible ? (
@@ -549,6 +585,13 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                     handleClick={handleWriteRecommendation}
                                                     isMobile={true}
                                                 />
+                                                {(user?.id === recommendation?.createdBy?.id ||
+                                                    userRole === UserRoleEnum.Admin) && (
+                                                    <EditRecommendationButton
+                                                        handleClick={handleEditRecommendation}
+                                                        isMobile={true}
+                                                    />
+                                                )}
                                                 <ShareButton
                                                     handleClick={handleShare}
                                                     isMobile={true}
@@ -574,6 +617,7 @@ const mapStateToProps = (state: StoreState) => ({
     venuesInLists: state.userReducer.venuesListsVenueIDs,
     venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
     isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    user: state.userReducer.user,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

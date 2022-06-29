@@ -5,7 +5,7 @@ import {
     RecommendationModalContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
-import axios, { POST_RECOMMENDATION } from 'config/AxiosConfig'
+import axios, { POST_RECOMMENDATION, PUT_RECOMMENDATION } from 'config/AxiosConfig'
 import { KeycloakInstance } from 'keycloak-js'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
@@ -17,14 +17,17 @@ import {
     clearRecommendationModal,
     closeRecommendationModal,
 } from 'store/recommendationModal/recommendationModal_actions'
+import { RecommendationModalType } from 'store/recommendationModal/recommendationModal_types'
 import { fetchUser } from 'store/user/user_actions'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { flaggedEnum } from 'utilities/types/enumerations'
 import RecommendationEditorHeader from './RecommendationEditorHeader'
 
 interface IReduxProps {
     placeID: number | null
     placeName: string | null
-    isAATL: boolean | null
+    recommendation_type: RecommendationModalType | null
+    recommendationID: number | null
     isOpen: boolean
     closeRecommendationModal: () => void
     clearRecommendationModal: () => void
@@ -42,7 +45,8 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     placeName,
     authenticatedAction,
     getTokenConfig,
-    isAATL,
+    recommendation_type,
+    recommendationID,
     fetchUser,
     keycloak,
     openGuidelinesModal,
@@ -61,7 +65,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     const handlePublish = (title: string, description: string, temporaryImageKey: string, rating: number) => {
         setLoading(true)
         const payload =
-            isAATL === true
+            recommendation_type === RecommendationModalType.AATL
                 ? {
                       venueID: placeID,
                       title: title,
@@ -100,6 +104,54 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
             })
     }
 
+    const handleEdit = (
+        inputRecommendationID: number,
+        inputTitle: string,
+        inputDescription: string,
+        temporaryImageKey: string,
+        inputRating: number,
+        inputFlagged: flaggedEnum
+    ) => {
+        const payload = temporaryImageKey
+            ? {
+                  id: inputRecommendationID,
+                  title: inputTitle,
+                  content: inputDescription,
+                  temporaryImageKey: temporaryImageKey,
+                  rating: inputRating,
+                  flagged: inputFlagged,
+              }
+            : {
+                  id: inputRecommendationID,
+                  title: inputTitle,
+                  content: inputDescription,
+                  rating: inputRating,
+                  flagged: inputFlagged,
+              }
+        axios
+            .put(
+                PUT_RECOMMENDATION,
+                payload,
+                authStore.getState().keycloak && authStore.getState().keycloak.token
+                    ? {
+                          headers: {
+                              Authorization: getTokenConfig(),
+                          },
+                      }
+                    : {}
+            )
+            .then((res) => {
+                setPublished(true)
+                setPublishedTitle(inputTitle)
+                setRecommendation(res.data)
+                fetchUser(keycloak)
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
     const handleReadOurGuidelines = () => {
         openGuidelinesModal()
     }
@@ -120,7 +172,10 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                             placeName={placeName}
                             isLoading={isLoading}
                             handlePublish={handlePublish}
+                            handleEdit={handleEdit}
                             handleReadOurGuidelines={handleReadOurGuidelines}
+                            recommendationID={recommendationID}
+                            recommendation_type={recommendation_type}
                         />
                     )}
                 </RecommendationModalContentContainer>
@@ -133,7 +188,8 @@ const mapStateToProps = (state: StoreState) => ({
     placeID: state.recommendationModalReducer.placeID,
     placeName: state.recommendationModalReducer.placeName,
     isOpen: state.recommendationModalReducer.isOpen,
-    isAATL: state.recommendationModalReducer.isAATL,
+    recommendation_type: state.recommendationModalReducer.recommendation_type,
+    recommendationID: state.recommendationModalReducer.recommendationID,
 })
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
