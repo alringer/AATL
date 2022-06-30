@@ -18,7 +18,7 @@ export const TOOL_TIPS = {
     ShareRecommendation: 'Share recommendation',
     WriteRecommendation: 'Write a recommendation',
     Recommend: 'Recommend',
-    EditRecommendation: 'Edit a recommendation',
+    EditRecommendation: 'Edit recommendation',
     Edit: 'Edit',
     RemoveProfile: 'Remove profile image',
     UploadProfile: 'Click or drop a photo to upload a profile picture',
@@ -47,6 +47,7 @@ export const BUTTON_LABELS = {
     ResetPassword: 'RESET PASSWORD',
     OK: 'OK',
     PublishRecommendation: 'PUBLISH RECOMMENDATION',
+    UpdateRecommendation: 'EDIT RECOMMENDATION',
     CheckItOut: 'CHECK IT OUT',
     MoreTips: 'MORE TIPS',
     ReadOurGuidelines: 'READ OUR GUIDELINES',
@@ -264,6 +265,7 @@ export const ERROR_MESSAGES = {
 
 export const RECOMMENDATION_EDITOR = {
     Title: 'Recommending',
+    TitleEdit: 'Edit Recommendation',
     LabelImage: 'Image',
     LabelTitle: 'Title',
     LabelDescription: 'Description',
