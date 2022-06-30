@@ -47,7 +47,7 @@ export const BUTTON_LABELS = {
     ResetPassword: 'RESET PASSWORD',
     OK: 'OK',
     PublishRecommendation: 'PUBLISH RECOMMENDATION',
-    UpdateRecommendation: 'EDIT RECOMMENDATION',
+    UpdateRecommendation: 'UPDATE RECOMMENDATION',
     CheckItOut: 'CHECK IT OUT',
     MoreTips: 'MORE TIPS',
     ReadOurGuidelines: 'READ OUR GUIDELINES',
