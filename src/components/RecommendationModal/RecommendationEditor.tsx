@@ -200,7 +200,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     return (
         <RecommendationEditorContainer>
             <RecommendationEditorTitle>
-                {S.RECOMMENDATION_EDITOR.Title} {placeName}
+                {recommendation_type === RecommendationModalType.Edit
+                    ? `${S.RECOMMENDATION_EDITOR.TitleEdit}`
+                    : `${S.RECOMMENDATION_EDITOR.Title} ${placeName}`}
             </RecommendationEditorTitle>
             <RecommendationEditorRowContainer id="recommendation-image">
                 <RecommendationEditorInputLabelContainer>
@@ -347,7 +349,9 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                 disabled={title === '' || description === '' || isLoading}
                 // || !temporaryImageKey || !file
             >
-                {S.BUTTON_LABELS.PublishRecommendation}
+                {recommendation_type === RecommendationModalType.Edit
+                    ? S.BUTTON_LABELS.UpdateRecommendation
+                    : S.BUTTON_LABELS.PublishRecommendation}
             </RecommendationEditorPublishButton>
             <RecommendationModalReadOurGuidelinesContainer>
                 <RecommendationEditorReadOurGuidelines onClick={handleReadOurGuidelines}>
