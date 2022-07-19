@@ -69,16 +69,19 @@ const HomeCarousel: React.FC<IHomeCarouselProps> = ({ featuredRecommendationsLis
                 onChange={updateCurrentSlide}
                 onClickItem={updateCurrentSlide}
             >
-                {currentFeaturedRecommendationsLists?.map((featuredRecommendationList, index) => (
-                    <HomeCarouselCard
-                        featuredRecommendationList={featuredRecommendationList}
-                        handleMoveForward={handleMoveForward}
-                        handleMoveBackward={handleMoveBackward}
-                        isCurrent={currentSlideIndex === index}
-                        length={currentFeaturedRecommendationsLists?.length}
-                        key={featuredRecommendationList.id}
-                    />
-                ))}
+                {currentFeaturedRecommendationsLists?.map(
+                    (featuredRecommendationList, index) =>
+                        index < 7 && (
+                            <HomeCarouselCard
+                                featuredRecommendationList={featuredRecommendationList}
+                                handleMoveForward={handleMoveForward}
+                                handleMoveBackward={handleMoveBackward}
+                                isCurrent={currentSlideIndex === index}
+                                length={currentFeaturedRecommendationsLists?.length}
+                                key={featuredRecommendationList.id}
+                            />
+                        )
+                )}
             </Carousel>
         </HomeCarouselContainer>
     ) : null

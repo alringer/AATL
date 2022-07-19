@@ -18,11 +18,11 @@ const CardRatings: React.FC<IProps> = ({ rating, uniqueID, isAvg, color }) => {
     return (
         <Tooltip
             title={
-                rating <= 3
+                Math.round(rating) <= 3
                     ? S.RECOMMENDATION_EDITOR.ThreeForks
-                    : rating <= 4
+                    : Math.round(rating) <= 4
                     ? S.RECOMMENDATION_EDITOR.FourForks
-                    : rating >= 5
+                    : Math.round(rating) >= 5
                     ? S.RECOMMENDATION_EDITOR.FiveForks
                     : S.RECOMMENDATION_EDITOR.ThreeForks
             }

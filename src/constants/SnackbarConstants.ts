@@ -62,6 +62,12 @@ export const ERROR_RECOMMENDATION_LIST: ISnackbarConstants = {
     Body: 'Meanwhile, browse other restaurants we have!',
 }
 
+export const ERROR_MORE_THAN_SEVEN_RECOMMENDATION_LISTS: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'We cannot feature this recommendation list',
+    Body: 'We cannot feature more than 7 lists at the same time.',
+}
+
 export const SIGN_UP: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Sign up complete',

@@ -29,6 +29,7 @@ interface IReduxProps {
     recommendation_type: RecommendationModalType | null
     recommendationID: number | null
     isOpen: boolean
+    venuesRecommendedIDs: number[]
     closeRecommendationModal: () => void
     clearRecommendationModal: () => void
     fetchUser: (keycloak: KeycloakInstance) => void
@@ -43,6 +44,7 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     isOpen,
     placeID,
     placeName,
+    venuesRecommendedIDs,
     authenticatedAction,
     getTokenConfig,
     recommendation_type,
@@ -61,6 +63,12 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
             clearRecommendationModal()
         }
     }, [])
+
+    React.useEffect(() => {
+        if (venuesRecommendedIDs.length <= 0) {
+            openGuidelinesModal()
+        }
+    }, [venuesRecommendedIDs])
 
     const handlePublish = (title: string, description: string, temporaryImageKey: string, rating: number) => {
         setLoading(true)
@@ -190,6 +198,7 @@ const mapStateToProps = (state: StoreState) => ({
     isOpen: state.recommendationModalReducer.isOpen,
     recommendation_type: state.recommendationModalReducer.recommendation_type,
     recommendationID: state.recommendationModalReducer.recommendationID,
+    venuesRecommendedIDs: state.userReducer.venuesRecommendedVenueIDs,
 })
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
