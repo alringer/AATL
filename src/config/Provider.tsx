@@ -4,7 +4,6 @@ import ModalProvider from 'components/ModalProvider/ModalProvider'
 import keycloakCfg from 'config/KeycloakConfig'
 import { SnackbarUtilsConfigurator } from 'config/SnackbarUtils'
 import { SnackbarProvider } from 'notistack'
-import React from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Provider as StoreProvider } from 'react-redux'
@@ -23,7 +22,7 @@ const Provider = ({ children, cookies }) => {
             <SSRKeycloakProvider
                 keycloakConfig={keycloakCfg}
                 persistor={Persistors.Cookies(cookies)}
-                LoadingComponent={<div>Loading...</div>}
+                LoadingComponent={<div></div>}
                 autoRefreshToken={true}
             >
                 <StoreProvider store={store}>
