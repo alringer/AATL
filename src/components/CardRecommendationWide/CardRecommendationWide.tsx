@@ -4,6 +4,12 @@ import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
+import PlaceHolderOne from 'assets/Placeholder-1.png'
+import PlaceHolderTwo from 'assets/Placeholder-2.png'
+import PlaceHolderThree from 'assets/Placeholder-3.png'
+import PlaceHolderFour from 'assets/Placeholder-4.png'
+import PlaceHolderFive from 'assets/Placeholder-5.png'
+import PlaceHolderSix from 'assets/Placeholder-6.png'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import EditRecommendationButton from 'components/CardButtons/EditRecommendationButton'
 import FlagButton from 'components/CardButtons/FlagButton'
@@ -127,6 +133,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     const { enqueueSnackbar } = useSnackbar()
 
     const [currentRecommendation, setCurrentRecommendation] = React.useState<IRecommendation | null>(null)
+    const [currentRandomImge, setCurrentRandomImage] = React.useState('')
     const [isLoading, setLoading] = React.useState(false)
     const [isMoreVisible, setMoreVisible] = React.useState(
         type === CardRecommendationWideEnum.AdminFlagged ? true : false
@@ -139,6 +146,23 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             : windowSize.width >= Number(size.tablet)
             ? DeviceNameEnum.tablet
             : DeviceNameEnum.mobile
+
+    React.useEffect(() => {
+        const randomNumber = Math.floor(Math.random() * 6)
+        if (randomNumber == 0) {
+            setCurrentRandomImage(PlaceHolderOne)
+        } else if (randomNumber == 1) {
+            setCurrentRandomImage(PlaceHolderTwo)
+        } else if (randomNumber == 2) {
+            setCurrentRandomImage(PlaceHolderThree)
+        } else if (randomNumber == 3) {
+            setCurrentRandomImage(PlaceHolderFour)
+        } else if (randomNumber == 4) {
+            setCurrentRandomImage(PlaceHolderFive)
+        } else if (randomNumber == 5) {
+            setCurrentRandomImage(PlaceHolderSix)
+        }
+    }, [])
 
     React.useEffect(() => {
         setCurrentRecommendation(recommendation)
@@ -303,11 +327,23 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         <Grow in={true}>
             <RecommendationCardContainer id={isMoreVisible ? 'toggled' : 'not-toggled'} key={recommendation?.id}>
                 <RecommendationCardImageContainer
-                    src={recommendation ? recommendation.imageCDNUrl : ''}
+                    src={
+                        recommendation
+                            ? recommendation.imageCDNUrl
+                                ? recommendation.imageCDNUrl
+                                : currentRandomImge
+                            : ''
+                    }
                     isToggled={isMoreVisible}
                 >
                     <RecommendationCardImage
-                        src={recommendation ? recommendation.imageCDNUrl : ''}
+                        src={
+                            recommendation
+                                ? recommendation.imageCDNUrl
+                                    ? recommendation.imageCDNUrl
+                                    : currentRandomImge
+                                : ''
+                        }
                         alt="recommendation-image"
                         isToggled={isMoreVisible}
                     />

@@ -1,6 +1,10 @@
 import RecommendationListCard from 'components/Admin/AdminRecommendationLists/RecommendationListCard'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { FEATURED_LISTS, FEATURED_LISTS_WITH_ID } from 'config/AxiosConfig'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import { ReactSortable } from 'react-sortablejs'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -27,6 +31,7 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
     getTokenConfig,
     fetchRecommendationLists,
 }) => {
+    const { enqueueSnackbar } = useSnackbar()
     const [lists, setLists] = React.useState<IRecommendationListMeta[]>([])
 
     React.useEffect(() => {
@@ -65,10 +70,11 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
                 }
                 axios
                     .put(FEATURED_LISTS_WITH_ID(targetFeaturedListID), payload, config)
-                    .then((res) => {
+                    .then((res) => {})
+                    .catch((err) => console.log(err))
+                    .finally(() => {
                         fetchRecommendationLists()
                     })
-                    .catch((err) => console.log(err))
             }
         }
     }
@@ -89,10 +95,31 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
                 : {}
         axios
             .post(FEATURED_LISTS, payload, config)
-            .then((res) => {
+            .then((res) => {})
+            .catch((error) => {
+                if (error?.response?.status == 400) {
+                    // TODO: Surface a snackbar
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.ERROR_MORE_THAN_SEVEN_RECOMMENDATION_LISTS.Type}
+                                    title={B.ERROR_MORE_THAN_SEVEN_RECOMMENDATION_LISTS.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            {B.ERROR_MORE_THAN_SEVEN_RECOMMENDATION_LISTS.Body}
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
+                    })
+                }
+                console.log(error)
+            })
+            .finally(() => {
                 fetchRecommendationLists()
             })
-            .catch((err) => console.log(err))
     }
 
     const unfeatureList = (listID: number) => {
@@ -109,10 +136,11 @@ const AdminRecommendationListsController: React.FC<IAdminRecommendationListsCont
         if (targetFeaturedListID !== null) {
             axios
                 .delete(FEATURED_LISTS_WITH_ID(targetFeaturedListID), config)
-                .then((res) => {
+                .then((res) => {})
+                .catch((err) => console.log(err))
+                .finally(() => {
                     fetchRecommendationLists()
                 })
-                .catch((err) => console.log(err))
         }
     }
 
