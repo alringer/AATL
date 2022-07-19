@@ -1,4 +1,5 @@
 import SharePaperIcon from 'assets/restaurant-share-icon.svg'
+import CardRatings from 'components/CardRatings/CardRatings'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
@@ -14,7 +15,10 @@ import { bindActionCreators } from 'redux'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -93,7 +97,7 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                 openRecommendationModal({
                     placeID: String(venueInformation.id),
                     placeName: venueInformation.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             )
         }
@@ -138,6 +142,12 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         {concatCategories(venueInformation.categories.map((category: ICategory) => category.longName))}
                     </PlaceBannerPlaceCategory>
                     <PlaceBannerPlaceName>{venueInformation.name}</PlaceBannerPlaceName>
+                    <CardRatings
+                        rating={venueInformation.averageRating}
+                        color={'white'}
+                        uniqueID={venueInformation.id}
+                        isAvg={true}
+                    />
                     <PlaceBannerCityState>
                         {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
                     </PlaceBannerCityState>

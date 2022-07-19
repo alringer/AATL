@@ -10,7 +10,8 @@ const initialState: RecommendationModalReducerState = {
     isOpen: false,
     placeID: null,
     placeName: null,
-    isAATL: null,
+    recommendation_type: null,
+    recommendationID: null,
 }
 
 const recommendationModalReducer = (
@@ -24,7 +25,8 @@ const recommendationModalReducer = (
                 isOpen: true,
                 placeID: action.payload.placeID,
                 placeName: action.payload.placeName,
-                isAATL: action.payload.isAATL,
+                recommendation_type: action.payload.recommendation_type,
+                recommendationID: action.payload.recommendationID,
             }
         case CLOSE_RECOMMENDATION_MODAL:
             return {

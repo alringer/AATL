@@ -1,5 +1,4 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
-import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
@@ -57,6 +56,7 @@ export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
 
 // Write Recommendation
 export const POST_RECOMMENDATION = '/recommendations'
+export const PUT_RECOMMENDATION = '/recommendations'
 
 // Venue List Metas
 export const VENUE_LIST = `/venue-list-metas`
@@ -199,7 +199,7 @@ const requestInterceptor = async (config: any = {}) => {
 const responseInterceptor = (response: AxiosResponse) => {
     if (
         store.getState().prelaunchReducer.isPrelaunch === null &&
-        response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
+        response.headers['x-aatl-prelaunch-period'] == 'true'
     ) {
         store.dispatch(setPrelaunchPeriod(true))
     }
@@ -237,12 +237,12 @@ const responseInterceptorError = (error: AxiosError) => {
     //     SnackbarUtils.error(error.message)
     // }
     // TODO: Delete the error toast below. This is only for development purposes
-    SnackbarUtils.error(error)
+    // SnackbarUtils.error(error)
     return Promise.reject(error)
 }
 
 axiosInstance.interceptors.request.use(requestInterceptor)
-axiosInstance.interceptors.response.use(responseInterceptor, responseInterceptorError)
+axiosInstance.interceptors.response.use(responseInterceptor)
 
 const axios = axiosInstance
 

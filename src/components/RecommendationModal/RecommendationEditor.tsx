@@ -1,16 +1,25 @@
+import EmptyFork from 'assets/icon-empty-ic-fork-rating.svg'
+import FilledFork from 'assets/icon-filled-ic-fork-rating.svg'
 import { AxiosResponse } from 'axios'
+import { CardPlaceWideForkCursorContainer } from 'components/CardRatings/CardRatings.style'
+import SVGImage from 'components/Image/Image'
 import ImageDropzone from 'components/ImageDropzone/ImageDropzone'
-import axios, { UPLOAD_BLOB } from 'config/AxiosConfig'
+import axios, { FETCH_RECOMMENDATION, UPLOAD_BLOB } from 'config/AxiosConfig'
 import * as D from 'constants/ImageDimensionConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import authStore from 'store/authentication/authentication_reducer'
+import { RecommendationModalType } from 'store/recommendationModal/recommendationModal_types'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { flaggedEnum } from 'utilities/types/enumerations'
+import { IRecommendation } from 'utilities/types/recommendation'
 import {
     CurrentTextLength,
     MaxTextLength,
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
+    RecommendationEditorForkMessage,
+    RecommendationEditorForkMessageContainer,
     RecommendationEditorInputContainer,
     RecommendationEditorInputLabelContainer,
     RecommendationEditorInputLabelText,
@@ -25,24 +34,62 @@ import {
 interface IRecommendationEditorProps extends IWithAuthInjectedProps {
     isLoading: boolean
     placeName: string
-    handlePublish: (title: string, description: string, temporaryImageKey: string) => void
+    recommendationID: number | null
+    recommendation_type: RecommendationModalType
+    handlePublish: (title: string, description: string, temporaryImageKey: string, rating: number) => void
+    handleEdit: (
+        inputRecommendationID: number,
+        inputTitle: string,
+        inputDescription: string,
+        temporaryImageKey: string,
+        inputRating: number,
+        inputFlagged: flaggedEnum
+    ) => void
     handleReadOurGuidelines: () => void
 }
 
 const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     placeName,
+    recommendationID,
+    recommendation_type,
     handlePublish,
+    handleEdit,
     isLoading,
     handleReadOurGuidelines,
     getTokenConfig,
 }) => {
     const [title, setTitle] = React.useState('')
     const [description, setDescription] = React.useState('')
+    const [rating, setRating] = React.useState(3)
+    const [previewRating, setPreviewRating] = React.useState(null)
     const [file, setFile] = React.useState()
     const [temporaryImageKey, setTemporaryImageKey] = React.useState()
-    const [imagePreviewURL, setImagePreviewURL] = React.useState()
+    const [imagePreviewURL, setImagePreviewURL] = React.useState('')
     const [isUploadingImage, setUploadingImage] = React.useState(false)
     const [isImageDimensionImproper, setImageDimensionImproper] = React.useState(false)
+    const [isForkHovered, setForkHovered] = React.useState(false)
+
+    const [fetchedRecommendation, setFetchedRecommendation] = React.useState<IRecommendation | null>(null)
+
+    React.useEffect(() => {
+        if (recommendation_type === RecommendationModalType.Edit && recommendationID) {
+            axios
+                .get(FETCH_RECOMMENDATION(recommendationID))
+                .then((res) => {
+                    if (res?.data) {
+                        const fetchedRecommendation: IRecommendation = res.data
+                        setTitle(fetchedRecommendation.title)
+                        setDescription(fetchedRecommendation.content)
+                        setImagePreviewURL(fetchedRecommendation.imageCDNUrl)
+                        setRating(fetchedRecommendation.rating)
+                        setPreviewRating(fetchedRecommendation.rating)
+                        setFetchedRecommendation(res.data)
+                    }
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {})
+        }
+    }, [recommendation_type, recommendationID])
 
     const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (e.target.value.length <= 150) {
@@ -114,10 +161,48 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
         }
     }
 
+    const handleHoverFork = (forkID: number) => {
+        setForkHovered(true)
+        if (forkID === 5) {
+            setPreviewRating(5)
+        } else if (forkID === 4) {
+            setPreviewRating(4)
+        } else {
+            setPreviewRating(3)
+        }
+    }
+
+    const handleMouseLeave = () => {
+        setPreviewRating(null)
+        setForkHovered(false)
+    }
+    const handleClickFork = (forkID: number) => {
+        if (forkID === 5) {
+            setRating(5)
+        } else if (forkID === 4) {
+            setRating(4)
+        } else {
+            setRating(3)
+        }
+    }
+
+    const handleClickSubmit = () => {
+        if (
+            recommendation_type === RecommendationModalType.AATL ||
+            recommendation_type === RecommendationModalType.Outsource
+        ) {
+            handlePublish(title, description, temporaryImageKey, rating)
+        } else if (recommendation_type === RecommendationModalType.Edit) {
+            handleEdit(recommendationID, title, description, temporaryImageKey, rating, fetchedRecommendation.flagged)
+        }
+    }
+
     return (
         <RecommendationEditorContainer>
             <RecommendationEditorTitle>
-                {S.RECOMMENDATION_EDITOR.Title} {placeName}
+                {recommendation_type === RecommendationModalType.Edit
+                    ? `${S.RECOMMENDATION_EDITOR.TitleEdit}`
+                    : `${S.RECOMMENDATION_EDITOR.Title} ${placeName}`}
             </RecommendationEditorTitle>
             <RecommendationEditorRowContainer id="recommendation-image">
                 <RecommendationEditorInputLabelContainer>
@@ -171,11 +256,102 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                     />
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
+            <RecommendationEditorRowContainer id="recommendation-rating">
+                <RecommendationEditorInputLabelContainer>
+                    <RecommendationEditorInputLabelText>
+                        {S.RECOMMENDATION_EDITOR.LabelRating}
+                    </RecommendationEditorInputLabelText>
+                </RecommendationEditorInputLabelContainer>
+                <RecommendationEditorInputContainer>
+                    <CardPlaceWideForkCursorContainer
+                        id="fork-1"
+                        onMouseEnter={() => handleHoverFork(1)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(1)}
+                    >
+                        <SVGImage src={FilledFork} alt="filled-fork" />
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
+                        id="fork-2"
+                        onMouseEnter={() => handleHoverFork(2)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(2)}
+                    >
+                        <SVGImage src={FilledFork} alt="filled-fork" />
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
+                        id="fork-3"
+                        onMouseEnter={() => handleHoverFork(3)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(3)}
+                    >
+                        <SVGImage src={FilledFork} alt="filled-fork" />
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
+                        id="fork-4"
+                        onMouseEnter={() => handleHoverFork(4)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(4)}
+                    >
+                        {isForkHovered ? (
+                            previewRating && previewRating >= 4 ? (
+                                <SVGImage src={FilledFork} alt="filled-fork" />
+                            ) : (
+                                <SVGImage src={EmptyFork} alt="empty-fork" />
+                            )
+                        ) : rating >= 4 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="empty-fork" />
+                        )}
+                    </CardPlaceWideForkCursorContainer>
+                    <CardPlaceWideForkCursorContainer
+                        id="fork-5"
+                        onMouseEnter={() => handleHoverFork(5)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleClickFork(5)}
+                    >
+                        {isForkHovered ? (
+                            previewRating && previewRating === 5 ? (
+                                <SVGImage src={FilledFork} alt="filled-fork" />
+                            ) : (
+                                <SVGImage src={EmptyFork} alt="empty-fork" />
+                            )
+                        ) : rating === 5 ? (
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        ) : (
+                            <SVGImage src={EmptyFork} alt="empty-fork" />
+                        )}
+                    </CardPlaceWideForkCursorContainer>
+                    <RecommendationEditorForkMessageContainer>
+                        <RecommendationEditorForkMessage>
+                            {isForkHovered
+                                ? previewRating <= 3
+                                    ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                    : previewRating === 4
+                                    ? S.RECOMMENDATION_EDITOR.FourForks
+                                    : previewRating === 5
+                                    ? S.RECOMMENDATION_EDITOR.FiveForks
+                                    : S.RECOMMENDATION_EDITOR.ThreeForks
+                                : rating <= 3
+                                ? S.RECOMMENDATION_EDITOR.ThreeForks
+                                : rating === 4
+                                ? S.RECOMMENDATION_EDITOR.FourForks
+                                : rating === 5
+                                ? S.RECOMMENDATION_EDITOR.FiveForks
+                                : S.RECOMMENDATION_EDITOR.ThreeForks}
+                        </RecommendationEditorForkMessage>
+                    </RecommendationEditorForkMessageContainer>
+                </RecommendationEditorInputContainer>
+            </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
-                onClick={() => handlePublish(title, description, temporaryImageKey)}
-                disabled={title === '' || description === '' || !file || isLoading || !temporaryImageKey}
+                onClick={handleClickSubmit}
+                disabled={title === '' || description === '' || isLoading}
+                // || !temporaryImageKey || !file
             >
-                {S.BUTTON_LABELS.PublishRecommendation}
+                {recommendation_type === RecommendationModalType.Edit
+                    ? S.BUTTON_LABELS.UpdateRecommendation
+                    : S.BUTTON_LABELS.PublishRecommendation}
             </RecommendationEditorPublishButton>
             <RecommendationModalReadOurGuidelinesContainer>
                 <RecommendationEditorReadOurGuidelines onClick={handleReadOurGuidelines}>

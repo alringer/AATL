@@ -3,7 +3,10 @@ import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import {
     HaveYouBeenToContainer,
     HaveYouBeenToContentContainer,
@@ -27,7 +30,11 @@ const HaveYouBeenTo: React.FC<IHaveYouBeenToProps> = ({ placeName, placeID, open
         console.log(
             `Write recommendation clicked from "Have you been to" section from the restaurant with ID of ${placeID}`
         )
-        openRecommendationModal({ placeID: String(placeID), placeName: placeName, isAATL: true })
+        openRecommendationModal({
+            placeID: String(placeID),
+            placeName: placeName,
+            recommendation_type: RecommendationModalType.AATL,
+        })
     }
 
     return (

@@ -1,5 +1,5 @@
 import Tooltip from '@material-ui/core/Tooltip'
-import CreateIcon from '@material-ui/icons/Create'
+import AddIcon from '@material-ui/icons/Add'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import {
@@ -19,7 +19,7 @@ const WriteRecommendationButton: React.FC<IWriteRecommendationButtonProps> = ({ 
         <Tooltip placement="top" title={S.TOOL_TIPS.AddToList}>
             <MobileMoreOptionButton onClick={handleClick}>
                 <MobileMoreOptionSpan>
-                    <CreateIcon />
+                    <AddIcon />
                     <MobileMoreOptionButtonLabel>{S.TOOL_TIPS.Recommend}</MobileMoreOptionButtonLabel>
                 </MobileMoreOptionSpan>
             </MobileMoreOptionButton>
@@ -27,7 +27,7 @@ const WriteRecommendationButton: React.FC<IWriteRecommendationButtonProps> = ({ 
     ) : (
         <Tooltip placement="top" title={S.TOOL_TIPS.WriteRecommendation}>
             <MoreOptionButton onClick={handleClick}>
-                <CreateIcon />
+                <AddIcon />
             </MoreOptionButton>
         </Tooltip>
     )

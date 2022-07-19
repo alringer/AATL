@@ -55,7 +55,7 @@ export const HomeBannerCenterContentContainer = styled.div`
 export const HomeBannerBottomContentContainer = styled.div`
     position: absolute;
     z-index: ${zIndices.homeBannerContent};
-    
+
     bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@ export const HomeBannerTitleText = styled.p`
     line-height: 1.21;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 
     @media ${device.tablet} {
         font-size: 48px;
@@ -90,9 +90,9 @@ export const HomeBannerSubTitleText = styled.p`
     line-height: 2.39;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 
-    margin-bottom: 30.5px;
+    margin-bottom: 20px;
 
     @media ${device.mobile} {
         font-size: 13px;
@@ -104,6 +104,30 @@ export const HomeBannerSubTitleText = styled.p`
         font-size: 18px;
     }
 `
+export const HomeBannerSubTitleTwoText = styled.p`
+    font-family: 'Rubik', sans-serif;
+    /* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.04); */
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+    font-size: 28px;
+    font-weight: 400;
+    font-stretch: normal;
+    line-height: 43px;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffc09c;
+
+    margin-bottom: 30.5px;
+
+    @media ${device.mobile} {
+        font-size: 16px;
+    }
+    @media ${device.tablet} {
+        font-size: 20px;
+    }
+    @media ${device.laptop} {
+        font-size: 28px;
+    }
+`
 export const HomeBannerFooterText = styled.p`
     margin-top: 8px;
     font-size: 14px;
@@ -113,5 +137,5 @@ export const HomeBannerFooterText = styled.p`
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 `

@@ -3,7 +3,7 @@ import RecommendationEditor from 'components/RecommendationModal/RecommendationE
 import RecommendationEditorHeader from 'components/RecommendationModal/RecommendationEditorHeader'
 import {
     RecommendationModalContainer,
-    RecommendationModalContentContainer
+    RecommendationModalContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
 import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import React from 'react'
@@ -21,10 +21,7 @@ storiesOf('Recommendation Editor Modal', module)
     .add('Editor View', () => {
         return (
             <RecommendationModalContainer>
-                <RecommendationEditorHeader
-                    published={false}
-                    closeRecommendationModal={() => {}}
-                />
+                <RecommendationEditorHeader published={false} closeRecommendationModal={() => {}} />
                 <RecommendationModalContentContainer>
                     <RecommendationEditor
                         placeName={RecommendationEditorData.default.placeName}
@@ -39,14 +36,12 @@ storiesOf('Recommendation Editor Modal', module)
     .add('Published View', () => {
         return (
             <RecommendationModalContainer>
-                <RecommendationEditorHeader
-                    published={true}
-                    closeRecommendationModal={() => {}}
-                />
+                <RecommendationEditorHeader published={true} closeRecommendationModal={() => {}} />
                 <RecommendationModalContentContainer>
                     <RecommendationPublished
                         publishedTitle={RecommendationEditorData.default.recommendationTitle}
                         recommendation={mockRecommendation}
+                        closeRecommendationModal={() => {}}
                     />
                 </RecommendationModalContentContainer>
             </RecommendationModalContainer>
