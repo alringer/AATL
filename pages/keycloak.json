@@ -4,6 +4,5 @@
     "ssl-required": "none",
     "resource": "web_app",
     "public-client": true,
-    "confidential-port": 0,
-    "enable-cors": true
+    "confidential-port": 0
 }
