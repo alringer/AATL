@@ -1,6 +1,6 @@
 const keycloakCfg = {
-    // realm: 'aatl',
-    realm: 'jhipster',
+    realm: 'aatl',
+    // realm: 'jhipster',
     url: process.env.AUTH_URL,
     clientId: 'web_app',
 }
