@@ -1,5 +1,4 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
-import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
@@ -238,12 +237,12 @@ const responseInterceptorError = (error: AxiosError) => {
     //     SnackbarUtils.error(error.message)
     // }
     // TODO: Delete the error toast below. This is only for development purposes
-    SnackbarUtils.error(error)
+    // SnackbarUtils.error(error)
     return Promise.reject(error)
 }
 
 axiosInstance.interceptors.request.use(requestInterceptor)
-axiosInstance.interceptors.response.use(responseInterceptor, responseInterceptorError)
+axiosInstance.interceptors.response.use(responseInterceptor)
 
 const axios = axiosInstance
 
