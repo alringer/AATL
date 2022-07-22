@@ -104,7 +104,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                 ? SortEnum.Newest
                 : inputSort === SortEnum.Trending
                 ? SortEnum.Trending
-                : SortEnum.MostRecommended
+                : SortEnum.BestRated
             : SortEnum.BestRated
         setFilter(newFilter)
     }, [inputSort])

@@ -1,4 +1,5 @@
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import CloseIcon from '@material-ui/icons/Close'
 import { CustomButton } from 'style/Button/Button.style'
 import { CustomIconButton } from 'style/Button/IconButton.style'
 import { TextLink } from 'style/Button/TextLink.style'
@@ -214,6 +215,32 @@ export const RecommendationEditorInputContainer = styled.div`
         padding-top: 12px;
         padding-bottom: 12px;
     }
+`
+
+export const RecommendationEditorImageDeleteButton = styled(CustomIconButton)`
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    border-radius: 50%;
+    border-color: ${(props) => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
+
+    padding: 5px;
+
+    && {
+        min-width: 0;
+
+        ::after {
+            border-radius: 50%;
+        }
+    }
+`
+
+export const RecommendationEditorImageDeleteCloseIcon = styled(CloseIcon)`
+    color: ${(props) => props.theme.mushroom};
+    width: 12px;
+    height: 12px;
 `
 
 export const RecommendationEditorTextField = styled(TextareaAutosize)`

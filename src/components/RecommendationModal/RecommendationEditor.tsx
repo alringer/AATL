@@ -20,6 +20,8 @@ import {
     RecommendationEditorDescriptionTextArea,
     RecommendationEditorForkMessage,
     RecommendationEditorForkMessageContainer,
+    RecommendationEditorImageDeleteButton,
+    RecommendationEditorImageDeleteCloseIcon,
     RecommendationEditorInputContainer,
     RecommendationEditorInputLabelContainer,
     RecommendationEditorInputLabelText,
@@ -101,6 +103,13 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     }
 
     const handleDrag = () => {
+        setImageDimensionImproper(false)
+    }
+
+    const handleDeleteImage = () => {
+        setFile(undefined)
+        setTemporaryImageKey(undefined)
+        setImagePreviewURL('')
         setImageDimensionImproper(false)
     }
 
@@ -220,6 +229,11 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         isImageDimensionImproper={isImageDimensionImproper}
                         tooltipMessage={S.IMAGE_DROPZONE.ToolTipRecommendation}
                     />
+                    {imagePreviewURL && (
+                        <RecommendationEditorImageDeleteButton onClick={() => handleDeleteImage()}>
+                            <RecommendationEditorImageDeleteCloseIcon />
+                        </RecommendationEditorImageDeleteButton>
+                    )}
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
             <RecommendationEditorRowContainer id="recommendation-title">
