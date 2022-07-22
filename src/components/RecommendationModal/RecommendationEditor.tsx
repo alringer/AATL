@@ -20,6 +20,8 @@ import {
     RecommendationEditorDescriptionTextArea,
     RecommendationEditorForkMessage,
     RecommendationEditorForkMessageContainer,
+    RecommendationEditorImageDeleteButton,
+    RecommendationEditorImageDeleteCloseIcon,
     RecommendationEditorInputContainer,
     RecommendationEditorInputLabelContainer,
     RecommendationEditorInputLabelText,
@@ -63,7 +65,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     const [rating, setRating] = React.useState(3)
     const [previewRating, setPreviewRating] = React.useState(null)
     const [file, setFile] = React.useState()
-    const [temporaryImageKey, setTemporaryImageKey] = React.useState()
+    const [temporaryImageKey, setTemporaryImageKey] = React.useState('')
     const [imagePreviewURL, setImagePreviewURL] = React.useState('')
     const [isUploadingImage, setUploadingImage] = React.useState(false)
     const [isImageDimensionImproper, setImageDimensionImproper] = React.useState(false)
@@ -101,6 +103,13 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     }
 
     const handleDrag = () => {
+        setImageDimensionImproper(false)
+    }
+
+    const handleDeleteImage = () => {
+        setFile(undefined)
+        setTemporaryImageKey('')
+        setImagePreviewURL('')
         setImageDimensionImproper(false)
     }
 
@@ -220,6 +229,11 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         isImageDimensionImproper={isImageDimensionImproper}
                         tooltipMessage={S.IMAGE_DROPZONE.ToolTipRecommendation}
                     />
+                    {imagePreviewURL && (
+                        <RecommendationEditorImageDeleteButton onClick={() => handleDeleteImage()}>
+                            <RecommendationEditorImageDeleteCloseIcon />
+                        </RecommendationEditorImageDeleteButton>
+                    )}
                 </RecommendationEditorInputContainer>
             </RecommendationEditorRowContainer>
             <RecommendationEditorRowContainer id="recommendation-title">

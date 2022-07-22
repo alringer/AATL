@@ -3,13 +3,19 @@ import Grow from '@material-ui/core/Grow'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
+import PlaceHolderOne from 'assets/Image01.png'
+import PlaceHolderTwo from 'assets/Image02.png'
+import PlaceHolderThree from 'assets/Image03.png'
+import PlaceHolderFour from 'assets/Image04.png'
+import PlaceHolderFive from 'assets/Image05.png'
+import PlaceHolderSix from 'assets/Image06.png'
+import PlaceHolderSeven from 'assets/Image07.png'
+import PlaceHolderEight from 'assets/Image08.png'
+import PlaceHolderNine from 'assets/Image09.png'
+import PlaceHolderTen from 'assets/Image10.png'
+import PlaceHolderEleven from 'assets/Image11.png'
+import PlaceHolderTwelve from 'assets/Image12.png'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
-import PlaceHolderOne from 'assets/Placeholder-1.png'
-import PlaceHolderTwo from 'assets/Placeholder-2.png'
-import PlaceHolderThree from 'assets/Placeholder-3.png'
-import PlaceHolderFour from 'assets/Placeholder-4.png'
-import PlaceHolderFive from 'assets/Placeholder-5.png'
-import PlaceHolderSix from 'assets/Placeholder-6.png'
 import AddToListButton from 'components/CardButtons/AddToListButton'
 import EditRecommendationButton from 'components/CardButtons/EditRecommendationButton'
 import FlagButton from 'components/CardButtons/FlagButton'
@@ -148,7 +154,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             : DeviceNameEnum.mobile
 
     React.useEffect(() => {
-        const randomNumber = Math.floor(Math.random() * 6)
+        const randomNumber = Math.floor(Math.random() * 12)
         if (randomNumber == 0) {
             setCurrentRandomImage(PlaceHolderOne)
         } else if (randomNumber == 1) {
@@ -161,6 +167,18 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             setCurrentRandomImage(PlaceHolderFive)
         } else if (randomNumber == 5) {
             setCurrentRandomImage(PlaceHolderSix)
+        } else if (randomNumber == 6) {
+            setCurrentRandomImage(PlaceHolderSeven)
+        } else if (randomNumber == 7) {
+            setCurrentRandomImage(PlaceHolderEight)
+        } else if (randomNumber == 8) {
+            setCurrentRandomImage(PlaceHolderNine)
+        } else if (randomNumber == 9) {
+            setCurrentRandomImage(PlaceHolderTen)
+        } else if (randomNumber == 10) {
+            setCurrentRandomImage(PlaceHolderEleven)
+        } else if (randomNumber == 11) {
+            setCurrentRandomImage(PlaceHolderTwelve)
         }
     }, [])
 
