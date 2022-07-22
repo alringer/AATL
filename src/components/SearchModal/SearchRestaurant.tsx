@@ -105,7 +105,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
     }
 
     const handleInfiniteScroll = () => {
-        if (!(offset > total) && results !== null) {
+        if (!(offset >= total) && results !== null) {
             setLoading(true)
             axios
                 .get(SEARCH_YELP_RESTAURANTS, {

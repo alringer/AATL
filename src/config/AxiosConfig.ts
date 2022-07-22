@@ -3,6 +3,7 @@ import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
 import { setPrelaunchPeriod } from 'store/prelaunch/prelaunch_actions'
+import { flaggedEnum } from 'utilities/types/enumerations'
 import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 
 const API_URL = '/api'
@@ -161,8 +162,8 @@ export const VENUE_RECOMMENDATION_PROMPT = `/venue-recommendation-prompts`
 export const FLAGGED_RECOMMENDATIONS = (page: number, sort: string) =>
     `/flagged-recommendations?page=${page}&size=10&sort=${sort}`
 export const FLAG_RECOMMENDATION = (recommendationID: number) => `/recommendations/${recommendationID}/flag`
-export const UPDATE_FLAGGED_RECOMMENDATION = (flaggedRecommendationID: number) =>
-    `/flagged-recommendations/${flaggedRecommendationID}`
+export const UPDATE_FLAGGED_RECOMMENDATION = (flaggedRecommendationID: number, flagged: flaggedEnum) =>
+    `/flagged-recommendations/${flaggedRecommendationID}?flagged=${flagged}`
 
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
