@@ -514,7 +514,7 @@ By providing content to this website, you agree to or attest that you:
 • Not to hack or intentionally disrupt the website’s security systems.
 • That in order to be a local guide or a registered user, you must submit a minimal amount of personal information (including your name and email address.)  I understand that the purpose of retaining this information is to help LocalFoodBuzz ensure that the guides and registered users are legitimate with no undisclosed or unclaimed potential conflicts of interest.
 • No personal information is required of people who want to review material posted on the site.
-• LocalFoodBuzz assumes no responsibility or liability for the accuracy of your posted information.
+• LocalFoodBuzz assumes no responsibility or liability for the accuracy of your or any other user's posted information.
 • Because I am appointed as a local guide, I do not have any right or expectation to maintain that position.
 • If my material is deemed inadequate, substandard, poor in quality or uninteresting, the material may be removed from the site and I may be replaced as a local guide.
 • LocalFoodBuzz may remove all of my postings, modify my material or remove me as a local guide for any reason whatsoever.
@@ -540,7 +540,7 @@ P.O. Box 4089, Incline Village, NV  89450`,
         },
         {
             Title: 'INDEMNIFICATION',
-            Body: 'You agree to defend and indemnify LocalFoodBuzz, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties as a result of use of this website.',
+            Body: 'You agree to defend and indemnify LocalFoodBuzz, its officers and employees against any claims, demands, losses, damages or other costs or expenses brought by third parties against you as a result of use of this website.',
         },
         {
             Title: 'COPYRIGHT AND TRADEMARK NOTICES',
@@ -548,7 +548,7 @@ P.O. Box 4089, Incline Village, NV  89450`,
         },
         {
             Title: 'JURISDICTION',
-            Body: 'This website is operated by a United States entity in the state of Nevada.  By using this website, you consent to the jurisdiction of the court system in the state of Nevada.',
+            Body: 'This website is operated by a United States entity in the state of Nevada.  By using this website, you consent to the jurisdiction of the court system in Washoe County, Nevada.',
         },
         {
             Title: 'CONTACT ADDRESS',

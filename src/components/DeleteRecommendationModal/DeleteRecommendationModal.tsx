@@ -69,7 +69,7 @@ const DeleteRecommendationModal: React.FC<IDeleteRecommendationModalProps> = ({
     const handleDelete = () => {
         if (flaggedRecommendationID) {
             authenticatedAction(() => {
-                const payload: flaggedEnum = flaggedEnum.Deleted
+                const payload = {}
                 const token = getTokenConfig()
                 const config = {
                     headers: {
@@ -80,7 +80,7 @@ const DeleteRecommendationModal: React.FC<IDeleteRecommendationModalProps> = ({
 
                 setSubmitting(true)
                 axios
-                    .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendationID), payload, config)
+                    .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendationID, flaggedEnum.Deleted), payload, config)
                     .then((res) => {
                         onSuccess()
                         enqueueSnackbar('', {
