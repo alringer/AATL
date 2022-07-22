@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import withCallToAction, { IWithCallToActionInjectedProps } from 'utilities/hocs/withCallToAction'
 import { ICategory } from 'utilities/types/category'
+import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 import { IVenue } from 'utilities/types/venue'
 import { ListContainer, ListSubTitle, ListTitle, PlaceCardContainer, PlaceCardsGrid } from './List.style'
 
@@ -31,7 +32,7 @@ const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places, ca
         router.push(
             `${R.ROUTE_ITEMS.search}${
                 category !== undefined && category !== null
-                    ? `?place=${category.longName}&categoryID=${category.id}`
+                    ? `?place=${category.longName}&categoryID=${category.id}&sort=${SortEnum.MostRecommended}`
                     : ''
             }`
         )
