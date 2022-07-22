@@ -120,15 +120,22 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
         inputRating: number,
         inputFlagged: flaggedEnum
     ) => {
-        const payload = {
-            id: inputRecommendationID,
-            title: inputTitle,
-            content: inputDescription,
-            temporaryImageKey: temporaryImageKey,
-            rating: inputRating,
-            flagged: inputFlagged,
-        }
-        console.log('payload: ', payload)
+        const payload = temporaryImageKey
+            ? {
+                  id: inputRecommendationID,
+                  title: inputTitle,
+                  content: inputDescription,
+                  temporaryImageKey: temporaryImageKey,
+                  rating: inputRating,
+                  flagged: inputFlagged,
+              }
+            : {
+                  id: inputRecommendationID,
+                  title: inputTitle,
+                  content: inputDescription,
+                  rating: inputRating,
+                  flagged: inputFlagged,
+              }
         axios
             .put(
                 PUT_RECOMMENDATION,
