@@ -79,7 +79,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
     const handleMarkAppropriate = () => {
         if (flaggedRecommendation.id) {
             authenticatedAction(() => {
-                const payload: flaggedEnum = flaggedEnum.None
+                const payload = {}
                 const token = getTokenConfig()
                 const config = {
                     headers: {
@@ -90,7 +90,7 @@ const AdminFlaggedCard: React.FC<IAdminFlaggedCardProps> = ({
 
                 setSubmitting(true)
                 axios
-                    .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendation.id), payload, config)
+                    .put(UPDATE_FLAGGED_RECOMMENDATION(flaggedRecommendation.id, flaggedEnum.None), payload, config)
                     .then((res) => {
                         fetchFlaggedRecommendations(currentPage - 1, currentSort)
                         enqueueSnackbar('', {
