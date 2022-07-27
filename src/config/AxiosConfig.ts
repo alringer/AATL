@@ -53,7 +53,7 @@ export const SEARCH_AATL_RESTAURANTS = `/restaurants/search`
 export const SEARCH_YELP_RESTAURANTS = '/lookup/restaurants'
 
 // MailChimp
-export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
+export const SUBSCRIBE_MAILCHIMP = (emailAddress: string) => `/mailing-list/subscribe?emailAddress=${emailAddress}`
 
 // Write Recommendation
 export const POST_RECOMMENDATION = '/recommendations'
