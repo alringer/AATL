@@ -59,6 +59,7 @@ const HomeBanner = () => {
                             <HomeBannerTitleText>{S.HOME_PAGE.BannerTitle}</HomeBannerTitleText>
                         )}
                         <HomeBannerSubTitleText>{S.HOME_PAGE.BannerSubTitle}</HomeBannerSubTitleText>
+                        <HomeBannerSubTitleText>Recommended by locals for the foodie in you.</HomeBannerSubTitleText>
                         <HomeBannerSubTitleTwoText>{S.HOME_PAGE.BannerSubTitleTwo}</HomeBannerSubTitleTwoText>
                         <SearchFull
                             inputPlace={null}
