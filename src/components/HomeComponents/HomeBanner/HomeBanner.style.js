@@ -74,6 +74,8 @@ export const HomeBannerTitleText = styled.p`
     text-align: center;
     color: ${(props) => props.theme.white};
 
+    margin-bottom: 20px;
+
     @media ${device.tablet} {
         font-size: 48px;
     }
@@ -87,12 +89,12 @@ export const HomeBannerSubTitleText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: italic;
-    line-height: 2.39;
+    line-height: 0.59;
     letter-spacing: normal;
     text-align: center;
     color: ${(props) => props.theme.white};
 
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 
     @media ${device.mobile} {
         font-size: 13px;
@@ -101,7 +103,7 @@ export const HomeBannerSubTitleText = styled.p`
         font-size: 16px;
     }
     @media ${device.laptop} {
-        font-size: 18px;
+        font-size: 22px;
     }
 `
 export const HomeBannerSubTitleTwoText = styled.p`

@@ -19,8 +19,10 @@ import {
 } from './EmailSubscription.style'
 
 const EmailSubscription = () => {
-    const [email, setEmail] = React.useState('')
     const { enqueueSnackbar } = useSnackbar()
+
+    const [email, setEmail] = React.useState('')
+    const [isLoading, setLoading] = React.useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(String(e.target.value))
@@ -31,12 +33,12 @@ const EmailSubscription = () => {
         const isEmpty = email === ''
 
         if (isValidEmail && !isEmpty) {
+            const payload = {}
+            setLoading(true)
             axios
-                .post(SUBSCRIBE_MAILCHIMP, { emailAddress: email })
+                .post(SUBSCRIBE_MAILCHIMP(email), payload)
                 .then((res) => {
-                    console.log('Response from subscription: ', res)
                     setEmail('')
-                    // TODO: Enqueue snackbar if the API returns with success
                     enqueueSnackbar('', {
                         content: (
                             <div>
@@ -50,6 +52,9 @@ const EmailSubscription = () => {
                     })
                 })
                 .catch((err) => console.log(err))
+                .finally(() => {
+                    setLoading(false)
+                })
         } else if (isEmpty) {
             enqueueSnackbar('', {
                 content: (
@@ -96,7 +101,7 @@ const EmailSubscription = () => {
                         variant="outlined"
                     />
                     <EmailSubscriptionButtonContainer>
-                        <EmailSubscriptionSubscribeButton onClick={handleSubscribe}>
+                        <EmailSubscriptionSubscribeButton onClick={handleSubscribe} disabled={isLoading}>
                             {S.BUTTON_LABELS.Subscribe}
                         </EmailSubscriptionSubscribeButton>
                     </EmailSubscriptionButtonContainer>
