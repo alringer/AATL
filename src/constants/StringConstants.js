@@ -215,7 +215,9 @@ export const FOOTER_ITEMS = {
     CompanyName: 'About LocalFoodBuzz',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 
-We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!`,
+We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!
+
+Y@!p is for the masses, LocalFoodBuzz is for serious foodies.`,
 }
 
 export const CALL_TO_ACTION = {
