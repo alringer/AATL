@@ -38,6 +38,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
     const router = useRouter()
 
     React.useEffect(() => {
+        window.scrollTo(0, 0)
         const queryPlace = router.query.place ? String(router.query.place) : null
         const queryCategoryID = router.query.categoryID ? String(router.query.categoryID) : null
         let queryAddress = null

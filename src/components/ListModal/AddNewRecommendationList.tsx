@@ -12,7 +12,6 @@ import {
     ListModalInputRowContainer,
     ListModalMainAreaContainer,
     ListModalMainContentContainer,
-    ListModalMessage,
     ListModalNavigationButton,
     ListModalTitleText,
     SubmitButton,
@@ -304,9 +303,9 @@ const AddToRecommendationList: React.FC<IAddToRecommendationListProps> = ({
                             InputLabelProps={{ shrink: false }}
                         />
                     </ListModalInputRowContainer>
-                    <ListModalInputRowContainer>
+                    {/* <ListModalInputRowContainer>
                         <ListModalMessage>{S.LIST_MODAL.AddNewRecommendationList.Message}</ListModalMessage>
-                    </ListModalInputRowContainer>
+                    </ListModalInputRowContainer> */}
                 </ListModalMainContentContainer>
             </ListModalMainAreaContainer>
             <ListModalFooterContainer>

@@ -301,7 +301,7 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                         />
                                         <TitleInput
                                             value={currentOccupation}
-                                            label={`By-Line`}
+                                            label={`Tagline`}
                                             onChange={handleChangeOccupation}
                                             variant="outlined"
                                             disabled={isSaving}

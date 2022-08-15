@@ -413,7 +413,7 @@ export const USER_PROFILE_INFLUENCER_GUIDE = {
     Incomplete: {
         Title: 'Complete Your Profile.',
         Message:
-            'Complete your profile by updating your Name, By-Line, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
+            'Complete your profile by updating your Name, Tagline, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
         ButtonLabel: 'EDIT PROFILE',
     },
     Complete: {
@@ -583,7 +583,7 @@ export const PRELAUNCH_TOUR = {
         Title: 'Step 2',
         PreOrangeMessage: 'You can update your',
         Name: 'Name',
-        Occupation: 'By-Line',
+        Occupation: 'Tagline',
         Bio: 'Bio',
         PostOrangeMessage: 'in this menu.',
         Selector: 'tour__two',
