@@ -23,7 +23,6 @@ import {
     ListModalInputRowContainer,
     ListModalMainAreaContainer,
     ListModalMainContentContainer,
-    ListModalMessage,
     ListModalTitleText,
     SubmitButton,
 } from './ListModal.style'
@@ -271,9 +270,9 @@ const EditRecommendationList: React.FC<IEditRecommendationListProps> = ({
                             InputLabelProps={{ shrink: false }}
                         />
                     </ListModalInputRowContainer>
-                    <ListModalInputRowContainer>
+                    {/* <ListModalInputRowContainer>
                         <ListModalMessage>{S.LIST_MODAL.EditRecommendationList.Message}</ListModalMessage>
-                    </ListModalInputRowContainer>
+                    </ListModalInputRowContainer> */}
                 </ListModalMainContentContainer>
             </ListModalMainAreaContainer>
             <ListModalFooterContainer>

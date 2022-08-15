@@ -33,7 +33,7 @@ const PlaceCardsList: React.FC<IPlaceCardsList> = ({ title, subTitle, places, ca
             `${R.ROUTE_ITEMS.search}${
                 category !== undefined && category !== null
                     ? `?place=${category.longName}&categoryID=${category.id}&sort=${SortEnum.MostRecommended}`
-                    : ''
+                    : `?sort=${SortEnum.MostRecommended}`
             }`
         )
     }
