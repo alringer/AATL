@@ -304,7 +304,9 @@ const UserProfileEditModal: React.FC<IUserProfileEditModalProps> = ({
                                             label={`Tagline`}
                                             onChange={handleChangeOccupation}
                                             variant="outlined"
+                                            InputLabelProps={{ shrink: true }}
                                             disabled={isSaving}
+                                            placeholder={"What's your profession or tagline?"}
                                         />
                                         <MultiInput
                                             value={currentBio}
