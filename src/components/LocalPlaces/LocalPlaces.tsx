@@ -4,9 +4,8 @@ import { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
 import CardRecommendationWide, {
     CardRecommendationWideEnum,
 } from 'components/CardRecommendationWide/CardRecommendationWide'
-import axios, { FETCH_LOCAL_PLACES } from 'config/AxiosConfig'
 import * as S from 'constants/StringConstants'
-import React from 'react'
+import React, { RefObject } from 'react'
 import CardPlaceWideList from 'sections/CardsList/CardPlaceWideList'
 import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 import { IParentRegion } from 'utilities/types/parentRegion'
@@ -24,6 +23,15 @@ import {
 
 interface ILocalPlacesProps {
     cityInformation: IParentRegion | undefined
+    currentTab: ILocalPlacesTab
+    currentPlaces: IVenue[]
+    currentRecommendations: IRecommendation[]
+    currentTotal: number
+    currentPageCount: number
+    currentPage: number
+    refLocalPlaces: RefObject<HTMLDivElement> | null
+    handleTabChange: (targetTab: ILocalPlacesTab) => void
+    handlePagination: (event: React.ChangeEvent<unknown>, value: number) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -48,61 +56,22 @@ const useStyles = makeStyles(() =>
         },
     })
 )
-const LocalPlaces: React.FC<ILocalPlacesProps> = ({ cityInformation }) => {
+const LocalPlaces: React.FC<ILocalPlacesProps> = ({
+    cityInformation,
+    currentTab,
+    currentPlaces,
+    currentRecommendations,
+    currentTotal,
+    currentPageCount,
+    currentPage,
+    refLocalPlaces,
+    handleTabChange,
+    handlePagination,
+}) => {
     const classes = useStyles()
-    const [currentTab, setCurrentTab] = React.useState<ILocalPlacesTab>(ILocalPlacesTab.MOST_RECOMMENDED)
-    const [currentPlaces, setCurrentPlaces] = React.useState<IVenue[]>([])
-    const [currentRecommendations, setCurrentRecommendations] = React.useState<IRecommendation[]>([])
-    const [currentTotal, setCurrentTotal] = React.useState(0)
-    const [currentPageCount, setCurrentPageCount] = React.useState(0)
-    const [currentPage, setCurrentPage] = React.useState(1)
-
-    React.useEffect(() => {
-        fetchData(0, currentTab)
-    }, [])
-
-    const handleTabChange = (targetTab: ILocalPlacesTab) => {
-        if (currentTab !== targetTab) {
-            fetchData(0, targetTab)
-            setCurrentPage(1)
-        }
-    }
-
-    const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-        fetchData(value - 1, currentTab)
-        setCurrentPage(value)
-    }
-
-    const fetchData = (page: number, sortEnum: ILocalPlacesTab) => {
-        setCurrentTab(sortEnum)
-        axios
-            .get(FETCH_LOCAL_PLACES(cityInformation?.id, page, sortEnum))
-            .then((res) => {
-                console.log(res)
-                switch (sortEnum) {
-                    case ILocalPlacesTab.MOST_RECOMMENDED:
-                        setCurrentRecommendations(res.data)
-                        break
-                    case ILocalPlacesTab.LATEST_RECOMMENDATIONS:
-                        setCurrentRecommendations(res.data)
-                        break
-                    case ILocalPlacesTab.NEW_PLACES:
-                        setCurrentPlaces(res.data)
-                        break
-                    case ILocalPlacesTab.TRENDING_PLACES:
-                        setCurrentPlaces(res.data)
-                        break
-                }
-                const total = Number(res.headers['x-total-count'])
-                const pageCount = Math.ceil(total / 5)
-                setCurrentTotal(total)
-                setCurrentPageCount(pageCount)
-            })
-            .catch((err) => console.log(err))
-    }
 
     return (
-        <LocalPlacesContainer>
+        <LocalPlacesContainer ref={refLocalPlaces}>
             <LocalPlacesHeaderContainer>
                 <LocalPlacesHeaderTitleText>{S.LOCAL_PLACES.Title}</LocalPlacesHeaderTitleText>
                 <LocalPlacesHeaderSubTitleText>

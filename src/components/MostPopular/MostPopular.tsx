@@ -12,9 +12,10 @@ import {
 
 interface IMostPopularProps {
     cityInformation: IParentRegion | null
+    handleClickViewMore: () => void
 }
 
-const MostPopular: React.FC<IMostPopularProps> = ({ cityInformation }) => {
+const MostPopular: React.FC<IMostPopularProps> = ({ cityInformation, handleClickViewMore }) => {
     return (
         cityInformation?.mostPopularVenues?.length > 0 && (
             <MostPopularContainer>
@@ -27,8 +28,7 @@ const MostPopular: React.FC<IMostPopularProps> = ({ cityInformation }) => {
                     </MostPopularHeaderSubTitleText>
                 </MostPopularHeaderContainer>
                 <InfiniteCarousel places={cityInformation?.mostPopularVenues} />
-                {/* TODO: View more button should scroll down to Local Places with Trending Places selected as the filter */}
-                <ViewMoreButton>{S.BUTTON_LABELS.ViewMore}</ViewMoreButton>
+                <ViewMoreButton onClick={handleClickViewMore}>{S.BUTTON_LABELS.ViewMore}</ViewMoreButton>
             </MostPopularContainer>
         )
     )
