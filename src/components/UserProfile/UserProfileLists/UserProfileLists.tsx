@@ -84,6 +84,8 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         byFood: false,
         myRecommendations: false,
     })
+    const refListView = React.useRef(null)
+    const yOffset = -100
     const [currentListInView, setCurrentListInView] = React.useState<
         IVenueListMeta | IVenueListMetaWithUniqueID | IByCityWithUniqueID | IByCategoryWithUniqueID | null
     >(null)
@@ -191,6 +193,15 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setCurrentListInView(list)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyList)
         setCurrentMyList(list)
+        if (refListView) {
+            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
+            console.log('y: ', y)
+            console.log('refListView?.current?: ', refListView)
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth',
+            })
+        }
     }
 
     const handleViewByCityList = (city: IByCityWithUniqueID, page: number) => {
@@ -198,18 +209,42 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setCurrentByCity(city)
         setCurrentListInView(city)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCity)
+        if (refListView) {
+            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
+            console.log('y: ', y)
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth',
+            })
+        }
     }
     const handleViewByCategoryList = (category: IByCategoryWithUniqueID, page: number) => {
         setCurrentListInViewUniqueID(category.uniqueListID)
         setCurrentByCategory(category)
         setCurrentListInView(category)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCategory)
+        if (refListView) {
+            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
+            console.log('y: ', y)
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth',
+            })
+        }
     }
 
     const handleViewRecommendations = () => {
         setCurrentListInViewUniqueID(-1)
         setCurrentListInView(null)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyRecommendation)
+        if (refListView) {
+            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
+            console.log('y: ', y)
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth',
+            })
+        }
     }
 
     React.useEffect(() => {
@@ -337,7 +372,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     </ListItem>
                 </UserProfileListsNavigationParentListContainer>
             </UserProfileListsNavigationContainer>
-            <UserProfileListsMainViewContainer>
+            <UserProfileListsMainViewContainer ref={refListView}>
                 {currentListInViewType === null && (
                     <UserProfileListsMainViewHeaderContainer>
                         <UserProfileListsMainViewHeaderTextContainer>
