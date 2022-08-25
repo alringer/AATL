@@ -3,21 +3,21 @@ import { device } from 'style/device'
 import styled, { css } from 'styled-components'
 
 export const SearchWorkBenchContainer = styled(ContentWrapper)`
-           display: flex;
-           flex-direction: column;
-           justify-content: flex-start;
-           align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 
-           @media ${device.mobile} {
-               padding: 30px 0;
-           }
-           @media ${device.tablet} {
-               padding: 50px 0;
-           }
-           @media ${device.laptop} {
-               padding: 100px 0;
-           }
-       `
+    @media ${device.mobile} {
+        padding: 30px 0;
+    }
+    @media ${device.tablet} {
+        padding: 50px 0;
+    }
+    @media ${device.laptop} {
+        padding: 100px 0;
+    }
+`
 
 export const SearchWorkBenchContentContainer = styled.div`
     display: flex;
@@ -97,7 +97,7 @@ export const SearchWorkBenchPaginationFilterContainer = styled.div`
         justify-content: flex-start;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'inactive') {
             return css`
                 /* cursor: not-allowed !important; */
@@ -107,6 +107,15 @@ export const SearchWorkBenchPaginationFilterContainer = styled.div`
     }}
 `
 
+export const SearchWorkBenchYelpResultsContainer = styled.div`
+    @media ${device.mobile} {
+        margin-top: 20px;
+    }
+    @media ${device.tablet} {
+        margin-top: 26px;
+    }
+`
+
 export const SearchWorkBenchPaginationFilterText = styled.p`
     font-size: 12px;
     font-weight: normal;
@@ -114,7 +123,7 @@ export const SearchWorkBenchPaginationFilterText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     margin-right: 10px;
 `
 
@@ -125,7 +134,7 @@ export const SearchWorkBenchTitle = styled.p`
     font-style: normal;
     line-height: 1.19;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 
     @media ${device.mobile} {
         font-size: 20px;
@@ -141,7 +150,7 @@ export const SearchWorkBenchSubTitle = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
     text-overflow: wrap;
 
     margin-top: 20px;
@@ -150,7 +159,7 @@ export const SearchWorkBenchSubTitle = styled.p`
 export const NoSearchResultsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    
+
     margin-top: 20px;
 `
 export const NoSearchResultsTitle = styled.p`
@@ -160,7 +169,7 @@ export const NoSearchResultsTitle = styled.p`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 10px;
 `
@@ -171,5 +180,5 @@ export const NoSearchResultsSubTitle = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `

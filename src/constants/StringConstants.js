@@ -211,7 +211,7 @@ export const FOOTER_ITEMS = {
     WithLove: '♥ With love from Lake Tahoe',
     SeeOur: 'See our',
     TermsOfUse: 'Terms of Use',
-    CopyRightText: 'LocalFoodBuzz ©',
+    CopyRightText: '© LocalFoodBuzz',
     CompanyName: 'About LocalFoodBuzz',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 

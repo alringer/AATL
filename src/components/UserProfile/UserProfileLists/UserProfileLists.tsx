@@ -188,15 +188,28 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setExpanded({ ...expanded, [e.currentTarget.id]: !expanded[e.currentTarget.id] })
     }
 
+    const handleClickViewMyList = (list: IVenueListMetaWithUniqueID) => {
+        handleViewMyList(list)
+        if (refListView) {
+            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth',
+            })
+        }
+    }
+
     const handleViewMyList = (list: IVenueListMetaWithUniqueID) => {
         setCurrentListInViewUniqueID(list.uniqueListID)
         setCurrentListInView(list)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyList)
         setCurrentMyList(list)
+    }
+
+    const handleClickViewByCityList = (city: IByCityWithUniqueID, page: number) => {
+        handleViewByCityList(city, page)
         if (refListView) {
             const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
-            console.log('y: ', y)
-            console.log('refListView?.current?: ', refListView)
             window.scrollTo({
                 top: y,
                 behavior: 'smooth',
@@ -209,6 +222,10 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setCurrentByCity(city)
         setCurrentListInView(city)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCity)
+    }
+
+    const handleClickViewByCategoryList = (category: IByCategoryWithUniqueID, page: number) => {
+        handleViewByCategoryList(category, page)
         if (refListView) {
             const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
             console.log('y: ', y)
@@ -218,11 +235,16 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
             })
         }
     }
+
     const handleViewByCategoryList = (category: IByCategoryWithUniqueID, page: number) => {
         setCurrentListInViewUniqueID(category.uniqueListID)
         setCurrentByCategory(category)
         setCurrentListInView(category)
         setCurrentListInViewType(CurrentListInViewTypeEnum.ByCategory)
+    }
+
+    const handleClickViewRecommendations = () => {
+        handleViewRecommendations()
         if (refListView) {
             const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
             console.log('y: ', y)
@@ -237,14 +259,6 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setCurrentListInViewUniqueID(-1)
         setCurrentListInView(null)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyRecommendation)
-        if (refListView) {
-            const y = refListView?.current?.getBoundingClientRect().top + window.pageYOffset + yOffset
-            console.log('y: ', y)
-            window.scrollTo({
-                top: y,
-                behavior: 'smooth',
-            })
-        }
     }
 
     React.useEffect(() => {
@@ -285,7 +299,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                                 <ListItem
                                     button
                                     className={classes.nested}
-                                    onClick={() => handleViewMyList(myList)}
+                                    onClick={() => handleClickViewMyList(myList)}
                                     key={myList.uniqueListID}
                                 >
                                     <UserProfileListsNavigationChildListTitle
@@ -315,7 +329,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                                 <ListItem
                                     button
                                     className={classes.nested}
-                                    onClick={() => handleViewByCityList(byCityList, 0)}
+                                    onClick={() => handleClickViewByCityList(byCityList, 0)}
                                     key={byCityList.uniqueListID}
                                 >
                                     <UserProfileListsNavigationChildListTitle
@@ -345,7 +359,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                                 <ListItem
                                     button
                                     className={classes.nested}
-                                    onClick={() => handleViewByCategoryList(byCategoryList, 0)}
+                                    onClick={() => handleClickViewByCategoryList(byCategoryList, 0)}
                                     key={byCategoryList.uniqueListID}
                                 >
                                     <UserProfileListsNavigationChildListTitle
@@ -363,7 +377,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
                     </Collapse>
                 </UserProfileListsNavigationParentListContainer>
                 <UserProfileListsNavigationParentListContainer>
-                    <ListItem id="myRecommendations" button onClick={handleViewRecommendations}>
+                    <ListItem id="myRecommendations" button onClick={handleClickViewRecommendations}>
                         <UserProfileListsNavigationParentListTitle
                             id={currentListInViewUniqueID === -1 ? 'active' : 'list'}
                         >

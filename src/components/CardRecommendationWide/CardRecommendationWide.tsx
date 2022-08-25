@@ -66,6 +66,7 @@ import {
     chopStringRecommendationCardUserName,
 } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
+import { getMomentFromNow } from 'utilities/helpers/getMomentFromNow'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
@@ -74,6 +75,7 @@ import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 import {
     RecommendationAnchor,
+    RecommendationAuthorLineContainer,
     RecommendationAuthorNameText,
     RecommendationAuthorTitleText,
     RecommendationButtonsContainer,
@@ -89,6 +91,7 @@ import {
     RecommendationPlaceCategoryText,
     RecommendationPlaceNameText,
     RecommendationSummaryText,
+    RecommendationTimestampText,
     RecommendationTitleText,
 } from './CardRecommendationWide.style'
 
@@ -575,32 +578,42 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                     </RecommendationContentMiddleContainer>
                     <RecommendationContentBottomContainer>
                         {/* TODO: Replace ID below with UserName once username becomes unique */}
-                        <Link
-                            href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
-                            passHref={true}
-                            prefetch={false}
-                        >
-                            <RecommendationAnchor onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}>
-                                <RecommendationAuthorNameText>
-                                    {_.has(currentRecommendation, 'createdBy.firstName') &&
-                                    _.has(currentRecommendation, 'createdBy.lastName')
-                                        ? isMoreVisible
-                                            ? currentRecommendation.createdBy.firstName +
-                                              ' ' +
-                                              currentRecommendation.createdBy.lastName
-                                            : chopStringRecommendationCardUserName(
-                                                  `${
-                                                      currentRecommendation.createdBy.firstName +
-                                                      ' ' +
-                                                      currentRecommendation.createdBy.lastName
-                                                  }`,
-                                                  viewport,
-                                                  isFull
-                                              )
-                                        : ''}
-                                </RecommendationAuthorNameText>
-                            </RecommendationAnchor>
-                        </Link>
+                        <RecommendationAuthorLineContainer>
+                            <Link
+                                href={`${R.ROUTE_ITEMS.userProfile}/${currentRecommendation.createdBy.id}`}
+                                passHref={true}
+                                prefetch={false}
+                            >
+                                <RecommendationAnchor
+                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
+                                >
+                                    <RecommendationAuthorNameText>
+                                        {_.has(currentRecommendation, 'createdBy.firstName') &&
+                                        _.has(currentRecommendation, 'createdBy.lastName')
+                                            ? isMoreVisible
+                                                ? currentRecommendation.createdBy.firstName +
+                                                  ' ' +
+                                                  currentRecommendation.createdBy.lastName
+                                                : chopStringRecommendationCardUserName(
+                                                      `${
+                                                          currentRecommendation.createdBy.firstName +
+                                                          ' ' +
+                                                          currentRecommendation.createdBy.lastName +
+                                                          ' '
+                                                      }`,
+                                                      viewport,
+                                                      isFull
+                                                  )
+                                            : ''}
+                                    </RecommendationAuthorNameText>
+                                </RecommendationAnchor>
+                            </Link>
+                            <RecommendationTimestampText>
+                                {currentRecommendation.updatedAt == currentRecommendation.createdAt
+                                    ? ' ' + ` • ${getMomentFromNow(currentRecommendation.createdAt)}`
+                                    : ' ' + ` • Updated ${getMomentFromNow(currentRecommendation.updatedAt)}`}
+                            </RecommendationTimestampText>
+                        </RecommendationAuthorLineContainer>
                         <RecommendationAuthorTitleText>
                             {_.has(currentRecommendation, 'createdBy.userByLine')
                                 ? isMoreVisible

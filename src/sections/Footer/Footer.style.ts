@@ -33,7 +33,7 @@ export const FooterContainer = styled.div<FooterContainerProps>`
         text-align: left;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.isPrelaunch) {
             return css`
                 background-image: url(${FooterBackgroundImage});
@@ -111,21 +111,34 @@ export const FooterLeftColumn = styled.div`
 
 export const FooterRightColumn = styled.div`
     display: flex;
+    flex-direction: column;
+    @media ${device.mobile} {
+        margin-top: 40px;
+    }
+    @media ${device.tablet} {
+        margin-top: 0;
+    }
+    @media ${device.laptop} {
+        margin-top: 0;
+    }
+`
+
+export const FooterRightColumnRow = styled.div`
+    display: flex;
 
     @media ${device.mobile} {
         flex-direction: column;
         align-items: center;
-        margin-top: 30px;
     }
     @media ${device.tablet} {
         flex-direction: row;
         align-items: flex-start;
-        margin-top: 0px;
+        margin-top: 0;
     }
     @media ${device.laptop} {
         flex-direction: row;
         align-items: flex-start;
-        margin-top: 0px;
+        margin-top: 0;
     }
 `
 
@@ -185,6 +198,7 @@ export const FooterLinksContainer = styled.div`
     flex-direction: column;
     @media ${device.mobile} {
         margin-left: 0;
+        margin-top: 30px;
     }
     @media ${device.tablet} {
         ${(props) => {
@@ -194,6 +208,7 @@ export const FooterLinksContainer = styled.div`
                 `
             }
         }}
+        margin-top: 0px;
     }
     @media ${device.laptop} {
         ${(props) => {
@@ -203,6 +218,7 @@ export const FooterLinksContainer = styled.div`
                 `
             }
         }}
+        margin-top: 0px;
     }
 `
 
@@ -234,8 +250,18 @@ export const FooterLinkTitleAnchor = styled(FooterAnchor)`
     margin-bottom: 20px;
 `
 
-export const FooterLinkTitle = styled.p`
+export const FooterLinkHeader = styled.p`
     font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.22;
+    letter-spacing: normal;
+    color: ${(props) => props.theme.darkGrey};
+`
+
+export const FooterLinkTitle = styled.p`
+    font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
