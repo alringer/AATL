@@ -1,10 +1,13 @@
-import { FormControl, MenuItem, Select } from '@material-ui/core'
+import { CircularProgress, FormControl, MenuItem, Select } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import Pagination from '@material-ui/lab/Pagination'
 import CardPlaceWide, { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
+import CardPlaceYelp from 'components/CardPlaceYelp/CardPlaceYelp'
 import SearchCategories from 'components/SearchCategories/SearchCategories'
 import SearchCouldNotFind from 'components/SearchCouldNotFind/SearchCouldNotFind'
 import SearchFull from 'components/SearchFull/SearchFull'
+import { SearchModalLoadingIconContainer } from 'components/SearchModal/SearchModal.style'
+import { IYelpRestaurant } from 'components/SearchModal/SearchRestaurant'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
@@ -27,7 +30,26 @@ import {
     SearchWorkBenchPlaceCardContainer,
     SearchWorkBenchSubTitle,
     SearchWorkBenchTitle,
+    SearchWorkBenchYelpResultsContainer,
 } from './SearchWorkBench.style'
+
+type SearchLFB = (
+    place?: string,
+    categoryID?: string,
+    address?: string,
+    lat?: string,
+    lng?: string,
+    sort?: SortEnum,
+    page?: string
+) => void
+type SearchYelp = (
+    place?: string,
+    address?: string,
+    lat?: string,
+    lng?: string,
+    offset?: string,
+    limit?: string
+) => void
 
 interface ISearchWorkBenchProps {
     inputPlace: string | null
@@ -39,17 +61,15 @@ interface ISearchWorkBenchProps {
     inputPageCount: number
     inputPage: number | null
     inputTotal: number
+    currentYelpOffset: number | undefined
+    currentYelpLimit: number | undefined
     searchResults: IVenue[]
+    searchYelpResults: IYelpRestaurant[]
     topCategories: ICategory[]
-    handleSearch: (
-        place?: string,
-        categoryID?: string,
-        address?: string,
-        lat?: string,
-        lng?: string,
-        sort?: SortEnum,
-        page?: string
-    ) => void
+    isRobust: boolean
+    isLoading: boolean
+    handleLFBSearch: SearchLFB
+    handleYelpSearch: SearchYelp
     openSearchModal: () => void
 }
 
@@ -81,13 +101,19 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     inputLat,
     inputLng,
     inputSort,
-    handleSearch,
+    currentYelpOffset,
+    currentYelpLimit,
+    handleLFBSearch,
+    handleYelpSearch,
     searchResults,
+    searchYelpResults,
     topCategories,
     openSearchModal,
     inputPageCount,
     inputPage,
     inputTotal,
+    isLoading,
+    isRobust,
 }) => {
     const classes = useStyles()
     const [filter, setFilter] = React.useState<SortEnum>(SortEnum.BestRated)
@@ -111,11 +137,22 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
 
     const handleChangeFilter = (event: React.ChangeEvent<{ value: SortEnum }>) => {
         setFilter(event.target.value)
-        handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, event.target.value)
+        handleLFBSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, event.target.value)
     }
 
-    const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
-        handleSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, filter, String(value - 1))
+    const handleLFBPagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        handleLFBSearch(inputPlace, inputCategoryID, inputAddress, inputLat, inputLng, filter, String(value - 1))
+    }
+
+    const handleYelpPagination = (event: React.ChangeEvent<unknown>, value: number) => {
+        handleYelpSearch(
+            inputPlace,
+            inputAddress,
+            inputLat,
+            inputLng,
+            String((value - 1) * currentYelpLimit),
+            String(currentYelpLimit)
+        )
     }
 
     return (
@@ -124,13 +161,17 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                 inputAddress ? `${S.SEARCH_PAGE.NearBy} ${inputAddress}` : ''
             }`}</SearchWorkBenchTitle>
             <SearchWorkBenchSubTitle>
-                {S.SEARCH_PAGE.WeHave} <b>{inputTotal}</b>{' '}
-                {inputPlace
-                    ? searchResults.length > 1
-                        ? S.SEARCH_PAGE.RecordsFor
-                        : S.SEARCH_PAGE.RecordFor
-                    : 'places'}{' '}
-                <b>{inputPlace ? inputPlace : null}</b>
+                {!isLoading && (
+                    <>
+                        {S.SEARCH_PAGE.WeHave} <b>{inputTotal}</b>{' '}
+                        {inputPlace
+                            ? searchResults.length > 1
+                                ? S.SEARCH_PAGE.RecordsFor
+                                : S.SEARCH_PAGE.RecordFor
+                            : 'places'}{' '}
+                        <b>{inputPlace ? inputPlace : null}</b>
+                    </>
+                )}
             </SearchWorkBenchSubTitle>
             <SearchWorkBenchContentContainer>
                 <SearchWorkBenchLookupContainer>
@@ -141,7 +182,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             inputAddress={inputAddress}
                             inputLat={inputLat}
                             inputLng={inputLng}
-                            handleSearch={handleSearch}
+                            handleSearch={handleLFBSearch}
                         />
                     </SearchWorkBenchInputsContainer>
 
@@ -167,7 +208,58 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             </FormControl>
                         </SearchWorkBenchPaginationFilterContainer>
                     )}
-                    {searchResults && searchResults.length > 0 && inputPageCount >= 1 ? (
+                    {isLoading ? (
+                        <NoSearchResultsContainer>
+                            <SearchModalLoadingIconContainer>
+                                <CircularProgress />
+                            </SearchModalLoadingIconContainer>
+                        </NoSearchResultsContainer>
+                    ) : isRobust ? (
+                        searchYelpResults && searchYelpResults.length > 0 && inputPageCount >= 1 ? (
+                            <SearchWorkBenchYelpResultsContainer>
+                                {searchYelpResults.map((searchYelpResult: IYelpRestaurant, index: number) => {
+                                    return (
+                                        <SearchWorkBenchPlaceCardContainer key={index}>
+                                            <CardPlaceYelp place={searchYelpResult} type={CardPlaceWideEnum.Search} />
+                                        </SearchWorkBenchPlaceCardContainer>
+                                    )
+                                })}
+                                <PaginationContainer>
+                                    <Pagination
+                                        className={classes.root}
+                                        count={inputPageCount}
+                                        page={inputPage}
+                                        variant="outlined"
+                                        shape="rounded"
+                                        onChange={handleYelpPagination}
+                                    />
+                                </PaginationContainer>
+                            </SearchWorkBenchYelpResultsContainer>
+                        ) : (
+                            <NoSearchResultsContainer>
+                                <NoSearchResultsTitle>{S.SEARCH_PAGE.NoResultsTitle}</NoSearchResultsTitle>
+                                <NoSearchResultsSubTitle>{S.SEARCH_PAGE.NoResultsSubTitle}</NoSearchResultsSubTitle>
+                                <Media queries={query}>
+                                    {(matches) => (
+                                        <>
+                                            {matches.laptop && (
+                                                <SearchCouldNotFind
+                                                    openSearchModal={openSearchModal}
+                                                    fullWidth={true}
+                                                />
+                                            )}
+                                            {(matches.mobile || matches.tablet) && (
+                                                <SearchCouldNotFind
+                                                    openSearchModal={openSearchModal}
+                                                    fullWidth={false}
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                </Media>
+                            </NoSearchResultsContainer>
+                        )
+                    ) : searchResults && searchResults.length > 0 && inputPageCount >= 1 ? (
                         <>
                             {searchResults.map((searchResult: IVenue, index: number) => {
                                 return (
@@ -183,7 +275,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                     page={inputPage}
                                     variant="outlined"
                                     shape="rounded"
-                                    onChange={handlePagination}
+                                    onChange={handleLFBPagination}
                                 />
                             </PaginationContainer>
                         </>
@@ -211,7 +303,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                         {(matches) => (
                             <>
                                 {matches.laptop && (
-                                    <SearchCategories handleSearch={handleSearch} topCategories={topCategories} />
+                                    <SearchCategories handleLFBSearch={handleLFBSearch} topCategories={topCategories} />
                                 )}
                             </>
                         )}
@@ -219,7 +311,8 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <Media queries={query}>
                         {(matches) => (
                             <>
-                                {searchResults && searchResults.length > 0 && (
+                                {((searchResults && searchResults.length > 0) ||
+                                    (searchYelpResults && searchYelpResults.length > 0)) && (
                                     <SearchCouldNotFind openSearchModal={openSearchModal} />
                                 )}
                             </>

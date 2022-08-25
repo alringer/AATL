@@ -199,7 +199,7 @@ export const chopStringRecommendationCardPlaceName = (input: string, viewport: D
                 if (isFull === false) {
                     return input.length > 10 ? `${input.slice(0, 10)}...` : input
                 } else {
-                    return input.length > 22 ? `${input.slice(0, 22)}...` : input
+                    return input.length > 28 ? `${input.slice(0, 28)}...` : input
                 }
 
             case DeviceNameEnum.tablet:

@@ -22,6 +22,7 @@ import {
     SearchButton,
     SearchInput,
     SearchInputFieldsContainer,
+    SuggestionConstantOption,
     SuggestionOption,
     SuggestionOptionUseMyLocation,
 } from './SearchFull.style'
@@ -243,6 +244,12 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         }
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleClickSearch()
+        }
+    }
+
     interface IDefaultSearchOption {
         value: string
         label: string
@@ -256,15 +263,32 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                     place === ''
                         ? []
                         : categories && place
-                        ? [`${place}`, ...categories]
+                        ? [
+                              `${place}`,
+                              ...categories.map((category) => {
+                                  return {
+                                      ...category,
+                                      tag: 'CATEGORIES',
+                                  }
+                              }),
+                          ]
                         : !categories && place
                         ? [`${place}`]
                         : categories && !place
-                        ? categories
+                        ? [
+                              ...categories.map((category) => {
+                                  return {
+                                      ...category,
+                                      tag: 'CATEGORIES',
+                                  }
+                              }),
+                          ]
                         : []
                 }
                 filterOptions={filterOptions}
                 getOptionLabel={(option) => (typeof option === 'string' ? option : option.longName)}
+                groupBy={(option) => option.tag}
+                // getOptionLabel={(option) => 'CATEGORIES'}
                 onChange={(event, value) => {
                     if (value.longName) {
                         setPlace(value.longName)
@@ -280,7 +304,11 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                     if (option.longName) {
                         return <SuggestionOption id="suggestion">{option.longName}</SuggestionOption>
                     } else {
-                        return <SuggestionOption id="suggestion">Search '{option}'</SuggestionOption>
+                        return (
+                            <SuggestionConstantOption id="suggestion">
+                                Search restaurants with "{option}"
+                            </SuggestionConstantOption>
+                        )
                     }
                 }}
                 renderInput={(params) => (
@@ -299,6 +327,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                         }
                         InputLabelProps={{ shrink: false }}
                         variant="outlined"
+                        onKeyDown={handleKeyDown}
                     />
                 )}
             />
@@ -313,6 +342,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                     }
                     getOptionLabel={(option: any) => (option.description ? option.description : option)}
                     filterOptions={(options, state) => options}
+                    onKeyDown={handleKeyDown}
                     onChange={(event, value) => {
                         if (value && value.place_id && value.description) {
                             setAddress(value.description)
