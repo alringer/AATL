@@ -40,6 +40,29 @@ export const GlobalStyle = createGlobalStyle`
         cursor: not-allowed;
     }
 
+    /* CSS for AutoComplete Groupby Label */
+    .MuiListSubheader-gutters {
+        padding-left: 24px;
+        font-family: 'Rubik';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 48px;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        color: #AFB0B3;
+    }
+
+    .MuiAutocomplete-option {
+        padding: 0;
+    }
+
+    .MuiAutocomplete-groupUl .MuiAutocomplete-option {
+        padding-left: 0;
+    }
+
     .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child {
         padding-left: 10px;
     }

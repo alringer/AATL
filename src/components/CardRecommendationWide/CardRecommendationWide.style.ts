@@ -1,4 +1,20 @@
-import { WideAuthorNameText, WideAuthorTitleText, WideButtonsContainer, WideCardContainer, WideCardContentContainer, WideCardImageContainer, WideContentBottomContainer, WideContentMiddleContainer, WideContentTopContainer, WideHeaderContainer, WidePlaceAddressText, WidePlaceCategoryText, WidePlaceNameText, WideSummaryText, WideTitleText } from 'style/Card/Card.style'
+import {
+    WideAuthorNameText,
+    WideAuthorTitleText,
+    WideButtonsContainer,
+    WideCardContainer,
+    WideCardContentContainer,
+    WideCardImageContainer,
+    WideContentBottomContainer,
+    WideContentMiddleContainer,
+    WideContentTopContainer,
+    WideHeaderContainer,
+    WidePlaceAddressText,
+    WidePlaceCategoryText,
+    WidePlaceNameText,
+    WideSummaryText,
+    WideTitleText,
+} from 'style/Card/Card.style'
 import { device } from 'style/device'
 import zIndices from 'style/zIndices'
 import styled, { css } from 'styled-components'
@@ -23,9 +39,8 @@ const cssRecommendationCardContentContainer = css`
     margin-left: 300px;
 `
 
-
 export const RecommendationCardContentContainer = styled(WideCardContentContainer)<ToggleProps & HighlightedProps>`
-    ${props => {
+    ${(props) => {
         if (props.isHighlighted === true) {
             return css`
                 background-color: rgb(232.4, 236.2, 237.9);
@@ -33,7 +48,7 @@ export const RecommendationCardContentContainer = styled(WideCardContentContaine
         }
     }}
 
-    ${props => {
+    ${(props) => {
         if (props.isToggled === true) {
             return css`
                 @media ${device.tablet} {
@@ -64,7 +79,7 @@ const cssRecommendationCardImageContainer = css`
     z-index: ${zIndices.recommendationCardImageBackground};
 `
 export const RecommendationCardImageContainer = styled(WideCardImageContainer)<ToggleProps & ImageSrcProps>`
-    ${props => {
+    ${(props) => {
         if (props.isToggled === true) {
             return css`
                 @media ${device.tablet} {
@@ -88,12 +103,12 @@ export const RecommendationCardImageContainer = styled(WideCardImageContainer)<T
                         right: 0;
                         content: '';
                         backdrop-filter: blur(50px);
-                        background-color: rgba(0,0,0,0.3);
+                        background-color: rgba(0, 0, 0, 0.3);
                         /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 37%, rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255,255,255,1)); */
                     }
-
                 }
-                @media ${device.laptop} {}
+                @media ${device.laptop} {
+                }
             `
         }
     }}
@@ -105,7 +120,7 @@ export const RecommendationCardImage = styled.img<ToggleProps>`
     height: 100%;
     z-index: ${zIndices.recommendationCardImage};
 
-    ${props => {
+    ${(props) => {
         if (props.isToggled === true) {
             return css`
                 @media ${device.mobile} {
@@ -123,8 +138,6 @@ export const RecommendationCardImage = styled.img<ToggleProps>`
             `
         }
     }}
-    
-
 `
 
 export const RecommendationHeaderContainer = styled(WideHeaderContainer)``
@@ -148,6 +161,18 @@ export const RecommendationTitleText = styled(WideTitleText)``
 export const RecommendationSummaryText = styled(WideSummaryText)``
 
 export const RecommendationAuthorNameText = styled(WideAuthorNameText)``
+
+export const RecommendationTimestampText = styled(WideAuthorNameText)`
+    font-weight: 400;
+    margin-left: 5px;
+`
+
+export const RecommendationAuthorLineContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`
 
 export const RecommendationAuthorTitleText = styled(WideAuthorTitleText)`
     overflow-wrap: anywhere;

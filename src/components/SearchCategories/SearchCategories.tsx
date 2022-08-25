@@ -10,7 +10,7 @@ import { ICategory } from 'utilities/types/category'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
 
 interface ISearchCategoriesProps {
-    handleSearch: (
+    handleLFBSearch: (
         place?: string,
         categoryID?: string,
         address?: string,
@@ -21,7 +21,7 @@ interface ISearchCategoriesProps {
     topCategories: ICategory[]
 }
 
-const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleSearch, topCategories }) => {
+const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleLFBSearch, topCategories }) => {
     return (
         <SearchWorkBenchCategoriesContainer>
             <Link href={R.ROUTE_ITEMS.foodAndDrink} passHref={true} prefetch={false}>
@@ -30,7 +30,7 @@ const SearchCategories: React.FC<ISearchCategoriesProps> = ({ handleSearch, topC
             {topCategories.map((category: ICategory, index: number) => {
                 return (
                     <SearchWorkBenchCategoriesText
-                        onClick={() => handleSearch(category.longName, String(category.id))}
+                        onClick={() => handleLFBSearch(category.longName, String(category.id))}
                         key={index}
                     >
                         {category.longName}

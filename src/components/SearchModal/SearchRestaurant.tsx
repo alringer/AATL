@@ -49,7 +49,7 @@ interface ISearchRestaurantProps extends IReduxProps, IWithAuthInjectedProps {
     closeModal: () => void
 }
 
-interface IYelpRestaurant {
+export interface IYelpRestaurant {
     address1: string | null
     address2: string | null
     address3: string | null
@@ -138,7 +138,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         }
     }
 
-    const handleSearch = (
+    const handleLFBSearch = (
         place?: string,
         categoryID?: string,
         address?: string,
@@ -228,7 +228,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
             <SearchModalContentWrapper>
                 <SearchModalInputFieldsContainer>
                     <SearchFull
-                        handleSearch={handleSearch}
+                        handleSearch={handleLFBSearch}
                         inputPlace={initialPlace}
                         inputCategoryID={null}
                         inputAddress={null}

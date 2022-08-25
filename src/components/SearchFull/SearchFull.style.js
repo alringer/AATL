@@ -12,12 +12,12 @@ export const SearchInputFieldsContainer = styled.div`
     @media ${device.mobile} {
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;   
+        align-items: center;
     }
     @media ${device.tablet} {
         flex-direction: row;
         justify-content: center;
-        align-items: center;   
+        align-items: center;
     }
 `
 
@@ -47,24 +47,24 @@ export const CustomAutoComplete = styled(Autocomplete)`
     }
     @media ${device.tablet} {
         width: 290px;
-        margin-right: 15px; 
+        margin-right: 15px;
     }
 
     .MuiTextField-root {
         border: transparent;
     }
 
-    ${props => {
+    ${(props) => {
         if (props.className === 'error') {
             return css`
                 input {
-                    color: ${props => props.theme.dustyRed} !important;
+                    color: ${(props) => props.theme.dustyRed} !important;
                 }
                 fieldset {
-                    border-color: color: ${props => props.theme.dustyRed} !important;
+                    border-color: color: ${(props) => props.theme.dustyRed} !important;
                 }
                 .MuiFormLabel-root {
-                    color: ${props => props.theme.dustyRed} !important;
+                    color: ${(props) => props.theme.dustyRed} !important;
                 }
             `
         }
@@ -91,15 +91,26 @@ export const SearchButton = styled(CustomButton)`
 export const SuggestionOption = styled.div`
     display: flex;
     align-items: center;
-    padding: 10px 5px;
+    padding: 20px 5px 20px 24px;
+`
+
+export const SuggestionConstantOption = styled(SuggestionOption)`
+    width: 100%;
+    border-bottom: 1px solid #e8e9e9;
+    box-sizing: content-box;
+`
+
+export const SuggestionHR = styled.hr`
+    height: 1px;
+    background-color: red;
+    width: 100%;
 `
 
 export const SuggestionOptionUseMyLocation = styled(SuggestionOption)`
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 `
 
-
 export const LocationIcon = styled(LocationOnIcon)`
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
     margin-right: 5px;
 `
