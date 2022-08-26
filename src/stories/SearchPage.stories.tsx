@@ -1,6 +1,5 @@
 import { storiesOf } from '@storybook/react'
 import SearchWorkBench from 'components/SearchWorkBench/SearchWorkBench'
-import React from 'react'
 
 export const SearchFullData = {
     default: {
@@ -21,12 +20,18 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             inputSort={null}
             searchResults={[]}
             topCategories={[]}
-            handleSearch={() => {}}
+            handleLFBSearch={() => {}}
+            handleYelpSearch={() => {}}
             openSearchModal={() => {}}
             inputCategoryID={null}
             inputPage={0}
             inputPageCount={0}
             inputTotal={0}
+            currentYelpOffset={0}
+            currentYelpLimit={0}
+            searchYelpResults={[]}
+            isRobust={false}
+            isLoading={false}
         />
     )
 })
