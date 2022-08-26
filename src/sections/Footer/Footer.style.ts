@@ -1,3 +1,5 @@
+import EmailIconMUI from '@material-ui/icons/Email'
+import LocationOnIconMUI from '@material-ui/icons/LocationOn'
 import FooterBackgroundImage from 'assets/pre-launch-footer.svg'
 import { device, sidePaddings } from 'style/device'
 import styled, { css } from 'styled-components'
@@ -289,4 +291,43 @@ export const FooterTinyText = styled.p`
     letter-spacing: normal;
     text-align: right;
     color: ${(props) => props.theme.darkGrey};
+`
+
+export const ContactUsRowContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 15px;
+
+    @media ${device.mobile} {
+        justify-content: center;
+    }
+    @media ${device.tablet} {
+        justify-content: flex-start;
+    }
+    @media ${device.laptop} {
+    }
+`
+
+export const ContactUsText = styled.p`
+    @media ${device.mobile} {
+        text-align: center;
+    }
+    @media ${device.tablet} {
+        text-align: left;
+    }
+`
+
+export const EmailIcon = styled(EmailIconMUI)`
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
+`
+export const LocationIcon = styled(LocationOnIconMUI)`
+    width: 20px;
+    height: 20px;
+
+    margin-right: 10px;
 `
