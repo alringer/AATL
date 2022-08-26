@@ -1,5 +1,6 @@
+import { IYelpRestaurant } from 'components/SearchModal/SearchRestaurant'
 import SearchWorkBench from 'components/SearchWorkBench/SearchWorkBench'
-import axios, { FETCH_TOP_CATEGORIES, SEARCH_AATL_RESTAURANTS } from 'config/AxiosConfig'
+import axios, { FETCH_TOP_CATEGORIES, SEARCH_AATL_RESTAURANTS, SEARCH_YELP_RESTAURANTS } from 'config/AxiosConfig'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
@@ -31,15 +32,33 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
     const [lng, setLng] = React.useState<string | null>(null)
     const [sort, setSort] = React.useState<string | null>(null)
 
+    // LFB Search Parameters
     const [currentTotal, setCurrentTotal] = React.useState(0)
     const [currentPageCount, setCurrentPageCount] = React.useState(0)
     const [currentPage, setCurrentPage] = React.useState(1)
+    // Yelp Search Parameters
+    const [isRobust, setRobust] = React.useState(false)
+    const [currentYelpOffset, setCurrentYelpOffset] = React.useState(0)
+    const [currentYelpLimit, setCurrentYelpLimit] = React.useState(10)
+    const [currentYelpPage, setCurrentYelpPage] = React.useState(1)
+    const [currentYelpPageCount, setCurrentYelpPageCount] = React.useState(0)
+    const [currentYelpTotal, setCurrentYelpTotal] = React.useState(0)
+    const [currentYelpResults, setCurrentYelpResults] = React.useState<IYelpRestaurant[]>([])
+    // Loading
+    const [isLoading, setLoading] = React.useState(false)
 
     const router = useRouter()
 
     React.useEffect(() => {
-        const queryPlace = router.query.place ? String(router.query.place) : null
+        window.scrollTo(0, 0)
+        const queryRobust = router.query.robust && router.query.robust === 'true' ? true : false
+        // LFB Parameters
         const queryCategoryID = router.query.categoryID ? String(router.query.categoryID) : null
+        // Yelp Parameters
+        let queryOffset = router.query.offset ? Number(router.query.offset) : null
+        let queryLimit = router.query.limit ? Number(router.query.limit) : null
+        // Shared Parameters
+        const queryPlace = router.query.place ? String(router.query.place) : null
         let queryAddress = null
         let queryLat = null
         let queryLng = null
@@ -69,31 +88,14 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         setLng(queryLng)
         setSort(querySort)
         setCurrentPage(queryPage)
-        const payload =
-            queryCategoryID !== null && queryCategoryID !== undefined
-                ? {
-                      categoryId: queryCategoryID ? queryCategoryID : '',
-                      longitude: queryLng ? queryLng : Math.round(-117.161087),
-                      latitude: queryLat ? queryLat : Math.round(32.715736),
-                      sort: querySort ? querySort : SortEnum.BestRated,
-                      page: queryPage ? queryPage : 0,
-                  }
-                : {
-                      keyword: queryPlace ? queryPlace : '',
-                      longitude: queryLng ? queryLng : Math.round(-117.161087),
-                      latitude: queryLat ? queryLat : Math.round(32.715736),
-                      sort: querySort ? querySort : SortEnum.BestRated,
-                      page: queryPage ? queryPage : 0,
-                  }
-        axios
-            .post(SEARCH_AATL_RESTAURANTS, payload)
-            .then((res) => {
-                setSearchResults(res.data.content)
-                setCurrentPage(res.data.number + 1)
-                setCurrentPageCount(res.data.totalPages)
-                setCurrentTotal(res.data.totalElements)
-            })
-            .catch((err) => console.log(err))
+        setRobust(queryRobust)
+
+        // Yelp Parameters
+        if (queryRobust) {
+            searchYelp(queryPlace, queryLat, queryLng, queryOffset, queryLimit)
+        } else {
+            searchLFB(queryPlace, queryCategoryID, queryLat, queryLng, querySort, queryPage)
+        }
         const topCategoriesConfig = {
             params: {
                 longitude: queryLng ? queryLng : Math.round(-117.161087),
@@ -109,7 +111,93 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             .catch((err) => console.log(err))
     }, [router])
 
-    const handleSearch = (
+    const searchLFB = (
+        inputPlace: string,
+        inputCategoryID: string | undefined,
+        inputLat: string | undefined,
+        inputLng: string | undefined,
+        inputSort,
+        inputPage
+    ) => {
+        setLoading(true)
+        const payload =
+            inputCategoryID !== null && inputCategoryID !== undefined
+                ? {
+                      categoryId: inputCategoryID ? inputCategoryID : '',
+                      longitude: inputLng ? inputLng : Math.round(-117.161087),
+                      latitude: inputLat ? inputLat : Math.round(32.715736),
+                      sort: inputSort ? inputSort : SortEnum.BestRated,
+                      page: inputPage ? inputPage : 0,
+                  }
+                : {
+                      keyword: inputPlace ? inputPlace : '',
+                      longitude: inputLng ? inputLng : Math.round(-117.161087),
+                      latitude: inputLat ? inputLat : Math.round(32.715736),
+                      sort: inputSort ? inputSort : SortEnum.BestRated,
+                      page: inputPage ? inputPage : 0,
+                  }
+        axios
+            .post(SEARCH_AATL_RESTAURANTS, payload)
+            .then((res) => {
+                if (res?.data?.content?.length > 0) {
+                    setSearchResults(res.data.content)
+                    setCurrentPage(res.data.number + 1)
+                    setCurrentPageCount(res.data.totalPages)
+                    setCurrentTotal(res.data.totalElements)
+                    setRobust(false)
+                    setLoading(false)
+                } else {
+                    // Trigger Yelp Search if there are no LFB results
+                    searchYelp(inputPlace, inputLat, inputLng, currentYelpOffset, currentYelpLimit)
+                }
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {})
+    }
+
+    const searchYelp = (
+        inputPlace: string,
+        inputLat: string,
+        inputLng: string,
+        inputOffset: number,
+        inputLimit: number
+    ) => {
+        setLoading(true)
+        axios
+            .get(SEARCH_YELP_RESTAURANTS, {
+                params: {
+                    searchTerm: inputPlace ? inputPlace : '',
+                    lat: inputLat ? inputLat : '40.7128',
+                    lng: inputLng ? inputLng : '-74.0060',
+                    radiusInMeter: 40000,
+                    offset: inputOffset,
+                    limit: inputLimit,
+                },
+            })
+            .then((res) => {
+                const newYelpTotal = res.data.total ? res.data.total : currentYelpTotal
+                const newYelpPageCount = res.data.total / inputLimit
+                const newYelpOffset =
+                    res.data.restaurants && res.data.restaurants.length > 0
+                        ? inputOffset + res.data.restaurants.length
+                        : inputOffset
+                const newYelpPage = inputOffset / inputLimit + 1
+                setCurrentYelpTotal(newYelpTotal)
+                setCurrentYelpPageCount(newYelpPageCount)
+                setCurrentYelpOffset(newYelpOffset)
+                setCurrentYelpPage(newYelpPage)
+                const newSearchResults = res.data.restaurants &&
+                    res.data.restaurants.length > 0 && [...res.data.restaurants]
+                setCurrentYelpResults(newSearchResults)
+                setRobust(true)
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    const handleLFBSearch = (
         place?: string,
         categoryID?: string,
         address?: string,
@@ -126,9 +214,64 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             { label: 'sort', value: sort },
             { label: 'categoryID', value: categoryID },
             { label: 'page', value: page },
+            { label: 'robust', value: 'false' },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
+        // LFB Search Parameters
+        setSearchResults([])
+        setCurrentTotal(0)
+        setCurrentPageCount(0)
+        setCurrentPage(1)
+        // Yelp Search Parameters
+        setCurrentYelpResults([])
+        setCurrentYelpOffset(0)
+        setCurrentYelpLimit(10)
+        setCurrentYelpPage(1)
+        setCurrentYelpPageCount(0)
+        setCurrentYelpTotal(0)
+        setCurrentYelpResults([])
+        // Search Mode
+        setRobust(false)
+        // Trigger
+        router.push(url, undefined, { shallow: true })
+    }
+
+    const handleYelpSearch = (
+        place?: string,
+        address?: string,
+        lat?: string,
+        lng?: string,
+        offset?: string,
+        limit?: string
+    ) => {
+        const paramsArray: ParamType[] = [
+            { label: 'place', value: place ? encodeURIComponent(place) : place },
+            { label: 'address', value: address ? encodeURIComponent(address) : address },
+            { label: 'lat', value: lat },
+            { label: 'lng', value: lng },
+            { label: 'offset', value: offset },
+            { label: 'limit', value: limit },
+            { label: 'robust', value: 'true' },
+        ]
+        const paramsURL = buildURLWithParams(paramsArray)
+        let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
+        // LFB Search Parameters
+        setSearchResults([])
+        setCurrentTotal(0)
+        setCurrentPageCount(0)
+        setCurrentPage(1)
+        // Yelp Search Parameters
+        setCurrentYelpResults([])
+        setCurrentYelpOffset(0)
+        setCurrentYelpLimit(10)
+        setCurrentYelpPage(1)
+        setCurrentYelpPageCount(0)
+        setCurrentYelpTotal(0)
+        setCurrentYelpResults([])
+        // Search Mode
+        setRobust(true)
+        // Trigger
         router.push(url, undefined, { shallow: true })
     }
 
@@ -143,13 +286,19 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                 inputLat={lat}
                 inputLng={lng}
                 inputSort={sort}
-                inputPageCount={currentPageCount}
-                inputPage={currentPage}
-                inputTotal={currentTotal}
+                inputPageCount={isRobust ? currentYelpPageCount : currentPageCount}
+                inputPage={isRobust ? currentYelpPage : currentPage}
+                inputTotal={isRobust ? currentYelpTotal : currentTotal}
+                currentYelpOffset={currentYelpOffset}
+                currentYelpLimit={currentYelpLimit}
                 searchResults={searchResults}
+                searchYelpResults={currentYelpResults}
                 topCategories={topCategories}
-                handleSearch={handleSearch}
+                handleLFBSearch={handleLFBSearch}
+                handleYelpSearch={handleYelpSearch}
                 openSearchModal={openSearchModal}
+                isRobust={isRobust}
+                isLoading={isLoading}
             />
         </div>
     )

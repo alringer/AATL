@@ -27,7 +27,6 @@ import {
     ListModalInputRowContainer,
     ListModalMainAreaContainer,
     ListModalMainContentContainer,
-    ListModalMessage,
     ListModalNavigationButton,
     ListModalTitleText,
     SubmitButton,
@@ -163,9 +162,9 @@ const AddNewRestaurantList: React.FC<IAddNewRestaurantListProps> = ({
                             InputLabelProps={{ shrink: false }}
                         />
                     </ListModalInputRowContainer>
-                    <ListModalInputRowContainer>
+                    {/* <ListModalInputRowContainer>
                         <ListModalMessage>{S.LIST_MODAL.AddNewRestaurantList.Message}</ListModalMessage>
-                    </ListModalInputRowContainer>
+                    </ListModalInputRowContainer> */}
                 </ListModalMainContentContainer>
             </ListModalMainAreaContainer>
             <ListModalFooterContainer>

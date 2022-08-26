@@ -89,7 +89,7 @@ export const HomeBannerSubTitleText = styled.p`
     font-weight: 500;
     font-stretch: normal;
     font-style: italic;
-    line-height: 0.59;
+    line-height: 1.4;
     letter-spacing: normal;
     text-align: center;
     color: ${(props) => props.theme.white};

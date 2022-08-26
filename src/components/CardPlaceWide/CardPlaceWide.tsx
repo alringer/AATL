@@ -296,6 +296,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                           {place && place.street ? place.street : null}
                                           {place && place.locality ? place.locality + ', ' : null}
                                           {place && place.state ? place.state : null}
+                                          {place && place.postalCode ? ` ${place.postalCode}` : null}
                                       </WidePlaceAddressText>
                                   )}
                                   <CardPlaceWidePlaceCategoryText>
@@ -475,6 +476,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                               {place && place.street ? place.street : null}
                                               {place && place.locality ? place.locality + ', ' : null}
                                               {place && place.state ? place.state : null}
+                                              {place && place.postalCode ? ` ${place.postalCode}` : null}
                                           </WidePlaceAddressText>
                                       )}
                                       <CardPlaceWidePlaceCategoryText>

@@ -1,9 +1,9 @@
 import { IconButton } from '@material-ui/core'
+import MobileLogoTextSVG from 'assets/LFB-Text.svg'
 import SearchSVG from 'assets/lightSearch.svg'
 import LogoLadySVG from 'assets/logo_svg/LFB_logo-mark.svg'
 import FullLogoSVG from 'assets/logo_svg/LFG_logo.svg'
 import CloseIconSVG from 'assets/mobileHeaderCloseIcon.svg'
-import LogoTextSVG from 'assets/mobileHeaderLogoText.svg'
 import MobileMenuSVG from 'assets/mobileHeaderMenuIcon.svg'
 import MobileSearchSvg from 'assets/mobileHeaderSearchIcon.svg'
 import UserProfileSVG from 'assets/userProfile.svg'
@@ -142,7 +142,7 @@ const Header: React.FC<IHeaderProps> = ({
         <LogoContainer>
             <Link href="/" prefetch={false}>
                 <a>
-                    <Image src={LogoTextSVG} alt="logo" />
+                    <Image src={MobileLogoTextSVG} alt="logo" />
                 </a>
             </Link>
         </LogoContainer>
