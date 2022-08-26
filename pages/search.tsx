@@ -281,18 +281,23 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         <div>
             <SearchWorkBench
                 inputPlace={place}
-                inputCategoryID={categoryID}
                 inputAddress={address}
                 inputLat={lat}
                 inputLng={lng}
+                // LFB Search Parameters
+                searchResults={searchResults}
+                inputCategoryID={categoryID}
                 inputSort={sort}
-                inputPageCount={isRobust ? currentYelpPageCount : currentPageCount}
-                inputPage={isRobust ? currentYelpPage : currentPage}
-                inputTotal={isRobust ? currentYelpTotal : currentTotal}
+                inputPageCount={currentPageCount}
+                inputPage={currentPage}
+                inputTotal={currentTotal}
+                // Yelp Search Parameters
+                searchYelpResults={currentYelpResults}
+                currentYelpPageCount={currentYelpPageCount}
+                currentYelpPage={currentYelpPage}
+                currentYelpTotal={currentYelpTotal}
                 currentYelpOffset={currentYelpOffset}
                 currentYelpLimit={currentYelpLimit}
-                searchResults={searchResults}
-                searchYelpResults={currentYelpResults}
                 topCategories={topCategories}
                 handleLFBSearch={handleLFBSearch}
                 handleYelpSearch={handleYelpSearch}
