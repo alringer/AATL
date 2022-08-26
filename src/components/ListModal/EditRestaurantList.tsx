@@ -20,7 +20,6 @@ import {
     ListModalInputRowContainer,
     ListModalMainAreaContainer,
     ListModalMainContentContainer,
-    ListModalMessage,
     ListModalTitleText,
     SubmitButton,
 } from './ListModal.style'
@@ -145,9 +144,9 @@ const EditRestaurantList: React.FC<IEditRestaurantListProps> = ({
                             InputLabelProps={{ shrink: false }}
                         />
                     </ListModalInputRowContainer>
-                    <ListModalInputRowContainer>
+                    {/* <ListModalInputRowContainer>
                         <ListModalMessage>{S.LIST_MODAL.EditRestaurantList.Message}</ListModalMessage>
-                    </ListModalInputRowContainer>
+                    </ListModalInputRowContainer> */}
                 </ListModalMainContentContainer>
             </ListModalMainAreaContainer>
             <ListModalFooterContainer>

@@ -155,7 +155,8 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         <PlaceBannerAddressOne>{`${venueInformation.street}`}</PlaceBannerAddressOne>
                         &nbsp;
                         <PlaceBannerAddressCityStateZip>
-                            {venueInformation.parentRegion.city}, {venueInformation.postalCode}
+                            {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}{' '}
+                            {venueInformation.postalCode} {venueInformation.iso3Country}
                         </PlaceBannerAddressCityStateZip>
                     </PlaceBannerAddressSpan>
                     <PlaceBannerRecommendSpan>

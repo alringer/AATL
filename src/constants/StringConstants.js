@@ -211,11 +211,13 @@ export const FOOTER_ITEMS = {
     WithLove: '♥ With love from Lake Tahoe',
     SeeOur: 'See our',
     TermsOfUse: 'Terms of Use',
-    CopyRightText: 'LocalFoodBuzz ©',
+    CopyRightText: '© LocalFoodBuzz',
     CompanyName: 'About LocalFoodBuzz',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 
-We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!`,
+We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!
+
+Y@!p is for the masses, LocalFoodBuzz is for serious foodies.`,
 }
 
 export const CALL_TO_ACTION = {
@@ -411,7 +413,7 @@ export const USER_PROFILE_INFLUENCER_GUIDE = {
     Incomplete: {
         Title: 'Complete Your Profile.',
         Message:
-            'Complete your profile by updating your Name, By-Line, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
+            'Complete your profile by updating your Name, Tagline, and Bio. Recommendation writing will be unlocked once your profile has been fillled out.',
         ButtonLabel: 'EDIT PROFILE',
     },
     Complete: {
@@ -581,7 +583,7 @@ export const PRELAUNCH_TOUR = {
         Title: 'Step 2',
         PreOrangeMessage: 'You can update your',
         Name: 'Name',
-        Occupation: 'By-Line',
+        Occupation: 'Tagline',
         Bio: 'Bio',
         PostOrangeMessage: 'in this menu.',
         Selector: 'tour__two',
