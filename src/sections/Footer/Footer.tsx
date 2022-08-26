@@ -15,6 +15,9 @@ import { IFooter } from 'utilities/types/footer'
 import { ICategory } from '../../utilities/types/category'
 import { IParentRegion } from '../../utilities/types/parentRegion'
 import {
+    ContactUsRowContainer,
+    ContactUsText,
+    EmailIcon,
     FooterAnchor,
     FooterButtonsContainer,
     FooterContainer,
@@ -32,6 +35,7 @@ import {
     FooterSecondRow,
     FooterTermsOfUseAnchor,
     FooterTinyText,
+    LocationIcon,
 } from './Footer.style'
 
 interface IReduxProps {
@@ -130,6 +134,17 @@ const Footer: React.FC<IFooterProps> = ({ isPrelaunch }) => {
                                                 </FooterAnchor>
                                             </Link>
                                         ))}
+                                </FooterLinksContainer>
+                            </FooterRightColumnRow>
+                            <FooterRightColumnRow style={{ marginTop: '20px' }}>
+                                <FooterLinksContainer>
+                                    <FooterLinkTitle>{S.FOOTER_ITEMS.ContactUs}</FooterLinkTitle>
+                                    <ContactUsRowContainer>
+                                        <EmailIcon /> <ContactUsText>{S.FOOTER_ITEMS.ContactEmail}</ContactUsText>
+                                    </ContactUsRowContainer>
+                                    <ContactUsRowContainer>
+                                        <LocationIcon /> <ContactUsText>{S.FOOTER_ITEMS.ContactLocation}</ContactUsText>
+                                    </ContactUsRowContainer>
                                 </FooterLinksContainer>
                             </FooterRightColumnRow>
                         </FooterRightColumn>

@@ -217,6 +217,34 @@ export const RecommendationEditorInputContainer = styled.div`
     }
 `
 
+export const RecommendationEditorForkInputContainer = styled(RecommendationEditorInputContainer)`
+    @media ${device.mobile} {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
+    @media ${device.laptop} {
+    }
+`
+
+export const RecommendationEditorForksContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    @media ${device.mobile} {
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        width: auto;
+    }
+    @media ${device.laptop} {
+    }
+`
+
 export const RecommendationEditorImageDeleteButton = styled(CustomIconButton)`
     position: absolute;
     top: 0;
@@ -566,7 +594,16 @@ export const RecommendationEditorForkMessageContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
 
-    margin-left: 10px;
+    @media ${device.mobile} {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        margin-left: 10px;
+        margin-top: 0;
+    }
 `
 export const RecommendationEditorForkMessage = styled.p`
     font-family: 'Rubik', sans-serif;

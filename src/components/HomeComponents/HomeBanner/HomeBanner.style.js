@@ -113,7 +113,6 @@ export const HomeBannerSubTitleTwoText = styled.p`
     font-size: 28px;
     font-weight: 400;
     font-stretch: normal;
-    line-height: 43px;
     letter-spacing: normal;
     text-align: center;
     color: #ffc09c;
@@ -122,9 +121,11 @@ export const HomeBannerSubTitleTwoText = styled.p`
 
     @media ${device.mobile} {
         font-size: 16px;
+        line-height: 25px;
     }
     @media ${device.tablet} {
         font-size: 20px;
+        line-height: 35px;
     }
     @media ${device.laptop} {
         font-size: 28px;

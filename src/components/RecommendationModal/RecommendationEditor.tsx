@@ -18,8 +18,10 @@ import {
     MaxTextLength,
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
+    RecommendationEditorForkInputContainer,
     RecommendationEditorForkMessage,
     RecommendationEditorForkMessageContainer,
+    RecommendationEditorForksContainer,
     RecommendationEditorImageDeleteButton,
     RecommendationEditorImageDeleteCloseIcon,
     RecommendationEditorInputContainer,
@@ -276,67 +278,69 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                         {S.RECOMMENDATION_EDITOR.LabelRating}
                     </RecommendationEditorInputLabelText>
                 </RecommendationEditorInputLabelContainer>
-                <RecommendationEditorInputContainer>
-                    <CardPlaceWideForkCursorContainer
-                        id="fork-1"
-                        onMouseEnter={() => handleHoverFork(1)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => handleClickFork(1)}
-                    >
-                        <SVGImage src={FilledFork} alt="filled-fork" />
-                    </CardPlaceWideForkCursorContainer>
-                    <CardPlaceWideForkCursorContainer
-                        id="fork-2"
-                        onMouseEnter={() => handleHoverFork(2)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => handleClickFork(2)}
-                    >
-                        <SVGImage src={FilledFork} alt="filled-fork" />
-                    </CardPlaceWideForkCursorContainer>
-                    <CardPlaceWideForkCursorContainer
-                        id="fork-3"
-                        onMouseEnter={() => handleHoverFork(3)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => handleClickFork(3)}
-                    >
-                        <SVGImage src={FilledFork} alt="filled-fork" />
-                    </CardPlaceWideForkCursorContainer>
-                    <CardPlaceWideForkCursorContainer
-                        id="fork-4"
-                        onMouseEnter={() => handleHoverFork(4)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => handleClickFork(4)}
-                    >
-                        {isForkHovered ? (
-                            previewRating && previewRating >= 4 ? (
+                <RecommendationEditorForkInputContainer>
+                    <RecommendationEditorForksContainer>
+                        <CardPlaceWideForkCursorContainer
+                            id="fork-1"
+                            onMouseEnter={() => handleHoverFork(1)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleClickFork(1)}
+                        >
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        </CardPlaceWideForkCursorContainer>
+                        <CardPlaceWideForkCursorContainer
+                            id="fork-2"
+                            onMouseEnter={() => handleHoverFork(2)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleClickFork(2)}
+                        >
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        </CardPlaceWideForkCursorContainer>
+                        <CardPlaceWideForkCursorContainer
+                            id="fork-3"
+                            onMouseEnter={() => handleHoverFork(3)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleClickFork(3)}
+                        >
+                            <SVGImage src={FilledFork} alt="filled-fork" />
+                        </CardPlaceWideForkCursorContainer>
+                        <CardPlaceWideForkCursorContainer
+                            id="fork-4"
+                            onMouseEnter={() => handleHoverFork(4)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleClickFork(4)}
+                        >
+                            {isForkHovered ? (
+                                previewRating && previewRating >= 4 ? (
+                                    <SVGImage src={FilledFork} alt="filled-fork" />
+                                ) : (
+                                    <SVGImage src={EmptyFork} alt="empty-fork" />
+                                )
+                            ) : rating >= 4 ? (
                                 <SVGImage src={FilledFork} alt="filled-fork" />
                             ) : (
                                 <SVGImage src={EmptyFork} alt="empty-fork" />
-                            )
-                        ) : rating >= 4 ? (
-                            <SVGImage src={FilledFork} alt="filled-fork" />
-                        ) : (
-                            <SVGImage src={EmptyFork} alt="empty-fork" />
-                        )}
-                    </CardPlaceWideForkCursorContainer>
-                    <CardPlaceWideForkCursorContainer
-                        id="fork-5"
-                        onMouseEnter={() => handleHoverFork(5)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => handleClickFork(5)}
-                    >
-                        {isForkHovered ? (
-                            previewRating && previewRating === 5 ? (
+                            )}
+                        </CardPlaceWideForkCursorContainer>
+                        <CardPlaceWideForkCursorContainer
+                            id="fork-5"
+                            onMouseEnter={() => handleHoverFork(5)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleClickFork(5)}
+                        >
+                            {isForkHovered ? (
+                                previewRating && previewRating === 5 ? (
+                                    <SVGImage src={FilledFork} alt="filled-fork" />
+                                ) : (
+                                    <SVGImage src={EmptyFork} alt="empty-fork" />
+                                )
+                            ) : rating === 5 ? (
                                 <SVGImage src={FilledFork} alt="filled-fork" />
                             ) : (
                                 <SVGImage src={EmptyFork} alt="empty-fork" />
-                            )
-                        ) : rating === 5 ? (
-                            <SVGImage src={FilledFork} alt="filled-fork" />
-                        ) : (
-                            <SVGImage src={EmptyFork} alt="empty-fork" />
-                        )}
-                    </CardPlaceWideForkCursorContainer>
+                            )}
+                        </CardPlaceWideForkCursorContainer>
+                    </RecommendationEditorForksContainer>
                     <RecommendationEditorForkMessageContainer>
                         <RecommendationEditorForkMessage>
                             {isForkHovered
@@ -356,7 +360,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                                 : S.RECOMMENDATION_EDITOR.ThreeForks}
                         </RecommendationEditorForkMessage>
                     </RecommendationEditorForkMessageContainer>
-                </RecommendationEditorInputContainer>
+                </RecommendationEditorForkInputContainer>
             </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
                 onClick={handleClickSubmit}
