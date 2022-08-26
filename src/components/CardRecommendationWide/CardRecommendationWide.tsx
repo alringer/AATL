@@ -3,12 +3,26 @@ import Grow from '@material-ui/core/Grow'
 import AddedSVG from 'assets/added.svg'
 import AuthoredSVG from 'assets/authored.svg'
 import ExpandSVG from 'assets/expand-icon.svg'
+import PlaceHolderOne from 'assets/Image01.png'
+import PlaceHolderTwo from 'assets/Image02.png'
+import PlaceHolderThree from 'assets/Image03.png'
+import PlaceHolderFour from 'assets/Image04.png'
+import PlaceHolderFive from 'assets/Image05.png'
+import PlaceHolderSix from 'assets/Image06.png'
+import PlaceHolderSeven from 'assets/Image07.png'
+import PlaceHolderEight from 'assets/Image08.png'
+import PlaceHolderNine from 'assets/Image09.png'
+import PlaceHolderTen from 'assets/Image10.png'
+import PlaceHolderEleven from 'assets/Image11.png'
+import PlaceHolderTwelve from 'assets/Image12.png'
 import CloseSVG from 'assets/mushroomOutlineClose.svg'
 import AddToListButton from 'components/CardButtons/AddToListButton'
+import EditRecommendationButton from 'components/CardButtons/EditRecommendationButton'
 import FlagButton from 'components/CardButtons/FlagButton'
 import RemoveFromListButton from 'components/CardButtons/RemoveFromListButton'
 import ShareButton from 'components/CardButtons/ShareButton'
 import WriteRecommendationButton from 'components/CardButtons/WriteRecommendationButton'
+import CardRatings from 'components/CardRatings/CardRatings'
 import Image from 'components/Image/Image'
 import Snackbar from 'components/Snackbar/Snackbar'
 import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
@@ -28,7 +42,10 @@ import { OpenFlagModalPayload } from 'store/flagModal/flagModal_types'
 import { openListModal } from 'store/listModal/listModal_actions'
 import { ListModalViewEnum, OpenListModalPayload } from 'store/listModal/listModal_types'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import {
     CardIcon,
     MobileActionButtonsContainer,
@@ -54,6 +71,7 @@ import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
 import { IRecommendation } from 'utilities/types/recommendation'
+import { IUserProfile } from 'utilities/types/userProfile'
 import {
     RecommendationAnchor,
     RecommendationAuthorNameText,
@@ -84,12 +102,14 @@ export enum CardRecommendationWideEnum {
 }
 
 interface IReduxProps {
+    user: IUserProfile
     userRole: UserRoleEnum
     openRecommendationModal: (placeInformation: RecommendationModalPlaceInformation) => void
     openListModal: (payload: OpenListModalPayload) => void
     openFlagModal: (payload: OpenFlagModalPayload) => void
     venuesInLists: number[]
     venuesRecommended: number[]
+    isPrelaunch: boolean
 }
 
 interface IRecommendationCardProps extends IReduxProps, IWithAuthInjectedProps {
@@ -105,6 +125,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     isFull,
     recommendation,
     authenticatedAction,
+    user,
     userRole,
     openRecommendationModal,
     openListModal,
@@ -113,10 +134,12 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
     type,
     venuesInLists,
     venuesRecommended,
+    isPrelaunch,
 }) => {
     const { enqueueSnackbar } = useSnackbar()
 
     const [currentRecommendation, setCurrentRecommendation] = React.useState<IRecommendation | null>(null)
+    const [currentRandomImge, setCurrentRandomImage] = React.useState('')
     const [isLoading, setLoading] = React.useState(false)
     const [isMoreVisible, setMoreVisible] = React.useState(
         type === CardRecommendationWideEnum.AdminFlagged ? true : false
@@ -129,6 +152,35 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
             : windowSize.width >= Number(size.tablet)
             ? DeviceNameEnum.tablet
             : DeviceNameEnum.mobile
+
+    React.useEffect(() => {
+        const randomNumber = Math.floor(Math.random() * 12)
+        if (randomNumber == 0) {
+            setCurrentRandomImage(PlaceHolderOne)
+        } else if (randomNumber == 1) {
+            setCurrentRandomImage(PlaceHolderTwo)
+        } else if (randomNumber == 2) {
+            setCurrentRandomImage(PlaceHolderThree)
+        } else if (randomNumber == 3) {
+            setCurrentRandomImage(PlaceHolderFour)
+        } else if (randomNumber == 4) {
+            setCurrentRandomImage(PlaceHolderFive)
+        } else if (randomNumber == 5) {
+            setCurrentRandomImage(PlaceHolderSix)
+        } else if (randomNumber == 6) {
+            setCurrentRandomImage(PlaceHolderSeven)
+        } else if (randomNumber == 7) {
+            setCurrentRandomImage(PlaceHolderEight)
+        } else if (randomNumber == 8) {
+            setCurrentRandomImage(PlaceHolderNine)
+        } else if (randomNumber == 9) {
+            setCurrentRandomImage(PlaceHolderTen)
+        } else if (randomNumber == 10) {
+            setCurrentRandomImage(PlaceHolderEleven)
+        } else if (randomNumber == 11) {
+            setCurrentRandomImage(PlaceHolderTwelve)
+        }
+    }, [])
 
     React.useEffect(() => {
         setCurrentRecommendation(recommendation)
@@ -178,6 +230,7 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         e.stopPropagation()
         setMoreVisible(false)
     }
+
     const handleWriteRecommendation = (e: React.MouseEvent<HTMLElement>) => {
         if (
             currentRecommendation &&
@@ -190,13 +243,35 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                 openRecommendationModal({
                     placeID: String(currentRecommendation.venue.id),
                     placeName: currentRecommendation.venue.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             )
         }
         e.stopPropagation()
         setMoreVisible(false)
     }
+
+    const handleEditRecommendation = (e: React.MouseEvent<HTMLElement>) => {
+        if (
+            currentRecommendation &&
+            currentRecommendation.id !== undefined &&
+            currentRecommendation.id !== null &&
+            currentRecommendation.venue &&
+            currentRecommendation.venue.name
+        ) {
+            authenticatedAction(() =>
+                openRecommendationModal({
+                    placeID: String(currentRecommendation.venue.id),
+                    placeName: currentRecommendation.venue.name,
+                    recommendation_type: RecommendationModalType.Edit,
+                    recommendationID: currentRecommendation.id,
+                })
+            )
+        }
+        e.stopPropagation()
+        setMoreVisible(false)
+    }
+
     const handleShare = (e: React.MouseEvent<HTMLElement>) => {
         if (currentRecommendation) {
             navigator.clipboard
@@ -239,6 +314,21 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         e.stopPropagation()
     }
 
+    const handlePreLaunchClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.stopPropagation()
+        enqueueSnackbar('', {
+            content: (
+                <div>
+                    <Snackbar
+                        type={B.SNACKBAR_TYPES.Complete}
+                        title={B.PRELAUNCH_MESSAGE.Title}
+                        message={<SnackbarMessageBody>{B.PRELAUNCH_MESSAGE.Body}</SnackbarMessageBody>}
+                    />
+                </div>
+            ),
+        })
+    }
+
     const ViewMore = () => {
         return (
             <CardIcon onClick={handleMore}>
@@ -255,11 +345,23 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
         <Grow in={true}>
             <RecommendationCardContainer id={isMoreVisible ? 'toggled' : 'not-toggled'} key={recommendation?.id}>
                 <RecommendationCardImageContainer
-                    src={recommendation ? recommendation.imageCDNUrl : ''}
+                    src={
+                        recommendation
+                            ? recommendation.imageCDNUrl
+                                ? recommendation.imageCDNUrl
+                                : currentRandomImge
+                            : ''
+                    }
                     isToggled={isMoreVisible}
                 >
                     <RecommendationCardImage
-                        src={recommendation ? recommendation.imageCDNUrl : ''}
+                        src={
+                            recommendation
+                                ? recommendation.imageCDNUrl
+                                    ? recommendation.imageCDNUrl
+                                    : currentRandomImge
+                                : ''
+                        }
                         alt="recommendation-image"
                         isToggled={isMoreVisible}
                     />
@@ -272,14 +374,8 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                     currentRecommendation &&
                                     currentRecommendation.venue &&
                                     currentRecommendation.venue.name ? (
-                                        <Link
-                                            href={`${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}`}
-                                            passHref={true}
-                                            prefetch={false}
-                                        >
-                                            <RecommendationAnchor
-                                                onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
-                                            >
+                                        isPrelaunch ? (
+                                            <RecommendationAnchor onClick={handlePreLaunchClick}>
                                                 <RecommendationPlaceNameText>
                                                     {isMoreVisible
                                                         ? currentRecommendation.venue.name
@@ -290,7 +386,27 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                           )}
                                                 </RecommendationPlaceNameText>
                                             </RecommendationAnchor>
-                                        </Link>
+                                        ) : (
+                                            <Link
+                                                href={`${R.ROUTE_ITEMS.restaurant}/${currentRecommendation.venue.id}`}
+                                                passHref={true}
+                                                prefetch={false}
+                                            >
+                                                <RecommendationAnchor
+                                                    onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
+                                                >
+                                                    <RecommendationPlaceNameText>
+                                                        {isMoreVisible
+                                                            ? currentRecommendation.venue.name
+                                                            : chopStringRecommendationCardPlaceName(
+                                                                  currentRecommendation.venue.name,
+                                                                  viewport,
+                                                                  isFull
+                                                              )}
+                                                    </RecommendationPlaceNameText>
+                                                </RecommendationAnchor>
+                                            </Link>
+                                        )
                                     ) : (
                                         ''
                                     )
@@ -364,6 +480,12 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                             <WriteRecommendationButton
                                                                 handleClick={handleWriteRecommendation}
                                                             />
+                                                            {(user?.id === recommendation?.createdBy?.id ||
+                                                                userRole === UserRoleEnum.Admin) && (
+                                                                <EditRecommendationButton
+                                                                    handleClick={handleEditRecommendation}
+                                                                />
+                                                            )}
                                                         </MoreHorizontalContainer>
                                                     ) : null}
                                                     {isMoreVisible ? (
@@ -381,6 +503,11 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                 )}
                             </Media>
                         </RecommendationHeaderContainer>
+                        <CardRatings
+                            rating={currentRecommendation.rating}
+                            uniqueID={currentRecommendation ? currentRecommendation.id : 0}
+                            isAvg={false}
+                        />
                         {type !== CardRecommendationWideEnum.Restaurant && (
                             <>
                                 <Media queries={query} defaultMatches={{ mobile: true }}>
@@ -512,6 +639,13 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                     handleClick={handleWriteRecommendation}
                                                     isMobile={true}
                                                 />
+                                                {(user?.id === recommendation?.createdBy?.id ||
+                                                    userRole === UserRoleEnum.Admin) && (
+                                                    <EditRecommendationButton
+                                                        handleClick={handleEditRecommendation}
+                                                        isMobile={true}
+                                                    />
+                                                )}
                                                 <ShareButton
                                                     handleClick={handleShare}
                                                     isMobile={true}
@@ -536,6 +670,8 @@ const mapStateToProps = (state: StoreState) => ({
     userRole: state.userReducer.userRole,
     venuesInLists: state.userReducer.venuesListsVenueIDs,
     venuesRecommended: state.userReducer.venuesRecommendedVenueIDs,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
+    user: state.userReducer.user,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

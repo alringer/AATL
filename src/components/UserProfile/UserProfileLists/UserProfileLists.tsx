@@ -103,7 +103,7 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         fetchVenueLists()
         fetchVenueListsByCity()
         fetchVenueListsByCategory()
-    }, [])
+    }, [user])
 
     const fetchVenueLists = () => {
         axios
@@ -211,6 +211,21 @@ const UserProfileLists: React.FC<IUserProfileListsProps> = ({
         setCurrentListInView(null)
         setCurrentListInViewType(CurrentListInViewTypeEnum.MyRecommendation)
     }
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            if (JSON.parse(localStorage.getItem('clickedMyLists'))) {
+                const myLists = document.getElementById('myLists')
+                if (myLists) {
+                    // Smooth scroll to that elment
+                    myLists.scrollIntoView({
+                        behavior: 'smooth',
+                    })
+                }
+                localStorage.setItem('clickedMyLists', 'false')
+            }
+        }, 0)
+    })
 
     return (
         <UserProfileListsContainer>

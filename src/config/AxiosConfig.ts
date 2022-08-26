@@ -1,9 +1,9 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios'
-import SnackbarUtils from 'config/SnackbarUtils'
 import store from 'store'
 import { setIPLocation, setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
 import { setPrelaunchPeriod } from 'store/prelaunch/prelaunch_actions'
+import { flaggedEnum } from 'utilities/types/enumerations'
 import { ILocalPlacesTab } from 'utilities/types/localPlacesTab'
 
 const API_URL = '/api'
@@ -53,10 +53,11 @@ export const SEARCH_AATL_RESTAURANTS = `/restaurants/search`
 export const SEARCH_YELP_RESTAURANTS = '/lookup/restaurants'
 
 // MailChimp
-export const SUBSCRIBE_MAILCHIMP = '/mailing-list/subscribe'
+export const SUBSCRIBE_MAILCHIMP = (emailAddress: string) => `/mailing-list/subscribe?emailAddress=${emailAddress}`
 
 // Write Recommendation
 export const POST_RECOMMENDATION = '/recommendations'
+export const PUT_RECOMMENDATION = '/recommendations'
 
 // Venue List Metas
 export const VENUE_LIST = `/venue-list-metas`
@@ -161,8 +162,8 @@ export const VENUE_RECOMMENDATION_PROMPT = `/venue-recommendation-prompts`
 export const FLAGGED_RECOMMENDATIONS = (page: number, sort: string) =>
     `/flagged-recommendations?page=${page}&size=10&sort=${sort}`
 export const FLAG_RECOMMENDATION = (recommendationID: number) => `/recommendations/${recommendationID}/flag`
-export const UPDATE_FLAGGED_RECOMMENDATION = (flaggedRecommendationID: number) =>
-    `/flagged-recommendations/${flaggedRecommendationID}`
+export const UPDATE_FLAGGED_RECOMMENDATION = (flaggedRecommendationID: number, flagged: flaggedEnum) =>
+    `/flagged-recommendations/${flaggedRecommendationID}?flagged=${flagged}`
 
 const axiosInstance = Axios.create({
     baseURL: BASE_URL,
@@ -199,7 +200,7 @@ const requestInterceptor = async (config: any = {}) => {
 const responseInterceptor = (response: AxiosResponse) => {
     if (
         store.getState().prelaunchReducer.isPrelaunch === null &&
-        response.headers['x-aatl-prelaunch-period'] === 'PRELAUNCH_PERIOD'
+        response.headers['x-aatl-prelaunch-period'] == 'true'
     ) {
         store.dispatch(setPrelaunchPeriod(true))
     }
@@ -237,12 +238,12 @@ const responseInterceptorError = (error: AxiosError) => {
     //     SnackbarUtils.error(error.message)
     // }
     // TODO: Delete the error toast below. This is only for development purposes
-    SnackbarUtils.error(error)
+    // SnackbarUtils.error(error)
     return Promise.reject(error)
 }
 
 axiosInstance.interceptors.request.use(requestInterceptor)
-axiosInstance.interceptors.response.use(responseInterceptor, responseInterceptorError)
+axiosInstance.interceptors.response.use(responseInterceptor)
 
 const axios = axiosInstance
 

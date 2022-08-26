@@ -1,7 +1,7 @@
 export enum flaggedEnum {
-    None,
-    Pending,
-    Deleted,
+    None = 'None',
+    Pending = 'Pending',
+    Deleted = 'Deleted',
 }
 
 export enum sourceEnum {

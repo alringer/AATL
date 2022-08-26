@@ -62,6 +62,12 @@ export const ERROR_RECOMMENDATION_LIST: ISnackbarConstants = {
     Body: 'Meanwhile, browse other restaurants we have!',
 }
 
+export const ERROR_MORE_THAN_SEVEN_RECOMMENDATION_LISTS: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Error,
+    Title: 'We cannot feature this recommendation list',
+    Body: 'We cannot feature more than 7 lists at the same time.',
+}
+
 export const SIGN_UP: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Sign up complete',
@@ -177,11 +183,17 @@ export const FLAG_RECOMMENDATION: ISnackbarConstants = {
 export const DELETE_RECOMMENDATION: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Recommendation Deleted',
-    Body: 'A recommendation has been permanently removed from AATL records.',
+    Body: 'A recommendation has been permanently removed from LocalFoodBuzz records.',
 }
 
 export const UNFLAG_RECOMMENDATION: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Recommendation unflagged',
     Body: 'A flagged recommendation has been marked as appropriate.',
+}
+
+export const PRELAUNCH_MESSAGE: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Hold On To Your Hat',
+    Body: 'We have not launched yet.  Come back and checkout all the features soon. In the meantime, we appreciate you writing recommendations to your favorite restaurants!',
 }

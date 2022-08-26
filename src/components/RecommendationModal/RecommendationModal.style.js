@@ -1,4 +1,5 @@
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
+import CloseIcon from '@material-ui/icons/Close'
 import { CustomButton } from 'style/Button/Button.style'
 import { CustomIconButton } from 'style/Button/IconButton.style'
 import { TextLink } from 'style/Button/TextLink.style'
@@ -27,7 +28,6 @@ export const RecommendationModalHeaderContainer = styled.div`
         padding: 24px;
     }
     @media ${device.laptop} {
-        
     }
 `
 
@@ -52,11 +52,11 @@ export const RecommendationModalCloseButton = styled(RecommendationModalHeaderBu
     margin-bottom: 20px;
 `
 export const RecommendationModalTipsButton = styled(RecommendationModalHeaderButton)`
-    background-color: ${props => props.theme.mushroom};
+    background-color: ${(props) => props.theme.mushroom};
     backdrop-filter: blur(10px);
 
     :hover {
-        background-color: ${props => props.theme.mushroom};
+        background-color: ${(props) => props.theme.mushroom};
         backdrop-filter: blur(10px);
     }
 `
@@ -70,8 +70,8 @@ export const RecommendationModalContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    color: ${props => props.theme.charcoalGrey};
-    background-color: ${props => props.theme.white};
+    color: ${(props) => props.theme.charcoalGrey};
+    background-color: ${(props) => props.theme.white};
 
     padding: 0 20px 24px;
 `
@@ -99,7 +99,7 @@ export const RecommendationEditorTitle = styled.p`
     line-height: 1.19;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     align-self: center;
     @media ${device.mobile} {
@@ -119,25 +119,25 @@ export const RecommendationEditorRowContainer = styled.div`
 
     margin-bottom: 70px;
 
-    ${props => {
+    ${(props) => {
         if (props.id === 'recommendation-description') {
             return css`
                 margin-bottom: 50px;
             `
-        } 
+        }
     }}
 
     @media ${device.mobile} {
         flex-direction: column;
         padding: 5px 0 5px 8px;
         align-items: flex-start;
-        border-left: solid 1px ${props => props.theme.pinkishTan};
+        border-left: solid 1px ${(props) => props.theme.pinkishTan};
     }
     @media ${device.tablet} {
         flex-direction: column;
         padding: 12px 0 12px 20px;
         align-items: flex-start;
-        border-left: solid 1px ${props => props.theme.pinkishTan};
+        border-left: solid 1px ${(props) => props.theme.pinkishTan};
     }
     @media ${device.laptop} {
         flex-direction: row;
@@ -160,7 +160,8 @@ export const RecommendationEditorInputLabelContainer = styled.div`
         align-items: flex-start;
         justify-content: space-between;
     }
-    @media ${device.tablet} {}
+    @media ${device.tablet} {
+    }
     @media ${device.laptop} {
         width: 50px;
         flex-direction: column;
@@ -179,7 +180,7 @@ export const RecommendationEditorInputLabelText = styled.p`
     line-height: 1.38;
     letter-spacing: normal;
     text-align: right;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 `
 
 export const CurrentTextLength = styled(RecommendationEditorInputLabelText)`
@@ -209,18 +210,44 @@ export const RecommendationEditorInputContainer = styled.div`
         padding-bottom: 0;
     }
     @media ${device.laptop} {
-        border-left: solid 1px ${props => props.theme.pinkishTan};
+        border-left: solid 1px ${(props) => props.theme.pinkishTan};
         padding-left: 20px;
         padding-top: 12px;
         padding-bottom: 12px;
     }
 `
 
+export const RecommendationEditorImageDeleteButton = styled(CustomIconButton)`
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    border-radius: 50%;
+    border-color: ${(props) => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
+
+    padding: 5px;
+
+    && {
+        min-width: 0;
+
+        ::after {
+            border-radius: 50%;
+        }
+    }
+`
+
+export const RecommendationEditorImageDeleteCloseIcon = styled(CloseIcon)`
+    color: ${(props) => props.theme.mushroom};
+    width: 12px;
+    height: 12px;
+`
+
 export const RecommendationEditorTextField = styled(TextareaAutosize)`
     width: 100%;
     border: none;
     resize: none;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
     font-stretch: normal;
     font-style: normal;
     letter-spacing: normal;
@@ -270,17 +297,18 @@ export const RecommendationEditorDescriptionTextArea = styled(RecommendationEdit
 export const RecommendationEditorPublishButton = styled(CustomButton)`
     align-self: center;
 
-    color: ${props => props.theme.white};
-    background-color: ${props => props.theme.darkSlateBlue};
+    color: ${(props) => props.theme.white};
+    background-color: ${(props) => props.theme.darkSlateBlue};
     :hover {
-        background-color: ${props => props.theme.darkSlateBlue};
+        background-color: ${(props) => props.theme.darkSlateBlue};
     }
 
-    @media ${device.mobile}{
+    @media ${device.mobile} {
         margin-bottom: 14px;
     }
-    @media ${device.tablet}{}
-    @media ${device.laptop}{
+    @media ${device.tablet} {
+    }
+    @media ${device.laptop} {
         margin-bottom: 100px;
     }
 `
@@ -310,7 +338,7 @@ export const RecommendationEditorPublishedTitle = styled.p`
     line-height: 1.19;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     @media ${device.mobile} {
         font-size: 24px;
@@ -346,7 +374,7 @@ export const RecommendationEditorPublishedBody = styled.p`
     line-height: 1.38;
     letter-spacing: normal;
     text-align: center;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 20px;
 
@@ -361,7 +389,7 @@ export const RecommendationEditorPublishedBody = styled.p`
 export const RecommendationEditorCopyRecommendationButtonContainer = styled.div`
     width: 100%;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 `
@@ -405,7 +433,7 @@ export const RecommendationEditorReadOurGuidelines = styled(TextLink)`
     line-height: 1.67;
     letter-spacing: 2px;
     text-align: right;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 `
 
 // Tips
@@ -420,7 +448,8 @@ export const TipsContainer = styled.div`
         bottom: 0;
         right: 0;
     }
-    @media ${device.laptop} {}
+    @media ${device.laptop} {
+    }
 `
 
 export const TipsToggledContainer = styled.div`
@@ -428,7 +457,7 @@ export const TipsToggledContainer = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 280px;
-    
+
     border-radius: 4px;
     box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.1);
     background-color: #efe6e1;
@@ -452,7 +481,7 @@ export const TipsHeaderContainer = styled.div`
 export const TipsHR = styled.hr`
     width: 60px;
     height: 2px;
-    color: ${props => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 
     margin-bottom: 10px;
 `
@@ -465,7 +494,7 @@ export const TipsTitle = styled.p`
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 10px;
 `
@@ -476,23 +505,23 @@ export const TipsDescription = styled.p`
     font-style: normal;
     line-height: 1.38;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 20px;
 `
 export const TipsMoreButton = styled(CustomButton)`
-    color: ${props => props.theme.mushroom};
-    background-color: ${props => props.theme.white};
-    border-color: ${props => props.theme.darkGreyOpaque};
+    color: ${(props) => props.theme.mushroom};
+    background-color: ${(props) => props.theme.white};
+    border-color: ${(props) => props.theme.darkGreyOpaque};
     :hover {
-        border-color: ${props => props.theme.darkGreyOpaque};
+        border-color: ${(props) => props.theme.darkGreyOpaque};
     }
 `
 
 export const TipsCloseButton = styled(CustomIconButton)`
     border-radius: 50%;
-    border-color: ${props => props.theme.mushroom};
-    color: ${props => props.theme.mushroom};
+    border-color: ${(props) => props.theme.mushroom};
+    color: ${(props) => props.theme.mushroom};
 
     min-width: 0px !important;
     width: 24px;
@@ -515,4 +544,37 @@ export const TipsCloseButton = styled(CustomIconButton)`
 
 export const RecommendationPublishedButtonAnchor = styled.a`
     text-decoration: none;
+`
+
+export const RecommendationEditorForkContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 24px;
+    height: 24px;
+
+    margin-right: 10px;
+
+    cursor: pointer;
+`
+
+export const RecommendationEditorForkMessageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-left: 10px;
+`
+export const RecommendationEditorForkMessage = styled.p`
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.38;
+    letter-spacing: normal;
+    color: #363940;
 `

@@ -37,7 +37,7 @@ import {
     ListModalMainContentContainer,
     ListModalNavigationButton,
     ListModalTitleText,
-    SubmitButton
+    SubmitButton,
 } from './ListModal.style'
 
 interface IReduxProps {
@@ -65,24 +65,26 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
     const { enqueueSnackbar } = useSnackbar()
 
     React.useEffect(() => {
-        const config = {
-            headers: {
-                Authorization: getTokenConfig(),
-            },
+        if (user?.id) {
+            const config = {
+                headers: {
+                    Authorization: getTokenConfig(),
+                },
+            }
+            setLoading(true)
+            axios
+                .get(FETCH_VENUE_LISTS(user.id), config)
+                .then((res) => {
+                    if (res && res.data && res.data.length && res.data[0] && res.data[0].id) {
+                        setRestaurantLists(res.data)
+                        setSelectedListID(res.data[0].id)
+                    }
+                })
+                .catch((err) => console.log(err))
+                .finally(() => {
+                    setLoading(false)
+                })
         }
-        setLoading(true)
-        axios
-            .get(FETCH_VENUE_LISTS(user.id), config)
-            .then((res) => {
-                if (res && res.data && res.data.length && res.data[0] && res.data[0].id) {
-                    setRestaurantLists(res.data)
-                    setSelectedListID(res.data[0].id)
-                }
-            })
-            .catch((err) => console.log(err))
-            .finally(() => {
-                setLoading(false)
-            })
     }, [])
 
     const handleSelect = (restaurantListID: number) => {
@@ -206,8 +208,8 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
                             </ListModalCardButton>
                         ))
                     ) : (
-                                <p>{S.LIST_MODAL.AddToRestaurant.EmptyMessage}</p>
-                            )}
+                        <p>{S.LIST_MODAL.AddToRestaurant.EmptyMessage}</p>
+                    )}
                     <Media queries={query} defaultMatches={{ mobile: true }}>
                         {(matches) => (
                             <>

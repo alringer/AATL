@@ -3,7 +3,9 @@ import VersionInfo from 'constants/GitProperties.json'
 import React from 'react'
 
 const Version = () => {
-    return (
+    return !JSON.parse(localStorage.getItem('isPrelaunch')) ? (
+        <p>Redirecting...</p>
+    ) : (
         <div>
             <pre>
                 <p>git.build.time: {VersionInfo['git.build.time']}</p>

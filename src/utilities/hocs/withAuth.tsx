@@ -1,5 +1,6 @@
 import { withKeycloak } from '@react-keycloak/nextjs'
 import { KeycloakInstance } from 'keycloak-js'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { Subtract } from 'utility-types'
 
@@ -19,9 +20,12 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
     const KeycloakComponent = withKeycloak((props) => {
         // console.log('Props in Keycloak Component: ', props)
         const { keycloak, isServer, keycloakInitialized, ...passProps } = props
+        const router = useRouter()
         const handleLogin = () => {
             if (keycloak) {
-                keycloak.login()
+                // keycloak.login()
+                const url = keycloak.createLoginUrl()
+                location.assign(url)
             } else {
                 console.log('Keycloak not available')
             }
@@ -35,7 +39,9 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
         }
         const handleSignUp = () => {
             if (keycloak) {
-                keycloak.register()
+                // keycloak.register()
+                const url = keycloak.createRegisterUrl()
+                location.assign(url)
             } else {
                 console.log('Keycloak not available')
             }
@@ -44,7 +50,9 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
             if (keycloak && keycloak.authenticated) {
                 callback()
             } else {
-                keycloak.login()
+                // keycloak.login()
+                const url = keycloak.createLoginUrl()
+                location.assign(url)
             }
         }
         const getToken = () => {
@@ -64,7 +72,7 @@ const withAuth = <P extends IWithAuthInjectedProps>(WrappedComponent: React.Comp
 
         return (
             <WrappedComponent
-                {...((passProps as unknown) as P)}
+                {...(passProps as unknown as P)}
                 keycloak={keycloak}
                 keycloakLogin={handleLogin}
                 keycloakLogout={handleLogout}

@@ -1,9 +1,9 @@
 {
-  "git.build.time" : "2021-11-11 08:36:22AM-0800",
+  "git.build.time" : "2022-04-05 10:12:56AM-0700",
   "git.build.version" : "0.0.1-SNAPSHOT",
-  "git.commit.id.abbrev" : "f51a963",
-  "git.commit.message.full" : "Merged in AATL-890 (pull request #81)\n\nChanged header for restaurant search modal\n\nApproved-by: Yoon Chang",
-  "git.commit.time" : "2021-11-04 08:14:31AM-0700",
-  "git.commit.user.name" : "Lucas Bajoua",
-  "git.total.commit.count" : "327"
+  "git.commit.id.abbrev" : "3a77ed8",
+  "git.commit.message.full" : "temp",
+  "git.commit.time" : "2022-04-05 10:12:13AM-0700",
+  "git.commit.user.name" : "lucasbajoua",
+  "git.total.commit.count" : "379"
 }

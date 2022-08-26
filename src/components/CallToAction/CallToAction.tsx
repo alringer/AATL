@@ -7,7 +7,10 @@ import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { openRecommendationModal } from 'store/recommendationModal/recommendationModal_actions'
-import { RecommendationModalPlaceInformation } from 'store/recommendationModal/recommendationModal_types'
+import {
+    RecommendationModalPlaceInformation,
+    RecommendationModalType,
+} from 'store/recommendationModal/recommendationModal_types'
 import { fetchUser } from 'store/user/user_actions'
 import { chopStringSmallCallToAction } from 'utilities/helpers/chopString'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -80,7 +83,7 @@ const CallToAction: React.FC<ICallToActionProps> = ({
                 openRecommendationModal({
                     placeID: String(currentPlace.id),
                     placeName: currentPlace.name,
-                    isAATL: true,
+                    recommendation_type: RecommendationModalType.AATL,
                 })
             )
         }
