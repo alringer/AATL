@@ -141,8 +141,10 @@ export const FETCH_CURRENT_USER_PROFILE = '/me'
 export const FETCH_USER_PROFILE = (userID: number) => {
     return `/user-profiles/${userID}`
 }
-export const FETCH_USER_RECOMMENDATIONS = (userID: number, page: number) => {
-    return `/user-profiles/${userID}/recommendations?page=${page}&size=10&sort=createdAt,DESC`
+export const FETCH_USER_RECOMMENDATIONS = (userID: number, page?: number, size?: number) => {
+    return `/user-profiles/${userID}/recommendations?sort=createdAt,DESC${size ? `&size=${size}` : ''}${
+        page ? `&page=${page}` : ''
+    }`
 }
 export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
     return `/user-profiles/${userID}/instagram/authorize`

@@ -45,7 +45,8 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
     const [currentYelpTotal, setCurrentYelpTotal] = React.useState(0)
     const [currentYelpResults, setCurrentYelpResults] = React.useState<IYelpRestaurant[]>([])
     // Loading
-    const [isLoading, setLoading] = React.useState(false)
+    const [isLFBLoading, setLFBLoading] = React.useState(false)
+    const [isYelpLoading, setYelpLoading] = React.useState(false)
 
     const router = useRouter()
 
@@ -119,7 +120,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         inputSort,
         inputPage
     ) => {
-        setLoading(true)
+        setLFBLoading(true)
         const payload =
             inputCategoryID !== null && inputCategoryID !== undefined
                 ? {
@@ -145,14 +146,15 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                     setCurrentPageCount(res.data.totalPages)
                     setCurrentTotal(res.data.totalElements)
                     setRobust(false)
-                    setLoading(false)
                 } else {
                     // Trigger Yelp Search if there are no LFB results
                     searchYelp(inputPlace, inputLat, inputLng, currentYelpOffset, currentYelpLimit)
                 }
             })
             .catch((err) => console.log(err))
-            .finally(() => {})
+            .finally(() => {
+                setLFBLoading(false)
+            })
     }
 
     const searchYelp = (
@@ -162,7 +164,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
         inputOffset: number,
         inputLimit: number
     ) => {
-        setLoading(true)
+        setYelpLoading(true)
         axios
             .get(SEARCH_YELP_RESTAURANTS, {
                 params: {
@@ -193,7 +195,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             })
             .catch((err) => console.log(err))
             .finally(() => {
-                setLoading(false)
+                setYelpLoading(false)
             })
     }
 
@@ -303,7 +305,8 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                 handleYelpSearch={handleYelpSearch}
                 openSearchModal={openSearchModal}
                 isRobust={isRobust}
-                isLoading={isLoading}
+                isLFBLoading={isLFBLoading}
+                isYelpLoading={isYelpLoading}
             />
         </div>
     )
