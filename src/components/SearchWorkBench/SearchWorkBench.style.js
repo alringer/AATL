@@ -51,6 +51,53 @@ export const SearchWorkBenchLookupContainer = styled.div`
     }
 `
 
+export const SearchWorkBenchYelpHeaderContainer = styled.div`
+    display: flex;
+    align-items: center;
+
+    @media ${device.mobile} {
+        padding: 10px 0;
+        margin-top: 10px;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+    }
+    @media ${device.tablet} {
+        padding: 10px 0;
+        margin-top: 38px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+`
+
+export const SearchWorkBenchYelpHeaderText = styled.div`
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+
+    color: #363940;
+
+    @media ${device.mobile} {
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        margin-top: 15px;
+    }
+    @media ${device.tablet} {
+        font-size: 20px;
+        line-height: 24px;
+        text-align: left;
+        margin-top: 0px;
+    }
+    @media ${device.laptop} {
+        font-size: 20px;
+        line-height: 24px;
+    }
+`
+
+export const SearchWorkBenchYelpImage = styled.img`
+    object-fit: cover;
+`
+
 export const PaginationContainer = styled.div`
     display: flex;
     width: 100%;
