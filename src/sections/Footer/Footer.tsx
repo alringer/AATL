@@ -87,7 +87,6 @@ const Footer: React.FC<IFooterProps> = ({ isPrelaunch }) => {
                             </FooterButtonsContainer>
                         </FooterLeftColumn>
                         <FooterRightColumn>
-                            <FooterInformationTitle>Most Popular</FooterInformationTitle>
                             <FooterRightColumnRow>
                                 <FooterLinksContainer>
                                     <Link href={R.ROUTE_ITEMS.cities} passHref>
@@ -140,7 +139,16 @@ const Footer: React.FC<IFooterProps> = ({ isPrelaunch }) => {
                                 <FooterLinksContainer>
                                     <FooterLinkTitle>{S.FOOTER_ITEMS.ContactUs}</FooterLinkTitle>
                                     <ContactUsRowContainer>
-                                        <EmailIcon /> <ContactUsText>{S.FOOTER_ITEMS.ContactEmail}</ContactUsText>
+                                        <EmailIcon />{' '}
+                                        <Link
+                                            href={`mailto:${S.FOOTER_ITEMS.ContactEmail}`}
+                                            passHref={true}
+                                            prefetch={false}
+                                        >
+                                            <FooterTermsOfUseAnchor>
+                                                <ContactUsText>{S.FOOTER_ITEMS.ContactEmail}</ContactUsText>
+                                            </FooterTermsOfUseAnchor>
+                                        </Link>
                                     </ContactUsRowContainer>
                                     <ContactUsRowContainer>
                                         <LocationIcon /> <ContactUsText>{S.FOOTER_ITEMS.ContactLocation}</ContactUsText>

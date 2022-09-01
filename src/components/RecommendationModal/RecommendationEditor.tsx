@@ -16,6 +16,8 @@ import { IRecommendation } from 'utilities/types/recommendation'
 import {
     CurrentTextLength,
     MaxTextLength,
+    RecommendationEditorCheckbox,
+    RecommendationEditorCheckboxMessage,
     RecommendationEditorContainer,
     RecommendationEditorDescriptionTextArea,
     RecommendationEditorForkInputContainer,
@@ -66,6 +68,7 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     const [description, setDescription] = React.useState('')
     const [rating, setRating] = React.useState(3)
     const [previewRating, setPreviewRating] = React.useState(null)
+    const [isConfirmed, setConfirmed] = React.useState(false)
     const [file, setFile] = React.useState()
     const [temporaryImageKey, setTemporaryImageKey] = React.useState()
     const [imagePreviewURL, setImagePreviewURL] = React.useState('')
@@ -102,6 +105,10 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
     }
     const handleChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(String(e.target.value))
+    }
+
+    const handleClickConfirmed = () => {
+        setConfirmed((prev) => !prev)
     }
 
     const handleDrag = () => {
@@ -362,9 +369,23 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
                     </RecommendationEditorForkMessageContainer>
                 </RecommendationEditorForkInputContainer>
             </RecommendationEditorRowContainer>
+            <RecommendationEditorRowContainer id="recommendation-description">
+                <RecommendationEditorInputLabelContainer>
+                    <RecommendationEditorInputLabelText>
+                        {/* {S.RECOMMENDATION_EDITOR.LabelDescription} */}
+                        Terms
+                    </RecommendationEditorInputLabelText>
+                </RecommendationEditorInputLabelContainer>
+                <RecommendationEditorInputContainer>
+                    <RecommendationEditorCheckbox checked={isConfirmed} onChange={handleClickConfirmed} />
+                    <RecommendationEditorCheckboxMessage>
+                        {S.RECOMMENDATION_EDITOR.CheckBox}
+                    </RecommendationEditorCheckboxMessage>
+                </RecommendationEditorInputContainer>
+            </RecommendationEditorRowContainer>
             <RecommendationEditorPublishButton
                 onClick={handleClickSubmit}
-                disabled={title === '' || description === '' || isLoading}
+                disabled={title === '' || description === '' || !isConfirmed || isLoading}
                 // || !temporaryImageKey || !file
             >
                 {recommendation_type === RecommendationModalType.Edit

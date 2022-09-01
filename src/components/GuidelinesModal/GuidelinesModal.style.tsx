@@ -9,28 +9,46 @@ export const GuidelinesModalCustomDialog = styled(Dialog)`
     width: 100%;
 `
 
+export const GuidelinesModalContainer = styled.div`
+    padding: 30px;
+`
+
+export const GuidelinesModalDiv = styled.div`
+    display: flex;
+    @media ${device.mobile} {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    @media ${device.laptop} {
+    }
+`
+
 export const GuidelinesModalHeader = styled.p`
     font-weight: 500;
     font-size: 16px;
     line-height: 1.25;
     color: ${(props) => props.theme.mushroom};
     letter-spacing: 2.67px;
-    margin-left: 37px;
-    margin-top: 30px;
 `
 export const GuidelinesModalMessage = styled.p`
     color: ${(props) => props.theme.charcoalGrey};
     line-height: 1.38;
     font-size: 16px;
     font-family: Rubik;
-    margin-left: 37px;
-    margin-top: 13px;
-    margin-right: 40px;
-    margin-bottom: 40px;
     display: inline;
-    width: 1100px;
+    @media ${device.mobile} {
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        width: 80%;
+        margin-right: 20px;
+    }
     @media ${device.laptop} {
-        height: 88px;
     }
 `
 
@@ -42,29 +60,18 @@ export const GuidelinesModalOkGotIt = styled(CustomButton)`
     line-height: 1.67;
     border: solid 2px rgba(30, 31, 34, 0.1);
     background-color: white;
-    margin-top: 26px;
-    margin-right: 40px;
-    margin-bottom: 40px;
     max-height: 90px;
     color: ${(props) => props.theme.pinkishTan};
     @media ${device.mobile} {
         width: 200px;
+        margin-top: 20px;
     }
-    @media ${device.laptop} {
+    @media ${device.tablet} {
         width: 180px;
         height: 46px;
-    }
-`
-export const GuidelinesModalDiv = styled.div`
-    display: flex;
-    @media ${device.tablet} {
-        align-items: center;
-    }
-    @media ${device.mobile} {
-        align-items: center;
-    }
-    @media ${device.laptop} {
-        align-items: normal;
+        margin-top: 0;
+        align-self: center;
+        margin-left: auto;
     }
 `
 
@@ -73,10 +80,8 @@ export const GuidelinesModalVerticalLine = styled.span`
         display: inline;
         border-left: 1px solid;
         border-color: ${(props) => props.theme.mushroom};
-        margin-top: 13px;
-        margin-right: 40px;
-        height: 88px;
+
+        margin-left: auto;
+        margin-right: auto;
     }
 `
-
-export const GuidelinesModalContainer = styled.div``

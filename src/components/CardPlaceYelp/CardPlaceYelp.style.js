@@ -24,18 +24,20 @@ export const CardPlaceWideCardContainer = styled(WideCardContainer)`
         if (props.id === 'search') {
             return css`
                 @media ${device.tablet} {
-                    height: 180px !important;
+                    height: 220px;
+                    min-height: 200px;
                 }
                 ${CardPlaceWideCardImageContainer} {
                     @media ${device.tablet} {
                         height: 100% !important;
-                        width: 220px !important;
+                        width: 300px !important;
                     }
                 }
 
                 ${CardPlaceWideCardContentContainer} {
                     @media ${device.tablet} {
                         padding: 20px !important;
+                        min-height: 0;
                     }
 
                     @media ${device.laptop} {
@@ -46,7 +48,19 @@ export const CardPlaceWideCardContainer = styled(WideCardContainer)`
         }
     }}
 `
-export const CardPlaceWideCardImageContainer = styled(WideCardImageContainer)``
+export const CardPlaceWideCardImageContainer = styled(WideCardImageContainer)`
+    @media ${device.mobile} {
+        height: 160px;
+        width: 100%;
+    }
+
+    @media ${device.tablet} {
+        height: 100%;
+        width: 300px;
+    }
+    @media ${device.laptop} {
+    }
+`
 export const CardPlaceWideCardContentContainer = styled(WideCardContentContainer)`
     position: relative;
     @media ${device.mobile} {

@@ -9,6 +9,7 @@ import { StoreState } from 'store'
 import { openSearchModal } from 'store/searchModal/searchModal_actions'
 import { openUserProfileEditModal } from 'store/userProfileEditModal/userProfileEditModal_actions'
 import { OpenUserProfileEditModalPayload } from 'store/userProfileEditModal/userProfileEditModal_types'
+import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 import {
     UserProfileInfluencerGuideButton,
@@ -47,8 +48,13 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
 }) => {
     const [isComplete, setComplete] = React.useState(false)
     const [recommendationsCount, setRecommendationsCount] = React.useState(0)
+    const [recommendedVenueIDMap, setRecommendedVenueIDMap] = React.useState<{ [key: number]: true }>({})
     const [isLocked, setLocked] = React.useState(true)
     const [isLockedComponentsVisible, setLockedComponentsVisible] = React.useState(true)
+
+    React.useEffect(() => {
+        setRecommendationsCount(Object.keys(recommendedVenueIDMap).length)
+    }, [recommendedVenueIDMap])
 
     React.useEffect(() => {
         if (recommendationsCount >= 3) {
@@ -59,7 +65,7 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
     React.useEffect(() => {
         if (user && (user.firstName || user.lastName) && user.content && user.userByLine) {
             setComplete(true)
-            fetchRecommendations(user.id, 0)
+            fetchRecommendations(user.id)
         } else {
             setComplete(false)
         }
@@ -83,13 +89,25 @@ const UserProfileInfluencerGuide: React.FC<IUserProfileInfluencerGuideProps> = (
         openSearchModal()
     }
 
-    const fetchRecommendations = (id: number, page: number) => {
+    const fetchRecommendations = (id: number) => {
         if (user) {
             axios
-                .get(FETCH_USER_RECOMMENDATIONS(id, page))
+                .get(FETCH_USER_RECOMMENDATIONS(id))
                 .then((res) => {
-                    console.log('Fetched recommendations: ', res)
-                    setRecommendationsCount(numPlacesRecommended)
+                    if (res?.data) {
+                        let newRecommendedVenueIDMap = Object.assign({}, recommendedVenueIDMap)
+                        res?.data?.map((recommendation: IRecommendation) => {
+                            if (recommendation && recommendation?.venue) {
+                                if (!newRecommendedVenueIDMap[recommendation.venue.id]) {
+                                    newRecommendedVenueIDMap = Object.assign(newRecommendedVenueIDMap, {
+                                        ...newRecommendedVenueIDMap,
+                                        [recommendation.venue.id]: true,
+                                    })
+                                }
+                            }
+                        })
+                        setRecommendedVenueIDMap({ ...newRecommendedVenueIDMap })
+                    }
                 })
                 .catch((err) => console.log(err))
         }
