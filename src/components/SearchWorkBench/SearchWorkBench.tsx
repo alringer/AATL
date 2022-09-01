@@ -76,7 +76,8 @@ interface ISearchWorkBenchProps {
     currentYelpLimit: number | undefined
     topCategories: ICategory[]
     isRobust: boolean
-    isLoading: boolean
+    isLFBLoading: boolean
+    isYelpLoading: boolean
     handleLFBSearch: SearchLFB
     handleYelpSearch: SearchYelp
     openSearchModal: () => void
@@ -124,7 +125,8 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     inputPageCount,
     inputPage,
     inputTotal,
-    isLoading,
+    isLFBLoading,
+    isYelpLoading,
     isRobust,
 }) => {
     const classes = useStyles()
@@ -173,7 +175,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                 inputAddress ? `${S.SEARCH_PAGE.NearBy} ${inputAddress}` : ''
             }`}</SearchWorkBenchTitle>
             <SearchWorkBenchSubTitle>
-                {!isLoading && (
+                {!isLFBLoading && (
                     <>
                         {S.SEARCH_PAGE.WeHave} <b>{inputTotal}</b>{' '}
                         {inputPlace
@@ -219,7 +221,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             </FormControl>
                         </SearchWorkBenchPaginationFilterContainer>
                     )}
-                    {isLoading ? (
+                    {isLFBLoading ? (
                         <NoSearchResultsContainer>
                             <SearchModalLoadingIconContainer>
                                 <CircularProgress />
@@ -263,7 +265,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                             </Media>
                         </NoSearchResultsContainer>
                     )}
-                    {isLoading ? (
+                    {isYelpLoading ? (
                         <NoSearchResultsContainer>
                             <SearchModalLoadingIconContainer>
                                 <CircularProgress />
@@ -312,8 +314,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                     <Media queries={query}>
                         {(matches) => (
                             <>
-                                {((searchResults && searchResults.length > 0) ||
-                                    (searchYelpResults && searchYelpResults.length > 0)) && (
+                                {searchResults && searchResults.length > 0 && (
                                     <SearchCouldNotFind openSearchModal={openSearchModal} />
                                 )}
                             </>

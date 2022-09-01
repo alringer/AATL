@@ -1,3 +1,4 @@
+import Checkbox from '@material-ui/core/Checkbox'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import CloseIcon from '@material-ui/icons/Close'
 import { CustomButton } from 'style/Button/Button.style'
@@ -614,4 +615,25 @@ export const RecommendationEditorForkMessage = styled.p`
     line-height: 1.38;
     letter-spacing: normal;
     color: #363940;
+`
+
+export const RecommendationEditorCheckbox = styled(Checkbox)`
+    color: ${(props) => props.theme.mushroom};
+    /* .Mui-checked {
+        color: ${(props) => props.theme.mushroom} !important;
+    } */
+
+    padding: 0;
+
+    ${(props) => {
+        if (props.checked) {
+            return css`
+                color: ${(props) => props.theme.mushroom} !important;
+            `
+        }
+    }}
+`
+
+export const RecommendationEditorCheckboxMessage = styled(RecommendationEditorForkMessage)`
+    margin-left: 20px;
 `
