@@ -1,6 +1,7 @@
 import DefaultUserProfileImage from 'assets/user-profile-icon.svg'
 import UserProfileInstagramIcon from 'assets/user-profile-instagram-icon.svg'
 import Image from 'components/Image/Image'
+import axios, { FETCH_USER_RECOMMENDATIONS } from 'config/AxiosConfig'
 import { INSTAGRAM_CLIENT_ID, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import * as S from 'constants/StringConstants'
 import React from 'react'
@@ -12,6 +13,7 @@ import { openUserProfileEditModal } from 'store/userProfileEditModal/userProfile
 import { OpenUserProfileEditModalPayload } from 'store/userProfileEditModal/userProfileEditModal_types'
 import { query } from 'style/device'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
+import { IRecommendation } from 'utilities/types/recommendation'
 import { IUserProfile } from 'utilities/types/userProfile'
 import {
     UserProfileBannerContainer,
@@ -37,7 +39,6 @@ import {
 
 interface IReduxProps {
     currentUser: IUserProfile | null
-    numberOfPlacesRecommended: number[] | null
     openUserProfileEditModal: (payload: OpenUserProfileEditModalPayload) => void
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
@@ -50,7 +51,6 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     currentUser,
     openUserProfileEditModal,
     fetchUser,
-    numberOfPlacesRecommended,
 }) => {
     const isOwner = currentUser && user && currentUser.id === user.id
     // Input States
@@ -68,6 +68,8 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         userDescription: user.content ? user.content : '',
     })
     const [instagramLink, setInstagramLink] = React.useState(null)
+    const [numberOfPlacesRecommended, setNumberOfPlacesRecommended] = React.useState(0)
+    const [recommendedVenueIDMap, setRecommendedVenueIDMap] = React.useState<{ [key: number]: true }>({})
 
     React.useEffect(() => {
         setUserInformation({
@@ -92,7 +94,36 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                 ? `https://api.instagram.com/oauth/authorize?client_id=${encoded}&redirect_uri=${INSTAGRAM_REDIRECT_URI}&scope=user_profile,user_media&response_type=code`
                 : ''
         )
+        fetchRecommendations(user.id)
     }, [user])
+
+    React.useEffect(() => {
+        setNumberOfPlacesRecommended(Object.keys(recommendedVenueIDMap).length)
+    }, [recommendedVenueIDMap])
+
+    const fetchRecommendations = (id: number) => {
+        if (user) {
+            axios
+                .get(FETCH_USER_RECOMMENDATIONS(id))
+                .then((res) => {
+                    if (res?.data) {
+                        let newRecommendedVenueIDMap = Object.assign({}, recommendedVenueIDMap)
+                        res?.data?.map((recommendation: IRecommendation) => {
+                            if (recommendation && recommendation?.venue) {
+                                if (!newRecommendedVenueIDMap[recommendation.venue.id]) {
+                                    newRecommendedVenueIDMap = Object.assign(newRecommendedVenueIDMap, {
+                                        ...newRecommendedVenueIDMap,
+                                        [recommendation.venue.id]: true,
+                                    })
+                                }
+                            }
+                        })
+                        setRecommendedVenueIDMap({ ...newRecommendedVenueIDMap })
+                    }
+                })
+                .catch((err) => console.log(err))
+        }
+    }
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
@@ -166,7 +197,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                 </UserProfileDescriptionContainer>
                                 <UserProfileNumberOfRecommendations>
                                     {S.USER_PROFILE_BANNER.Recommends}:{' '}
-                                    {numberOfPlacesRecommended ? numberOfPlacesRecommended.length : 0}{' '}
+                                    {numberOfPlacesRecommended ? numberOfPlacesRecommended : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
                                 {
@@ -200,7 +231,6 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
 const mapStateToProps = (state: StoreState) => ({
     currentUser: state.userReducer.user,
-    numberOfPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs,
 })
 
 const mapDispatchToProps = (dispatch: any) =>

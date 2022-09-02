@@ -282,6 +282,7 @@ export const RECOMMENDATION_EDITOR = {
     ThreeForks: `Good. I'd come back.`,
     FourForks: `Great. Worth a detour.`,
     FiveForks: `Outstanding. You MUST come here.`,
+    CheckBox: `When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law.`,
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -620,6 +621,6 @@ export const FOODIE_MODAL = {
 export const GUIDELINES_MODAL = {
     Title: 'RECOMMENDATION GUIDELINES',
     Message:
-        'LocalFoodBuzz.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
+        'LocalFoodBuzz.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.',
     OkGotIt: 'OK, GOT IT',
 }
