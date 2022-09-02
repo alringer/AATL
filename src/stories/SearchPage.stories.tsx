@@ -34,7 +34,8 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             currentYelpLimit={0}
             searchYelpResults={[]}
             isRobust={false}
-            isLoading={false}
+            isLFBLoading={false}
+            isYelpLoading={false}
         />
     )
 })
