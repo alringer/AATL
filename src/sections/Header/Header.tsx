@@ -244,13 +244,13 @@ const Header: React.FC<IHeaderProps> = ({
                 </MenuItemContainer>
             )}
             {isSearchEnabled && (
-                <MenuItemContainer id={'leftPadded'} ref={searchReference.ref}>
+                <MenuItemContainer id={'leftPadded'}>
                     {!isSearchToggled || !searchReference.isComponentVisible ? (
                         <SearchToggleButton onClick={handleOpenSearch}>
                             <Image src={SearchSVG} alt="logo" />
                         </SearchToggleButton>
                     ) : (
-                        <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                        <HeaderSearch handleCloseSearch={handleCloseSearch} searchRef={searchReference.ref} />
                     )}
                 </MenuItemContainer>
             )}
@@ -281,7 +281,7 @@ const Header: React.FC<IHeaderProps> = ({
                                 <Image src={MobileSearchSvg} alt="" />
                             </IconButton>
                         ) : (
-                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
+                            <HeaderSearch searchRef={searchReference.ref} handleCloseSearch={handleCloseSearch} />
                         )}
                     </MobileIconContainer>
                 )}
