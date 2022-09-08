@@ -258,6 +258,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         <SearchInputFieldsContainer>
             <CustomAutoComplete
                 freeSolo
+                value={place}
                 inputValue={place}
                 options={
                     place === ''
