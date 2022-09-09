@@ -25,9 +25,11 @@ export const SearchCouldNotFindContainer = styled.div`
         margin-top: 40px;
         padding: 0;
         border: none;
-        text-align: left;
-
         align-items: flex-start;
+
+        p {
+            text-align: left;
+        }
     }
 
     ${(props) => {
@@ -56,7 +58,7 @@ export const SearchCouldNotFindColumn = styled.div<IMarginProps>`
         align-items: center;
 
         ${(props) => {
-            if (props.giveMargin !== undefined) {
+            if (props.giveMargin === 1) {
                 return css`
                     margin-top: 20px;
                 `
@@ -69,7 +71,7 @@ export const SearchCouldNotFindColumn = styled.div<IMarginProps>`
         align-items: flex-start;
 
         ${(props) => {
-            if (props.giveMargin !== undefined) {
+            if (props.giveMargin === 1) {
                 return css`
                     margin-left: 40px;
                 `

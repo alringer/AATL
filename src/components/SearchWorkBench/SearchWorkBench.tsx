@@ -306,7 +306,7 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                         {(matches) => (
                             <>
                                 {searchResults && searchResults.length > 0 && (
-                                    <SearchCouldNotFind openSearchModal={openSearchModal} />
+                                    <SearchCouldNotFind openSearchModal={openSearchModal} isSide={true} />
                                 )}
                             </>
                         )}

@@ -11,16 +11,19 @@ import {
 
 interface ISearchCouldNotFind {
     fullWidth?: boolean
+    isSide?: boolean
     openSearchModal: () => void
 }
 
-const SearchCouldNotFind: React.FC<ISearchCouldNotFind> = ({ openSearchModal, fullWidth }) => {
+const SearchCouldNotFind: React.FC<ISearchCouldNotFind> = ({ openSearchModal, fullWidth, isSide }) => {
     return (
         <SearchCouldNotFindContainer id={fullWidth ? 'full-width' : ''}>
-            <SearchCouldNotFindColumn>
-                <img src={LogoLady} alt="logo" />
-            </SearchCouldNotFindColumn>
-            <SearchCouldNotFindColumn giveMargin={1}>
+            {!isSide && (
+                <SearchCouldNotFindColumn>
+                    <img src={LogoLady} alt="logo" />
+                </SearchCouldNotFindColumn>
+            )}
+            <SearchCouldNotFindColumn giveMargin={!isSide && 1}>
                 <SearchCouldNotFindTitle>{S.COULD_NOT_FIND.Title}</SearchCouldNotFindTitle>
                 <SearchCouldNotFindDescription>{S.COULD_NOT_FIND.Description}</SearchCouldNotFindDescription>
                 <SearchCouldNotFindButton onClick={openSearchModal}>
