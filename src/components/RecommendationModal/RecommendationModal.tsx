@@ -4,14 +4,16 @@ import {
     RecommendationModalContainer,
     RecommendationModalContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
-import RecommendationPublished from 'components/RecommendationModal/RecommendationPublished'
 import axios, { POST_RECOMMENDATION, PUT_RECOMMENDATION } from 'config/AxiosConfig'
+import * as R from 'constants/RouteConstants'
 import { KeycloakInstance } from 'keycloak-js'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StoreState } from 'store'
 import authStore from 'store/authentication/authentication_reducer'
+import { openFoodieFounderUnlockedModal } from 'store/foodieFounderUnlockedModal/foodieFounderUnlocked_actions'
 import { openGuidelinesModal } from 'store/guidelinesModal/guidelinesModal_actions'
 import {
     clearRecommendationModal,
@@ -29,11 +31,14 @@ interface IReduxProps {
     recommendation_type: RecommendationModalType | null
     recommendationID: number | null
     isOpen: boolean
+    isPrelaunch: boolean
     venuesRecommendedIDs: number[]
+    numPlacesRecommended: number
     closeRecommendationModal: () => void
     clearRecommendationModal: () => void
     fetchUser: (keycloak: KeycloakInstance) => void
     openGuidelinesModal: () => void
+    openFoodieFounderUnlockedModal: () => void
 }
 
 interface IRecommendationModalProps extends IReduxProps, IWithAuthInjectedProps {}
@@ -43,8 +48,10 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     closeRecommendationModal,
     isOpen,
     placeID,
+    isPrelaunch,
     placeName,
     venuesRecommendedIDs,
+    numPlacesRecommended,
     authenticatedAction,
     getTokenConfig,
     recommendation_type,
@@ -52,11 +59,14 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     fetchUser,
     keycloak,
     openGuidelinesModal,
+    openFoodieFounderUnlockedModal,
 }) => {
+    const router = useRouter()
     const [isLoading, setLoading] = React.useState(false)
     const [publishedTitle, setPublishedTitle] = React.useState('')
     const [published, setPublished] = React.useState(false)
     const [recommendation, setRecommendation] = React.useState(null)
+    const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
         return () => {
@@ -69,6 +79,28 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
             openGuidelinesModal()
         }
     }, [venuesRecommendedIDs])
+
+    React.useEffect(() => {
+        if (published && recommendation) {
+            if (!isPrelaunch) {
+                const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
+                router.push(newPermaLink)
+                closeRecommendationModal()
+                // Toast
+            } else {
+                // Update user profile
+                // Toast
+                // Dismiss modal
+                closeRecommendationModal()
+            }
+        }
+    }, [published, recommendation, isPrelaunch])
+
+    React.useEffect(() => {
+        if (isPrelaunch && numPlacesRecommended === 3) {
+            openFoodieFounderUnlockedModal()
+        }
+    }, [numPlacesRecommended])
 
     const handlePublish = (title: string, description: string, temporaryImageKey: string, rating: number) => {
         setLoading(true)
@@ -167,25 +199,17 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     return (
         <Dialog open={isOpen} fullScreen>
             <RecommendationModalContainer>
-                <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} published={published} />
+                <RecommendationEditorHeader closeRecommendationModal={closeRecommendationModal} />
                 <RecommendationModalContentContainer>
-                    {published ? (
-                        <RecommendationPublished
-                            publishedTitle={publishedTitle}
-                            recommendation={recommendation}
-                            closeRecommendationModal={closeRecommendationModal}
-                        />
-                    ) : (
-                        <RecommendationEditor
-                            placeName={placeName}
-                            isLoading={isLoading}
-                            handlePublish={handlePublish}
-                            handleEdit={handleEdit}
-                            handleReadOurGuidelines={handleReadOurGuidelines}
-                            recommendationID={recommendationID}
-                            recommendation_type={recommendation_type}
-                        />
-                    )}
+                    <RecommendationEditor
+                        placeName={placeName}
+                        isLoading={isLoading}
+                        handlePublish={handlePublish}
+                        handleEdit={handleEdit}
+                        handleReadOurGuidelines={handleReadOurGuidelines}
+                        recommendationID={recommendationID}
+                        recommendation_type={recommendation_type}
+                    />
                 </RecommendationModalContentContainer>
             </RecommendationModalContainer>
         </Dialog>
@@ -196,9 +220,11 @@ const mapStateToProps = (state: StoreState) => ({
     placeID: state.recommendationModalReducer.placeID,
     placeName: state.recommendationModalReducer.placeName,
     isOpen: state.recommendationModalReducer.isOpen,
+    isPrelaunch: state.prelaunchReducer.isPrelaunch,
     recommendation_type: state.recommendationModalReducer.recommendation_type,
     recommendationID: state.recommendationModalReducer.recommendationID,
     venuesRecommendedIDs: state.userReducer.venuesRecommendedVenueIDs,
+    numPlacesRecommended: state.userReducer.venuesRecommendedVenueIDs.length,
 })
 const mapDispatchToProps = (dispatch: any) =>
     bindActionCreators(
@@ -207,6 +233,7 @@ const mapDispatchToProps = (dispatch: any) =>
             clearRecommendationModal,
             fetchUser,
             openGuidelinesModal,
+            openFoodieFounderUnlockedModal,
         },
         dispatch
     )
