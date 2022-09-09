@@ -4,6 +4,7 @@ interface ISnackbarConstants {
     Type: string
     Title: string
     Body: string
+    BodyTwo?: string
     LinkMessage?: string
     LinkDestination?: string
 }
@@ -172,6 +173,19 @@ export const USER_PROFILE_UPDATED_DESCRIPTION: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Updated!',
     Body: 'Your bio was updated',
+}
+
+export const POST_RECOMMENDATION: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Recommendation posted',
+    Body: 'Your recommendation for',
+    BodyTwo: 'was posted successfully',
+}
+export const EDIT_RECOMMENDATION: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Recommendation edited',
+    Body: 'Your recommendation for',
+    BodyTwo: 'was edited successfully',
 }
 
 export const FLAG_RECOMMENDATION: ISnackbarConstants = {
