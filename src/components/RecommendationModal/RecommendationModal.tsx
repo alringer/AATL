@@ -4,10 +4,14 @@ import {
     RecommendationModalContainer,
     RecommendationModalContentContainer,
 } from 'components/RecommendationModal/RecommendationModal.style'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
 import axios, { POST_RECOMMENDATION, PUT_RECOMMENDATION } from 'config/AxiosConfig'
 import * as R from 'constants/RouteConstants'
+import * as B from 'constants/SnackbarConstants'
 import { KeycloakInstance } from 'keycloak-js'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import { connect as reduxConnect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -62,11 +66,9 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     openFoodieFounderUnlockedModal,
 }) => {
     const router = useRouter()
+    const { enqueueSnackbar } = useSnackbar()
+
     const [isLoading, setLoading] = React.useState(false)
-    const [publishedTitle, setPublishedTitle] = React.useState('')
-    const [published, setPublished] = React.useState(false)
-    const [recommendation, setRecommendation] = React.useState(null)
-    const [permaLink, setPermaLink] = React.useState('')
 
     React.useEffect(() => {
         return () => {
@@ -81,26 +83,10 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
     }, [venuesRecommendedIDs])
 
     React.useEffect(() => {
-        if (published && recommendation) {
-            if (!isPrelaunch) {
-                const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${recommendation.venue.id}?r=${recommendation.id}`
-                router.push(newPermaLink)
-                closeRecommendationModal()
-                // Toast
-            } else {
-                // Update user profile
-                // Toast
-                // Dismiss modal
-                closeRecommendationModal()
-            }
-        }
-    }, [published, recommendation, isPrelaunch])
-
-    React.useEffect(() => {
         if (isPrelaunch && numPlacesRecommended === 3) {
             openFoodieFounderUnlockedModal()
         }
-    }, [numPlacesRecommended])
+    }, [isPrelaunch, numPlacesRecommended])
 
     const handlePublish = (title: string, description: string, temporaryImageKey: string, rating: number) => {
         setLoading(true)
@@ -133,10 +119,47 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                     : {}
             )
             .then((res) => {
-                setPublished(true)
-                setPublishedTitle(title)
-                setRecommendation(res.data)
                 fetchUser(keycloak)
+                if (res && res.data) {
+                    if (!isPrelaunch) {
+                        const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${res.data.venue.id}?r=${res.data.id}`
+                        router.push(newPermaLink)
+                        enqueueSnackbar('', {
+                            content: (
+                                <div>
+                                    <Snackbar
+                                        type={B.POST_RECOMMENDATION.Type}
+                                        title={B.POST_RECOMMENDATION.Title}
+                                        message={
+                                            <SnackbarMessageBody>
+                                                {B.POST_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
+                                                {B.POST_RECOMMENDATION.BodyTwo}
+                                            </SnackbarMessageBody>
+                                        }
+                                    />
+                                </div>
+                            ),
+                        })
+                    } else {
+                        enqueueSnackbar('', {
+                            content: (
+                                <div>
+                                    <Snackbar
+                                        type={B.POST_RECOMMENDATION.Type}
+                                        title={B.POST_RECOMMENDATION.Title}
+                                        message={
+                                            <SnackbarMessageBody>
+                                                {B.POST_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
+                                                {B.POST_RECOMMENDATION.BodyTwo}
+                                            </SnackbarMessageBody>
+                                        }
+                                    />
+                                </div>
+                            ),
+                        })
+                    }
+                    closeRecommendationModal()
+                }
             })
             .catch((err) => console.log(err))
             .finally(() => {
@@ -181,10 +204,45 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                     : {}
             )
             .then((res) => {
-                setPublished(true)
-                setPublishedTitle(inputTitle)
-                setRecommendation(res.data)
                 fetchUser(keycloak)
+                if (!isPrelaunch) {
+                    const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${res.data.venue.id}?r=${res.data.id}`
+                    router.push(newPermaLink)
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.EDIT_RECOMMENDATION.Type}
+                                    title={B.EDIT_RECOMMENDATION.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            {B.EDIT_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
+                                            {B.EDIT_RECOMMENDATION.BodyTwo}
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
+                    })
+                } else {
+                    enqueueSnackbar('', {
+                        content: (
+                            <div>
+                                <Snackbar
+                                    type={B.EDIT_RECOMMENDATION.Type}
+                                    title={B.EDIT_RECOMMENDATION.Title}
+                                    message={
+                                        <SnackbarMessageBody>
+                                            {B.EDIT_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
+                                            {B.EDIT_RECOMMENDATION.BodyTwo}
+                                        </SnackbarMessageBody>
+                                    }
+                                />
+                            </div>
+                        ),
+                    })
+                }
+                closeRecommendationModal()
             })
             .catch((err) => console.log(err))
             .finally(() => {
