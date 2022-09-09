@@ -1,7 +1,6 @@
 import { CircularProgress, FormControl, MenuItem, Select } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import Pagination from '@material-ui/lab/Pagination'
-import Yelp from 'assets/yelp.png'
 import CardPlaceWide, { CardPlaceWideEnum } from 'components/CardPlaceWide/CardPlaceWide'
 import CardPlaceYelp from 'components/CardPlaceYelp/CardPlaceYelp'
 import SearchCategories from 'components/SearchCategories/SearchCategories'
@@ -18,8 +17,6 @@ import { SortEnum, SortOption, sortOptions } from 'utilities/types/clientDTOS/So
 import { IVenue } from 'utilities/types/venue'
 import {
     NoSearchResultsContainer,
-    NoSearchResultsSubTitle,
-    NoSearchResultsTitle,
     PaginationContainer,
     SearchWorkBenchContainer,
     SearchWorkBenchContentContainer,
@@ -33,7 +30,6 @@ import {
     SearchWorkBenchTitle,
     SearchWorkBenchYelpHeaderContainer,
     SearchWorkBenchYelpHeaderText,
-    SearchWorkBenchYelpImage,
     SearchWorkBenchYelpResultsContainer,
 } from './SearchWorkBench.style'
 
@@ -249,17 +245,13 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                         </>
                     ) : (
                         <NoSearchResultsContainer>
-                            <NoSearchResultsTitle>{S.SEARCH_PAGE.NoResultsTitle}</NoSearchResultsTitle>
-                            <NoSearchResultsSubTitle>{S.SEARCH_PAGE.NoResultsSubTitle}</NoSearchResultsSubTitle>
                             <Media queries={query}>
                                 {(matches) => (
                                     <>
-                                        {matches.laptop && (
-                                            <SearchCouldNotFind openSearchModal={openSearchModal} fullWidth={true} />
-                                        )}
-                                        {(matches.mobile || matches.tablet) && (
-                                            <SearchCouldNotFind openSearchModal={openSearchModal} fullWidth={false} />
-                                        )}
+                                        <SearchCouldNotFind
+                                            openSearchModal={openSearchModal}
+                                            fullWidth={matches.mobile || matches.tablet ? false : true}
+                                        />
                                     </>
                                 )}
                             </Media>
@@ -277,7 +269,6 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                 <SearchWorkBenchYelpHeaderText>
                                     {S.RESTAURANT_SEARCH.YelpHeader}
                                 </SearchWorkBenchYelpHeaderText>
-                                <SearchWorkBenchYelpImage src={Yelp} alt="yelp-logo" />
                             </SearchWorkBenchYelpHeaderContainer>
                             <SearchWorkBenchYelpResultsContainer>
                                 {searchYelpResults.map((searchYelpResult: IYelpRestaurant, index: number) => {

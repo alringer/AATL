@@ -31,15 +31,9 @@ interface IReduxProps {
 interface IHeaderSearchProps extends IReduxProps {
     searchRef: any
     handleCloseSearch: () => void
-    searchHelperParameter: any
 }
 
-const HeaderSearch: React.FC<IHeaderSearchProps> = ({
-    searchRef,
-    categories,
-    handleCloseSearch,
-    searchHelperParameter,
-}) => {
+const HeaderSearch: React.FC<IHeaderSearchProps> = ({ searchRef, categories, handleCloseSearch }) => {
     const router = useRouter()
     const [place, setPlace] = React.useState<string>('')
     const [categoryID, setCategoryID] = React.useState('')
