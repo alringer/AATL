@@ -518,15 +518,45 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                         <>
                                             {(matches.laptop || matches.tablet) && (
                                                 <RecommendationPlaceAddressText>
-                                                    {_.has(currentRecommendation, 'venue.formattedAddress')
-                                                        ? isMoreVisible
-                                                            ? currentRecommendation.venue.formattedAddress
-                                                            : chopStringRecommendationCardAddress(
-                                                                  currentRecommendation.venue.formattedAddress,
-                                                                  viewport,
-                                                                  isFull
-                                                              )
-                                                        : ''}
+                                                    {isMoreVisible
+                                                        ? `${
+                                                              currentRecommendation?.venue?.street
+                                                                  ? currentRecommendation?.venue?.street
+                                                                  : ''
+                                                          }${
+                                                              currentRecommendation?.venue?.locality
+                                                                  ? ` ${currentRecommendation?.venue?.locality}, `
+                                                                  : null
+                                                          }${
+                                                              currentRecommendation?.venue?.state
+                                                                  ? currentRecommendation?.venue?.state
+                                                                  : ''
+                                                          }${
+                                                              currentRecommendation?.venue?.postalCode
+                                                                  ? ` ${currentRecommendation?.venue?.postalCode}`
+                                                                  : null
+                                                          }`
+                                                        : chopStringRecommendationCardAddress(
+                                                              `${
+                                                                  currentRecommendation?.venue?.street
+                                                                      ? currentRecommendation?.venue?.street
+                                                                      : ''
+                                                              }${
+                                                                  currentRecommendation?.venue?.locality
+                                                                      ? ` ${currentRecommendation?.venue?.locality}, `
+                                                                      : null
+                                                              }${
+                                                                  currentRecommendation?.venue?.state
+                                                                      ? currentRecommendation?.venue?.state
+                                                                      : ''
+                                                              }${
+                                                                  currentRecommendation?.venue?.postalCode
+                                                                      ? ` ${currentRecommendation?.venue?.postalCode}`
+                                                                      : null
+                                                              }`,
+                                                              viewport,
+                                                              isFull
+                                                          )}
                                                 </RecommendationPlaceAddressText>
                                             )}
                                         </>
