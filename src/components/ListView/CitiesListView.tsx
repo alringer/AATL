@@ -2,7 +2,6 @@ import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import React from 'react'
 import { IParentRegion } from 'utilities/types/parentRegion'
 import {
     EmptyMessage,
@@ -25,7 +24,7 @@ interface ICitiesListViewProps {
 }
 
 const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceList }) => {
-    const renderList = (currentList: IParentRegion[]) => {
+    const renderList = (currentList: IParentRegion[], listString: string) => {
         const itemsPerColumn = 20
         const numberOfColumns = Math.ceil(currentList.length / itemsPerColumn)
         let columns = []
@@ -35,7 +34,7 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
             const slicedList = currentList.slice(startIndex, endIndex)
             columns = [
                 ...columns,
-                <ListViewRegionColumnContainer key={i}>
+                <ListViewRegionColumnContainer key={`${listString}-${i}`}>
                     {slicedList.map((city: IParentRegion) => {
                         return (
                             <ListViewRegionContainer key={city.id}>
@@ -68,7 +67,7 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
                     </ListViewCountryTitleContainer>
                     <ListViewRegionsContainer>
                         {stateList && stateList.length > 0 ? (
-                            renderList(stateList)
+                            renderList(stateList, 'states')
                         ) : (
                             <EmptyMessage>{S.CITIES.EmptyMessage}</EmptyMessage>
                         )}
@@ -81,7 +80,7 @@ const CitiesListView: NextPage<ICitiesListViewProps> = ({ stateList, provinceLis
                     </ListViewCountryTitleContainer>
                     <ListViewRegionsContainer>
                         {provinceList && provinceList.length > 0 ? (
-                            renderList(provinceList)
+                            renderList(provinceList, 'provinces')
                         ) : (
                             <EmptyMessage>{S.CITIES.EmptyMessage}</EmptyMessage>
                         )}

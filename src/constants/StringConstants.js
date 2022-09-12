@@ -334,7 +334,7 @@ export const RESTAURANT_SEARCH = {
     Header: 'Search for a restaurant you would like to recommend.',
     Matches: 'Matches found',
     NotFind: "Didn't find what you were looking for?",
-    YelpHeader: 'You can also check out some Yelp results',
+    YelpHeader: 'You can also check out these other results',
 }
 
 export const ADD_PLACE = {

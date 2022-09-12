@@ -2,7 +2,6 @@ import EmailSubscription from 'components/EmailSubscription/EmailSubscription'
 import CitiesListView from 'components/ListView/CitiesListView'
 import axios, { FETCH_CITIES } from 'config/AxiosConfig'
 import { GetStaticProps, NextPage } from 'next'
-import React from 'react'
 import { IParentRegion } from 'utilities/types/parentRegion'
 
 interface IServerSideProps {
