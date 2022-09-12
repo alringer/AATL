@@ -23,6 +23,9 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             handleLFBSearch={() => {}}
             handleYelpSearch={() => {}}
             openSearchModal={() => {}}
+            currentYelpPageCount={0}
+            currentYelpPage={0}
+            currentYelpTotal={0}
             inputCategoryID={null}
             inputPage={0}
             inputPageCount={0}
@@ -31,7 +34,8 @@ storiesOf('Search Page', module).add('Search Panel', () => {
             currentYelpLimit={0}
             searchYelpResults={[]}
             isRobust={false}
-            isLoading={false}
+            isLFBLoading={false}
+            isYelpLoading={false}
         />
     )
 })

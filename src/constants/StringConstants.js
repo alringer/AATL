@@ -206,13 +206,16 @@ export const PROFILE_POPOVER_ITEMS = {
 }
 
 export const FOOTER_ITEMS = {
+    ContactUs: 'Contact Us',
     FoodAndDrinks: 'Food & Drink',
-    Cities: 'Cities',
+    Cities: 'Popular Cities',
     WithLove: '♥ With love from Lake Tahoe',
     SeeOur: 'See our',
     TermsOfUse: 'Terms of Use',
     CopyRightText: '© LocalFoodBuzz',
     CompanyName: 'About LocalFoodBuzz',
+    ContactEmail: 'info@LocalFoodBuzz.com',
+    ContactLocation: 'P.O. Box 4089 Incline Village, NV 89450',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 
 We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!
@@ -279,6 +282,7 @@ export const RECOMMENDATION_EDITOR = {
     ThreeForks: `Good. I'd come back.`,
     FourForks: `Great. Worth a detour.`,
     FiveForks: `Outstanding. You MUST come here.`,
+    CheckBox: `When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law.`,
 }
 
 export const RECOMMENDATION_PUBLISHED = {
@@ -330,6 +334,7 @@ export const RESTAURANT_SEARCH = {
     Header: 'Search for a restaurant you would like to recommend.',
     Matches: 'Matches found',
     NotFind: "Didn't find what you were looking for?",
+    YelpHeader: 'You can also check out some Yelp results',
 }
 
 export const ADD_PLACE = {
@@ -338,8 +343,9 @@ export const ADD_PLACE = {
 }
 
 export const COULD_NOT_FIND = {
-    Title: 'Couldn’t find it?',
-    Description: 'If you’d like to recommend a place you couldn’t find, please do us a kindness and recommend it!',
+    Title: 'No results found',
+    Description:
+        'Become a city guide by being the first to recommend one of the following restaurants matching your search criteria.',
 }
 
 export const SEARCH_PAGE = {
@@ -616,6 +622,6 @@ export const FOODIE_MODAL = {
 export const GUIDELINES_MODAL = {
     Title: 'RECOMMENDATION GUIDELINES',
     Message:
-        'LocalFoodBuzz.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.  When you make a recommendation, you are certifying that you have no conflicts of interest and are not being compensated in any way by the place you are recommending.  If there is a potential conflict, you must disclose this as required by law. ',
+        'LocalFoodBuzz.com is about finding great places to eat. We only want to hear about places that you would recommend to friends, family and even complete strangers. Please do not recommend places you don’t fully endorse and do not write a negative recommendation.',
     OkGotIt: 'OK, GOT IT',
 }

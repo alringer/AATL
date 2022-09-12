@@ -1,3 +1,4 @@
+import Checkbox from '@material-ui/core/Checkbox'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import CloseIcon from '@material-ui/icons/Close'
 import { CustomButton } from 'style/Button/Button.style'
@@ -214,6 +215,34 @@ export const RecommendationEditorInputContainer = styled.div`
         padding-left: 20px;
         padding-top: 12px;
         padding-bottom: 12px;
+    }
+`
+
+export const RecommendationEditorForkInputContainer = styled(RecommendationEditorInputContainer)`
+    @media ${device.mobile} {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
+    @media ${device.laptop} {
+    }
+`
+
+export const RecommendationEditorForksContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    @media ${device.mobile} {
+        width: 100%;
+    }
+    @media ${device.tablet} {
+        width: auto;
+    }
+    @media ${device.laptop} {
     }
 `
 
@@ -566,7 +595,16 @@ export const RecommendationEditorForkMessageContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
 
-    margin-left: 10px;
+    @media ${device.mobile} {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+    @media ${device.tablet} {
+        width: auto;
+        margin-left: 10px;
+        margin-top: 0;
+    }
 `
 export const RecommendationEditorForkMessage = styled.p`
     font-family: 'Rubik', sans-serif;
@@ -577,4 +615,25 @@ export const RecommendationEditorForkMessage = styled.p`
     line-height: 1.38;
     letter-spacing: normal;
     color: #363940;
+`
+
+export const RecommendationEditorCheckbox = styled(Checkbox)`
+    color: ${(props) => props.theme.mushroom};
+    /* .Mui-checked {
+        color: ${(props) => props.theme.mushroom} !important;
+    } */
+
+    padding: 0;
+
+    ${(props) => {
+        if (props.checked) {
+            return css`
+                color: ${(props) => props.theme.mushroom} !important;
+            `
+        }
+    }}
+`
+
+export const RecommendationEditorCheckboxMessage = styled(RecommendationEditorForkMessage)`
+    margin-left: 20px;
 `
