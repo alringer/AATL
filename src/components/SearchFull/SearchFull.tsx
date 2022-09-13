@@ -68,7 +68,8 @@ const SearchFull: React.FC<ISearchFullProps> = ({
     const [selectedAddress, setSelectedAddress] = React.useState(null)
     const predictions = useAddressPredictions(address)
     const filterOptions = createFilterOptions({
-        matchFrom: 'start',
+        matchFrom: 'any',
+        trim: true,
     })
 
     const isClient = typeof window === 'object'
@@ -258,7 +259,6 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         <SearchInputFieldsContainer>
             <CustomAutoComplete
                 freeSolo
-                value={place}
                 inputValue={place}
                 options={
                     place === ''
