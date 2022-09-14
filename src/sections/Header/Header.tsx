@@ -250,7 +250,11 @@ const Header: React.FC<IHeaderProps> = ({
                             <Image src={SearchSVG} alt="logo" />
                         </SearchToggleButton>
                     ) : (
-                        <HeaderSearch handleCloseSearch={handleCloseSearch} searchRef={searchReference.ref} />
+                        <HeaderSearch
+                            handleCloseSearch={handleCloseSearch}
+                            searchRef={searchReference.ref}
+                            searchSecondaryRef={searchReference.refSecondary}
+                        />
                     )}
                 </MenuItemContainer>
             )}
@@ -281,7 +285,11 @@ const Header: React.FC<IHeaderProps> = ({
                                 <Image src={MobileSearchSvg} alt="" />
                             </IconButton>
                         ) : (
-                            <HeaderSearch searchRef={searchReference.ref} handleCloseSearch={handleCloseSearch} />
+                            <HeaderSearch
+                                searchRef={searchReference.ref}
+                                searchSecondaryRef={searchReference.refSecondary}
+                                handleCloseSearch={handleCloseSearch}
+                            />
                         )}
                     </MobileIconContainer>
                 )}

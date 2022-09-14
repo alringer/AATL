@@ -43,7 +43,6 @@ export const fetchUser = (keycloak: KeycloakInstance) => {
                             venuesRecommendationPromptsVenueIDs: venuesRecommendationPromptsVenueIds,
                         })
                     )
-                    console.log('User Profile Results: ', res.data)
                 })
                 .catch((err) => console.log(err))
         }

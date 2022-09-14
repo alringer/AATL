@@ -56,6 +56,7 @@ import {
     WideHeaderTooltipIconsContainer,
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
+import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
 import {
     chopStringRecommendationCardAddress,
     chopStringRecommendationCardByLine,
@@ -521,7 +522,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                     {isMoreVisible
                                                         ? `${
                                                               currentRecommendation?.venue?.street
-                                                                  ? currentRecommendation?.venue?.street
+                                                                  ? addCommaToStreet(
+                                                                        currentRecommendation?.venue?.street
+                                                                    )
                                                                   : ''
                                                           }${
                                                               currentRecommendation?.venue?.locality
@@ -539,7 +542,9 @@ const CardRecommendationWide: React.FC<IRecommendationCardProps> = ({
                                                         : chopStringRecommendationCardAddress(
                                                               `${
                                                                   currentRecommendation?.venue?.street
-                                                                      ? currentRecommendation?.venue?.street
+                                                                      ? addCommaToStreet(
+                                                                            currentRecommendation?.venue?.street
+                                                                        )
                                                                       : ''
                                                               }${
                                                                   currentRecommendation?.venue?.locality

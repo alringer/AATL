@@ -3,9 +3,10 @@ import React from 'react'
 const useComponentVisible = (initialIsVisible: boolean) => {
     const [isComponentVisible, setIsComponentVisible] = React.useState(initialIsVisible)
     const ref = React.useRef(null)
+    const refSecondary = React.useRef(null)
 
     const handleClickOutside = (event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+        if (!ref?.current?.contains(event.target) && !refSecondary?.current?.contains(event.target)) {
             setIsComponentVisible(false)
         }
     }
@@ -17,7 +18,7 @@ const useComponentVisible = (initialIsVisible: boolean) => {
         }
     })
 
-    return { ref, isComponentVisible, setIsComponentVisible }
+    return { ref, refSecondary, isComponentVisible, setIsComponentVisible }
 }
 
 export default useComponentVisible
