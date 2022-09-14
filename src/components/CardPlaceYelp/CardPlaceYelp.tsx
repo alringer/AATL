@@ -19,6 +19,7 @@ import {
 } from 'store/recommendationModal/recommendationModal_types'
 import { CardIcon, WideHeaderContentContainer, WidePlaceAddressText } from 'style/Card/Card.style'
 import { DeviceNameEnum, size } from 'style/device'
+import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
 import { chopStringPlaceCategories, chopStringPlaceName } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
@@ -141,7 +142,11 @@ const CardPlaceYelp: React.FC<ICardPlaceWideProps> = ({
                                           isAvg={true}
                                       /> */}
                             <WidePlaceAddressText>
-                                {place.address1 ? place.address1 : null}
+                                {place && place.address1 ? addCommaToStreet(place.address1) : null}
+                                {place && place.city ? place.city + ', ' : null}
+                                {place && place.state ? place.state : null}
+                                {place && place.zipCode ? ` ${place.zipCode}` : null}
+                                {place && place.country ? ` ${place.country}` : null}
                                 {/* {place && place.street ? place.street : null}
                                               {place && place.locality ? place.locality + ', ' : null}
                                               {place && place.state ? place.state : null}

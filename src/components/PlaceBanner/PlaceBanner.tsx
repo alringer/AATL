@@ -20,6 +20,7 @@ import {
     RecommendationModalType,
 } from 'store/recommendationModal/recommendationModal_types'
 import { query } from 'style/device'
+import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
@@ -152,10 +153,10 @@ const PlaceBanner: React.FC<IPlaceBannerProps> = ({
                         {venueInformation.parentRegion.city}, {venueInformation.parentRegion.state}
                     </PlaceBannerCityState>
                     <PlaceBannerAddressSpan>
-                        <PlaceBannerAddressOne>{`${venueInformation.street}`}</PlaceBannerAddressOne>
+                        <PlaceBannerAddressOne>{`${addCommaToStreet(venueInformation.street)}`}</PlaceBannerAddressOne>
                         &nbsp;
                         <PlaceBannerAddressCityStateZip>
-                            {venueInformation.parentRegion.city}, {venueInformation.parentRegion.stateAbbrevation}{' '}
+                            {venueInformation.locality}, {venueInformation.parentRegion.stateAbbrevation}{' '}
                             {venueInformation.postalCode} {venueInformation.iso3Country}
                         </PlaceBannerAddressCityStateZip>
                     </PlaceBannerAddressSpan>

@@ -207,6 +207,7 @@ type IUserProfileInstagramContainer = {
     disabled: boolean
 }
 export const UserProfileInstagramContainer = styled.a<IUserProfileInstagramContainer>`
+    width: fit-content;
     display: flex;
     flex-direction: row;
     align-items: center;
