@@ -42,6 +42,7 @@ import {
     WidePlaceAddressText,
 } from 'style/Card/Card.style'
 import { DeviceNameEnum, query, size } from 'style/device'
+import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
 import {
     chopStringPlaceCategories,
     chopStringPlaceLatestRecommendationContent,
@@ -293,7 +294,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                       type === CardPlaceWideEnum.Profile ||
                                       type === CardPlaceWideEnum.ProfileOwnerList) && (
                                       <WidePlaceAddressText>
-                                          {place && place.street ? place.street : null}
+                                          {place && place.street ? addCommaToStreet(place.street) : null}
                                           {place && place.locality ? place.locality + ', ' : null}
                                           {place && place.state ? place.state : null}
                                           {place && place.postalCode ? ` ${place.postalCode}` : null}
@@ -473,7 +474,7 @@ const CardPlaceWide: React.FC<ICardPlaceWideProps> = ({
                                           type === CardPlaceWideEnum.Profile ||
                                           type === CardPlaceWideEnum.ProfileOwnerList) && (
                                           <WidePlaceAddressText>
-                                              {place && place.street ? place.street : null}
+                                              {place && place.street ? addCommaToStreet(place.street) : null}
                                               {place && place.locality ? place.locality + ', ' : null}
                                               {place && place.state ? place.state : null}
                                               {place && place.postalCode ? ` ${place.postalCode}` : null}
