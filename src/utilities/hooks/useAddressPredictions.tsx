@@ -17,7 +17,7 @@ export default function useAddressPredictions(input) {
             setPredictions([])
         } else if (autocomplete && autocomplete.current) {
             autocomplete.current.getPlacePredictions(
-                { input: input, componentRestrictions: { country: ['us', 'ca'] } },
+                { input: input, componentRestrictions: { country: ['us', 'ca'] }, types: ['(cities)'] },
                 (predictions) => {
                     if (predictions && predictions.length > 0) {
                         setPredictions(predictions)

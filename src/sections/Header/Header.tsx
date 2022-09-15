@@ -78,18 +78,15 @@ const Header: React.FC<IHeaderProps> = ({
 }) => {
     const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false)
     const [isSearchToggled, setSearchToggled] = React.useState(false)
-    const searchReference = useComponentVisible(false)
     const popoverReference = useComponentVisible(false)
     const router = useRouter()
     const isSearchEnabled = router.pathname !== R.ROUTE_ITEMS.home && router.pathname !== R.ROUTE_ITEMS.search
 
     const handleOpenSearch = () => {
-        searchReference.setIsComponentVisible(true)
         setSearchToggled(true)
     }
 
     const handleCloseSearch = () => {
-        searchReference.setIsComponentVisible(false)
         setSearchToggled(false)
     }
 
@@ -245,12 +242,12 @@ const Header: React.FC<IHeaderProps> = ({
             )}
             {isSearchEnabled && (
                 <MenuItemContainer id={'leftPadded'}>
-                    {!isSearchToggled || !searchReference.isComponentVisible ? (
+                    {!isSearchToggled ? (
                         <SearchToggleButton onClick={handleOpenSearch}>
                             <Image src={SearchSVG} alt="logo" />
                         </SearchToggleButton>
                     ) : (
-                        <HeaderSearch handleCloseSearch={handleCloseSearch} searchRef={searchReference.ref} />
+                        <HeaderSearch handleCloseSearch={handleCloseSearch} />
                     )}
                 </MenuItemContainer>
             )}
@@ -276,12 +273,12 @@ const Header: React.FC<IHeaderProps> = ({
             <MobileIconsContainer>
                 {!isPrelaunch && isSearchEnabled && (
                     <MobileIconContainer>
-                        {!isSearchToggled || !searchReference.isComponentVisible ? (
+                        {!isSearchToggled ? (
                             <IconButton onClick={handleOpenSearch}>
                                 <Image src={MobileSearchSvg} alt="" />
                             </IconButton>
                         ) : (
-                            <HeaderSearch searchRef={searchReference.ref} handleCloseSearch={handleCloseSearch} />
+                            <HeaderSearch handleCloseSearch={handleCloseSearch} />
                         )}
                     </MobileIconContainer>
                 )}
