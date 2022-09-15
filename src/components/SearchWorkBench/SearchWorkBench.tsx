@@ -240,6 +240,10 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                     variant="outlined"
                                     shape="rounded"
                                     onChange={handleLFBPagination}
+                                    siblingCount={2}
+                                    boundaryCount={1}
+                                    showFirstButton
+                                    showLastButton
                                 />
                             </PaginationContainer>
                         </>
@@ -286,6 +290,10 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                         variant="outlined"
                                         shape="rounded"
                                         onChange={handleYelpPagination}
+                                        siblingCount={2}
+                                        boundaryCount={1}
+                                        showFirstButton
+                                        showLastButton
                                     />
                                 </PaginationContainer>
                             </SearchWorkBenchYelpResultsContainer>
