@@ -1,5 +1,4 @@
 import { InputAdornment } from '@material-ui/core'
-import { createFilterOptions } from '@material-ui/lab/Autocomplete'
 import CloseSVG from 'assets/close.svg'
 import SearchSVG from 'assets/darkSearch.svg'
 import Image from 'components/Image/Image'
@@ -19,6 +18,7 @@ import { CustomIconButton } from 'style/Button/IconButton.style'
 import { query } from 'style/device'
 import { CustomTextField } from 'style/TextField/TextField.style'
 import buildURLWithParams from 'utilities/helpers/buildURLWithParams'
+import { filterCategories } from 'utilities/helpers/filterCategories'
 import { ICategory } from 'utilities/types/category'
 import { ParamType } from 'utilities/types/clientDTOS/ParamType'
 import {
@@ -35,29 +35,20 @@ interface IReduxProps {
 }
 
 interface IHeaderSearchProps extends IReduxProps {
-    searchRef: any
-    searchSecondaryRef: any
     handleCloseSearch: () => void
 }
 
-const HeaderSearch: React.FC<IHeaderSearchProps> = ({
-    searchRef,
-    searchSecondaryRef,
-    categories,
-    handleCloseSearch,
-}) => {
+const HeaderSearch: React.FC<IHeaderSearchProps> = ({ categories, handleCloseSearch }) => {
     const router = useRouter()
     const [place, setPlace] = React.useState<string>('')
     const [categoryID, setCategoryID] = React.useState('')
-    const filterOptions = createFilterOptions({
-        matchFrom: 'start',
-    })
+    const [currentCategories, setCurrentCategories] = React.useState([])
 
     React.useEffect(() => {
-        console.log('Place: ', place)
-    }, [place])
+        setCurrentCategories(filterCategories(place, categories))
+    }, [place, categories])
 
-    const handlePlaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e && e.target) {
             if (e.target.value) {
                 setPlace(String(e.target.value))
@@ -70,10 +61,10 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
         }
     }
 
-    const handleSearch = (keyword: string) => {
+    const handleSearch = (keyword: string, inputCategoryID: string) => {
         const paramsArray: ParamType[] = [
             { label: 'place', value: keyword ? encodeURIComponent(keyword) : keyword },
-            { label: 'categoryID', value: categoryID },
+            { label: 'categoryID', value: inputCategoryID },
         ]
         const paramsURL = buildURLWithParams(paramsArray)
         let url = `/search` + `${paramsURL ? '?' + paramsURL : ''}`
@@ -83,7 +74,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
     const handleTextFieldKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
             case 'Enter':
-                handleSearch(place)
+                handleSearch(place, categoryID)
                 break
             case 'Escape':
                 handleCloseSearch()
@@ -91,58 +82,35 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
         }
     }
 
+    const handleBlur = () => {
+        handleCloseSearch()
+    }
+
     const HeaderSearchTablet = () => (
-        <HeaderSearchTabletContainer ref={searchRef}>
+        <HeaderSearchTabletContainer onBlur={handleBlur}>
             <CustomAutoComplete
                 freeSolo
                 openOnFocus
-                blurOnSelect={true}
                 inputValue={place}
-                onInputChange={handlePlaceChange}
-                ListboxComponent={(props) => {
-                    return <ul {...props} ref={searchSecondaryRef}></ul>
-                }}
-                options={
-                    place === ''
-                        ? []
-                        : categories && place
-                        ? [
-                              `${place}`,
-                              ...categories.map((category) => {
-                                  return {
-                                      ...category,
-                                      tag: 'CATEGORIES',
-                                  }
-                              }),
-                          ]
-                        : !categories && place
-                        ? [`${place}`]
-                        : categories && !place
-                        ? [
-                              ...categories.map((category) => {
-                                  return {
-                                      ...category,
-                                      tag: 'CATEGORIES',
-                                  }
-                              }),
-                          ]
-                        : []
-                }
-                filterOptions={filterOptions}
+                options={currentCategories}
                 getOptionLabel={(option: any) => (typeof option === 'string' ? option : option.longName)}
-                style={{ width: '100%' }}
+                groupBy={(option: any) => option.tag}
                 onChange={(event, value) => {
                     if (value.longName) {
                         setPlace(value.longName)
                         setCategoryID(value.id)
+                        handleSearch(value.longName, value.id)
                     } else {
                         setPlace(value)
                         setCategoryID(null)
+                        handleSearch(value, '')
                     }
                 }}
+                onInputChange={handleInputChange}
+                blurOnSelect
+                style={{ width: '100%' }}
                 disableClearable
                 renderOption={(option: any, state) => {
-                    console.log('Option Rendered')
                     if (option.longName) {
                         return <SuggestionOption id="suggestion">{option.longName}</SuggestionOption>
                     } else {
@@ -160,8 +128,8 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
                         variant="outlined"
                         autoFocus={true}
                         placeholder={`${S.INPUT_PLACEHOLDERS.VenueSearchBold} ${S.INPUT_PLACEHOLDERS.VenueSearchNormal}`}
-                        onKeyDown={handleTextFieldKeyDown}
                         InputLabelProps={{
+                            ...params.InputLabelProps,
                             shrink: false,
                         }}
                         InputProps={{
@@ -181,6 +149,7 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
                                 </InputAdornment>
                             ),
                         }}
+                        onKeyDown={handleTextFieldKeyDown}
                     />
                 )}
             />
@@ -188,54 +157,28 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
     )
 
     const HeaderSearchDesktop = () => (
-        <div ref={searchRef} style={{ display: 'flex' }}>
+        <div style={{ display: 'flex' }} onBlur={handleBlur}>
             <HeaderSearchContainer>
                 <CustomAutoComplete
                     freeSolo
                     openOnFocus
-                    blurOnSelect={true}
                     inputValue={place}
-                    onInputChange={handlePlaceChange}
-                    ListboxComponent={(props) => {
-                        return <ul {...props} ref={searchSecondaryRef}></ul>
-                    }}
-                    options={
-                        place === ''
-                            ? []
-                            : categories && place
-                            ? [
-                                  `${place}`,
-                                  ...categories.map((category) => {
-                                      return {
-                                          ...category,
-                                          tag: 'CATEGORIES',
-                                      }
-                                  }),
-                              ]
-                            : !categories && place
-                            ? [`${place}`]
-                            : categories && !place
-                            ? [
-                                  ...categories.map((category) => {
-                                      return {
-                                          ...category,
-                                          tag: 'CATEGORIES',
-                                      }
-                                  }),
-                              ]
-                            : []
-                    }
-                    filterOptions={filterOptions}
+                    options={currentCategories}
                     getOptionLabel={(option: any) => (typeof option === 'string' ? option : option.longName)}
+                    groupBy={(option: any) => option.tag}
                     onChange={(event, value) => {
                         if (value.longName) {
                             setPlace(value.longName)
                             setCategoryID(value.id)
+                            handleSearch(value.longName, value.id)
                         } else {
                             setPlace(value)
                             setCategoryID(null)
+                            handleSearch(value, '')
                         }
                     }}
+                    onInputChange={handleInputChange}
+                    blurOnSelect
                     disableClearable
                     renderOption={(option: any, state) => {
                         if (option.longName) {
@@ -265,14 +208,14 @@ const HeaderSearch: React.FC<IHeaderSearchProps> = ({
                                     </PlaceholderContainer>
                                 ) : null
                             }
-                            InputLabelProps={{ shrink: false }}
+                            InputLabelProps={{ ...params.InputLabelProps, shrink: false }}
                             variant="outlined"
                             onKeyDown={handleTextFieldKeyDown}
                         />
                     )}
                 />
             </HeaderSearchContainer>
-            <SearchButton onClick={() => handleSearch(place)}>{S.BUTTON_LABELS.Search}</SearchButton>
+            <SearchButton onMouseDown={() => handleSearch(place, categoryID)}>{S.BUTTON_LABELS.Search}</SearchButton>
         </div>
     )
 
