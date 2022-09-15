@@ -181,9 +181,9 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         // Capture currently highlighted value in the case that the user triggers enter search
         if (option?.longName) {
             setHighlightedPlace(option.longName)
-        } else if (option !== '') {
+        } else if (option) {
             setHighlightedPlace(option)
-        } else {
+        } else if (option === '') {
             setHighlightedPlace('')
         }
     }
@@ -289,10 +289,11 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                 freeSolo
                 inputValue={place}
                 options={currentCategories}
+                filterOptions={filterOptions}
                 getOptionLabel={(option) => (typeof option === 'string' ? option : option.longName)}
                 groupBy={(option) => option.tag}
                 onChange={(event, value) => {
-                    if (value.longName) {
+                    if (value?.longName) {
                         setPlace(value.longName)
                         setHighlightedPlace(value.longName)
                         setCategoryID(value.id)
