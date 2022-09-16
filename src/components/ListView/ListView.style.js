@@ -3,9 +3,9 @@ import { ContentWrapper } from 'style/ContentWrapper/ContentWrapper'
 import { device } from 'style/device'
 import styled from 'styled-components'
 
-const marginRight = '40px';
-const hiddenContainerMargin = '40px';
-const hiddenColumnMargin = '20px';
+const marginRight = '40px'
+const hiddenContainerMargin = '40px'
+const hiddenColumnMargin = '20px'
 
 export const ListViewPageContainer = styled(ContentWrapper)`
     display: flex;
@@ -42,7 +42,7 @@ export const ListViewCountryContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    
+
     margin-right: ${marginRight};
     margin-top: ${hiddenContainerMargin};
 `
@@ -54,11 +54,18 @@ export const ListViewCountryTitleContainer = styled.div`
 
 export const ListViewRegionsContainer = styled.ul`
     display: flex;
-    flex-wrap: hidden;
     list-style: none;
-    
+
     padding-top: 20px;
     margin-top: -${hiddenColumnMargin};
+
+    @media ${device.mobile} {
+        flex-wrap: wrap;
+    }
+
+    @media ${device.tablet} {
+        flex-wrap: hidden;
+    }
 `
 
 export const ListViewRegionColumnContainer = styled.div`
@@ -67,9 +74,16 @@ export const ListViewRegionColumnContainer = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     width: 140px;
-    margin-right: 20px;
 
-    margin-top: ${hiddenColumnMargin}; 
+    margin-top: ${hiddenColumnMargin};
+
+    @media ${device.mobile} {
+        margin-right: 0;
+    }
+
+    @media ${device.tablet} {
+        margin-right: 20px;
+    }
 `
 export const ListViewRegionContainer = styled.div`
     width: 100%;
@@ -80,7 +94,6 @@ export const ListViewRegionContainer = styled.div`
     word-wrap: normal;
 `
 
-
 // Texts
 export const ListViewTitle = styled.p`
     font-size: 24px;
@@ -89,7 +102,7 @@ export const ListViewTitle = styled.p`
     font-style: normal;
     line-height: 1.17;
     letter-spacing: normal;
-    color: ${props => props.theme.charcoalGrey};
+    color: ${(props) => props.theme.charcoalGrey};
 
     margin-bottom: 30px;
 
@@ -111,7 +124,7 @@ export const ListViewCountryText = styled.p`
     font-style: normal;
     line-height: 1.22;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
+    color: ${(props) => props.theme.darkGrey};
 `
 
 export const ListViewRegionText = styled(TextLink)`
@@ -122,8 +135,7 @@ export const ListViewRegionText = styled(TextLink)`
     font-style: normal;
     line-height: 1.7;
     letter-spacing: normal;
-    color: ${props => props.theme.darkGrey};
-
+    color: ${(props) => props.theme.darkGrey};
 `
 export const ListViewNewText = styled.p`
     font-size: 12px;
@@ -132,8 +144,8 @@ export const ListViewNewText = styled.p`
     font-style: normal;
     line-height: 1.67;
     letter-spacing: 2px;
-    color: ${props => props.theme.mushroom};
-    
+    color: ${(props) => props.theme.mushroom};
+
     margin-left: 5px;
 `
 

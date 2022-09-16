@@ -151,7 +151,11 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
                     searchYelp(inputPlace, inputLat, inputLng, currentYelpOffset, currentYelpLimit)
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                // Trigger Yelp Search if there are no LFB results
+                searchYelp(inputPlace, inputLat, inputLng, currentYelpOffset, currentYelpLimit)
+                console.log(err)
+            })
             .finally(() => {
                 setLFBLoading(false)
             })
@@ -178,7 +182,7 @@ const Search: React.FC<ISearchProps> = ({ openSearchModal, getTokenConfig, ipLoc
             })
             .then((res) => {
                 const newYelpTotal = res.data.total ? res.data.total : currentYelpTotal
-                const newYelpPageCount = res.data.total / inputLimit
+                const newYelpPageCount = Math.ceil(res.data.total / inputLimit)
                 const newYelpOffset =
                     res.data.restaurants && res.data.restaurants.length > 0
                         ? inputOffset + res.data.restaurants.length

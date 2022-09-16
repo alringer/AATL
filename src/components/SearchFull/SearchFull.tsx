@@ -12,6 +12,7 @@ import { StoreState } from 'store'
 import { setPreferredLocation } from 'store/location/location_actions'
 import { ILocationInformation } from 'store/location/location_types'
 import { query } from 'style/device'
+import { filterCategories } from 'utilities/helpers/filterCategories'
 import useAddressPredictions from 'utilities/hooks/useAddressPredictions'
 import { ICategory } from 'utilities/types/category'
 import { SortEnum } from 'utilities/types/clientDTOS/SortType'
@@ -63,12 +64,15 @@ const SearchFull: React.FC<ISearchFullProps> = ({
     setPreferredLocation,
 }) => {
     const [place, setPlace] = React.useState(inputPlace ? inputPlace : '')
+    const [highlightedPlace, setHighlightedPlace] = React.useState(inputPlace ? inputPlace : '')
     const [categoryID, setCategoryID] = React.useState(inputCategoryID ? inputCategoryID : '')
     const [address, setAddress] = React.useState(inputAddress ? inputAddress : '')
     const [selectedAddress, setSelectedAddress] = React.useState(null)
+    const [currentCategories, setCurrentCategories] = React.useState([])
     const predictions = useAddressPredictions(address)
     const filterOptions = createFilterOptions({
-        matchFrom: 'start',
+        matchFrom: 'any',
+        trim: true,
     })
 
     const isClient = typeof window === 'object'
@@ -77,6 +81,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
     React.useEffect(() => {
         if (inputPlace) {
             setPlace(inputPlace)
+            setHighlightedPlace(inputPlace)
         }
     }, [inputPlace])
     React.useEffect(() => {
@@ -101,6 +106,10 @@ const SearchFull: React.FC<ISearchFullProps> = ({
             setSelectedAddress({ ...selectedAddress, lng: inputLng })
         }
     }, [inputLng])
+
+    React.useEffect(() => {
+        setCurrentCategories(filterCategories(place, categories))
+    }, [place, categories])
 
     React.useEffect(() => {
         if (preferredLocation && !inputAddress && !address) {
@@ -153,17 +162,30 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         }
     }
 
-    const handlePlaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e && e.target) {
             if (e.target.value) {
                 setPlace(String(e.target.value))
+                setHighlightedPlace(String(e.target.value))
                 setCategoryID(null)
             } else if (e.target.value === '') {
                 setPlace('')
+                setHighlightedPlace('')
                 setCategoryID(null)
             }
+            e.stopPropagation()
         }
-        e.stopPropagation()
+    }
+
+    const handleHighlightChange = (e: React.ChangeEvent, option: any) => {
+        // Capture currently highlighted value in the case that the user triggers enter search
+        if (option?.longName) {
+            setHighlightedPlace(option.longName)
+        } else if (option) {
+            setHighlightedPlace(option)
+        } else if (option === '') {
+            setHighlightedPlace('')
+        }
     }
 
     const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -229,18 +251,25 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                                 lat: geocodeLat,
                                 lng: geocodeLng,
                             })
-                            handleSearch(place, categoryID, geocode[0].formatted_address, geocodeLat, geocodeLng, 0)
+                            handleSearch(
+                                highlightedPlace,
+                                categoryID,
+                                geocode[0].formatted_address,
+                                geocodeLat,
+                                geocodeLng,
+                                0
+                            )
                         }
                     })
                 } else {
-                    handleSearch(place, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
+                    handleSearch(highlightedPlace, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
                 }
             } else {
-                handleSearch(place, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
+                handleSearch(highlightedPlace, categoryID, address, preferredLocation?.lat, preferredLocation?.lng)
             }
         } else {
             // Selected address exists
-            handleSearch(place, categoryID, address, selectedAddress?.lat, selectedAddress?.lng)
+            handleSearch(highlightedPlace, categoryID, address, selectedAddress?.lat, selectedAddress?.lng)
         }
     }
 
@@ -258,48 +287,24 @@ const SearchFull: React.FC<ISearchFullProps> = ({
         <SearchInputFieldsContainer>
             <CustomAutoComplete
                 freeSolo
-                value={place}
                 inputValue={place}
-                options={
-                    place === ''
-                        ? []
-                        : categories && place
-                        ? [
-                              `${place}`,
-                              ...categories.map((category) => {
-                                  return {
-                                      ...category,
-                                      tag: 'CATEGORIES',
-                                  }
-                              }),
-                          ]
-                        : !categories && place
-                        ? [`${place}`]
-                        : categories && !place
-                        ? [
-                              ...categories.map((category) => {
-                                  return {
-                                      ...category,
-                                      tag: 'CATEGORIES',
-                                  }
-                              }),
-                          ]
-                        : []
-                }
+                options={currentCategories}
                 filterOptions={filterOptions}
                 getOptionLabel={(option) => (typeof option === 'string' ? option : option.longName)}
                 groupBy={(option) => option.tag}
-                // getOptionLabel={(option) => 'CATEGORIES'}
                 onChange={(event, value) => {
-                    if (value.longName) {
+                    if (value?.longName) {
                         setPlace(value.longName)
+                        setHighlightedPlace(value.longName)
                         setCategoryID(value.id)
                     } else {
                         setPlace(value)
+                        setHighlightedPlace(value)
                         setCategoryID(null)
                     }
                 }}
-                onInputChange={handlePlaceChange}
+                onInputChange={handleInputChange}
+                onHighlightChange={handleHighlightChange}
                 disableClearable
                 renderOption={(option, state) => {
                     if (option.longName) {
@@ -315,6 +320,7 @@ const SearchFull: React.FC<ISearchFullProps> = ({
                 renderInput={(params) => (
                     <SearchInput
                         {...params}
+                        autoFocus
                         label={
                             place === '' ? (
                                 <PlaceholderContainer>

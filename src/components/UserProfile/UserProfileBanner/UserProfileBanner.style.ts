@@ -1,6 +1,6 @@
 import TextareaAutosize from '@material-ui/core/TextareaAutosize'
 import MuiEditIcon from '@material-ui/icons/Edit'
-import ProfileBannerBG from 'assets/profileHeroBG.svg'
+import ProfileBannerBG from 'assets/profileHeroBG.png'
 import { CustomButton } from 'style/Button/Button.style'
 import { CustomIconButton } from 'style/Button/IconButton.style'
 import { device } from 'style/device'
@@ -11,14 +11,15 @@ export const UserProfileBannerContainer = styled.div`
     display: flex;
     width: 100%;
     background-image: url(${ProfileBannerBG});
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-    
     @media ${device.mobile} {
         padding: 29px 24px;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-
     }
     @media ${device.tablet} {
         padding: 102px 24px 78px;
@@ -50,7 +51,7 @@ export const UserProfileMainInformationContainer = styled.div`
 export const UserProfileImageContainer = styled.div`
     display: flex;
     border-radius: 50%;
-    border: solid 4px ${props => props.theme.white};
+    border: solid 4px ${(props) => props.theme.white};
     overflow: hidden;
 
     @media ${device.mobile} {
@@ -109,7 +110,7 @@ const UserProfileNameCSS = css`
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 
     @media ${device.mobile} {
         font-size: 16px;
@@ -136,7 +137,7 @@ const UserProfileTitleCSS = css`
     font-style: normal;
     line-height: 2;
     letter-spacing: normal;
-    color: ${props => props.theme.white};
+    color: ${(props) => props.theme.white};
 
     @media ${device.mobile} {
         font-size: 12px;
@@ -206,6 +207,7 @@ type IUserProfileInstagramContainer = {
     disabled: boolean
 }
 export const UserProfileInstagramContainer = styled.a<IUserProfileInstagramContainer>`
+    width: fit-content;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -213,7 +215,7 @@ export const UserProfileInstagramContainer = styled.a<IUserProfileInstagramConta
 
     margin-top: 20px;
 
-    ${props => {
+    ${(props) => {
         if (props.disabled) {
             return css`
                 pointer-events: none;
@@ -252,10 +254,10 @@ export const UserProfileBannerEditButton = styled(CustomButton)`
 
     color: ${(props) => props.theme.white};
     background-color: transparent;
-    border-color: ${props => props.theme.white};
+    border-color: ${(props) => props.theme.white};
     :hover {
         background-color: transparent;
-        border-color: ${props => props.theme.white};
+        border-color: ${(props) => props.theme.white};
     }
 
     @media ${device.mobile} {
@@ -288,10 +290,10 @@ export const UserProfileBannerPencilButton = styled(CustomIconButton)`
 
     color: ${(props) => props.theme.white};
     background-color: transparent;
-    border-color: ${props => props.theme.white};
+    border-color: ${(props) => props.theme.white};
     :hover {
         background-color: transparent;
-        border-color: ${props => props.theme.white};
+        border-color: ${(props) => props.theme.white};
     }
 `
 
