@@ -149,6 +149,11 @@ export const FETCH_USER_RECOMMENDATIONS = (userID: number, page?: number, size?:
 export const FETCH_USER_PROFILE_INSTAGRAM_AUTHORIZE = (userID: number) => {
     return `/user-profiles/${userID}/instagram/authorize`
 }
+
+export const DISCONNECT_INSTAGRAM = (userID: number) => {
+    return `/user-profiles/${userID}/instagram/reset`
+}
+
 export const FETCH_USER_PROFILE_INSTAGRAM_MEDIA = (userID: number) => `/user-profiles/${userID}/food-and-travel`
 
 // Image Upload
