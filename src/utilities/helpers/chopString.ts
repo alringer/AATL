@@ -76,6 +76,23 @@ export const chopStringPlaceCategories = (input: string, viewport: DeviceNameEnu
     }
 }
 
+export const chopStringPlaceCategoriesYelp = (input: string, viewport: DeviceNameEnum) => {
+    if (input) {
+        switch (viewport) {
+            case DeviceNameEnum.laptop:
+                return input.length > 33 ? `${input.slice(0, 33)}...` : input
+            case DeviceNameEnum.tablet:
+                return input.length > 38 ? `${input.slice(0, 38)}...` : input
+            case DeviceNameEnum.mobile:
+                return input.length > 36 ? `${input.slice(0, 36)}...` : input
+            default:
+                return input
+        }
+    } else {
+        return ''
+    }
+}
+
 export const chopStringPlaceLatestRecommendationTitle = (
     input: string,
     viewport: DeviceNameEnum,

@@ -11,7 +11,8 @@ import { IYelpRestaurant } from 'components/SearchModal/SearchRestaurant'
 import * as S from 'constants/StringConstants'
 import React from 'react'
 import Media from 'react-media'
-import { query } from 'style/device'
+import { DeviceNameEnum, query, size } from 'style/device'
+import useWindowSize from 'utilities/hooks/useWindowSize'
 import { ICategory } from 'utilities/types/category'
 import { SortEnum, SortOption, sortOptions } from 'utilities/types/clientDTOS/SortType'
 import { IVenue } from 'utilities/types/venue'
@@ -128,6 +129,14 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
     const classes = useStyles()
     const [filter, setFilter] = React.useState<SortEnum>(SortEnum.BestRated)
 
+    const windowSize = useWindowSize()
+    const viewport: DeviceNameEnum =
+        windowSize.width >= Number(size.laptop)
+            ? DeviceNameEnum.laptop
+            : windowSize.width >= Number(size.tablet)
+            ? DeviceNameEnum.tablet
+            : DeviceNameEnum.mobile
+
     React.useEffect(() => {
         const newFilter = inputSort
             ? inputSort === SortEnum.BestRated
@@ -239,11 +248,12 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                     page={inputPage}
                                     variant="outlined"
                                     shape="rounded"
+                                    size={viewport === DeviceNameEnum.mobile ? 'small' : 'large'}
                                     onChange={handleLFBPagination}
-                                    siblingCount={2}
                                     boundaryCount={1}
-                                    showFirstButton
-                                    showLastButton
+                                    siblingCount={viewport === DeviceNameEnum.mobile ? 1 : 2}
+                                    showFirstButton={viewport === DeviceNameEnum.mobile ? false : true}
+                                    showLastButton={viewport === DeviceNameEnum.mobile ? false : true}
                                 />
                             </PaginationContainer>
                         </>
@@ -289,11 +299,12 @@ const SearchWorkBench: React.FC<ISearchWorkBenchProps> = ({
                                         page={currentYelpPage}
                                         variant="outlined"
                                         shape="rounded"
+                                        size={viewport === DeviceNameEnum.mobile ? 'small' : 'large'}
                                         onChange={handleYelpPagination}
-                                        siblingCount={2}
                                         boundaryCount={1}
-                                        showFirstButton
-                                        showLastButton
+                                        siblingCount={viewport === DeviceNameEnum.mobile ? 1 : 2}
+                                        showFirstButton={viewport === DeviceNameEnum.mobile ? false : true}
+                                        showLastButton={viewport === DeviceNameEnum.mobile ? false : true}
                                     />
                                 </PaginationContainer>
                             </SearchWorkBenchYelpResultsContainer>
