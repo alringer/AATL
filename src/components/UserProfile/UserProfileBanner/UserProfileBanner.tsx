@@ -7,6 +7,7 @@ import axios, { DISCONNECT_INSTAGRAM, FETCH_USER_RECOMMENDATIONS } from 'config/
 import { INSTAGRAM_CLIENT_ID, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
 import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
@@ -49,12 +50,13 @@ interface IReduxProps {
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
     user: IUserProfile | null
-    fetchUser: () => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 
 const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     user,
     currentUser,
+    keycloak,
     openUserProfileEditModal,
     fetchUser,
     getTokenConfig,
@@ -137,7 +139,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
-            onSuccess: fetchUser,
+            onSuccess: () => fetchUser(keycloak),
             user: user,
         })
     }
@@ -166,7 +168,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                     ),
                 })
                 // Fetch new user
-                fetchUser()
+                fetchUser(keycloak)
             })
             .catch((err) => console.log(err))
             .finally(() => {
