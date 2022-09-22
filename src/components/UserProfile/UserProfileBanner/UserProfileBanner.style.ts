@@ -223,6 +223,31 @@ export const UserProfileInstagramContainer = styled.a<IUserProfileInstagramConta
         }
     }}
 `
+
+export const UserProfileDisconnectInstagramContainer = styled.div`
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+
+    margin-top: 20px;
+`
+
+export const UserProfileDisconnectInstagramButton = styled.button`
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+
+    color: ${(props) => props.theme.white};
+    font-size: 12px;
+    text-decoration: underline;
+
+    :hover {
+        cursor: pointer;
+    }
+`
+
 export const UserProfileInstagramIconImg = styled.img`
     margin-right: 8px;
 `
