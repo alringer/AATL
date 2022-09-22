@@ -34,9 +34,9 @@ const HomeBanner = () => {
         page?: string
     ) => {
         const paramsArray: ParamType[] = [
-            { label: 'place', value: place },
+            { label: 'place', value: encodeURIComponent(place) },
             { label: 'categoryID', value: categoryID },
-            { label: 'address', value: address },
+            { label: 'address', value: encodeURIComponent(address) },
             { label: 'lat', value: lat },
             { label: 'lng', value: lng },
             { label: 'sort', value: sort },
