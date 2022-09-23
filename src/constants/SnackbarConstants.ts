@@ -181,6 +181,13 @@ export const POST_RECOMMENDATION: ISnackbarConstants = {
     Body: 'Your recommendation for',
     BodyTwo: 'was posted successfully',
 }
+
+export const DELETE_INSTAGRAM: ISnackbarConstants = {
+    Type: SNACKBAR_TYPES.Complete,
+    Title: 'Instagram disconnected',
+    Body: 'Your Instagram was disconnected successfully!',
+}
+
 export const EDIT_RECOMMENDATION: ISnackbarConstants = {
     Type: SNACKBAR_TYPES.Complete,
     Title: 'Recommendation edited',

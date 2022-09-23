@@ -8,6 +8,7 @@ import UserProfileInstagram from 'components/UserProfile/UserProfileInstagram/Us
 import UserProfileLists from 'components/UserProfile/UserProfileLists/UserProfileLists'
 import * as R from 'constants/RouteConstants'
 import * as B from 'constants/SnackbarConstants'
+import { KeycloakInstance } from 'keycloak-js'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import React from 'react'
@@ -23,6 +24,7 @@ interface IReduxProps {
     currentUser: IUserProfile | null
     isLoggedIn: boolean
     isLoading: boolean
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 
 interface IServerSideProps {
@@ -39,6 +41,7 @@ const UserProfile: React.FC<IUserProfileProps> = ({
     currentUser,
     isLoggedIn,
     isLoading,
+    fetchUser,
 }) => {
     const router = useRouter()
     const { enqueueSnackbar } = useSnackbar()

@@ -207,23 +207,25 @@ const RecommendationModal: React.FC<IRecommendationModalProps> = ({
                 fetchUser(keycloak)
                 if (!isPrelaunch) {
                     const newPermaLink = `${R.ROUTE_ITEMS.restaurant}/${res.data.venue.id}?r=${res.data.id}`
-                    router.push(newPermaLink)
-                    enqueueSnackbar('', {
-                        content: (
-                            <div>
-                                <Snackbar
-                                    type={B.EDIT_RECOMMENDATION.Type}
-                                    title={B.EDIT_RECOMMENDATION.Title}
-                                    message={
-                                        <SnackbarMessageBody>
-                                            {B.EDIT_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
-                                            {B.EDIT_RECOMMENDATION.BodyTwo}
-                                        </SnackbarMessageBody>
-                                    }
-                                />
-                            </div>
-                        ),
-                    })
+                    setTimeout(() => {
+                        router.push(newPermaLink)
+                        enqueueSnackbar('', {
+                            content: (
+                                <div>
+                                    <Snackbar
+                                        type={B.EDIT_RECOMMENDATION.Type}
+                                        title={B.EDIT_RECOMMENDATION.Title}
+                                        message={
+                                            <SnackbarMessageBody>
+                                                {B.EDIT_RECOMMENDATION.Body} {res.data?.venue?.name}{' '}
+                                                {B.EDIT_RECOMMENDATION.BodyTwo}
+                                            </SnackbarMessageBody>
+                                        }
+                                    />
+                                </div>
+                            ),
+                        })
+                    }, 3000)
                 } else {
                     enqueueSnackbar('', {
                         content: (

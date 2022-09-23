@@ -20,7 +20,7 @@ import {
 import { CardIcon, WideHeaderContentContainer, WidePlaceAddressText } from 'style/Card/Card.style'
 import { DeviceNameEnum, size } from 'style/device'
 import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
-import { chopStringPlaceCategories, chopStringPlaceName } from 'utilities/helpers/chopString'
+import { chopStringPlaceCategoriesYelp, chopStringPlaceName } from 'utilities/helpers/chopString'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import useWindowSize from 'utilities/hooks/useWindowSize'
@@ -154,12 +154,11 @@ const CardPlaceYelp: React.FC<ICardPlaceWideProps> = ({
                             </WidePlaceAddressText>
                             <CardPlaceWidePlaceCategoryText>
                                 {place && place.categories
-                                    ? chopStringPlaceCategories(
+                                    ? chopStringPlaceCategoriesYelp(
                                           concatCategories(
                                               place.categories.map((category: ICategory) => category.longName)
                                           ),
-                                          viewport,
-                                          type
+                                          viewport
                                       )
                                     : null}
                             </CardPlaceWidePlaceCategoryText>
