@@ -1,9 +1,14 @@
 import DefaultUserProfileImage from 'assets/user-profile-icon.svg'
 import UserProfileInstagramIcon from 'assets/user-profile-instagram-icon.svg'
 import Image from 'components/Image/Image'
-import axios, { FETCH_USER_RECOMMENDATIONS } from 'config/AxiosConfig'
+import Snackbar from 'components/Snackbar/Snackbar'
+import { SnackbarMessageBody } from 'components/Snackbar/Snackbar.style'
+import axios, { DISCONNECT_INSTAGRAM, FETCH_USER_RECOMMENDATIONS } from 'config/AxiosConfig'
 import { INSTAGRAM_CLIENT_ID, INSTAGRAM_REDIRECT_URI } from 'constants/InstagramConstants'
+import * as B from 'constants/SnackbarConstants'
 import * as S from 'constants/StringConstants'
+import { KeycloakInstance } from 'keycloak-js'
+import { useSnackbar } from 'notistack'
 import React from 'react'
 import Media from 'react-media'
 import { connect as reduxConnect } from 'react-redux'
@@ -25,6 +30,8 @@ import {
     UserProfileContentHeaderContainer,
     UserProfileDescription,
     UserProfileDescriptionContainer,
+    UserProfileDisconnectInstagramButton,
+    UserProfileDisconnectInstagramContainer,
     UserProfileImageContainer,
     UserProfileInstagram,
     UserProfileInstagramContainer,
@@ -43,15 +50,19 @@ interface IReduxProps {
 }
 interface IUserProfileBannerProps extends IReduxProps, IWithAuthInjectedProps {
     user: IUserProfile | null
-    fetchUser: () => void
+    fetchUser: (keycloak: KeycloakInstance) => void
 }
 
 const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     user,
     currentUser,
+    keycloak,
     openUserProfileEditModal,
     fetchUser,
+    getTokenConfig,
 }) => {
+    const { enqueueSnackbar } = useSnackbar()
+
     const isOwner = currentUser && user && currentUser.id === user.id
     // Input States
     const [viewedUser, setViewedUser] = React.useState(user)
@@ -70,6 +81,7 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     const [instagramLink, setInstagramLink] = React.useState(null)
     const [numberOfPlacesRecommended, setNumberOfPlacesRecommended] = React.useState(0)
     const [recommendedVenueIDMap, setRecommendedVenueIDMap] = React.useState<{ [key: number]: true }>({})
+    const [isDisconnecting, setDisconnecting] = React.useState(false)
 
     React.useEffect(() => {
         setUserInformation({
@@ -127,9 +139,41 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
-            onSuccess: fetchUser,
+            onSuccess: () => fetchUser(keycloak),
             user: user,
         })
+    }
+
+    const handleDisconnectInstagram = (id: number) => {
+        const config = {
+            headers: {
+                Authorization: getTokenConfig(),
+                'Content-Type': 'text/plain',
+            },
+        }
+        setDisconnecting(true)
+        axios
+            .delete(DISCONNECT_INSTAGRAM(id), config)
+            .then((res) => {
+                // Surface Snackbar
+                enqueueSnackbar('', {
+                    content: (
+                        <div>
+                            <Snackbar
+                                type={B.DELETE_INSTAGRAM.Type}
+                                title={B.DELETE_INSTAGRAM.Title}
+                                message={<SnackbarMessageBody>{B.DELETE_INSTAGRAM.Body}</SnackbarMessageBody>}
+                            />
+                        </div>
+                    ),
+                })
+                // Fetch new user
+                fetchUser(keycloak)
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {
+                setDisconnecting(false)
+            })
     }
 
     const renderHeaderAndDescription = () => {
@@ -200,17 +244,15 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                     {numberOfPlacesRecommended ? numberOfPlacesRecommended : 0}{' '}
                                     {S.USER_PROFILE_BANNER.Places}
                                 </UserProfileNumberOfRecommendations>
-                                {
+                                {(viewedUser.instagramProfile || isOwner) && (
                                     <UserProfileInstagramContainer
                                         href={instagramLink}
                                         disabled={instagramLink ? false : true}
                                     >
-                                        {(viewedUser.instagramProfile || isOwner) && (
-                                            <UserProfileInstagramIconImg
-                                                src={UserProfileInstagramIcon}
-                                                alt="user-profile-instagram-icon"
-                                            />
-                                        )}
+                                        <UserProfileInstagramIconImg
+                                            src={UserProfileInstagramIcon}
+                                            alt="user-profile-instagram-icon"
+                                        />
                                         <UserProfileInstagram>
                                             {viewedUser.instagramProfile
                                                 ? `@${viewedUser.instagramProfile.username}`
@@ -219,7 +261,16 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
                                                 : ''}
                                         </UserProfileInstagram>
                                     </UserProfileInstagramContainer>
-                                }
+                                )}
+                                {isOwner && currentUser?.id && viewedUser.instagramProfile && (
+                                    <UserProfileDisconnectInstagramContainer
+                                        onClick={() => handleDisconnectInstagram(currentUser.id)}
+                                    >
+                                        <UserProfileDisconnectInstagramButton disabled={isDisconnecting}>
+                                            {S.USER_PROFILE_BANNER.DisconnectInstagram}
+                                        </UserProfileDisconnectInstagramButton>
+                                    </UserProfileDisconnectInstagramContainer>
+                                )}
                             </UserProfileContentBodyContainer>
                         </UserProfileContentContainer>
                     </>
