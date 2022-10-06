@@ -43,6 +43,7 @@ export interface IUserProfile {
     userBadges: null
     configurationAudits: null
     instagramProfile: InstagramProfileDTO
+    countVenuesRecommended: number | null
 }
 
 export const mockUser: IUserProfile = {
@@ -66,4 +67,5 @@ export const mockUser: IUserProfile = {
     userBadges: null,
     configurationAudits: null,
     instagramProfile: null,
+    countVenuesRecommended: 7,
 }
