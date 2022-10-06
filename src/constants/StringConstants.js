@@ -218,7 +218,7 @@ export const FOOTER_ITEMS = {
     ContactLocation: 'P.O. Box 4089 Incline Village, NV 89450',
     FooterMessage: `We are a new restaurant recommendation website serving the United States and Canada.  All of our content comes from local foodies who are eager to share their trusted food finds with other foodies.  Only good recommendations are posted, so there is no need to read through negative reviews.
 
-We hope to have recommendations posted for all cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!
+We hope to have recommendations posted for ALL cities in North America.  Come join our growing band of food guides and tell us about your favorite restaurants and other food finds.  Our service is free for everyone.  The sign-up process just takes seconds.  At last, a website for foodies, by foodies!
 
 Y@!p is for the masses, LocalFoodBuzz is for serious foodies.`,
 }
@@ -519,7 +519,7 @@ By providing content to this website, you agree to or attest that you:
 • Will not duplicate this website for the purposes of exporting or removing data to another website without written permission.
 • Have no conflicts of interest and are not being compensated in any way by a business you are recommending.  If you have potential conflicts of interest, you must disclose this in both your bio field and in each recommendation you are making where the conflict may exist.  This disclosure is required in the U.S. by the Federal Trade Commission.
 • Understand that you are not or compensated in any way for the material you post on the website.
-• Understand that once posted, the material becomes the property of LocalFoodBuzz.
+• Once posted, the material may be used in other sections of the website.
 • Will not gain unauthorized access to the site by posing as another person, posing as a fictitious person or by making false representations.
 • Not to hack or intentionally disrupt the website’s security systems.
 • That in order to be a local guide or a registered user, you must submit a minimal amount of personal information (including your name and email address.)  I understand that the purpose of retaining this information is to help LocalFoodBuzz ensure that the guides and registered users are legitimate with no undisclosed or unclaimed potential conflicts of interest.
@@ -566,7 +566,7 @@ P.O. Box 4089, Incline Village, NV  89450`,
         },
         {
             Title: 'DATE TERMS AND CONDITIONS LAST MODIFIED',
-            Body: 'January 7, 2018',
+            Body: 'October 4, 2022',
         },
     ],
 }
