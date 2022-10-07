@@ -126,6 +126,7 @@ export const mockRecommendation: IRecommendation = {
         userBadges: null,
         configurationAudits: null,
         instagramProfile: null,
+        countVenuesRecommended: 5,
     },
     rating: 4,
 }
