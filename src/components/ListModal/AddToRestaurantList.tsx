@@ -85,7 +85,7 @@ const AddToRestaurantList: React.FC<IAddToRestaurantListProps> = ({
                     setLoading(false)
                 })
         }
-    }, [])
+    }, [user])
 
     const handleSelect = (restaurantListID: number) => {
         if (restaurantListID !== undefined && restaurantListID !== null) {
