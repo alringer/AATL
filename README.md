@@ -2,6 +2,17 @@
 
 This README file documents the necessary steps to set up the client-side application for LFB.
 
+### List of Related Repositories
+
+-   Client-side (Current Repository)
+    -   https://bitbucket.org/SeamgenSD/aatl-web/
+-   Services
+    -   https://bitbucket.org/SeamgenSD/aatl-services/
+-   Keycloak
+    -   https://bitbucket.org/SeamgenSD/aatl-keycloak/
+-   Development
+    -   https://bitbucket.org/SeamgenSD/aatl-development/
+
 ### How do I get set up?
 
 -   Install all packages by running the following command in the root directory of this repository:
