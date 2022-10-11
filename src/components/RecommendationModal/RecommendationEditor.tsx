@@ -211,7 +211,14 @@ const RecommendationEditor: React.FC<IRecommendationEditorProps> = ({
         ) {
             handlePublish(title, description, temporaryImageKey, rating)
         } else if (recommendation_type === RecommendationModalType.Edit) {
-            handleEdit(recommendationID, title, description, temporaryImageKey, rating, fetchedRecommendation.flagged)
+            handleEdit(
+                recommendationID,
+                title,
+                description,
+                temporaryImageKey === undefined ? (imagePreviewURL === '' ? null : '') : temporaryImageKey,
+                rating,
+                fetchedRecommendation.flagged
+            )
         }
     }
 
