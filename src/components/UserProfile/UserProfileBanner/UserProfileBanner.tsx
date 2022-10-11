@@ -79,7 +79,6 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
     })
     const [instagramLink, setInstagramLink] = React.useState(null)
     const [numberOfPlacesRecommended, setNumberOfPlacesRecommended] = React.useState(0)
-    const [recommendedVenueIDMap, setRecommendedVenueIDMap] = React.useState<{ [key: number]: true }>({})
     const [isDisconnecting, setDisconnecting] = React.useState(false)
 
     React.useEffect(() => {
@@ -107,10 +106,6 @@ const UserProfileBanner: React.FC<IUserProfileBannerProps> = ({
         )
         setNumberOfPlacesRecommended(user.countVenuesRecommended)
     }, [user])
-
-    React.useEffect(() => {
-        setNumberOfPlacesRecommended(Object.keys(recommendedVenueIDMap).length)
-    }, [recommendedVenueIDMap])
 
     const handleEditProfile = () => {
         openUserProfileEditModal({
