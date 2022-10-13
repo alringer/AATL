@@ -77,7 +77,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
                 shallow: true,
             })
         }
-    }, [])
+    }, [router])
 
     React.useEffect(() => {
         fetchCities()
