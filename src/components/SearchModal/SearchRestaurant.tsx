@@ -90,12 +90,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
 
     React.useEffect(() => {
         const queryPlace = router.query.place ? String(router.query.place) : null
-        const queryLat = router.query.lat ? String(router.query.lat) : null
-        const queryLng = router.query.lng ? String(router.query.lng) : null
         setInitialPlace(queryPlace)
-        setInputLat(queryLat)
-        setInputLng(queryLng)
-        handleLFBSearch(queryPlace, undefined, undefined, queryLat, queryLng, undefined)
     }, [router])
 
     const handleScroll = (e) => {
@@ -260,7 +255,7 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                             ? 'Try a different location, alternative spelling or a more generalized search.'
                             : ''}
                     </SearchModalMatchesFound>
-                    <SearchModalRestaurantCardsContainer>
+                    <SearchModalRestaurantCardsContainer style={!results ? { padding: '0px' } : {}}>
                         {results &&
                             results.map((result: IYelpRestaurant, index: number) => {
                                 return renderSearchModalRestaurantCard(result, index)
