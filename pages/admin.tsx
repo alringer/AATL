@@ -68,6 +68,9 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
     }, [userRole, isMounted, isLoading, keycloak])
 
     React.useEffect(() => {
+        console.log('Router: ', router)
+        console.log('Router.query: ', router?.query)
+        console.log('Router.query.menu: ', router?.query?.menu)
         if (
             router.query.menu !== R.ROUTE_ITEMS.adminCities &&
             router.query.menu !== R.ROUTE_ITEMS.adminFlaggedContent &&
@@ -78,6 +81,19 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
             })
         }
     }, [router])
+
+    // Logger useEffects
+    React.useEffect(() => {
+        console.log('isMounted: ', isMounted)
+    }, [isMounted])
+
+    React.useEffect(() => {
+        console.log('userRole: ', userRole)
+    }, [userRole])
+
+    React.useEffect(() => {
+        console.log('isLoading: ', isLoading)
+    }, [isLoading])
 
     React.useEffect(() => {
         fetchCities()
