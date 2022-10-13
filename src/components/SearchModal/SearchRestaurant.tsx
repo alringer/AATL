@@ -89,7 +89,12 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
 
     React.useEffect(() => {
         const queryPlace = router.query.place ? String(router.query.place) : null
+        const queryLat = router.query.lat ? String(router.query.lat) : null
+        const queryLng = router.query.lng ? String(router.query.lng) : null
         setInitialPlace(queryPlace)
+        setInputLat(queryLat)
+        setInputLng(queryLng)
+        handleLFBSearch(queryPlace, undefined, undefined, queryLat, queryLng, undefined)
     }, [router])
 
     const handleScroll = (e) => {
@@ -119,13 +124,13 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                 })
                 .then((res) => {
                     const newSearchResults =
-                        res.data.restaurants && res.data.restaurants.length > 0
-                            ? [...results, ...res.data.restaurants]
+                        res?.data?.restaurants && res?.data?.restaurants?.length > 0
+                            ? [...results, ...res?.data?.restaurants]
                             : results
-                    const newTotal = res.data.total ? res.data.total : total
+                    const newTotal = res?.data?.total ? res?.data?.total : total
                     const newOffset =
-                        res.data.restaurants && res.data.restaurants.length > 0
-                            ? offset + res.data.restaurants.length
+                        res?.data?.restaurants && res?.data?.restaurants?.length > 0
+                            ? offset + res?.data?.restaurants?.length
                             : offset
                     setResults(newSearchResults)
                     setTotal(newTotal)
@@ -152,19 +157,21 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
         setInputPlace(place)
         setInputLat(lat)
         setInputLng(lng)
+        setLoading(true)
         axios
             .get(SEARCH_YELP_RESTAURANTS + params)
             .then((res) => {
                 const newSearchResults =
-                    res.data.restaurants && res.data.restaurants.length > 0 ? res.data.restaurants : []
-                const newTotal = res.data.total ? res.data.total : 0
+                    res?.data?.restaurants && res?.data?.restaurants?.length > 0 ? res?.data?.restaurants : []
+                const newTotal = res?.data?.total ? res?.data?.total : 0
                 const newOffset =
-                    res.data.restaurants && res.data.restaurants.length > 0 ? res.data.restaurants.length : 0
+                    res?.data?.restaurants && res?.data?.restaurants?.length > 0 ? res?.data?.restaurants?.length : 0
                 setResults(newSearchResults)
                 setTotal(newTotal)
                 setOffset(newOffset)
             })
             .catch((err) => console.log(err))
+            .finally(() => setLoading(false))
     }
 
     const handleRecommend = (id: string, name: string) => {
@@ -236,33 +243,32 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
                         inputLng={null}
                     />
                 </SearchModalInputFieldsContainer>
-                {results && (
-                    <>
-                        <SearchModalSearchResultsContainer>
-                            {results && results.length === 0 && (
-                                <SearchModalNoResultsHeader>No results found</SearchModalNoResultsHeader>
-                            )}
-                            <SearchModalMatchesFound>
-                                {results && results.length > 0
-                                    ? `${total} ${S.RESTAURANT_SEARCH.Matches}`
-                                    : 'Try a different location, alternative spelling or a more generalized search.'}
-                            </SearchModalMatchesFound>
-                            <SearchModalRestaurantCardsContainer>
-                                {results.map((result: IYelpRestaurant, index: number) => {
-                                    return renderSearchModalRestaurantCard(result, index)
-                                })}
-                                {isLoading && (
-                                    <SearchModalLoadingIconContainer>
-                                        <CircularProgress />
-                                    </SearchModalLoadingIconContainer>
-                                )}
-                            </SearchModalRestaurantCardsContainer>
-                        </SearchModalSearchResultsContainer>
-                        {/* <SearchModalSearchFooterContainer>
+                <SearchModalSearchResultsContainer>
+                    {results && results?.length === 0 && (
+                        <SearchModalNoResultsHeader>No results found</SearchModalNoResultsHeader>
+                    )}
+                    <SearchModalMatchesFound>
+                        {results && results?.length > 0
+                            ? `${total} ${S.RESTAURANT_SEARCH.Matches}`
+                            : results?.length === 0
+                            ? 'Try a different location, alternative spelling or a more generalized search.'
+                            : ''}
+                    </SearchModalMatchesFound>
+                    <SearchModalRestaurantCardsContainer>
+                        {results &&
+                            results.map((result: IYelpRestaurant, index: number) => {
+                                return renderSearchModalRestaurantCard(result, index)
+                            })}
+                        {isLoading && (
+                            <SearchModalLoadingIconContainer>
+                                <CircularProgress />
+                            </SearchModalLoadingIconContainer>
+                        )}
+                    </SearchModalRestaurantCardsContainer>
+                    {/* <SearchModalSearchFooterContainer>
                             <CancelButton onClick={closeModal}>{S.BUTTON_LABELS.Cancel}</CancelButton>
                         </SearchModalSearchFooterContainer> */}
-                    </>
-                )}
+                </SearchModalSearchResultsContainer>
             </SearchModalContentWrapper>
         </SearchModalScrollContainer>
     )
