@@ -22,3 +22,9 @@ export enum publishedStateEnum {
     Published,
     Offline,
 }
+
+export enum adminViewEnum {
+    Cities,
+    FlaggedContent,
+    RecommendationLists,
+}

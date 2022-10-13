@@ -13,6 +13,7 @@ import {
     RecommendationModalPlaceInformation,
     RecommendationModalType,
 } from 'store/recommendationModal/recommendationModal_types'
+import { addCommaToStreet } from 'utilities/helpers/addCommaToStreet'
 import { concatCategories } from 'utilities/helpers/concatStrings'
 import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { ICategory } from 'utilities/types/category'
@@ -186,41 +187,46 @@ const SearchRestaurant: React.FC<ISearchRestaurantProps> = ({
 
     const renderSearchModalRestaurantCard = (restaurant: IYelpRestaurant, key: number) => {
         return (
-            <SearchModalRestaurantCardContainer key={key}>
-                <SearchModalRestaurantCardContentContainer>
-                    <SearchModalRestaurantCardImageContainer>
-                        {/* TODO: Add default image url? */}
-                        <Image src={restaurant.imageURL ? restaurant.imageURL : ''} alt="restaurant-image" />
-                    </SearchModalRestaurantCardImageContainer>
-                    <SearchModalRestaurantCardInformationsContainer>
-                        <SearchModalRestaurantCardDetailsContainer>
-                            <SearchModalRestaurantCardRestaurantName>
-                                {restaurant.name}
-                            </SearchModalRestaurantCardRestaurantName>
-                            <SearchModalRestaurantCardCategories>
-                                {restaurant.categories
-                                    ? concatCategories(
-                                          restaurant.categories.map((category: ICategory) => category.longName)
-                                      )
-                                    : null}
-                            </SearchModalRestaurantCardCategories>
-                            {/* <SearchModalRestaurantCardSpecials>{restaurant.specials}</SearchModalRestaurantCardSpecials> */}
-                        </SearchModalRestaurantCardDetailsContainer>
-                        <SearchModalRestaurantCardAddressContainer>
-                            <SearchModalRestaurantCardAddress>
-                                {restaurant.address1 ? restaurant.address1 : null}
-                            </SearchModalRestaurantCardAddress>
-                        </SearchModalRestaurantCardAddressContainer>
-                    </SearchModalRestaurantCardInformationsContainer>
-                </SearchModalRestaurantCardContentContainer>
-                <RecommendButton
-                    onClick={() =>
-                        handleRecommend(restaurant.id ? restaurant.id : '', restaurant.name ? restaurant.name : '')
-                    }
-                >
-                    {S.BUTTON_LABELS.Recommend}
-                </RecommendButton>
-            </SearchModalRestaurantCardContainer>
+            restaurant && (
+                <SearchModalRestaurantCardContainer key={key}>
+                    <SearchModalRestaurantCardContentContainer>
+                        <SearchModalRestaurantCardImageContainer>
+                            {/* TODO: Add default image url? */}
+                            <Image src={restaurant.imageURL ? restaurant.imageURL : ''} alt="restaurant-image" />
+                        </SearchModalRestaurantCardImageContainer>
+                        <SearchModalRestaurantCardInformationsContainer>
+                            <SearchModalRestaurantCardDetailsContainer>
+                                <SearchModalRestaurantCardRestaurantName>
+                                    {restaurant.name}
+                                </SearchModalRestaurantCardRestaurantName>
+                                <SearchModalRestaurantCardCategories>
+                                    {restaurant.categories
+                                        ? concatCategories(
+                                              restaurant.categories.map((category: ICategory) => category.longName)
+                                          )
+                                        : null}
+                                </SearchModalRestaurantCardCategories>
+                                {/* <SearchModalRestaurantCardSpecials>{restaurant.specials}</SearchModalRestaurantCardSpecials> */}
+                            </SearchModalRestaurantCardDetailsContainer>
+                            <SearchModalRestaurantCardAddressContainer>
+                                <SearchModalRestaurantCardAddress>
+                                    {restaurant && restaurant?.address1 ? addCommaToStreet(restaurant.address1) : null}
+                                    {restaurant && restaurant?.city ? restaurant?.city + ', ' : null}
+                                    {restaurant && restaurant?.state ? restaurant?.state : null}
+                                    {restaurant && restaurant?.zipCode ? ` ${restaurant?.zipCode}` : null}
+                                </SearchModalRestaurantCardAddress>
+                            </SearchModalRestaurantCardAddressContainer>
+                        </SearchModalRestaurantCardInformationsContainer>
+                    </SearchModalRestaurantCardContentContainer>
+                    <RecommendButton
+                        onClick={() =>
+                            handleRecommend(restaurant.id ? restaurant.id : '', restaurant.name ? restaurant.name : '')
+                        }
+                    >
+                        {S.BUTTON_LABELS.Recommend}
+                    </RecommendButton>
+                </SearchModalRestaurantCardContainer>
+            )
         )
     }
 
