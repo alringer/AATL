@@ -2,15 +2,17 @@ import * as R from 'constants/RouteConstants'
 import * as S from 'constants/StringConstants'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { adminViewEnum } from 'utilities/types/enumerations'
 import { AdminMenuContainer, AdminMenuItem, AdminMenuTitle } from './AdminMenu.style'
 
 interface IAdminMenu {
+    currentView: adminViewEnum
     countCities: number | null
     countFlagged: number | null
     countRecommendationLists: number | null
 }
 
-const AdminMenu: React.FC<IAdminMenu> = ({ countCities, countFlagged, countRecommendationLists }) => {
+const AdminMenu: React.FC<IAdminMenu> = ({ currentView, countCities, countFlagged, countRecommendationLists }) => {
     const router = useRouter()
 
     const handleCities = () => {
@@ -32,18 +34,18 @@ const AdminMenu: React.FC<IAdminMenu> = ({ countCities, countFlagged, countRecom
     return (
         <AdminMenuContainer>
             <AdminMenuTitle>{S.ADMIN_PAGE.AdminMenu.AdminMenu}</AdminMenuTitle>
-            <AdminMenuItem id={router.query.menu === R.ROUTE_ITEMS.adminCities ? 'active' : ''} onClick={handleCities}>
+            <AdminMenuItem id={currentView === adminViewEnum.Cities ? 'active' : ''} onClick={handleCities}>
                 {S.ADMIN_PAGE.AdminMenu.Cities} {countCities ? `(${countCities})` : ''}
             </AdminMenuItem>
 
             <AdminMenuItem
-                id={router.query.menu === R.ROUTE_ITEMS.adminFlaggedContent ? 'active' : ''}
+                id={currentView === adminViewEnum.FlaggedContent ? 'active' : ''}
                 onClick={handleFlaggedContent}
             >
                 {S.ADMIN_PAGE.AdminMenu.FlaggedContent} {countFlagged ? `(${countFlagged})` : ''}
             </AdminMenuItem>
             <AdminMenuItem
-                id={router.query.menu === R.ROUTE_ITEMS.adminRecommendationLists ? 'active' : ''}
+                id={currentView === adminViewEnum.RecommendationLists ? 'active' : ''}
                 onClick={handleRecommendationLists}
             >
                 {S.ADMIN_PAGE.AdminMenu.RecommendationLists}{' '}
