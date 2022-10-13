@@ -112,6 +112,7 @@ const LocalPlaces: React.FC<ILocalPlacesProps> = ({
                             isFull={true}
                             recommendation={recommendation}
                             type={CardRecommendationWideEnum.City}
+                            key={recommendation.id}
                         />
                     ))
                 ) : (
