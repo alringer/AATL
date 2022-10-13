@@ -125,13 +125,11 @@ const City: React.FC<ICityProps> = ({ cityInformation }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const cityID = context && context.params ? context.params.id : null
-    console.log('TODO: Query city with ID: ', cityID)
     let cityInformation = undefined
     if (cityID) {
         await axios
             .get(FETCH_CITY(Number(cityID)))
             .then((res) => {
-                console.log('Fetch City: ', res.data)
                 cityInformation = res.data
             })
             .catch((err) => console.log('Error: ', err))
