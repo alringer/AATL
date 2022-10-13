@@ -92,6 +92,9 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
                     setCurrentView(adminViewEnum.RecommendationLists)
                     break
                 default:
+                    router.push(`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`, undefined, {
+                        shallow: true,
+                    })
                     setCurrentView(adminViewEnum.Cities)
             }
         }
@@ -192,6 +195,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
     return isMounted === true && isLoading === false && userRole === UserRoleEnum.Admin ? (
         <AdminContainer>
             <AdminMenu
+                currentView={currentView}
                 countCities={listCities.length}
                 countFlagged={currentTotal}
                 countRecommendationLists={otherLists.length + featuredLists.length}
