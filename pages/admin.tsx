@@ -18,6 +18,7 @@ import withAuth, { IWithAuthInjectedProps } from 'utilities/hocs/withAuth'
 import { useAuth } from 'utilities/providers/AuthProvider'
 import { IAdminCity } from 'utilities/types/adminCity'
 import { UserRoleEnum } from 'utilities/types/clientDTOS/UserRole'
+import { adminViewEnum } from 'utilities/types/enumerations'
 import { IFlaggedRecommendation, IFlaggedRecommendationSort } from 'utilities/types/flaggedRecommendation'
 import { IRecommendationListMeta } from 'utilities/types/recommendationListMeta'
 
@@ -32,6 +33,8 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
     const { enqueueSnackbar } = useSnackbar()
     const { isMounted } = useAuth()
 
+    // Admin View States
+    const [currentView, setCurrentView] = React.useState<adminViewEnum>(adminViewEnum.Cities)
     // Cities
     const [listCities, setListCities] = React.useState<IAdminCity[]>([])
     const [isLoadingCities, setLoadingCities] = React.useState(false)
@@ -76,8 +79,26 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
             router.push(`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`, undefined, {
                 shallow: true,
             })
+            setCurrentView(adminViewEnum.Cities)
+        } else {
+            switch (router?.query?.menu) {
+                case R.ROUTE_ITEMS.adminCities:
+                    setCurrentView(adminViewEnum.Cities)
+                    break
+                case R.ROUTE_ITEMS.adminFlaggedContent:
+                    setCurrentView(adminViewEnum.FlaggedContent)
+                    break
+                case R.ROUTE_ITEMS.adminRecommendationLists:
+                    setCurrentView(adminViewEnum.RecommendationLists)
+                    break
+                default:
+                    router.push(`${R.ROUTE_ITEMS.admin}?menu=${R.ROUTE_ITEMS.adminCities}`, undefined, {
+                        shallow: true,
+                    })
+                    setCurrentView(adminViewEnum.Cities)
+            }
         }
-    }, [])
+    }, [router])
 
     React.useEffect(() => {
         fetchCities()
@@ -174,14 +195,15 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
     return isMounted === true && isLoading === false && userRole === UserRoleEnum.Admin ? (
         <AdminContainer>
             <AdminMenu
+                currentView={currentView}
                 countCities={listCities.length}
                 countFlagged={currentTotal}
                 countRecommendationLists={otherLists.length + featuredLists.length}
             />
             <AdminContentContainer>
-                {router.query.menu === R.ROUTE_ITEMS.adminCities ? (
+                {currentView === adminViewEnum.Cities ? (
                     <AdminCities listCities={listCities} isLoadingCities={isLoadingCities} />
-                ) : router.query.menu === R.ROUTE_ITEMS.adminFlaggedContent ? (
+                ) : currentView === adminViewEnum.FlaggedContent ? (
                     <AdminFlaggedContent
                         listFlaggedRecommendations={listFlaggedRecommendations}
                         isLoadingFlaggedRecommendations={isLoadingFlaggedRecommendations}
@@ -189,7 +211,7 @@ const Admin: React.FC<IAdminProps> = ({ userRole, isLoading, getTokenConfig, key
                         currentPageCount={currentPageCount}
                         fetchFlaggedRecommendations={fetchFlaggedRecommendations}
                     />
-                ) : router.query.menu === R.ROUTE_ITEMS.adminRecommendationLists ? (
+                ) : currentView === adminViewEnum.RecommendationLists ? (
                     <AdminRecommendationLists
                         featuredLists={featuredLists}
                         otherLists={otherLists}
