@@ -9,8 +9,8 @@ export const SearchCouldNotFindContainer = styled.div`
     @media ${device.mobile} {
         flex-direction: column;
         align-items: center;
-        margin-top: 20px;
-        padding: 20px 16px;
+        margin-top: 10px;
+        padding: 10 15px;
         p {
             text-align: center;
         }
@@ -80,17 +80,42 @@ export const SearchCouldNotFindColumn = styled.div<IMarginProps>`
     }
 `
 
+export const SearchCouldNotFindImage = styled.img`
+    object-fit: cover;
+
+    @media ${device.mobile} {
+        display: none;
+    }
+    @media ${device.tablet} {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+    @media ${device.laptop} {
+        width: auto;
+        height: auto;
+    }
+`
+
 export const SearchCouldNotFindTitle = styled.p`
-    font-size: 20px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.2;
     letter-spacing: normal;
     color: ${(props) => props.theme.charcoalGrey};
+
+    @media ${device.mobile} {
+        font-size: 16px;
+    }
+    @media ${device.tablet} {
+        font-size: 16px;
+    }
+    @media ${device.laptop} {
+        font-size: 20px;
+    }
 `
 export const SearchCouldNotFindDescription = styled.p`
-    font-size: 16px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -99,6 +124,16 @@ export const SearchCouldNotFindDescription = styled.p`
     color: ${(props) => props.theme.charcoalGrey};
 
     margin-top: 8px;
+
+    @media ${device.mobile} {
+        font-size: 14px;
+    }
+    @media ${device.tablet} {
+        font-size: 14px;
+    }
+    @media ${device.laptop} {
+        font-size: 16px;
+    }
 `
 export const SearchCouldNotFindButton = styled(CustomButton)`
     color: ${(props) => props.theme.pinkishTan};
