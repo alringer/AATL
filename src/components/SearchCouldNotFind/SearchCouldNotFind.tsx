@@ -6,6 +6,7 @@ import {
     SearchCouldNotFindColumn,
     SearchCouldNotFindContainer,
     SearchCouldNotFindDescription,
+    SearchCouldNotFindImage,
     SearchCouldNotFindTitle,
 } from './SearchCouldNotFind.style'
 
@@ -20,7 +21,7 @@ const SearchCouldNotFind: React.FC<ISearchCouldNotFind> = ({ openSearchModal, fu
         <SearchCouldNotFindContainer id={fullWidth ? 'full-width' : ''}>
             {!isSide && (
                 <SearchCouldNotFindColumn>
-                    <img src={LogoLady} alt="logo" />
+                    <SearchCouldNotFindImage src={LogoLady} alt="logo" />
                 </SearchCouldNotFindColumn>
             )}
             <SearchCouldNotFindColumn giveMargin={!isSide && 1}>

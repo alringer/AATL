@@ -344,7 +344,7 @@ export const ADD_PLACE = {
 
 export const COULD_NOT_FIND = {
     // Title: 'No results found',
-    Title: "Couldn't find it?",
+    Title: 'Write a recommendation',
     Description:
         'Become a city guide by being the first to recommend one of the following restaurants matching your search criteria.',
 }
